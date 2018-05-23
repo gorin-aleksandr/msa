@@ -10,6 +10,9 @@ import UIKit
 
 class SetPurposeViewController: UIViewController {
 
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!{didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var purposeTextField: UITextField!
     @IBOutlet weak var countCharLabel: UILabel!
@@ -26,13 +29,22 @@ class SetPurposeViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    @objc func back() {
-        if let purpose = purposeTextField.text {
+    @objc func save() {
+        if let purpose = purposeTextField.text, purpose != AuthModule.currUser.purpose {
             presenter.setPurpose(purpose: purpose)
+        } else {
+            navigationController?.popViewController(animated: true)
         }
-//        navigationController?.popViewController(animated: true)
+    }
+
+    @objc func back() {
+        navigationController?.popViewController(animated: true)
     }
     override func viewWillAppear(_ animated: Bool) {
+        if let purp = AuthModule.currUser.purpose {
+            purposeTextField.text = purp
+            countCharLabel.text = "\(purposeTextField.text?.count ?? 0) / 32"
+        }
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -42,7 +54,7 @@ class SetPurposeViewController: UIViewController {
     
     func configureNavigationItem() {
         purposeTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        let button1 = UIBarButtonItem(image: #imageLiteral(resourceName: "ok_blue"), style: .plain, target: self, action: #selector(self.back))
+        let button1 = UIBarButtonItem(image: #imageLiteral(resourceName: "ok_blue"), style: .plain, target: self, action: #selector(self.save))
         let button2 = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(self.back))
         button2.tintColor = UIColor.black
         self.navigationItem.leftBarButtonItem = button2
@@ -56,6 +68,7 @@ extension SetPurposeViewController: EditProfileProtocol {
     
     func purposeSetted() {
         DispatchQueue.main.async {
+            self.presenter.setUser(user: AuthModule.currUser, context: self.context)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -67,11 +80,11 @@ extension SetPurposeViewController: EditProfileProtocol {
     }
     
     func startLoading() {
-//        activityIndicator.startAnimating()
+        activityIndicator.startAnimating()
     }
     
     func finishLoading() {
-//        activityIndicator.stopAnimating()
+        activityIndicator.stopAnimating()
     }
     
     func setUser(user: UserVO) {}

@@ -15,7 +15,7 @@ class EmailPasswordViewController: UIViewController {
     @IBOutlet weak var passTF: UITextField!
     @IBOutlet weak var passConfirmFT: UITextField!
 
-    private let presenter = UserSignInPresenter(auth: AuthModule())
+    private let presenter = SignUpPresenter(signUp: UserDataManager())
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +33,8 @@ class EmailPasswordViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func confirm(_ sender: Any) {
-        if emailTF.text != "" && passTF.text != "" && passTF.text == passConfirmFT.text {
-            if AuthModule.currUser.email != emailTF.text {
-                presenter.registerUser(email: emailTF.text!, password: passTF.text!)
-            } else {
-                registrated()
-            }
+        if let email = emailTF.text, let pass = passTF.text, passTF.text == passConfirmFT.text {
+                presenter.setEmailAndPass(email: email, pass: pass)
         } else {
             AlertDialog.showAlert("Ошибка", message: "Невалидный email, короткий пароль или пароли не совпадают", viewController: self)
         }
@@ -46,47 +42,30 @@ class EmailPasswordViewController: UIViewController {
     
 }
 
-extension EmailPasswordViewController: SignInViewProtocol {
-    
-    func setNoUser() {  }
-    
-    func notRegistrated(resp: String) {
-        AlertDialog.showAlert("Ошибка регистрации", message: resp, viewController: self)
+extension EmailPasswordViewController: SignUpViewProtocol {
+ 
+    func notUpdated() {
     }
-    
-    func notLogged(resp: String) { }
-    
-    func loggedWithFacebook() { }
-    
-    func logged() { }
-    
-    func registrated() {
-        DispatchQueue.main.async {
-            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "regSecond") as! NameSurnameViewController
-            self.show(nextViewController, sender: nil)
-        }
+    func next() {
     }
-    
     func startLoading() {
-        activityIndicator.startAnimating()
     }
     
     func finishLoading() {
-        activityIndicator.stopAnimating()
+        
     }
     
     func setUser(user: UserVO) {
-        AuthModule.currUser = user
+        
     }
     
     func userCreated() {
+        
     }
     
     func userNotCreated() {
-        AlertDialog.showAlert("Error", message: "Ошибка создания юзера", viewController: self)
+        
     }
-    
     
 }
 

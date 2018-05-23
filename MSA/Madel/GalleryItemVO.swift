@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import UIKit
+
+struct GalleryItemVO {
+    var imageUrl: String?
+    var videoPaht: String?
+    var video_url: String?
+}

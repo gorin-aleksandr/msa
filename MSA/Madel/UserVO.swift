@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 struct UserVO {
     var id: String?
     var email: String?
     var firstName: String?
     var lastname: String?
+    var avatar: String?
     var level: String?
     var age: Int?
     var sex: String?
@@ -21,6 +23,8 @@ struct UserVO {
     var weight: Int?
     var weightType: String?
     var type: String?
+    var purpose: String?
+    var gallery: [GalleryItemVO]?
 }
 
 enum Sex: String {
