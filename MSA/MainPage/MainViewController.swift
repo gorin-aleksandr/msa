@@ -26,6 +26,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
+    @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var buttViewHeight: NSLayoutConstraint!
     @IBOutlet weak var imagePreviewView: UIView!
     @IBOutlet weak var previewImage: UIImageView!
     
@@ -52,6 +54,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureButtonsView()
         presenter.attachView(view: self)
 //        presenter.getGallery(context: context)
 //        if GalleryDataManager.GalleryItems.count == 0 {
@@ -67,7 +70,23 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
+    func configureButtonsView() {
+        let w = CGFloat(self.view.frame.width - 32.0)
+        buttViewHeight.constant = CGFloat(20.0 + (w*111.0/164.0))
+    }
+    
+    func setShadow(outerView: UIView, shadowOpacity: Float) {
+        outerView.clipsToBounds = false
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOpacity = shadowOpacity
+        outerView.layer.shadowOffset = CGSize.zero
+        outerView.layer.shadowRadius = 10
+        outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
+    }
+    
     func configureProfile() {
+        setShadow(outerView: profileView, shadowOpacity: 0.3)
+        setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
         setProfileImage(image: nil, url: AuthModule.currUser.avatar)
         if let name = AuthModule.currUser.firstName, let surname = AuthModule.currUser.lastname {
             userName.text = name + " " + surname

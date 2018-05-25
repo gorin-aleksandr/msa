@@ -27,7 +27,6 @@ class UserSignInPresenter {
         AuthModule.facebookAuth = false
         self.view?.startLoading()
         auth.loginUser(email: email, pass: password) { (user, error) in
-            self.view?.finishLoading()
             if error == nil && user != nil {
                 let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastname: user?.lastname, avatar: user?.avatar, level: user?.level, age: user?.age, sex: user?.sex, height: user?.height, heightType: user?.heightType, weight: user?.weight,weightType: user?.weightType, type: user?.type, purpose: user?.purpose, gallery: user?.gallery)
                     self.view?.setUser(user: user)
@@ -35,12 +34,15 @@ class UserSignInPresenter {
                         if let user = user {
                             self.view?.setUser(user: user)
                             self.view?.logged()
+                            self.view?.finishLoading()
                         }
                     })
                     return
             } else if error?.localizedDescription == AuthErrors.noSuchUser.rawValue {
+                self.view?.finishLoading()
                 self.view?.notLogged(resp: "Нету такого пользователя")
             } else {
+                self.view?.finishLoading()
                 self.view?.notLogged(resp: "Ошибка авторизации")
             }
         }
@@ -49,18 +51,22 @@ class UserSignInPresenter {
     func registerUser(email: String, password: String) {
         self.view?.startLoading()
         auth.registerUser(email: email, pass: password) { (user, error) in
-            self.view?.finishLoading()
             if error == nil && user != nil {
                 let user = UserVO(id: user?.id, email: user?.email, firstName: AuthModule.currUser.firstName, lastname: AuthModule.currUser.lastname, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: AuthModule.currUser.type, purpose: user?.purpose, gallery: nil)
-                    self.view?.setUser(user: user)
-                    self.view?.registrated()
+                self.view?.setUser(user: user)
+                self.view?.registrated()
+                self.view?.finishLoading()
             } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
+                self.view?.finishLoading()
                     self.view?.notRegistrated(resp: "Формат email неверный")
             } else if error?.localizedDescription == AuthErrors.userExist.rawValue {
+                self.view?.finishLoading()
                     self.view?.notRegistrated(resp: "Пользователь с таким email уже зарегистрирован")
             } else if error?.localizedDescription == AuthErrors.shortPassword.rawValue {
+                self.view?.finishLoading()
                     self.view?.notRegistrated(resp: "Пароль слишком короткий")
             } else {
+                self.view?.finishLoading()
                     self.view?.notRegistrated(resp: "Ошибка регистрации")
             }
         }

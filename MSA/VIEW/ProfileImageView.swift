@@ -14,12 +14,22 @@ class ProfileImageView: UIImageView {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height))
         path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height*17/20))
-        path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height*1/20))
-        path.addLine(to: CGPoint(x: self.frame.size.width/2, y: 0))
-        path.addLine(to: CGPoint(x: 0, y: self.frame.size.height*1/20))
+        path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height*3/20))
+        
+        path.addQuadCurve(to: CGPoint(x: self.frame.size.width-self.frame.size.height*3/80, y: self.frame.size.height*2/40), controlPoint: CGPoint(x: self.frame.size.width, y: self.frame.size.height*3/40))
+        path.addQuadCurve(to: CGPoint(x: self.frame.size.width/2, y: 0), controlPoint: CGPoint(x: self.frame.size.width*3/4, y: 0))
+        path.addQuadCurve(to: CGPoint(x: self.frame.size.height*3/80, y: self.frame.size.height*2/40), controlPoint: CGPoint(x: self.frame.size.width*1/4, y: 0))
+        path.addQuadCurve(to: CGPoint(x: 0, y: self.frame.size.height*3/20), controlPoint: CGPoint(x: 0, y: self.frame.size.height*3/40))
+
+//        path.addArc(withCenter: CGPoint(x: self.frame.size.width-self.frame.size.height*3/40, y: self.frame.size.height*3/20), radius: self.frame.size.height*3/40, startAngle: 0, endAngle: .pi/2, clockwise: false)
+//        path.addLine(to: CGPoint(x: self.frame.size.width/2, y: 0))
+//        path.addQuadCurve(to: CGPoint(x: self.frame.size.width/2, y: 0), controlPoint: CGPoint(x: self.frame.size.width*19/20, y: 0))
+//        path.addQuadCurve(to: CGPoint(x: 0, y: self.frame.size.height*3/20), controlPoint: CGPoint(x: self.frame.size.width*1/20, y: 0))
+
+//        path.addLine(to: CGPoint(x: self.frame.size.width/2, y: 0))
+//        path.addLine(to: CGPoint(x: 0, y: self.frame.size.height*2/20))
         path.addLine(to: CGPoint(x: 0, y: self.frame.size.height*17/20))
         path.addLine(to: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height))
-        
         path.close()
         UIColor.red.setFill()
         path.stroke()
