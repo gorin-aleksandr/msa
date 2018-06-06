@@ -71,6 +71,7 @@ extension SignInViewController: SignInViewProtocol {
             let storyBoard = UIStoryboard(name: "Profile", bundle:nil)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
             self.show(nextViewController, sender: nil)
+            self.view.isUserInteractionEnabled = true
         }
     }
     
@@ -98,14 +99,17 @@ extension SignInViewController: SignInViewProtocol {
     }
     
     func notRegistrated(resp: String) {
+        self.view.isUserInteractionEnabled = true
         AlertDialog.showAlert("Ошибка регистрации", message: resp, viewController: self)
     }
     
     func notLogged(resp: String) {
+        self.view.isUserInteractionEnabled = true
         AlertDialog.showAlert("Ошибка авторизации", message: resp, viewController: self)
     }
     
     func startLoading() {
+        self.view.isUserInteractionEnabled = false
         blurView.alpha = 0.3
         activityIndicator.startAnimating()
     }

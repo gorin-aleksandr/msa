@@ -73,9 +73,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func setShadow(outerView: UIView) {
         outerView.clipsToBounds = false
         outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOpacity = 0.3
+        outerView.layer.shadowOpacity = 0.2
         outerView.layer.shadowOffset = CGSize.zero
-        outerView.layer.shadowRadius = 1.5
+        outerView.layer.shadowRadius = 2
         outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
     }
     
