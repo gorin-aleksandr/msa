@@ -52,6 +52,7 @@
 		298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF658203C1FAC00FB0180 /* UserVO.swift */; };
 		298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65A203C226800FB0180 /* SignInPresenter.swift */; };
 		298DF65F203C36B300FB0180 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65E203C36B300FB0180 /* AlertView.swift */; };
+		2993086220EA5264009C035E /* AddImagesManages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993086120EA5264009C035E /* AddImagesManages.swift */; };
 		299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */; };
 		299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299AA10720E94E9A00BCCA12 /* NewExerciseDataSource.swift */; };
 		299B548720A0D38B004E60A2 /* Rubik-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 299B547C20A0D38A004E60A2 /* Rubik-MediumItalic.ttf */; };
@@ -140,6 +141,7 @@
 		298DF658203C1FAC00FB0180 /* UserVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVO.swift; sourceTree = "<group>"; };
 		298DF65A203C226800FB0180 /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		298DF65E203C36B300FB0180 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		2993086120EA5264009C035E /* AddImagesManages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImagesManages.swift; sourceTree = "<group>"; };
 		299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseManager.swift; sourceTree = "<group>"; };
 		299AA10720E94E9A00BCCA12 /* NewExerciseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseDataSource.swift; sourceTree = "<group>"; };
 		299B547C20A0D38A004E60A2 /* Rubik-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-MediumItalic.ttf"; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				295A4EE4203DF78300124A07 /* UserDataManagerFirebase.swift */,
 				29D2CD6E20A170870073C838 /* StartCoordinator.swift */,
 				2923AD8C20E6358300AE17C5 /* RealmManager.swift */,
+				2993086120EA5264009C035E /* AddImagesManages.swift */,
 			);
 			path = API_Moduls_Managers;
 			sourceTree = "<group>";
@@ -472,7 +475,6 @@
 				29160B3F2035AA3B00DA7227 /* Frameworks */,
 				29160B402035AA3B00DA7227 /* Resources */,
 				6D90A83F362A74F18D714161 /* [CP] Embed Pods Frameworks */,
-				88EA3004BAF0348584EA8BCF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -584,6 +586,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MSA/Pods-MSA-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
@@ -602,6 +605,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
@@ -620,21 +624,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MSA/Pods-MSA-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		88EA3004BAF0348584EA8BCF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MSA/Pods-MSA-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -680,6 +669,7 @@
 				299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */,
 				298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */,
 				29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */,
+				2993086220EA5264009C035E /* AddImagesManages.swift in Sources */,
 				295A4EED203EC73E00124A07 /* NameSurnameViewController.swift in Sources */,
 				2962D48320D2AAF000870953 /* ExercisesCollectionViewCell.swift in Sources */,
 				2940A35F20D90C9B00EBAE84 /* PlayVideoTableViewCell.swift in Sources */,
