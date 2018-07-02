@@ -26,14 +26,13 @@ class ImageManager: NSObject, SelectingImagesManager {
     required init(presentingViewController viewController: UIViewController & SelectingImagesManagerDelegate) {
         presentingViewController = viewController
         super.init()
-        print("Test")
     }
     
     func presentImagePicker() {
         guard presentingViewController.maximumImagesCanBePicked() > 0 else {return}
         let actionSheetController = UIAlertController(title: "Please select a source of your photo", message: "Option to select", preferredStyle: .actionSheet)
         let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
-            print("Cancel")
+
         }
         actionSheetController.addAction(cancelActionButton)
         
