@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Q4q-Vk-X9e">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Rubik-Regular.ttf">
+            <string>Rubik-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Вид упражнения-->
+        <scene sceneID="htw-jx-UX7">
+            <objects>
+                <viewController id="Q4q-Vk-X9e" customClass="ExercisesForTypeViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="s7n-Fb-gJk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JcA-iT-roU">
+                                <rect key="frame" x="0.0" y="114" width="375" height="553"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exerciseForTypeTableCell" rowHeight="75" id="Paf-dT-Z5R" customClass="ExercisesTableViewCell" customModule="MSA" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="75"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Paf-dT-Z5R" id="mxT-I0-urb">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DS7-lr-cOV">
+                                                    <rect key="frame" x="10" y="12.5" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="AI7-SO-aNy"/>
+                                                        <constraint firstAttribute="height" constant="50" id="i97-Rn-SsK"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Упражнение" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYp-8M-zs3">
+                                                    <rect key="frame" x="65" y="16" width="285" height="43"/>
+                                                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="DS7-lr-cOV" firstAttribute="centerY" secondItem="mxT-I0-urb" secondAttribute="centerY" id="1f9-js-yC4"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="IYp-8M-zs3" secondAttribute="trailing" constant="10" id="9xg-fU-OcG"/>
+                                                <constraint firstItem="DS7-lr-cOV" firstAttribute="leading" secondItem="mxT-I0-urb" secondAttribute="leading" constant="10" id="UCh-jU-Mzu"/>
+                                                <constraint firstItem="IYp-8M-zs3" firstAttribute="top" secondItem="mxT-I0-urb" secondAttribute="topMargin" constant="5" id="e8G-tu-iwZ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="IYp-8M-zs3" secondAttribute="bottom" constant="5" id="n0y-Fb-cTu"/>
+                                                <constraint firstItem="IYp-8M-zs3" firstAttribute="leading" secondItem="DS7-lr-cOV" secondAttribute="trailing" constant="5" id="nKs-ic-j3r"/>
+                                                <constraint firstItem="DS7-lr-cOV" firstAttribute="centerY" secondItem="mxT-I0-urb" secondAttribute="centerY" id="w69-Fe-NsH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="exerciseImage" destination="DS7-lr-cOV" id="ipL-Af-mkg"/>
+                                            <outlet property="exercisename" destination="IYp-8M-zs3" id="EiM-TE-tDj"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aue-c9-gvY">
+                                <rect key="frame" x="0.0" y="64" width="375" height="50"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="3Ax-aH-KiY">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Bc2-Bv-4v3"/>
+                                    <constraint firstItem="3Ax-aH-KiY" firstAttribute="leading" secondItem="Aue-c9-gvY" secondAttribute="leading" id="DI7-Rf-ExB"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Ax-aH-KiY" secondAttribute="trailing" id="PNE-Pk-SZ7"/>
+                                    <constraint firstItem="3Ax-aH-KiY" firstAttribute="top" secondItem="Aue-c9-gvY" secondAttribute="top" id="R1q-aI-Plz"/>
+                                    <constraint firstAttribute="bottom" secondItem="3Ax-aH-KiY" secondAttribute="bottom" id="WCx-kE-NQa"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Aue-c9-gvY" firstAttribute="trailing" secondItem="Q4m-N8-2Pb" secondAttribute="trailing" id="2HR-oF-eE2"/>
+                            <constraint firstItem="Aue-c9-gvY" firstAttribute="leading" secondItem="Q4m-N8-2Pb" secondAttribute="leading" id="D7u-hC-79C"/>
+                            <constraint firstItem="JcA-iT-roU" firstAttribute="top" secondItem="Aue-c9-gvY" secondAttribute="bottom" id="IKW-kZ-U2r"/>
+                            <constraint firstItem="Q4m-N8-2Pb" firstAttribute="bottom" secondItem="JcA-iT-roU" secondAttribute="bottom" id="Tyd-iP-3kB"/>
+                            <constraint firstItem="Q4m-N8-2Pb" firstAttribute="trailing" secondItem="JcA-iT-roU" secondAttribute="trailing" id="axu-oJ-RGo"/>
+                            <constraint firstItem="Aue-c9-gvY" firstAttribute="top" secondItem="Q4m-N8-2Pb" secondAttribute="top" id="q1g-Rn-FeN"/>
+                            <constraint firstItem="JcA-iT-roU" firstAttribute="leading" secondItem="Q4m-N8-2Pb" secondAttribute="leading" id="rET-jl-pWw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Q4m-N8-2Pb"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Вид упражнения" id="XBx-03-dXo">
+                        <barButtonItem key="leftBarButtonItem" image="back" id="dsh-QE-iFa">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="back:" destination="Q4q-Vk-X9e" id="a9k-yL-lrI"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="Plus" id="deq-X0-EMc">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="plus:" destination="Q4q-Vk-X9e" id="ztA-5a-Kp6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="scrollView" destination="3Ax-aH-KiY" id="1VY-Kd-QFF"/>
+                        <outlet property="tableView" destination="JcA-iT-roU" id="WOE-uT-F8P"/>
+                        <outlet property="viewWithScroll" destination="Aue-c9-gvY" id="icu-Nx-1Tm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="agu-sN-1rq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5026.3999999999996" y="316.19190404797604"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Plus" width="18" height="18"/>
+        <image name="back" width="13" height="22"/>
+    </resources>
+</document>

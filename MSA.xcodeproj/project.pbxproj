@@ -88,6 +88,7 @@
 		29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */; };
 		29FF688620DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */; };
 		29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */; };
+		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +177,7 @@
 		29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesPresenter.swift; sourceTree = "<group>"; };
 		29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesDataManager.swift; sourceTree = "<group>"; };
+		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
 		4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -406,6 +408,7 @@
 				29160B492035AA3B00DA7227 /* Main.storyboard */,
 				29A169322048342C006864C2 /* Profile.storyboard */,
 				2962D47920D2A17E00870953 /* Exercises.storyboard */,
+				35CE070720EA4065006892B0 /* Community.storyboard */,
 				29AC912720CDA73E003F8152 /* Trannings.storyboard */,
 				29160B4E2035AA3B00DA7227 /* LaunchScreen.storyboard */,
 			);
@@ -545,6 +548,7 @@
 				29160B4D2035AA3B00DA7227 /* Assets.xcassets in Resources */,
 				2940A36420D90E1E00EBAE84 /* TextViewTableViewCell.xib in Resources */,
 				299B548D20A0D38B004E60A2 /* Rubik-LightItalic.ttf in Resources */,
+				35CE070820EA4065006892B0 /* Community.storyboard in Resources */,
 				299B548B20A0D38B004E60A2 /* Rubik-Black.ttf in Resources */,
 				2934806420E8FD860039028E /* CreateExerciseTableViewCell.xib in Resources */,
 				2934805420E8EECC0039028E /* TextViewViewCounterTableViewCell.xib in Resources */,
