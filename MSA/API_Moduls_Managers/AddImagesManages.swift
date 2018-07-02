@@ -26,6 +26,7 @@ class ImageManager: NSObject, SelectingImagesManager {
     required init(presentingViewController viewController: UIViewController & SelectingImagesManagerDelegate) {
         presentingViewController = viewController
         super.init()
+        print("Test")
     }
     
     func presentImagePicker() {

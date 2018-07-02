@@ -242,7 +242,7 @@ extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
         } else if selectedRow == 3 {
             return RealmManager.shared.getArray(ofType: ExerciseTypeFilter.self)[row].name
         } else {
-            return ""
+            return "Nothing"
         }
     }
     
