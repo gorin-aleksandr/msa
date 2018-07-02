@@ -33,6 +33,13 @@ class NewExerciseManager {
         dataSource.howToDo = howToDo
     }
     
+    func setVideo(url: String) {
+        dataSource.video = url
+    }
+    func deleteVideo() {
+        dataSource.video = ""
+    }
+    
     func addPictures(picData: Data) {
         dataSource.pictures.append(picData)
     }

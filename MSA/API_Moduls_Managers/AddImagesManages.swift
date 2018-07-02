@@ -8,24 +8,32 @@
 
 import UIKit
 import DKImagePickerController
+import AVFoundation
 
 protocol SelectingImagesManager: AnyObject {
     init(presentingViewController viewController: UIViewController & SelectingImagesManagerDelegate)
     func presentImagePicker()
+    var contentType: DKImagePickerControllerAssetType { get set }
 }
 
 protocol SelectingImagesManagerDelegate: AnyObject {
     func maximumImagesCanBePicked() -> Int
     func imagesWasSelecting(images: [Data])
+    func videoSelectenWith(url: String, image: UIImage)
 }
 
 class ImageManager: NSObject, SelectingImagesManager {
     
     let presentingViewController: UIViewController & SelectingImagesManagerDelegate
+    var contentType: DKImagePickerControllerAssetType = .allAssets
     
     required init(presentingViewController viewController: UIViewController & SelectingImagesManagerDelegate) {
         presentingViewController = viewController
         super.init()
+    }
+    
+    func setContentType(type: DKImagePickerControllerAssetType) {
+        contentType = type
     }
     
     func presentImagePicker() {
@@ -82,8 +90,8 @@ class ImageManager: NSObject, SelectingImagesManager {
         let photoLibraryActionButton = UIAlertAction(title: "Photo Library", style: .default) { action -> Void in
             selectedPhotoController.maxSelectableCount = self.presentingViewController.maximumImagesCanBePicked()
             selectedPhotoController.allowMultipleTypes = false
-            selectedPhotoController.sourceType = .photo
-            selectedPhotoController.assetType = .allPhotos
+            selectedPhotoController.sourceType = .both
+            selectedPhotoController.assetType = self.contentType
             selectedPhotoController.didSelectAssets = { (assets: [DKAsset]) in
                 var imageArray: [Data] = []
                 if assets.count != 0 {
@@ -110,10 +118,26 @@ class ImageManager: NSObject, SelectingImagesManager {
 
 extension ImageManager: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {return}
-        let normalImage = image.scaleAndRotateImage()
-        guard let newImage = UIImagePNGRepresentation(normalImage) else {return}
-        presentingViewController.imagesWasSelecting(images: [newImage])
+        
+        if contentType == .allPhotos {
+            guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {return}
+            let normalImage = image.scaleAndRotateImage()
+            guard let newImage = UIImagePNGRepresentation(normalImage) else {return}
+            presentingViewController.imagesWasSelecting(images: [newImage])
+        } else if contentType == .allVideos {
+            if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
+                do {
+                    let asset = AVURLAsset(url: videoURL, options: nil)
+                    let imgGenerator = AVAssetImageGenerator(asset: asset)
+                    imgGenerator.appliesPreferredTrackTransform = true
+                    let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+                    let thumbnail = UIImage(cgImage: cgImage)
+                    presentingViewController.videoSelectenWith(url: videoURL.absoluteString, image: thumbnail)
+                } catch let error {
+                    print("*** Error generating thumbnail: \(error.localizedDescription)")
+                }
+            }
+        }
         picker.dismiss(animated: true, completion: nil)
     }
     

@@ -62,10 +62,17 @@
                         <rect key="frame" x="168" y="40.5" width="37" height="37"/>
                         <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </activityIndicatorView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BCV-KL-ZQt">
+                        <rect key="frame" x="0.0" y="0.0" width="373" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="LQS-2j-DVa"/>
+                        </constraints>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="uRC-HG-Ttc" firstAttribute="trailing" secondItem="WOb-Jr-nXo" secondAttribute="trailing" constant="5" id="1nl-9m-PHh"/>
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="3uM-PH-oML"/>
+                    <constraint firstItem="BCV-KL-ZQt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4pC-9a-j37"/>
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EPV-Og-QHp"/>
                     <constraint firstItem="9Gv-iN-mb5" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" constant="41.5" id="Ihu-iF-aVt"/>
                     <constraint firstItem="wrV-sr-WsS" firstAttribute="centerY" secondItem="uJL-Sg-oey" secondAttribute="centerY" id="JaV-Yz-DAA"/>
@@ -76,6 +83,8 @@
                     <constraint firstItem="uJL-Sg-oey" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="ePy-LU-3qU"/>
                     <constraint firstItem="WOb-Jr-nXo" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" id="fAL-C0-MAg"/>
                     <constraint firstItem="uRC-HG-Ttc" firstAttribute="top" secondItem="WOb-Jr-nXo" secondAttribute="top" constant="-5" id="gDQ-3B-Z3A"/>
+                    <constraint firstItem="BCV-KL-ZQt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="k5y-IV-zPf"/>
+                    <constraint firstAttribute="trailing" secondItem="BCV-KL-ZQt" secondAttribute="trailing" id="lDK-ie-G6j"/>
                     <constraint firstAttribute="bottom" secondItem="9Gv-iN-mb5" secondAttribute="bottom" constant="10" id="pCi-GP-hbk"/>
                     <constraint firstItem="WOb-Jr-nXo" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="skr-Js-dhp"/>
                 </constraints>
@@ -83,6 +92,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="activityIndicator" destination="y1i-52-jg4" id="oBl-My-ftI"/>
+                <outlet property="addVideo" destination="BCV-KL-ZQt" id="VUD-KY-cec"/>
                 <outlet property="deleteVideoButt" destination="uRC-HG-Ttc" id="8iC-2C-XGa"/>
                 <outlet property="errorLabel" destination="9Gv-iN-mb5" id="yau-TS-nWh"/>
                 <outlet property="img" destination="WOb-Jr-nXo" id="cN4-L6-gf9"/>

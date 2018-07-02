@@ -20,7 +20,7 @@ class NewExerciseDataSource {
     var descript = ""
     var howToDo = ""
     var pictures: [Data] = []
-    var video: Data? = nil
+    var video = ""
     
     var curretnTextViewTag = 0
     

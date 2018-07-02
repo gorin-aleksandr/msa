@@ -19,20 +19,28 @@ class NewExerciseViewController: UIViewController {
     
     var selectedRow = -1
     let exercManager = NewExerciseManager.shared
-    
+    var imageManager: SelectingImagesManager?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imageManager = ImageManager(presentingViewController: self)
         picker.delegate = self
         configureTableView()
     }
 
     @IBAction func pickerDoneButton(_ sender: Any) {
-        viewWithPicker.alpha = 0
+        UIView.animate(withDuration: 0.3) {
+            self.viewWithPicker.alpha = 0
+        }
         tableView.reloadData()
     }
     
-    
+    //MARK: Handle photo selecting
+    @objc func handleAddPhoto(_ sender: UIButton) {
+        imageManager?.contentType = .allPhotos
+        imageManager?.presentImagePicker()
+    }
     
     func configureTableView() {
         tableView.delegate = self
@@ -62,18 +70,25 @@ extension NewExerciseViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         tableView.beginUpdates()
         switch textView.tag {
-            case 1: exercManager.setName(name: textView.text)
-            case 2: exercManager.setDescription(description: textView.text)
-            case 3: exercManager.setHowToDo(howToDo: textView.text)
+            case 1:
+                exercManager.setName(name: textView.text)
+                guard let cell = tableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? TextViewViewCounterTableViewCell else {return}
+                cell.numOfSymbuls.text = "\(textView.text.count)"
+            case 2:
+                exercManager.setDescription(description: textView.text)
+                guard let cell = tableView.cellForRow(at: IndexPath(item: 4, section: 0)) as? TextViewViewCounterTableViewCell else {return}
+                cell.numOfSymbuls.text = "\(textView.text.count)"
+            case 3:
+                exercManager.setHowToDo(howToDo: textView.text)
+                guard let cell = tableView.cellForRow(at: IndexPath(item: 5, section: 0)) as? TextViewViewCounterTableViewCell else {return}
+                cell.numOfSymbuls.text = "\(textView.text.count)"
             default: return
         }
         tableView.endUpdates()
         textView.becomeFirstResponder()
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
-        tableView.reloadData()
-    }
+
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
@@ -85,6 +100,24 @@ extension NewExerciseViewController: UITextViewDelegate {
             default: return false
         }
     }
+}
+
+extension NewExerciseViewController: SelectingImagesManagerDelegate {
+    func videoSelectenWith(url: String, image: UIImage) {
+        exercManager.setVideo(url: url)
+        tableView.reloadData()
+    }
+
+    func maximumImagesCanBePicked() -> Int {
+        return (5 - exercManager.dataSource.pictures.count)
+    }
+    
+    func imagesWasSelecting(images: [Data]) {
+        exercManager.dataSource.pictures.append(contentsOf: images)
+        tableView.reloadData()
+    }
+    
+    
 }
 
 extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource {
@@ -155,13 +188,16 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureImagesCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddImagesTableViewCell", for:  indexPath) as! AddImagesTableViewCell
         cell.delegate = self
-        cell.images = [Data(),Data(),Data(),Data(),Data()]
+        cell.addPictureButton.addTarget(self, action: #selector(self.handleAddPhoto(_:)), for: .touchUpInside)
+        cell.images = exercManager.dataSource.pictures
+        cell.photoCounter.text = "\(cell.images.count)"
         return cell
     }
     
     func configureVideoCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LoadVideoTableViewCell", for:  indexPath) as! LoadVideoTableViewCell
         cell.deleteVideoButt.addTarget(self, action: #selector(self.deleteVideo(_:)), for: .touchUpInside)
+        cell.addVideo.addTarget(self, action: #selector(self.addVideo(_:)), for: .touchUpInside)
         return cell
     }
     
@@ -214,7 +250,9 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         selectedRow = indexPath.row
         if selectedRow == 2 || selectedRow == 3 {
             picker.reloadAllComponents()
-            viewWithPicker.alpha = 1
+            UIView.animate(withDuration: 0.3) {
+                self.viewWithPicker.alpha = 1
+            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -256,10 +294,16 @@ extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 }
 
 extension NewExerciseViewController: ImagesProtocol {
+    @objc func addVideo(_ sender: UIButton) {
+        imageManager?.contentType = .allVideos
+        imageManager?.presentImagePicker()
+    }
     @objc func deleteVideo(_ sender: UIButton) {
-        print("Delete Video")
+        exercManager.deleteVideo()
+        tableView.reloadData()
     }
     func deleteImage(at index: Int) {
-        print(index)
+        exercManager.dataSource.pictures.remove(at: index)
+        tableView.reloadData()
     }
 }

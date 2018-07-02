@@ -87,6 +87,12 @@
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fGx-DC-XnP">
+                        <rect key="frame" x="0.0" y="0.0" width="418" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="HE4-sC-TCQ"/>
+                        </constraints>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="gg4-pM-JnP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="B0q-a6-F2M"/>
@@ -99,8 +105,11 @@
                     <constraint firstItem="btz-BZ-SMQ" firstAttribute="top" secondItem="gg4-pM-JnP" secondAttribute="bottom" constant="5" id="L3B-SL-gt8"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Y6D-5O-syg" secondAttribute="trailing" id="X3b-hR-jcB"/>
                     <constraint firstItem="btz-BZ-SMQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="YYX-1P-jRU"/>
+                    <constraint firstItem="fGx-DC-XnP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="b5l-9T-hLE"/>
                     <constraint firstItem="MD5-Hl-6z8" firstAttribute="centerY" secondItem="gg4-pM-JnP" secondAttribute="centerY" id="blJ-xc-bjd"/>
+                    <constraint firstItem="fGx-DC-XnP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="cKp-Ic-JcX"/>
                     <constraint firstItem="gg4-pM-JnP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="kjD-m7-sWh"/>
+                    <constraint firstAttribute="trailing" secondItem="fGx-DC-XnP" secondAttribute="trailing" id="r8I-hj-cZF"/>
                     <constraint firstItem="tQG-gW-rcX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="rgU-Jb-eFj"/>
                     <constraint firstAttribute="bottom" secondItem="tQG-gW-rcX" secondAttribute="bottom" constant="2" id="uk2-tx-blj"/>
                     <constraint firstItem="Y6D-5O-syg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="uuN-e6-Ogu"/>
@@ -108,6 +117,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="addPictureButton" destination="fGx-DC-XnP" id="oPB-cs-xmH"/>
                 <outlet property="collectionView" destination="btz-BZ-SMQ" id="aqU-Eo-De5"/>
                 <outlet property="errorLabel" destination="Y6D-5O-syg" id="ibF-pq-aeq"/>
                 <outlet property="hieghtOfColView" destination="QyD-RO-HAj" id="gNy-hB-fDa"/>
