@@ -7,6 +7,7 @@ target 'MSA' do
 
   # Pods for MSA
 
+  pod 'DKImagePickerController'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
