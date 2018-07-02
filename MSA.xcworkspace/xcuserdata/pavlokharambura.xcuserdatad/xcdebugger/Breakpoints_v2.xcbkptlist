@@ -9,14 +9,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/MainPage/MainViewController.swift"
-            timestampString = "549013236.676645"
+            filePath = "MSA/Exercises/VC/ExercisesForTypeViewController.swift"
+            timestampString = "552060053.3722709"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "configureButtonsView()"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "filterContentForSearchText(_:scope:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MSA.ExercisesForTypeViewController.(filterContentForSearchText in _87CD00F8646537403E09F215C0155E70)(Swift.String, scope: Swift.String) -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/ExercisesForTypeViewController.swift"
+                  timestampString = "552173999.363025"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "226"
+                  endingLineNumber = "226"
+                  offsetFromSymbolStart = "59">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (MSA.Exercise) -&gt; Swift.Bool in MSA.ExercisesForTypeViewController.(filterContentForSearchText in _87CD00F8646537403E09F215C0155E70)(Swift.String, scope: Swift.String) -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/ExercisesForTypeViewController.swift"
+                  timestampString = "552173999.367138"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "226"
+                  endingLineNumber = "226"
+                  offsetFromSymbolStart = "29">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

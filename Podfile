@@ -18,5 +18,7 @@ target 'MSA' do
   pod 'FBSDKCoreKit'
   pod 'Bolts'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
- pod 'NYTPhotoViewer'
+  pod 'NYTPhotoViewer'
+  pod 'RealmSwift'
+
 end

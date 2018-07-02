@@ -11,16 +11,25 @@ import Firebase
 import IQKeyboardManagerSwift
 import FBSDKCoreKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    let realmVersion: UInt64 = 0
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
         start.start()
+        let config = Realm.Configuration(
+            schemaVersion: realmVersion,
+            migrationBlock: { migration, oldSchemaVersion in
+                self.performMigration(migration: migration, oldSchemaVersion: oldSchemaVersion)
+        })
+        Realm.Configuration.defaultConfiguration = config
+        
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
@@ -30,6 +39,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
+    
+    fileprivate func performMigration(migration: Migration, oldSchemaVersion: UInt64) {
+        if (oldSchemaVersion < self.realmVersion) {
+            //MARK: Migration of realm
+            
+        }
+    }
+    
+    
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
