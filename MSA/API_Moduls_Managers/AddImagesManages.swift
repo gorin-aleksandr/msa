@@ -13,6 +13,7 @@ import AVFoundation
 protocol SelectingImagesManager: AnyObject {
     init(presentingViewController viewController: UIViewController & SelectingImagesManagerDelegate)
     func presentImagePicker()
+    func presentVideoPicker()
     var contentType: DKImagePickerControllerAssetType { get set }
 }
 
@@ -53,6 +54,31 @@ class ImageManager: NSObject, SelectingImagesManager {
         
     }
     
+    
+    func presentVideoPicker() {
+        guard presentingViewController.maximumImagesCanBePicked() > 0 else {return}
+        let actionSheetController = UIAlertController(title: "", message: "Вибрать видео с:", preferredStyle: .actionSheet)
+        let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in }
+        actionSheetController.addAction(cancelActionButton)
+
+        let photoLibraryActionButton = getVideoAlertAction()
+        actionSheetController.addAction(photoLibraryActionButton)
+        presentingViewController.present(actionSheetController, animated: true, completion: nil)
+    }
+    
+    private func getVideoAlertAction() -> UIAlertAction {
+        let getVideo = UIAlertAction(title: "С галлереи", style: .default) { action -> Void in
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.mediaTypes = ["public.movie"]
+            self.presentingViewController.present(imagePicker, animated: true, completion: nil)
+        }
+        
+        return getVideo
+    }
+
+    
     private func getCameraAlertAction() -> UIAlertAction {
         let cameraActionButton = UIAlertAction(title: "Camera", style: .default) { action -> Void in
             let imagePicker = UIImagePickerController()
@@ -91,7 +117,7 @@ class ImageManager: NSObject, SelectingImagesManager {
             selectedPhotoController.maxSelectableCount = self.presentingViewController.maximumImagesCanBePicked()
             selectedPhotoController.allowMultipleTypes = false
             selectedPhotoController.sourceType = .both
-            selectedPhotoController.assetType = self.contentType
+            selectedPhotoController.assetType = .allPhotos
             selectedPhotoController.didSelectAssets = { (assets: [DKAsset]) in
                 var imageArray: [Data] = []
                 if assets.count != 0 {

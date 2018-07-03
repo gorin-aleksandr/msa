@@ -48,23 +48,23 @@ class ExercisesViewController: UIViewController {
         presenter.getTypesFromRealm()
         presenter.getFiltersFromRealm()
         
-        if presenter.getFilters().isEmpty {
-            presenter.getAllFilters()
-        } else {
-            presenter.detectFiltersChanges()
-        }
-
-        if presenter.getExercises().isEmpty {
-            presenter.getAllExersises()
-        } else {
-            presenter.detectExersisesChanges()
-        }
-        
-        if presenter.getTypes().isEmpty {
-            presenter.getAllTypes()
-        } else {
-            presenter.detectTypesChanges()
-        }
+////        if presenter.getFilters().isEmpty {
+//            presenter.getAllFilters()
+////        } else {
+////            presenter.detectFiltersChanges()
+////        }
+//
+////        if presenter.getExercises().isEmpty {
+//            presenter.getAllExersises()
+////        } else {
+////            presenter.detectExersisesChanges()
+////        }
+//        
+////        if presenter.getTypes().isEmpty {
+//            presenter.getAllTypes()
+////        } else {
+////            presenter.detectTypesChanges()
+////        }
     }
     
     private func configureTable_CollectionView() {

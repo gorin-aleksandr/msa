@@ -8,6 +8,17 @@
 
 import UIKit
 import RealmSwift
+import AVKit
+import AVFoundation
+
+protocol NewExerciseProtocol {
+    func startLoading()
+    func finishLoading()
+    func photoUploaded()
+    func videoLoaded(url: String)
+    func exerciseCreated()
+    func errorOccurred(err: String)
+}
 
 class NewExerciseViewController: UIViewController {
 
@@ -24,8 +35,7 @@ class NewExerciseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        imageManager = ImageManager(presentingViewController: self)
-        picker.delegate = self
+        initialConfigurations()
         configureTableView()
     }
 
@@ -40,6 +50,23 @@ class NewExerciseViewController: UIViewController {
     @objc func handleAddPhoto(_ sender: UIButton) {
         imageManager?.contentType = .allPhotos
         imageManager?.presentImagePicker()
+    }
+    
+    func playVideo(url: String) {
+        if let VideoURL = URL(string: url) {
+            let player = AVPlayer(url: VideoURL)
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
+            }
+        }
+    }
+    
+    func initialConfigurations() {
+        imageManager = ImageManager(presentingViewController: self)
+        exercManager.attachView(view: self)
+        picker.delegate = self
     }
     
     func configureTableView() {
@@ -104,7 +131,9 @@ extension NewExerciseViewController: UITextViewDelegate {
 
 extension NewExerciseViewController: SelectingImagesManagerDelegate {
     func videoSelectenWith(url: String, image: UIImage) {
-        exercManager.setVideo(url: url)
+//        let data = NSData.dataWithContentsOfMappedFile(url) as! Data
+//        exercManager.uploadVideo(url, image)
+        exercManager.dataSource.videoPath = url
         tableView.reloadData()
     }
 
@@ -116,7 +145,6 @@ extension NewExerciseViewController: SelectingImagesManagerDelegate {
         exercManager.dataSource.pictures.append(contentsOf: images)
         tableView.reloadData()
     }
-    
     
 }
 
@@ -247,14 +275,16 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         selectedRow = indexPath.row
         if selectedRow == 2 || selectedRow == 3 {
             picker.reloadAllComponents()
             UIView.animate(withDuration: 0.3) {
                 self.viewWithPicker.alpha = 1
             }
+        } else if selectedRow == 8 {
+            exercManager.createNewExerciseInFirebase()
         }
-        tableView.deselectRow(at: indexPath, animated: true)
     }
   
 }
@@ -293,10 +323,39 @@ extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     }
 }
 
+extension NewExerciseViewController: NewExerciseProtocol {
+    func exerciseCreated() {
+        
+    }
+    
+    func startLoading() {
+        
+    }
+    
+    func finishLoading() {
+        
+    }
+
+    func photoUploaded() {
+        AlertDialog.showAlert("Ура", message: "Картинки загружены", viewController: self)
+    }
+    
+    func videoLoaded(url: String) {
+        exercManager.setVideo(url: url)
+//        playVideo(url: url)
+    }
+    
+    func errorOccurred(err: String) {
+        AlertDialog.showAlert("Ошибка", message: err, viewController: self)
+    }
+    
+    
+}
+
 extension NewExerciseViewController: ImagesProtocol {
     @objc func addVideo(_ sender: UIButton) {
         imageManager?.contentType = .allVideos
-        imageManager?.presentImagePicker()
+        imageManager?.presentVideoPicker()
     }
     @objc func deleteVideo(_ sender: UIButton) {
         exercManager.deleteVideo()

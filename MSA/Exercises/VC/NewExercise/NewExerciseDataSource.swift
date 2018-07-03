@@ -20,7 +20,9 @@ class NewExerciseDataSource {
     var descript = ""
     var howToDo = ""
     var pictures: [Data] = []
-    var video = ""
+    var picturesUrls: [Image] = []
+    var videoUrl = ""
+    var videoPath = ""
     
     var curretnTextViewTag = 0
     
