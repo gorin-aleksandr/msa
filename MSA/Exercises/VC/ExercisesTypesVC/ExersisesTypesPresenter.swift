@@ -11,7 +11,7 @@ import Firebase
 import RealmSwift
 import Realm
 
-protocol ExercisesTypesDataProtocol {
+protocol ExercisesTypesDataProtocol: class {
     func startLoading()
     func finishLoading()
     func exercisesTypesLoaded()
@@ -23,7 +23,7 @@ protocol ExercisesTypesDataProtocol {
 class ExersisesTypesPresenter {
     
     private let exercises: ExersisesDataManager
-    private var view: ExercisesTypesDataProtocol?
+    private weak var view: ExercisesTypesDataProtocol?
     private let realmManager = RealmManager.shared
     
     init(exercises: ExersisesDataManager) {

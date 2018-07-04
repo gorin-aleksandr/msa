@@ -14,7 +14,7 @@ class NewExerciseManager {
     
     static let shared = NewExerciseManager()
     var dataSource = NewExerciseDataSource()
-    private var view: NewExerciseProtocol?
+    private weak var view: NewExerciseProtocol?
     let exerciseRef = Database.database().reference().child("Exercise")
 //    let typesRef = Database.database().reference().child("<#T##pathString: String##String#>")
     func setName(name: String) {

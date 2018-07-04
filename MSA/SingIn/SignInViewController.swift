@@ -11,7 +11,7 @@ import Firebase
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-protocol SignInViewProtocol {
+protocol SignInViewProtocol: class {
     func startLoading()
     func finishLoading()
     func setUser(user: UserVO)

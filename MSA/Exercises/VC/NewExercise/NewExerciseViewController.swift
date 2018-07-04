@@ -11,7 +11,7 @@ import RealmSwift
 import AVKit
 import AVFoundation
 
-protocol NewExerciseProtocol {
+protocol NewExerciseProtocol: class {
     func startLoading()
     func finishLoading()
     func photoUploaded()

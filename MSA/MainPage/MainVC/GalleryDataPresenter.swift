@@ -14,7 +14,7 @@ import UIKit
 class GalleryDataPresenter {
     
     private let gallery: GalleryDataManager
-    private var view: GalleryDataProtocol?
+    private weak var view: GalleryDataProtocol?
     
     init(gallery: GalleryDataManager) {
         self.gallery = gallery

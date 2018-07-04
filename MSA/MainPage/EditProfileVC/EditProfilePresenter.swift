@@ -14,7 +14,7 @@ import Firebase
 class EditProfilePresenter {
     
     private let profile: UserDataManager
-    private var view: EditProfileProtocol?
+    private weak var view: EditProfileProtocol?
 
     init(profile: UserDataManager) {
         self.profile = profile
