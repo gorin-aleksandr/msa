@@ -34,6 +34,15 @@ class ExercisesInfoViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print("Will")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ImagesTableViewCell else {return}
+        cell.loadScrollView(fake: false)
+    }
+    
     @IBAction func back(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }

@@ -123,12 +123,13 @@ class ImageManager: NSObject, SelectingImagesManager {
                 if assets.count != 0 {
                     for asset in assets {
                         asset.fetchOriginalImage(true, completeBlock: { image, info in
-                            let resizedImage = image?.scaleAndRotateImage()
-                            let smallImage = resizedImage?.scaleImage(toSize: CGSize(width: 200, height: 200))
-                            let data = UIImagePNGRepresentation(smallImage!) as Data?
-                            if let _data = data {
-                                let newImage = _data
-                                imageArray.append(newImage)
+                            if let resizedImage = image?.scaleAndRotateImage() {
+    //                            let smallImage = resizedImage?.scaleImage(toSize: CGSize(width: 200, height: 200))
+                                let data = UIImagePNGRepresentation(resizedImage) as Data?
+                                if let _data = data {
+                                    let newImage = _data
+                                    imageArray.append(newImage)
+                                }
                             }
                         })
                     }
