@@ -68,6 +68,20 @@ class NewExerciseManager {
         dataSource.pictures.remove(at: index)
     }
     
+    func finish() {
+        dataSource.name = ""
+        dataSource.typeId = -1
+        dataSource.filterId = -1
+        dataSource.descript = ""
+        dataSource.howToDo = ""
+        dataSource.pictures = []
+        dataSource.picturesUrls = []
+        dataSource.videoUrl = ""
+        dataSource.videoPath = ""
+        dataSource.curretnTextViewTag = 0
+        dataSource.createButtonTapped = false
+    }
+    
     func uploadVideo(_ path: String, success: @escaping (_ bool: Bool)->()) {
         if let _ = AuthModule.currUser.id {
             Storage.storage().reference().child("ExercisesVideoUrls").child(path).putFile(from: URL(string:path)!, metadata: nil, completion: { (metadata, error) in
@@ -118,6 +132,7 @@ class NewExerciseManager {
                                 self.view?.finishLoading()
                                 if error == nil {
                                     self.view?.exerciseCreated()
+                                    self.finish()
                                 } else {
                                     self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
                                 }

@@ -417,13 +417,10 @@ extension NewExerciseViewController: NewExerciseProtocol {
         greyView.isHidden = true
     }
 
-    func photoUploaded() {
-//        AlertDialog.showAlert("Ура", message: "Картинки загружены", viewController: self)
-    }
+    func photoUploaded() { }
     
     func videoLoaded(url: String) {
         exercManager.setVideo(url: url)
-//        playVideo(url: url)
     }
     
     func errorOccurred(err: String) {
@@ -431,7 +428,6 @@ extension NewExerciseViewController: NewExerciseProtocol {
         greyView.isHidden = true
         AlertDialog.showAlert("Ошибка", message: err, viewController: self)
     }
-    
     
 }
 
