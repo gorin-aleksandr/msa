@@ -32,6 +32,8 @@ class ExercisesViewController: UIViewController {
         configurateSearchController()
         initialDataPreparing()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAdded), name: Notification.Name("Exercise_added"), object: nil)
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,23 +50,30 @@ class ExercisesViewController: UIViewController {
         presenter.getTypesFromRealm()
         presenter.getFiltersFromRealm()
         
-////        if presenter.getFilters().isEmpty {
-//            presenter.getAllFilters()
-////        } else {
-////            presenter.detectFiltersChanges()
-////        }
-//
-////        if presenter.getExercises().isEmpty {
-//            presenter.getAllExersises()
-////        } else {
-////            presenter.detectExersisesChanges()
-////        }
-//        
-////        if presenter.getTypes().isEmpty {
-//            presenter.getAllTypes()
-////        } else {
-////            presenter.detectTypesChanges()
-////        }
+//        if presenter.getFilters().isEmpty {
+            presenter.getAllFilters()
+//        } else {
+//            presenter.detectFiltersChanges()
+//        }
+
+//        if presenter.getExercises().isEmpty {
+            presenter.getAllExersises()
+//        } else {
+//            presenter.detectExersisesChanges()
+//        }
+        
+//        if presenter.getTypes().isEmpty {
+            presenter.getAllTypes()
+//        } else {
+//            presenter.detectTypesChanges()
+//        }
+    }
+    
+    @objc func exerciseAdded(notfication: NSNotification) {
+        AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
+        presenter.getAllFilters()
+        presenter.getAllExersises()
+        presenter.getAllTypes()
     }
     
     private func configureTable_CollectionView() {

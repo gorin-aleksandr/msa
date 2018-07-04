@@ -26,4 +26,5 @@ class NewExerciseDataSource {
     
     var curretnTextViewTag = 0
     
+    var createButtonTapped = false
 }

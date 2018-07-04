@@ -239,12 +239,26 @@
                                     <constraint firstAttribute="height" constant="200" id="pmz-eE-1ZH"/>
                                 </constraints>
                             </view>
+                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPk-bb-3z7">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BV1-gX-nAw">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="bPk-bb-3z7" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="72b-KB-Nzb"/>
                             <constraint firstItem="so9-ET-0ul" firstAttribute="bottom" secondItem="zbf-Po-6JD" secondAttribute="bottom" id="BLT-I2-sWt"/>
                             <constraint firstItem="qFl-Hv-Tcr" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="BSk-lk-4rL"/>
+                            <constraint firstItem="BV1-gX-nAw" firstAttribute="centerY" secondItem="3nE-EQ-EEr" secondAttribute="centerY" id="CVE-GG-mrJ"/>
                             <constraint firstItem="zbf-Po-6JD" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" constant="30" id="Kma-4x-NSE"/>
+                            <constraint firstItem="bPk-bb-3z7" firstAttribute="top" secondItem="so9-ET-0ul" secondAttribute="top" id="QNH-TJ-bWI"/>
+                            <constraint firstItem="BV1-gX-nAw" firstAttribute="centerX" secondItem="3nE-EQ-EEr" secondAttribute="centerX" id="T6y-8t-1ke"/>
+                            <constraint firstItem="bPk-bb-3z7" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="W4q-B9-Gik"/>
+                            <constraint firstItem="bPk-bb-3z7" firstAttribute="trailing" secondItem="so9-ET-0ul" secondAttribute="trailing" id="XEO-bi-B5d"/>
                             <constraint firstItem="qFl-Hv-Tcr" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="hkv-lQ-1EX"/>
                             <constraint firstItem="so9-ET-0ul" firstAttribute="trailing" secondItem="zbf-Po-6JD" secondAttribute="trailing" constant="30" id="qG6-5U-hg2"/>
                             <constraint firstItem="zbf-Po-6JD" firstAttribute="top" secondItem="so9-ET-0ul" secondAttribute="top" id="sC7-Ho-KbN"/>
@@ -267,6 +281,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="BV1-gX-nAw" id="f1g-AA-HLG"/>
+                        <outlet property="greyView" destination="bPk-bb-3z7" id="5ve-D8-AZt"/>
                         <outlet property="picker" destination="3y8-SB-qRo" id="3M5-Hb-UXA"/>
                         <outlet property="tableView" destination="zbf-Po-6JD" id="Bnf-3N-m3s"/>
                         <outlet property="viewWithPicker" destination="qFl-Hv-Tcr" id="RTQ-5w-qsz"/>

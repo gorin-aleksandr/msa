@@ -22,6 +22,16 @@ protocol NewExerciseProtocol {
 
 class NewExerciseViewController: UIViewController {
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {
+        didSet{
+            activityIndicator.stopAnimating()
+        }
+    }
+    @IBOutlet weak var greyView: UIView! {
+        didSet{
+            greyView.isHidden = true
+        }
+    }
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewWithPicker: UIView!{
         didSet{viewWithPicker.alpha = 0}
@@ -48,6 +58,7 @@ class NewExerciseViewController: UIViewController {
     
     //MARK: Handle photo selecting
     @objc func handleAddPhoto(_ sender: UIButton) {
+        self.view.endEditing(true)
         imageManager?.contentType = .allPhotos
         imageManager?.presentImagePicker()
     }
@@ -127,6 +138,11 @@ extension NewExerciseViewController: UITextViewDelegate {
             default: return false
         }
     }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        tableView.reloadData()
+    }
+    
 }
 
 extension NewExerciseViewController: SelectingImagesManagerDelegate {
@@ -158,18 +174,33 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureTypeCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChoosingItemTableViewCell", for:  indexPath) as! ChoosingItemTableViewCell
         cell.headerLabel.text = "Группа мышц / вид спорта"
+        if exercManager.created() && (exercManager.dataSource.typeId == -1){
+            cell.errorLabel.isHidden = false
+        } else {
+            cell.errorLabel.isHidden = true
+        }
         cell.elementChoosed.text = "\(RealmManager().getArray(ofType: ExerciseType.self, filterWith: NSPredicate(format: "id = %d", exercManager.dataSource.typeId)).first?.name ?? "-")"
         return cell
     }
     func configureInventarCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChoosingItemTableViewCell", for:  indexPath) as! ChoosingItemTableViewCell
         cell.headerLabel.text = "Инвентарь"
+        if exercManager.created() && (exercManager.dataSource.filterId == -1){
+            cell.errorLabel.isHidden = false
+        } else {
+            cell.errorLabel.isHidden = true
+        }
         cell.elementChoosed.text = "\(RealmManager().getArray(ofType: ExerciseTypeFilter.self, filterWith: NSPredicate(format: "id = %d", exercManager.dataSource.filterId)).first?.name ?? "-")"
         return cell
     }
     func configureNameCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewViewCounterTableViewCell", for:  indexPath) as! TextViewViewCounterTableViewCell
         cell.HeaderLabel.text = "Название"
+        if exercManager.created() && (exercManager.dataSource.name == ""){
+            cell.errorLabel.isHidden = false
+        } else {
+            cell.errorLabel.isHidden = true
+        }
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 1
         cell.infoTextView.text = exercManager.dataSource.name
@@ -185,6 +216,11 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureDescriptionCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewViewCounterTableViewCell", for:  indexPath) as! TextViewViewCounterTableViewCell
         cell.HeaderLabel.text = "Описание"
+        if exercManager.created() && (exercManager.dataSource.descript == ""){
+            cell.errorLabel.isHidden = false
+        } else {
+            cell.errorLabel.isHidden = true
+        }
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 2
         cell.infoTextView.text = "\(exercManager.dataSource.descript)"
@@ -200,6 +236,11 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureTechnicCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewViewCounterTableViewCell", for:  indexPath) as! TextViewViewCounterTableViewCell
         cell.HeaderLabel.text = "Техника"
+        if exercManager.created() && (exercManager.dataSource.howToDo == ""){
+            cell.errorLabel.isHidden = false
+        } else {
+            cell.errorLabel.isHidden = true
+        }
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 3
         cell.infoTextView.text = "\(exercManager.dataSource.howToDo)"
@@ -216,6 +257,14 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureImagesCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddImagesTableViewCell", for:  indexPath) as! AddImagesTableViewCell
         cell.delegate = self
+        if exercManager.created() && (exercManager.dataSource.pictures.count == 0) {
+            cell.errorLabel.isHidden = false
+            cell.collectionView.isHidden = true
+            cell.errorLabel.text = "Прикрепите изображения!"
+        } else {
+            cell.errorLabel.isHidden = true
+            cell.collectionView.isHidden = false
+        }
         cell.addPictureButton.addTarget(self, action: #selector(self.handleAddPhoto(_:)), for: .touchUpInside)
         cell.images = exercManager.dataSource.pictures
         cell.photoCounter.text = "\(cell.images.count)"
@@ -224,6 +273,22 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     
     func configureVideoCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LoadVideoTableViewCell", for:  indexPath) as! LoadVideoTableViewCell
+        if exercManager.created() && (exercManager.dataSource.videoPath == "") {
+            cell.errorLabel.isHidden = false
+            cell.errorLabel.text = "Прикрепите видео файл!"
+            cell.img.isHidden = true
+            cell.deleteVideoButt.isHidden = true
+        } else {
+            if exercManager.dataSource.videoPath == "" {
+                cell.img.isHidden = true
+                cell.deleteVideoButt.isHidden = true
+            } else {
+                cell.errorLabel.isHidden = true
+                cell.img.isHidden = false
+                cell.deleteVideoButt.isHidden = false
+            }
+            cell.errorLabel.isHidden = true
+        }
         cell.deleteVideoButt.addTarget(self, action: #selector(self.deleteVideo(_:)), for: .touchUpInside)
         cell.addVideo.addTarget(self, action: #selector(self.addVideo(_:)), for: .touchUpInside)
         return cell
@@ -278,12 +343,25 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         tableView.deselectRow(at: indexPath, animated: true)
         selectedRow = indexPath.row
         if selectedRow == 2 || selectedRow == 3 {
+            self.view.endEditing(true)
             picker.reloadAllComponents()
             UIView.animate(withDuration: 0.3) {
                 self.viewWithPicker.alpha = 1
             }
         } else if selectedRow == 8 {
+            self.view.endEditing(true)
+            exercManager.dataSource.createButtonTapped = true
+            createExercise()
+            tableView.reloadData()
+        }
+    }
+    
+    func createExercise() {
+        if exercManager.dataSource.name != "" && exercManager.dataSource.descript != "" && exercManager.dataSource.filterId != -1 && exercManager.dataSource.howToDo != "" && exercManager.dataSource.pictures.count != 0 && exercManager.dataSource.typeId != -1 && exercManager.dataSource.videoPath != "" {
             exercManager.createNewExerciseInFirebase()
+        } else {
+            AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
+            tableView.reloadData()
         }
     }
   
@@ -325,19 +403,22 @@ extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 
 extension NewExerciseViewController: NewExerciseProtocol {
     func exerciseCreated() {
-        
+        navigationController?.popViewController(animated: true)
+        NotificationCenter.default.post(name: Notification.Name("Exercise_added"), object: nil, userInfo: nil)
     }
     
     func startLoading() {
-        
+        activityIndicator.startAnimating()
+        greyView.isHidden = false
     }
     
     func finishLoading() {
-        
+        activityIndicator.stopAnimating()
+        greyView.isHidden = true
     }
 
     func photoUploaded() {
-        AlertDialog.showAlert("Ура", message: "Картинки загружены", viewController: self)
+//        AlertDialog.showAlert("Ура", message: "Картинки загружены", viewController: self)
     }
     
     func videoLoaded(url: String) {
@@ -346,6 +427,8 @@ extension NewExerciseViewController: NewExerciseProtocol {
     }
     
     func errorOccurred(err: String) {
+        activityIndicator.stopAnimating()
+        greyView.isHidden = true
         AlertDialog.showAlert("Ошибка", message: err, viewController: self)
     }
     
@@ -354,6 +437,7 @@ extension NewExerciseViewController: NewExerciseProtocol {
 
 extension NewExerciseViewController: ImagesProtocol {
     @objc func addVideo(_ sender: UIButton) {
+        self.view.endEditing(true)
         imageManager?.contentType = .allVideos
         imageManager?.presentVideoPicker()
     }

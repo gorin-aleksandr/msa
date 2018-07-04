@@ -26,7 +26,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/ExercisesForTypeViewController.swift"
-                  timestampString = "552321321.9953769"
+                  timestampString = "552390109.608373"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "226"
@@ -41,7 +41,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/ExercisesForTypeViewController.swift"
-                  timestampString = "552321321.999187"
+                  timestampString = "552390109.612551"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "226"
@@ -57,14 +57,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/Exercises/VC/ExercisesTypesVC/ExersisesTypesPresenter.swift"
-            timestampString = "552321321.7764421"
+            filePath = "MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+            timestampString = "552390590.334195"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
-            landmarkName = "observeExercises(snapchot:)"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "createNewExerciseInFirebase()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MSA.NewExerciseManager.createNewExerciseInFirebase() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+                  timestampString = "552390109.631231"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "88"
+                  endingLineNumber = "88"
+                  offsetFromSymbolStart = "408">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool) -&gt; () in MSA.NewExerciseManager.createNewExerciseInFirebase() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+                  timestampString = "552390109.635365"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89"
+                  offsetFromSymbolStart = "40">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -73,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/Exercises/VC/ExercisesTypesVC/ExersisesTypesPresenter.swift"
-            timestampString = "552321321.776558"
+            filePath = "MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+            timestampString = "552390590.3342969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "getTypes()"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "createNewExerciseInFirebase()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

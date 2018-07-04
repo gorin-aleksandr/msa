@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,11 +18,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadVideoTableViewCell" rowHeight="118" id="KGk-i7-Jjw" customClass="LoadVideoTableViewCell" customModule="MSA" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="373" height="118"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadVideoTableViewCell" rowHeight="139" id="KGk-i7-Jjw" customClass="LoadVideoTableViewCell" customModule="MSA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="377" height="139"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="373" height="117.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="377" height="138.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" filevideo-24px" translatesAutoresizingMaskIntoConstraints="NO" id="uJL-Sg-oey">
@@ -32,26 +33,26 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Загрузить видео" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrV-sr-WsS">
-                        <rect key="frame" x="55" y="15" width="138.5" height="20"/>
+                        <rect key="frame" x="55" y="12" width="138.5" height="26"/>
                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Не удалось загрузить файл! Проверьте подключение к сети." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Gv-iN-mb5">
-                        <rect key="frame" x="0.0" y="76.5" width="373" height="31"/>
+                        <rect key="frame" x="0.0" y="58" width="377" height="60.5"/>
                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="15"/>
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" filevideo-64px" translatesAutoresizingMaskIntoConstraints="NO" id="WOb-Jr-nXo">
-                        <rect key="frame" x="151.5" y="35" width="70" height="70"/>
+                        <rect key="frame" x="153.5" y="48" width="70" height="70"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="70" id="By5-cf-yFp"/>
                             <constraint firstAttribute="width" constant="70" id="rOI-MK-KqR"/>
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uRC-HG-Ttc">
-                        <rect key="frame" x="206.5" y="30" width="20" height="20"/>
+                        <rect key="frame" x="208.5" y="43" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="Yeg-eq-Q4z"/>
                             <constraint firstAttribute="height" constant="20" id="ax6-xG-UUR"/>
@@ -59,11 +60,11 @@
                         <state key="normal" image="X"/>
                     </button>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="y1i-52-jg4">
-                        <rect key="frame" x="168" y="40.5" width="37" height="37"/>
+                        <rect key="frame" x="170" y="51" width="37" height="37"/>
                         <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </activityIndicatorView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BCV-KL-ZQt">
-                        <rect key="frame" x="0.0" y="0.0" width="373" height="40"/>
+                        <rect key="frame" x="0.0" y="0.0" width="377" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="LQS-2j-DVa"/>
                         </constraints>
@@ -74,18 +75,19 @@
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="3uM-PH-oML"/>
                     <constraint firstItem="BCV-KL-ZQt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4pC-9a-j37"/>
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EPV-Og-QHp"/>
-                    <constraint firstItem="9Gv-iN-mb5" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" constant="41.5" id="Ihu-iF-aVt"/>
+                    <constraint firstItem="9Gv-iN-mb5" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" constant="20" id="Ihu-iF-aVt"/>
                     <constraint firstItem="wrV-sr-WsS" firstAttribute="centerY" secondItem="uJL-Sg-oey" secondAttribute="centerY" id="JaV-Yz-DAA"/>
                     <constraint firstAttribute="trailing" secondItem="9Gv-iN-mb5" secondAttribute="trailing" id="Ml9-tA-kr7"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="WOb-Jr-nXo" secondAttribute="bottom" constant="10" id="N9h-6u-Pop"/>
                     <constraint firstItem="9Gv-iN-mb5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="VAM-4t-3K9"/>
                     <constraint firstItem="uJL-Sg-oey" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="VeV-Se-gaI"/>
                     <constraint firstItem="wrV-sr-WsS" firstAttribute="leading" secondItem="uJL-Sg-oey" secondAttribute="trailing" constant="10" id="X1o-M9-ck0"/>
                     <constraint firstItem="uJL-Sg-oey" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="ePy-LU-3qU"/>
-                    <constraint firstItem="WOb-Jr-nXo" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" id="fAL-C0-MAg"/>
+                    <constraint firstItem="WOb-Jr-nXo" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" constant="10" id="fAL-C0-MAg"/>
                     <constraint firstItem="uRC-HG-Ttc" firstAttribute="top" secondItem="WOb-Jr-nXo" secondAttribute="top" constant="-5" id="gDQ-3B-Z3A"/>
                     <constraint firstItem="BCV-KL-ZQt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="k5y-IV-zPf"/>
                     <constraint firstAttribute="trailing" secondItem="BCV-KL-ZQt" secondAttribute="trailing" id="lDK-ie-G6j"/>
-                    <constraint firstAttribute="bottom" secondItem="9Gv-iN-mb5" secondAttribute="bottom" constant="10" id="pCi-GP-hbk"/>
+                    <constraint firstAttribute="bottom" secondItem="9Gv-iN-mb5" secondAttribute="bottom" constant="20" id="pCi-GP-hbk"/>
                     <constraint firstItem="WOb-Jr-nXo" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="skr-Js-dhp"/>
                 </constraints>
             </tableViewCellContentView>
@@ -99,7 +101,7 @@
                 <outlet property="lab" destination="wrV-sr-WsS" id="gNN-Uc-w2Y"/>
                 <outlet property="log" destination="uJL-Sg-oey" id="fx1-vc-Ecq"/>
             </connections>
-            <point key="canvasLocation" x="79.5" y="-122"/>
+            <point key="canvasLocation" x="81.5" y="-111.5"/>
         </tableViewCell>
     </objects>
     <resources>

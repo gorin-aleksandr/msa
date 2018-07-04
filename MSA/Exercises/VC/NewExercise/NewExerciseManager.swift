@@ -21,6 +21,10 @@ class NewExerciseManager {
         dataSource.name = name
     }
     
+    func created() -> Bool {
+        return dataSource.createButtonTapped
+    }
+    
     func attachView(view: NewExerciseProtocol) {
         self.view = view
     }

@@ -56,7 +56,7 @@ class ExersisesTypesPresenter {
     func getCurrentFilters() -> [ExerciseTypeFilter] {
         return exercises.currentFilters
     }
-
+    
     func getTypesFromRealm() {
         if let _ = AuthModule.currUser.id {
             exercises.exersiseTypes = realmManager.getArray(ofType: ExerciseType.self)
