@@ -90,6 +90,8 @@
 		29FF688620DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */; };
 		29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
+		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
+		35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */; };
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
 /* End PBXBuildFile section */
 
@@ -180,6 +182,8 @@
 		29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesPresenter.swift; sourceTree = "<group>"; };
 		29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesDataManager.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
+		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
+		35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListPresenter.swift; sourceTree = "<group>"; };
 		4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -235,6 +239,7 @@
 				299B58EA2086724500CBE646 /* MainPage */,
 				29AC912B20CDA80F003F8152 /* Trannings */,
 				2962D47B20D2A3A200870953 /* Exercises */,
+				35CE070920ECC644006892B0 /* Community */,
 				298DF65E203C36B300FB0180 /* AlertView.swift */,
 				29C2D5FA2074F36300E2B958 /* Etentions.swift */,
 				299B547B20A0D38A004E60A2 /* Rubik */,
@@ -466,6 +471,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		35CE070920ECC644006892B0 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				35CE070A20ECC6BF006892B0 /* CommunityListVC */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
+		35CE070A20ECC6BF006892B0 /* CommunityListVC */ = {
+			isa = PBXGroup;
+			children = (
+				35CE070B20ECC769006892B0 /* CommunityListViewController.swift */,
+				35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */,
+			);
+			path = CommunityListVC;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -478,6 +500,7 @@
 				29160B3F2035AA3B00DA7227 /* Frameworks */,
 				29160B402035AA3B00DA7227 /* Resources */,
 				6D90A83F362A74F18D714161 /* [CP] Embed Pods Frameworks */,
+				61572BB5BA8E6548C03F79AB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -582,6 +605,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		61572BB5BA8E6548C03F79AB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MSA/Pods-MSA-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6D90A83F362A74F18D714161 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -647,6 +685,7 @@
 				2934805320E8EECC0039028E /* TextViewViewCounterTableViewCell.swift in Sources */,
 				2934805920E8F7B80039028E /* ChoosingItemTableViewCell.swift in Sources */,
 				29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */,
+				35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */,
 				2962D47D20D2A3B300870953 /* ExercisesViewController.swift in Sources */,
 				299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */,
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
@@ -662,6 +701,7 @@
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
 				2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */,
 				29AC912D20CDA83E003F8152 /* MyTranningsViewController.swift in Sources */,
+				35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */,
 				2962D48120D2AADE00870953 /* ExercisesTableViewCell.swift in Sources */,
 				299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */,
 				2934806720E8FF290039028E /* AddImagesTableViewCell.swift in Sources */,

@@ -11,7 +11,7 @@ import UIKit
 import SkyFloatingLabelTextField
 import SDWebImage
 
-protocol EditProfileProtocol {
+protocol EditProfileProtocol: class {
     func startLoading()
     func finishLoading()
     func errorOcurred(_ error: String)

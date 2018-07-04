@@ -1816,11 +1816,11 @@
             </objects>
             <point key="canvasLocation" x="1277" y="24"/>
         </scene>
-        <!--Item-->
+        <!--Сообщество-->
         <scene sceneID="WQg-ke-FHI">
             <objects>
                 <navigationController id="rK2-zS-8G6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="kwT-7Z-xY6"/>
+                    <tabBarItem key="tabBarItem" title="Сообщество" image="community" id="kwT-7Z-xY6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wY2-OZ-NAB">
                         <rect key="frame" x="0.0" y="20" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1906,6 +1906,7 @@
         <image name="back" width="13" height="22"/>
         <image name="bgProfile" width="375" height="667"/>
         <image name="change_photo_edit_profile" width="343" height="40"/>
+        <image name="community" width="34" height="26"/>
         <image name="daily" width="24" height="24"/>
         <image name="delete_trainer" width="175" height="20"/>
         <image name="gantelya" width="20" height="20"/>
