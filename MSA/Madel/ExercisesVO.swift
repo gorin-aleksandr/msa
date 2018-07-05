@@ -15,7 +15,7 @@ class Exercise: Object {
     @objc dynamic var name: String = ""
     var pictures = List<Image>()
     @objc dynamic var typeId: Int = 0
-    @objc dynamic var trainerId: Int = 0
+    @objc dynamic var trainerId: String = ""
     @objc dynamic var videoUrl: String = ""
     @objc dynamic var exerciseDescriprion: String = "No description"
     @objc dynamic var howToDo: String = "No info about doing"
@@ -29,6 +29,20 @@ class Exercise: Object {
     func incrementID() -> Int {
         let realm = try! Realm()
         return (realm.objects(Exercise.self).max(ofProperty: "id") as Int? ?? 0) + 1
+    }
+}
+
+class MyExercises: Object {
+    @objc dynamic var id: String = ""
+    var myExercises = List<Exercise>()
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    func incrementID() -> Int {
+        let realm = try! Realm()
+        return (realm.objects(MyExercises.self).max(ofProperty: "id") as Int? ?? 0) + 1
     }
 }
 

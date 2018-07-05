@@ -93,7 +93,7 @@ class ExercisesForTypeViewController: UIViewController {
             }
         }
         let buttonPadding:CGFloat = 10
-        var xOffset:CGFloat = 5
+        var xOffset:CGFloat = 8
         for item in filters {
             let button = UIButton()
             let label = UILabel()
@@ -101,7 +101,7 @@ class ExercisesForTypeViewController: UIViewController {
             label.font = UIFont(name: "Rubik", size: 18)
             label.textColor = .black
             
-            let width = label.intrinsicContentSize.width + 20
+            let width = label.intrinsicContentSize.width + 30
             if selectedFilter == item.name {
                 button.backgroundColor = lightBlue
             } else {
@@ -198,6 +198,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
 }
 
 extension ExercisesForTypeViewController: ExercisesTypesDataProtocol {
+    func myExercisesLoaded() {}
     func startLoading() {}
     func finishLoading() {}
     func exercisesTypesLoaded() {}

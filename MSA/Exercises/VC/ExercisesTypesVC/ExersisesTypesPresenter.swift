@@ -16,6 +16,7 @@ protocol ExercisesTypesDataProtocol: class {
     func finishLoading()
     func exercisesTypesLoaded()
     func exercisesLoaded()
+    func myExercisesLoaded()
     func filtersLoaded()
     func errorOccurred(err: String)
 }
@@ -68,6 +69,16 @@ class ExersisesTypesPresenter {
             exercises.allExersises = realmManager.getArray(ofType: Exercise.self)
             self.view?.exercisesLoaded()
         }
+    }
+    func getMyExercisesFromRealm() {
+        if let _ = AuthModule.currUser.id {
+            exercises.ownExercises = Array(realmManager.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
+            self.view?.myExercisesLoaded()
+        }
+    }
+    
+    func getOwnExercises() -> [Exercise] {
+        return exercises.ownExercises
     }
     func getFiltersFromRealm() {
         if let _ = AuthModule.currUser.id {
@@ -183,7 +194,7 @@ class ExersisesTypesPresenter {
         if let _ = AuthModule.currUser.id {
             self.view?.startLoading()
             Database.database().reference().child("Exercise").observe(.childAdded) { (snapchot) in
-                self.observeExercises(snapchot: snapchot)
+                self.observeExercises(snapchot: snapchot, all: true)
             }
         }
     }
@@ -192,12 +203,21 @@ class ExersisesTypesPresenter {
         if let _ = AuthModule.currUser.id {
             self.view?.startLoading()
             Database.database().reference().child("Exercise").observeSingleEvent(of: .value) { (snapchot) in
-                self.observeExercises(snapchot: snapchot)
+                self.observeExercises(snapchot: snapchot, all: true)
             }
         }
     }
     
-    func observeExercises(snapchot: DataSnapshot) {
+    func getMyExercises() {
+        if let id = AuthModule.currUser.id {
+            self.view?.startLoading()
+            Database.database().reference().child("ExercisesByTrainers").child(id).observeSingleEvent(of: .value) { (data) in
+                self.observeExercises(snapchot: data, all: false)
+            }
+        }
+    }
+    
+    func observeExercises(snapchot: DataSnapshot, all: Bool) {
         self.view?.finishLoading()
         var items = [Exercise]()
         for snap in snapchot.children {
@@ -226,7 +246,7 @@ class ExersisesTypesPresenter {
             exercise.name = s.childSnapshot(forPath: "name").value as! String
             exercise.pictures = picturesUrls
             exercise.typeId = s.childSnapshot(forPath: "typeId").value as! Int
-            exercise.trainerId = s.childSnapshot(forPath: "trainerId").value as? Int ?? 0
+            exercise.trainerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
             exercise.videoUrl = s.childSnapshot(forPath: "videoUrl").value as? String ?? ""
             exercise.exerciseDescriprion = s.childSnapshot(forPath: "description").value as? String ?? "No description"
             exercise.howToDo = s.childSnapshot(forPath: "howToDo").value as? String ?? "No info about doing"
@@ -234,15 +254,32 @@ class ExersisesTypesPresenter {
             exercise.filterIDs = filterIds
             items.append(exercise)
         }
-        DispatchQueue.main.async {
-            self.realmManager.saveObjectsArray(items)
+        if all {
+            DispatchQueue.main.async {
+                self.realmManager.saveObjectsArray(items)
+            }
+            self.exercises.allExersises = items
+            self.view?.exercisesLoaded()
+        } else {
+            let myExerc = MyExercises()
+            myExerc.id = AuthModule.currUser.id ?? ""
+            for item in items {
+                myExerc.myExercises.append(item)
+            }
+            DispatchQueue.main.async {
+                self.realmManager.saveObject(myExerc)
+            }
+            self.exercises.ownExercises = Array(myExerc.myExercises)
+            self.view?.myExercisesLoaded()
         }
-        self.exercises.allExersises = items
-        self.view?.exercisesLoaded()
     }
     
     func setExercisesForType(with id: Int) {
-        exercises.currentTypeExercisesArray = self.realmManager.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "typeId = %d", id))
+        if id == 12 {
+            exercises.currentTypeExercisesArray = exercises.ownExercises
+        } else {
+            exercises.currentTypeExercisesArray = self.realmManager.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "typeId = %d", id))
+        }
     }
     
     func getCurrentTypeExerceses() -> [Exercise] {
