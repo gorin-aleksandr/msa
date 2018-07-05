@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-protocol SignUpViewProtocol {
+protocol SignUpViewProtocol: class {
     func startLoading()
     func finishLoading()
     func next()
@@ -23,7 +23,7 @@ protocol SignUpViewProtocol {
 class SignUpPresenter {
     
     private let signUpManager: UserDataManager
-    private var view: SignUpViewProtocol?
+    private weak var view: SignUpViewProtocol?
     
     init(signUp: UserDataManager) {
         self.signUpManager = signUp

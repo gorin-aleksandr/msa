@@ -22,13 +22,6 @@
                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gd4-GN-CMd">
                         <rect key="frame" x="15" y="0.0" width="296" height="238.5"/>
                     </scrollView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pages" translatesAutoresizingMaskIntoConstraints="NO" id="Ij7-Yh-6eA">
-                        <rect key="frame" x="137" y="221" width="53" height="19"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="53" id="DSB-2a-dU4"/>
-                            <constraint firstAttribute="height" constant="19" id="Oey-Gc-6l4"/>
-                        </constraints>
-                    </imageView>
                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="kVA-Si-mVY">
                         <rect key="frame" x="144" y="224.5" width="39" height="10"/>
                         <constraints>
@@ -41,8 +34,6 @@
                 <constraints>
                     <constraint firstItem="Gd4-GN-CMd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="B1l-5W-lXe"/>
                     <constraint firstAttribute="trailing" secondItem="Gd4-GN-CMd" secondAttribute="trailing" constant="15" id="JtP-Qq-G5G"/>
-                    <constraint firstItem="Ij7-Yh-6eA" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="KLC-bV-5X6"/>
-                    <constraint firstAttribute="bottom" secondItem="Ij7-Yh-6eA" secondAttribute="bottom" constant="-1.5" id="aEb-ow-Km1"/>
                     <constraint firstItem="kVA-Si-mVY" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="m0B-00-agj"/>
                     <constraint firstAttribute="bottom" secondItem="Gd4-GN-CMd" secondAttribute="bottom" id="ppg-eq-4dW"/>
                     <constraint firstAttribute="bottom" secondItem="kVA-Si-mVY" secondAttribute="bottom" constant="4" id="rbR-qV-sXM"/>
@@ -57,7 +48,4 @@
             <point key="canvasLocation" x="37" y="151.5"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="Pages" width="42" height="16"/>
-    </resources>
 </document>

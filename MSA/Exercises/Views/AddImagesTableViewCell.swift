@@ -14,6 +14,7 @@ protocol ImagesProtocol {
 
 class AddImagesTableViewCell: UITableViewCell,UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var addPictureButton: UIButton!
     @IBOutlet weak var lab: UILabel!
     @IBOutlet weak var log: UIImageView!
     @IBOutlet weak var photoCounter: UILabel!
@@ -21,14 +22,19 @@ class AddImagesTableViewCell: UITableViewCell,UICollectionViewDelegateFlowLayout
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var hieghtOfColView: NSLayoutConstraint!
     
-    var images = [Data]()
+    var images = [Data]() {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
     var delegate: ImagesProtocol?
     
     override func awakeFromNib() {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+
         let nibName = UINib(nibName: "ImageCollectionViewCell", bundle:nil)
         collectionView.register(nibName, forCellWithReuseIdentifier: "ImageCollectionViewCell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,6 +43,7 @@ class AddImagesTableViewCell: UITableViewCell,UICollectionViewDelegateFlowLayout
         // Configure the view for the selected state
     }
     
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
@@ -60,7 +67,7 @@ class AddImagesTableViewCell: UITableViewCell,UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 100)
+        return CGSize(width: 98, height: 98)
     }
     
     

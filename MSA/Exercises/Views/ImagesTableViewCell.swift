@@ -8,12 +8,14 @@
 
 import UIKit
 import SDWebImage
+import RealmSwift
 
 class ImagesTableViewCell: UITableViewCell, UIScrollViewDelegate {
 
     @IBOutlet weak var scrolMain: UIScrollView!
     @IBOutlet weak var pageContr: UIPageControl!
-    var images = [Image]()
+    
+    var images = [Image]() 
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +30,10 @@ class ImagesTableViewCell: UITableViewCell, UIScrollViewDelegate {
     }
     
     override func layoutSubviews() {
-        loadScrollView()
+        loadScrollView(fake: true)
     }
     
-    func loadScrollView() {
+    func loadScrollView(fake: Bool) {
         let pageCount = CGFloat(images.count)
         
         scrolMain.backgroundColor = UIColor.clear
@@ -44,11 +46,18 @@ class ImagesTableViewCell: UITableViewCell, UIScrollViewDelegate {
         
         for i in 0..<Int(pageCount) {
             let image = UIImageView(frame: CGRect(x: self.scrolMain.frame.size.width * CGFloat(i), y: 0, width: self.scrolMain.frame.size.width, height: self.scrolMain.frame.size.height))
-            image.sd_setImage(with: URL(string: images[i].url), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+            image.clipsToBounds = true
+            if fake {
+                
+            } else {
+                image.sd_setImage(with: URL(string: images[i].url), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+            }
             image.contentMode = UIViewContentMode.scaleToFill
             self.scrolMain.addSubview(image)
         }
     }
+    
+    
     
     //MARK: UIScrollView Delegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

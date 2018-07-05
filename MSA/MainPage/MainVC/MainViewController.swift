@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 import SDWebImage
 
-protocol GalleryDataProtocol {
+protocol GalleryDataProtocol: class {
     func startLoading()
     func finishLoading()
     func galleryLoaded()

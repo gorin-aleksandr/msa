@@ -13,7 +13,7 @@ import CoreData
 class UserSignInPresenter {
     
     private let auth: AuthModule
-    private var view: SignInViewProtocol?
+    private weak var view: SignInViewProtocol?
     
     init(auth: AuthModule) {
         self.auth = auth

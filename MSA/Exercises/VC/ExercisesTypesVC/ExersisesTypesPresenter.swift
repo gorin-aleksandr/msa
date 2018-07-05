@@ -11,7 +11,7 @@ import Firebase
 import RealmSwift
 import Realm
 
-protocol ExercisesTypesDataProtocol {
+protocol ExercisesTypesDataProtocol: class {
     func startLoading()
     func finishLoading()
     func exercisesTypesLoaded()
@@ -23,7 +23,7 @@ protocol ExercisesTypesDataProtocol {
 class ExersisesTypesPresenter {
     
     private let exercises: ExersisesDataManager
-    private var view: ExercisesTypesDataProtocol?
+    private weak var view: ExercisesTypesDataProtocol?
     private let realmManager = RealmManager.shared
     
     init(exercises: ExersisesDataManager) {
@@ -56,7 +56,7 @@ class ExersisesTypesPresenter {
     func getCurrentFilters() -> [ExerciseTypeFilter] {
         return exercises.currentFilters
     }
-
+    
     func getTypesFromRealm() {
         if let _ = AuthModule.currUser.id {
             exercises.exersiseTypes = realmManager.getArray(ofType: ExerciseType.self)

@@ -9,6 +9,7 @@
 import UIKit
 
 class LoadVideoTableViewCell: UITableViewCell {
+    @IBOutlet weak var addVideo: UIButton!
     @IBOutlet weak var log: UIImageView!
     @IBOutlet weak var lab: UILabel!
     @IBOutlet weak var img: UIImageView!
