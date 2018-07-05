@@ -92,6 +92,7 @@
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
 		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
 		35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */; };
+		35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */; };
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
 /* End PBXBuildFile section */
 
@@ -184,6 +185,7 @@
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
 		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
 		35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListPresenter.swift; sourceTree = "<group>"; };
+		35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -484,8 +486,17 @@
 			children = (
 				35CE070B20ECC769006892B0 /* CommunityListViewController.swift */,
 				35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */,
+				35CE070F20ECFE47006892B0 /* Views */,
 			);
 			path = CommunityListVC;
+			sourceTree = "<group>";
+		};
+		35CE070F20ECFE47006892B0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -723,6 +734,7 @@
 				2940A35520D9081B00EBAE84 /* TextTableViewCell.swift in Sources */,
 				29D2CD7120A175F40073C838 /* StartViewController.swift in Sources */,
 				2940A36320D90E1E00EBAE84 /* TextViewTableViewCell.swift in Sources */,
+				35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */,
 				29C2D5F22074231900E2B958 /* ProfileImageView.swift in Sources */,
 				295781B72039EFCB00EF8878 /* MainViewController.swift in Sources */,
 				29FF688620DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift in Sources */,
