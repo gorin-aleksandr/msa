@@ -193,10 +193,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zbf-Po-6JD">
-                                <rect key="frame" x="30" y="64" width="315" height="603"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uvI-8E-Ll1">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zbf-Po-6JD">
+                                        <rect key="frame" x="30" y="0.0" width="315" height="603"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableView>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="zbf-Po-6JD" secondAttribute="trailing" constant="30" id="Gem-Ye-8na"/>
+                                    <constraint firstAttribute="bottom" secondItem="zbf-Po-6JD" secondAttribute="bottom" id="WmA-RA-647"/>
+                                    <constraint firstItem="zbf-Po-6JD" firstAttribute="top" secondItem="uvI-8E-Ll1" secondAttribute="top" id="ZnL-j8-Z5c"/>
+                                    <constraint firstItem="zbf-Po-6JD" firstAttribute="leading" secondItem="uvI-8E-Ll1" secondAttribute="leading" constant="30" id="wGO-kE-o0o"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qFl-Hv-Tcr">
                                 <rect key="frame" x="0.0" y="467" width="375" height="200"/>
                                 <subviews>
@@ -261,18 +273,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="uvI-8E-Ll1" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="5n1-cz-XSZ"/>
                             <constraint firstItem="bPk-bb-3z7" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="72b-KB-Nzb"/>
-                            <constraint firstItem="so9-ET-0ul" firstAttribute="bottom" secondItem="zbf-Po-6JD" secondAttribute="bottom" id="BLT-I2-sWt"/>
                             <constraint firstItem="qFl-Hv-Tcr" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="BSk-lk-4rL"/>
                             <constraint firstItem="BV1-gX-nAw" firstAttribute="centerY" secondItem="3nE-EQ-EEr" secondAttribute="centerY" id="CVE-GG-mrJ"/>
                             <constraint firstItem="bPk-bb-3z7" firstAttribute="top" secondItem="3nE-EQ-EEr" secondAttribute="top" id="HQf-OT-EVH"/>
-                            <constraint firstItem="zbf-Po-6JD" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" constant="30" id="Kma-4x-NSE"/>
                             <constraint firstItem="BV1-gX-nAw" firstAttribute="centerX" secondItem="3nE-EQ-EEr" secondAttribute="centerX" id="T6y-8t-1ke"/>
+                            <constraint firstItem="uvI-8E-Ll1" firstAttribute="top" secondItem="so9-ET-0ul" secondAttribute="top" id="TE8-3j-54Q"/>
                             <constraint firstItem="bPk-bb-3z7" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="W4q-B9-Gik"/>
                             <constraint firstItem="bPk-bb-3z7" firstAttribute="trailing" secondItem="so9-ET-0ul" secondAttribute="trailing" id="XEO-bi-B5d"/>
+                            <constraint firstItem="uvI-8E-Ll1" firstAttribute="trailing" secondItem="so9-ET-0ul" secondAttribute="trailing" id="dGd-A0-Y0I"/>
+                            <constraint firstItem="uvI-8E-Ll1" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="eg5-AA-mVN"/>
                             <constraint firstItem="qFl-Hv-Tcr" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="hkv-lQ-1EX"/>
-                            <constraint firstItem="so9-ET-0ul" firstAttribute="trailing" secondItem="zbf-Po-6JD" secondAttribute="trailing" constant="30" id="qG6-5U-hg2"/>
-                            <constraint firstItem="zbf-Po-6JD" firstAttribute="top" secondItem="so9-ET-0ul" secondAttribute="top" id="sC7-Ho-KbN"/>
                             <constraint firstItem="qFl-Hv-Tcr" firstAttribute="trailing" secondItem="so9-ET-0ul" secondAttribute="trailing" id="yup-L6-b1D"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="so9-ET-0ul"/>
@@ -293,6 +305,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="BV1-gX-nAw" id="f1g-AA-HLG"/>
+                        <outlet property="bottom" destination="5n1-cz-XSZ" id="gjj-JJ-3DL"/>
                         <outlet property="greyView" destination="bPk-bb-3z7" id="5ve-D8-AZt"/>
                         <outlet property="picker" destination="3y8-SB-qRo" id="3M5-Hb-UXA"/>
                         <outlet property="tableView" destination="zbf-Po-6JD" id="Bnf-3N-m3s"/>

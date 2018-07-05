@@ -43,30 +43,13 @@ class EmailPasswordViewController: UIViewController {
 }
 
 extension EmailPasswordViewController: SignUpViewProtocol {
- 
-    func notUpdated() {
-    }
-    func next() {
-    }
-    func startLoading() {
-    }
-    
-    func finishLoading() {
-        
-    }
-    
-    func setUser(user: UserVO) {
-        
-    }
-    
-    func userCreated() {
-        
-    }
-    
-    func userNotCreated() {
-        
-    }
-    
+    func notUpdated() {}
+    func next() {}
+    func startLoading() {}
+    func finishLoading() {}
+    func setUser(user: UserVO) {}
+    func userCreated() {}
+    func userNotCreated() {}
 }
 
 

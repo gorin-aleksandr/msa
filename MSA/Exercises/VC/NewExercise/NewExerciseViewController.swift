@@ -32,6 +32,8 @@ class NewExerciseViewController: UIViewController {
             greyView.isHidden = true
         }
     }
+    @IBOutlet weak var bottom: NSLayoutConstraint!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewWithPicker: UIView!{
         didSet{viewWithPicker.alpha = 0}
@@ -140,15 +142,13 @@ extension NewExerciseViewController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
 }
 
 extension NewExerciseViewController: SelectingImagesManagerDelegate {
     func videoSelectenWith(url: String, image: UIImage) {
-//        let data = NSData.dataWithContentsOfMappedFile(url) as! Data
-//        exercManager.uploadVideo(url, image)
         exercManager.dataSource.videoPath = url
         tableView.reloadData()
     }
@@ -343,13 +343,11 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         tableView.deselectRow(at: indexPath, animated: true)
         selectedRow = indexPath.row
         if selectedRow == 2 || selectedRow == 3 {
-            self.view.endEditing(true)
             picker.reloadAllComponents()
             UIView.animate(withDuration: 0.3) {
                 self.viewWithPicker.alpha = 1
             }
         } else if selectedRow == 8 {
-            self.view.endEditing(true)
             exercManager.dataSource.createButtonTapped = true
             createExercise()
             tableView.reloadData()
