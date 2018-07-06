@@ -13,7 +13,7 @@ struct UserVO {
     var id: String?
     var email: String?
     var firstName: String?
-    var lastname: String?
+    var lastName: String?
     var avatar: String?
     var level: String?
     var age: Int?
@@ -25,6 +25,7 @@ struct UserVO {
     var type: String?
     var purpose: String?
     var gallery: [GalleryItemVO]?
+    var city: String? = "Киев"
 }
 
 enum Sex: String {

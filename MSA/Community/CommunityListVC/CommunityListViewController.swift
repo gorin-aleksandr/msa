@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CommunityListViewProtocol: class {
-    
+    func updateTableView()
 }
 
 class CommunityListViewController: UIViewController, CommunityListViewProtocol {
@@ -19,6 +19,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     @IBOutlet weak var filterScrollView: UIScrollView!
     
     var presenter: CommunityListPresenterProtocol!
+    let searchController = UISearchController(searchResultsController: nil)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,41 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
         communityTableView.delegate = self
         communityTableView.dataSource = self
         presenter.start()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureSearchController()
+        hideableNavigationBar(false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        hideableNavigationBar(true)
+    }
+    
+    func updateTableView() {
+        communityTableView.reloadData()
+    }
+    
+    private func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Enter search text..."
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        if #available(iOS 9.1, *) {
+            searchController.obscuresBackgroundDuringPresentation = false
+        }
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = nil
+            navigationItem.searchController = searchController
+        }
+    }
+    
+    private func hideableNavigationBar(_ hide: Bool) {
+        if #available(iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = hide
+        }
     }
 }
 
@@ -46,4 +82,29 @@ extension CommunityListViewController: UITableViewDelegate, UITableViewDataSourc
         cell.configure(with: presenter.communityDataSource[indexPath.row])
         return cell
     }
+}
+
+
+//MARK: - Search Results Updating
+extension CommunityListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+        
+    }
+    
+    private func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
+    private func searchBarIsEmpty() -> Bool {
+        // Returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    private func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+//        let filteretElements = presenter.communityDataSource.filter { element in return element.firstName.lowercased().contains(searchText.lowercased()) }
+       // self.filteredArray = getSortedArray(of: filteretElements)
+        communityTableView.reloadData()
+    }
+    
 }

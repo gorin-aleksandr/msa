@@ -88,7 +88,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         setShadow(outerView: profileView, shadowOpacity: 0.3)
         setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
         setProfileImage(image: nil, url: AuthModule.currUser.avatar)
-        if let name = AuthModule.currUser.firstName, let surname = AuthModule.currUser.lastname {
+        if let name = AuthModule.currUser.firstName, let surname = AuthModule.currUser.lastName {
             userName.text = name + " " + surname
         }
         if let level = AuthModule.currUser.level {

@@ -84,7 +84,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if let url = user.avatar {
             setProfileImage(image: nil, url: url)
         }
-        if let name = user.firstName, let surname = user.lastname {
+        if let name = user.firstName, let surname = user.lastName {
             userNametextField.text = name
             userSurnameTextField.text = surname
         }

@@ -28,7 +28,7 @@ class StratCoordinator {
             loggedUser.avatar = user.first?.avatar
             loggedUser.email = user.first?.email
             loggedUser.firstName = user.first?.name
-            loggedUser.lastname = user.first?.surname
+            loggedUser.lastName = user.first?.surname
             loggedUser.level = user.first?.level
             loggedUser.type = user.first?.type
             loggedUser.sex = user.first?.sex

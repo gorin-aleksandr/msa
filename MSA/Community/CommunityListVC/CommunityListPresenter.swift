@@ -19,29 +19,33 @@ enum PersonType: String {
 
 struct PersonVO {
     var firstName: String
-    var secondName: String?
-    var imageUrl: String?
-    var city: String?
-    var type: PersonType?
+    var secondName: String? = nil
+    var imageUrl: String? = nil
+    var city: String? = nil
+    var type: PersonType? = nil
 }
 
 protocol CommunityListPresenterProtocol {
     func start() -> ()
-    var communityDataSource: [PersonVO] { get }
+    var communityDataSource: [UserVO] { get }
 }
 
 final class CommunityListPresenter: CommunityListPresenterProtocol {
     
-    var communityDataSource = [PersonVO(firstName: "Андрей", secondName: "Крит", imageUrl: TEMP_IMAGE_URL, city: "Киев", type: .sportsman), PersonVO(firstName: "Гоша", secondName: "Куценко", imageUrl: TEMP_IMAGE_URL, city: "Москва", type: .sportsman), PersonVO(firstName: "Вася", secondName: "Пукин", imageUrl: nil, city: nil, type: .trainer)]
-    
+    var communityDataSource = [UserVO]()
     
     private unowned var view: CommunityListViewProtocol
+    private var dataLoader: UserDataManager
     
     init(view: CommunityListViewProtocol) {
         self.view = view
+        self.dataLoader = UserDataManager()
     }
     
     func start() {
-
+        dataLoader.loadAllUsers { [weak self] (users) in
+            self?.communityDataSource = users
+            self?.view.updateTableView()
+        }
     }
 }

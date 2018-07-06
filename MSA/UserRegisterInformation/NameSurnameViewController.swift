@@ -36,7 +36,7 @@ class NameSurnameViewController: BasicViewController {
         if let name = AuthModule.currUser.firstName {
             nameTF.text = name
         }
-        if let surname = AuthModule.currUser.lastname {
+        if let surname = AuthModule.currUser.lastName {
             surnameTF.text = surname
         }
         // Do any additional setup after loading the view.

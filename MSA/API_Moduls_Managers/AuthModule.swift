@@ -31,7 +31,7 @@ class AuthModule {
     func registerUser(email: String, pass: String, callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
         Auth.auth().createUser(withEmail: email, password: pass) { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.uid, email: user?.email, firstName: nil, lastname: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil)
+                let user = UserVO(id: user?.uid, email: user?.email, firstName: nil, lastName: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, city: nil)
                 callback(user, nil)
             } else {
                 callback(nil, error)
@@ -42,7 +42,7 @@ class AuthModule {
     func loginUser(email: String, pass: String, callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
         Auth.auth().signIn(withEmail: email, password: pass) { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.uid, email: user?.email, firstName: nil, lastname: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil)
+                let user = UserVO(id: user?.uid, email: user?.email, firstName: nil, lastName: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, city: nil)
                 callback(user, nil)
             } else {
                 callback(nil, error)
@@ -77,7 +77,7 @@ class AuthModule {
                                 let nameArray = name?.components(separatedBy: " ")
                                 AuthModule.currUser.email = email
                                 AuthModule.currUser.firstName = nameArray?.first
-                                AuthModule.currUser.lastname = nameArray?.last
+                                AuthModule.currUser.lastName = nameArray?.last
                             } catch {}
                         }
                         else
@@ -85,7 +85,7 @@ class AuthModule {
                     })
                     Auth.auth().signIn(with: credential, completion: { (user, error) in
                         if error == nil && user != nil {
-                            let user = UserVO(id: user?.uid, email: AuthModule.currUser.email, firstName: AuthModule.currUser.firstName, lastname: AuthModule.currUser.lastname, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil)
+                            let user = UserVO(id: user?.uid, email: AuthModule.currUser.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, city: nil)
                             callback(user, nil)
                         } else {
                             callback(nil, error)

@@ -16,17 +16,23 @@ class PersonTableViewCell: UITableViewCell {
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var locationIcon: UIImageView!
     
-    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.width/2
+    }
 
-    func configure(with person: PersonVO) {
-        var fullName = person.firstName
-        if let secondName = person.secondName {
+    func configure(with person: UserVO) {
+        guard var fullName = person.firstName else {
+            return
+        }
+        if let secondName = person.lastName {
             fullName += " " + secondName
         }
         fullNameLabel.text = fullName
         cityLabel.text = person.city
         locationIcon.isHidden = person.city == nil
-        avatarImageView.sd_setImage(with: URL(string: person.imageUrl ?? "" ), completed: nil)
+        if let stringUrl = person.avatar, !stringUrl.isEmpty, let url = URL(string: stringUrl) {
+            avatarImageView.sd_setImage(with: url, completed: nil)
+        }
     }
-
 }

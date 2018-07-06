@@ -10,11 +10,11 @@ import Foundation
 import Firebase
 
 class UserDataManager {
-
+    
     var userRef = Database.database().reference().child("Users")
     var storageRef = Storage.storage().reference()
     var levelsRef = Database.database().reference().child("Levels")
-
+    
     func addInfo(user: UserVO, callback: @escaping (_ created: Bool)->()) {
         if let key = AuthModule.currUser.id {
             let newInfo = [
@@ -25,7 +25,7 @@ class UserDataManager {
                 "heightType": user.heightType,
                 "weight": user.weight,
                 "weightType": user.weightType
-            ] as [String:Any]
+                ] as [String:Any]
             
             userRef.child(key).setValue(newInfo) { (error, ref) in
                 if error == nil {
@@ -43,7 +43,7 @@ class UserDataManager {
                 "id": key,
                 "email": user.email,
                 "name": user.firstName,
-                "surname": user.lastname,
+                "surname": user.lastName,
                 "level": user.level,
                 "age": user.age,
                 "sex": user.sex,
@@ -71,50 +71,74 @@ class UserDataManager {
     
     func getUser(callback: @escaping (_ user: UserVO?)->()) {
         if let userId = AuthModule.currUser.id {
-            userRef.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+            userRef.child(userId).observeSingleEvent(of: .value, with: { [weak self](snapshot) in
                 // Get user value
-                let value = snapshot.value as? NSDictionary
-                
-                var user: UserVO?
-                var gallery = [GalleryItemVO]()
-                if let value = value {
-                    if let array = value["gallery"] as? [[String:Any]] {
-                        for gal in array {
-                            var item = GalleryItemVO()
-                            if let image = gal["imageData"] as? String {
-                                item.imageUrl = image
-                            }
-                            if let video = gal["videoPath"] as? String {
-                                item.videoPaht = video
-                            }
-                            if let videoImage = gal["videoUrl"] as? String {
-                                item.video_url = videoImage
-                            }
-                            gallery.append(item)
-                        }
-                    }
-                    user = UserVO(id: value["id"] as? String,
-                                      email: value["email"] as? String,
-                                      firstName: value["name"] as? String,
-                                      lastname: value["surname"] as? String,
-                                      avatar: value["userPhoto"] as? String,
-                                      level: value["level"] as? String,
-                                      age: value["age"] as? Int,
-                                      sex: value["sex"] as? String,
-                                      height: value["height"] as? Int,
-                                      heightType: value["heightType"] as? String,
-                                      weight: value["weight"] as? Int,
-                                      weightType: value["weightType"] as? String,
-                                      type: value["type"] as? String,
-                                      purpose: value["purpose"] as? String,
-                                      gallery: gallery)
-                }
-                callback(user)
+                let value = snapshot.value as? [String : Any]
+                callback(self?.makeUser(from: value))
             }) { (error) in
                 print(error.localizedDescription)
                 callback(nil)
             }
         }
+    }
+    
+    func loadAllUsers(callback: @escaping (_ community: [UserVO]) -> ()) {
+        userRef.observeSingleEvent(of: .value) { [weak self] (snapshot) in
+            guard let data = snapshot.value as? [String : [String : Any]] else {
+                print(snapshot.value)
+                print("Error occured while parsing community for key from database")
+                return
+            }
+            
+            let values = Array(data.values)
+            
+            var community: [UserVO] = []
+                for value in values {
+                    if let user = self?.makeUser(from: value) {
+                        community.append(user)
+                    }
+                }
+            callback(community)
+        }
+    }
+    
+    private func makeUser(from value: [String : Any]?) -> UserVO? {
+        var user: UserVO?
+        var gallery = [GalleryItemVO]()
+        if let value = value {
+            if let array = value["gallery"] as? [[String:Any]] {
+                for gal in array {
+                    var item = GalleryItemVO()
+                    if let image = gal["imageData"] as? String {
+                        item.imageUrl = image
+                    }
+                    if let video = gal["videoPath"] as? String {
+                        item.videoPaht = video
+                    }
+                    if let videoImage = gal["videoUrl"] as? String {
+                        item.video_url = videoImage
+                    }
+                    gallery.append(item)
+                }
+            }
+            user = UserVO(id: value["id"] as? String,
+                          email: value["email"] as? String,
+                          firstName: value["name"] as? String,
+                          lastName: value["surname"] as? String,
+                          avatar: value["userPhoto"] as? String,
+                          level: value["level"] as? String,
+                          age: value["age"] as? Int,
+                          sex: value["sex"] as? String,
+                          height: value["height"] as? Int,
+                          heightType: value["heightType"] as? String,
+                          weight: value["weight"] as? Int,
+                          weightType: value["weightType"] as? String,
+                          type: value["type"] as? String,
+                          purpose: value["purpose"] as? String,
+                          gallery: gallery,
+                          city: "Киев")
+        }
+        return user
     }
     
     func updateProfile(_ user: UserVO, callback: @escaping (_ created: Bool,_ err: Error?)->()) {
@@ -123,7 +147,7 @@ class UserDataManager {
                 "id": key,
                 "email": user.email,
                 "name": user.firstName,
-                "surname": user.lastname,
+                "surname": user.lastName,
                 "level": user.level,
                 "age": user.age,
                 "sex": user.sex,

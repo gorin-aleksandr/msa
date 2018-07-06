@@ -70,7 +70,7 @@ class SignUpPresenter {
         task.id = user.id
         task.email = user.email
         task.name = user.firstName
-        task.surname = user.lastname
+        task.surname = user.lastName
         task.type = user.type
         task.level = user.level
         task.sex = user.sex
@@ -125,7 +125,7 @@ class SignUpPresenter {
         AuthModule.currUser.firstName = name
     }
     func setSurname(surname: String) {
-        AuthModule.currUser.lastname = surname
+        AuthModule.currUser.lastName = surname
     }
     func setType(type: MSA_User_Type) {
         AuthModule.currUser.type = type.rawValue
