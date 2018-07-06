@@ -49,6 +49,7 @@ class ExercisesViewController: UIViewController {
         presenter.getExercisesFromRealm()
         presenter.getTypesFromRealm()
         presenter.getFiltersFromRealm()
+        presenter.getMyExercisesFromRealm()
         
 //        if presenter.getFilters().isEmpty {
             presenter.getAllFilters()
@@ -67,13 +68,15 @@ class ExercisesViewController: UIViewController {
 //        } else {
 //            presenter.detectTypesChanges()
 //        }
+        presenter.getMyExercises()
     }
     
     @objc func exerciseAdded(notfication: NSNotification) {
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
-        presenter.getAllFilters()
-        presenter.getAllExersises()
-        presenter.getAllTypes()
+//        presenter.getAllFilters()
+//        presenter.getAllExersises()
+//        presenter.getAllTypes()
+        presenter.getMyExercises()
     }
     
     private func configureTable_CollectionView() {
@@ -171,16 +174,38 @@ extension ExercisesViewController : UICollectionViewDelegateFlowLayout, UICollec
         return CGSize(width: self.view.frame.width/3, height: self.view.frame.width/3)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.getTypes().count
+        if presenter.getOwnExercises().count != 0 {
+            return presenter.getTypes().count + 1
+        } else {
+            return presenter.getTypes().count
+        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exerciseCollectionCell", for: indexPath) as! ExercisesCollectionViewCell
-        cell.configureCell(with: presenter.getTypes()[indexPath.row])
+        if presenter.getOwnExercises().count != 0 && indexPath.row == presenter.getTypes().count {
+            cell.nameLabel.text = "Свои"
+            cell.imageView.sd_setImage(with: URL(string: "https://firebasestorage.googleapis.com/v0/b/msa-progect.appspot.com/o/%D0%A1%D0%B2%D0%BE%D0%B8.png?alt=media&token=2f923b39-8d90-43ff-97ce-c0fa7960de23"), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+        } else {
+            cell.configureCell(with: presenter.getTypes()[indexPath.row])
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter.setExercisesForType(with: presenter.getTypes()[indexPath.row].id)
-        presenter.setCurrentExetcisesType(type: presenter.getTypes()[indexPath.row])
+        if presenter.getOwnExercises().count != 0 && indexPath.row == presenter.getTypes().count {
+            presenter.setExercisesForType(with: 12)
+            let type = ExerciseType()
+            for exers in presenter.getCurrentTypeExerceses() {
+                let ID = Id()
+                ID.id = exers.filterIDs.first?.id ?? -1
+                if type.filterIDs.contains(where: { $0.id == ID.id }) {} else {
+                    type.filterIDs.append(ID)
+                }
+            }
+            presenter.setCurrentExetcisesType(type: type)
+        } else {
+            presenter.setExercisesForType(with: presenter.getTypes()[indexPath.row].id)
+            presenter.setCurrentExetcisesType(type: presenter.getTypes()[indexPath.row])
+        }
         performSegue(withIdentifier: SegueIDs.exercisesSegueId.rawValue, sender: nil)
     }
 }
@@ -201,6 +226,10 @@ extension ExercisesViewController: ExercisesTypesDataProtocol {
         print("Filters")
     }
     
+    func myExercisesLoaded() {
+        collectionView.reloadData()
+    }
+
     func exercisesLoaded() {
         print("Exercises")
         tableView.reloadData()

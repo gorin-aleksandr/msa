@@ -13,6 +13,7 @@ class ExersisesDataManager {
     var exersiseTypes: [ExerciseType] = []
     var currentExerciseeType = ExerciseType()
     
+    var ownExercises: [Exercise] = []
     var allExersises: [Exercise] = []
     var currentTypeExercisesArray: [Exercise] = []
     var currentExercise: Exercise? = nil

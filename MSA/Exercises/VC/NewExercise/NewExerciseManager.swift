@@ -115,7 +115,7 @@ class NewExerciseManager {
                             for url in self.dataSource.picturesUrls {
                                 pictures.append(["url": url.url])
                             }
-                            let index = RealmManager.shared.getArray(ofType: Exercise.self).count
+                            let index = RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0
                             let newInfo = [
                                 "description": self.dataSource.descript,
                                 "howToDo": self.dataSource.howToDo,
@@ -125,10 +125,10 @@ class NewExerciseManager {
                                 "name": self.dataSource.name,
                                 "pictures": pictures,
                                 "trainerId": id,
-                                "typeId": self.dataSource.typeId,
+                                "typeId": 12,
                                 "videoUrl": self.dataSource.videoUrl
                                 ] as [String:Any]
-                            self.exerciseRef.child("\(index)").setValue(newInfo) { (error, databaseFer) in
+                            Database.database().reference().child("ExercisesByTrainers").child(id).child("\(index)").setValue(newInfo) { (error, databaseFer) in
                                 self.view?.finishLoading()
                                 if error == nil {
                                     self.view?.exerciseCreated()
