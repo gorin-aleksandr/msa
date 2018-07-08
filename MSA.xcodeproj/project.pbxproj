@@ -93,7 +93,7 @@
 		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
 		35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */; };
 		35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */; };
-		35CE071320EE4947006892B0 /* CummunityDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE071220EE4947006892B0 /* CummunityDataLoader.swift */; };
+		35FC83F520EFBDDF00AECFC8 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC83F420EFBDDF00AECFC8 /* FilterButton.swift */; };
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
 /* End PBXBuildFile section */
 
@@ -187,7 +187,7 @@
 		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
 		35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListPresenter.swift; sourceTree = "<group>"; };
 		35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
-		35CE071220EE4947006892B0 /* CummunityDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CummunityDataLoader.swift; sourceTree = "<group>"; };
+		35FC83F420EFBDDF00AECFC8 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -276,6 +276,7 @@
 		2923304A203AFD3E00EFA2C5 /* API_Moduls_Managers */ = {
 			isa = PBXGroup;
 			children = (
+				35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */,
 				290CA6D0203AD6100073A8F0 /* AuthModule.swift */,
 				295A4EE4203DF78300124A07 /* UserDataManagerFirebase.swift */,
 				29D2CD6E20A170870073C838 /* StartCoordinator.swift */,
@@ -487,7 +488,6 @@
 			isa = PBXGroup;
 			children = (
 				35CE070B20ECC769006892B0 /* CommunityListViewController.swift */,
-				35CE071220EE4947006892B0 /* CummunityDataLoader.swift */,
 				35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */,
 				35CE070F20ECFE47006892B0 /* Views */,
 			);
@@ -500,6 +500,14 @@
 				35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				35FC83F420EFBDDF00AECFC8 /* FilterButton.swift */,
+			);
+			path = "Extensions+CustomViews";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -727,7 +735,6 @@
 				299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */,
 				298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */,
 				29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */,
-				35CE071320EE4947006892B0 /* CummunityDataLoader.swift in Sources */,
 				2993086220EA5264009C035E /* AddImagesManages.swift in Sources */,
 				295A4EED203EC73E00124A07 /* NameSurnameViewController.swift in Sources */,
 				2962D48320D2AAF000870953 /* ExercisesCollectionViewCell.swift in Sources */,
@@ -745,6 +752,7 @@
 				299B58EE208688E600CBE646 /* GalleryItemVO.swift in Sources */,
 				29A16935204836C8006864C2 /* BasicViewController.swift in Sources */,
 				29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */,
+				35FC83F520EFBDDF00AECFC8 /* FilterButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

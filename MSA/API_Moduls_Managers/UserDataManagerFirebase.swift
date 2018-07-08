@@ -11,6 +11,10 @@ import Firebase
 
 class UserDataManager {
     
+    init() {
+        print("init")
+    }
+    
     var userRef = Database.database().reference().child("Users")
     var storageRef = Storage.storage().reference()
     var levelsRef = Database.database().reference().child("Levels")
@@ -71,10 +75,11 @@ class UserDataManager {
     
     func getUser(callback: @escaping (_ user: UserVO?)->()) {
         if let userId = AuthModule.currUser.id {
-            userRef.child(userId).observeSingleEvent(of: .value, with: { [weak self](snapshot) in
+            userRef.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? [String : Any]
-                callback(self?.makeUser(from: value))
+                let user = self.makeUser(from: value)
+                callback(user)
             }) { (error) in
                 print(error.localizedDescription)
                 callback(nil)
@@ -83,7 +88,7 @@ class UserDataManager {
     }
     
     func loadAllUsers(callback: @escaping (_ community: [UserVO]) -> ()) {
-        userRef.observeSingleEvent(of: .value) { [weak self] (snapshot) in
+        userRef.observeSingleEvent(of: .value) { (snapshot) in
             guard let data = snapshot.value as? [String : [String : Any]] else {
                 print(snapshot.value)
                 print("Error occured while parsing community for key from database")
@@ -94,7 +99,7 @@ class UserDataManager {
             
             var community: [UserVO] = []
                 for value in values {
-                    if let user = self?.makeUser(from: value) {
+                    if let user = self.makeUser(from: value) {
                         community.append(user)
                     }
                 }
@@ -167,4 +172,8 @@ class UserDataManager {
         }
     }
     
+    
+    deinit {
+        print("UserDatDeinited")
+    }
 }

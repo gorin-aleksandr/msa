@@ -216,4 +216,8 @@ class EditProfilePresenter {
         AuthModule.currUser.weightType = type.rawValue
     }
     
+    deinit {
+        print("deinit")
+    }
+    
 }
