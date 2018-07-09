@@ -56,7 +56,6 @@ class ImageManager: NSObject, SelectingImagesManager {
     
     
     func presentVideoPicker() {
-        guard presentingViewController.maximumImagesCanBePicked() > 0 else {return}
         let actionSheetController = UIAlertController(title: "", message: "Вибрать видео с:", preferredStyle: .actionSheet)
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in }
         actionSheetController.addAction(cancelActionButton)

@@ -21,6 +21,7 @@ class Exercise: Object {
     @objc dynamic var howToDo: String = "No info about doing"
     @objc dynamic var link: String = "No attached link"
     var filterIDs = List<Id>()
+    @objc dynamic var realTypeId: Int = 0
 
     override static func primaryKey() -> String? {
         return "id"

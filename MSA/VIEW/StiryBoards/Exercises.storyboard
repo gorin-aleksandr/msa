@@ -188,7 +188,7 @@
         <!--Новое упражнение-->
         <scene sceneID="R8Q-pG-cRT">
             <objects>
-                <viewController id="bbY-NJ-TFA" customClass="NewExerciseViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewExerciseViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bbY-NJ-TFA" customClass="NewExerciseViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3nE-EQ-EEr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -200,12 +200,20 @@
                                         <rect key="frame" x="30" y="0.0" width="315" height="603"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </tableView>
+                                    <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPk-bb-3z7">
+                                        <rect key="frame" x="0.0" y="-64" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="bPk-bb-3z7" secondAttribute="bottom" id="1ym-ke-7bZ"/>
                                     <constraint firstAttribute="trailing" secondItem="zbf-Po-6JD" secondAttribute="trailing" constant="30" id="Gem-Ye-8na"/>
+                                    <constraint firstAttribute="trailing" secondItem="bPk-bb-3z7" secondAttribute="trailing" id="HcV-rY-VqY"/>
+                                    <constraint firstItem="bPk-bb-3z7" firstAttribute="leading" secondItem="uvI-8E-Ll1" secondAttribute="leading" id="Jye-6C-mdL"/>
                                     <constraint firstAttribute="bottom" secondItem="zbf-Po-6JD" secondAttribute="bottom" id="WmA-RA-647"/>
                                     <constraint firstItem="zbf-Po-6JD" firstAttribute="top" secondItem="uvI-8E-Ll1" secondAttribute="top" id="ZnL-j8-Z5c"/>
+                                    <constraint firstItem="bPk-bb-3z7" firstAttribute="top" secondItem="uvI-8E-Ll1" secondAttribute="top" constant="-64" id="osn-OP-Pjo"/>
                                     <constraint firstItem="zbf-Po-6JD" firstAttribute="leading" secondItem="uvI-8E-Ll1" secondAttribute="leading" constant="30" id="wGO-kE-o0o"/>
                                 </constraints>
                             </view>
@@ -262,10 +270,6 @@
                                     <constraint firstAttribute="height" constant="200" id="pmz-eE-1ZH"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPk-bb-3z7">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="BV1-gX-nAw">
                                 <rect key="frame" x="169" y="315" width="37" height="37"/>
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -274,14 +278,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="uvI-8E-Ll1" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="5n1-cz-XSZ"/>
-                            <constraint firstItem="bPk-bb-3z7" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="72b-KB-Nzb"/>
                             <constraint firstItem="qFl-Hv-Tcr" firstAttribute="bottom" secondItem="so9-ET-0ul" secondAttribute="bottom" id="BSk-lk-4rL"/>
                             <constraint firstItem="BV1-gX-nAw" firstAttribute="centerY" secondItem="3nE-EQ-EEr" secondAttribute="centerY" id="CVE-GG-mrJ"/>
-                            <constraint firstItem="bPk-bb-3z7" firstAttribute="top" secondItem="3nE-EQ-EEr" secondAttribute="top" id="HQf-OT-EVH"/>
                             <constraint firstItem="BV1-gX-nAw" firstAttribute="centerX" secondItem="3nE-EQ-EEr" secondAttribute="centerX" id="T6y-8t-1ke"/>
                             <constraint firstItem="uvI-8E-Ll1" firstAttribute="top" secondItem="so9-ET-0ul" secondAttribute="top" id="TE8-3j-54Q"/>
-                            <constraint firstItem="bPk-bb-3z7" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="W4q-B9-Gik"/>
-                            <constraint firstItem="bPk-bb-3z7" firstAttribute="trailing" secondItem="so9-ET-0ul" secondAttribute="trailing" id="XEO-bi-B5d"/>
                             <constraint firstItem="uvI-8E-Ll1" firstAttribute="trailing" secondItem="so9-ET-0ul" secondAttribute="trailing" id="dGd-A0-Y0I"/>
                             <constraint firstItem="uvI-8E-Ll1" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="eg5-AA-mVN"/>
                             <constraint firstItem="qFl-Hv-Tcr" firstAttribute="leading" secondItem="so9-ET-0ul" secondAttribute="leading" id="hkv-lQ-1EX"/>
@@ -473,14 +473,20 @@
                                 <action selector="back:" destination="3tJ-Vx-ySk" id="cWV-ca-a2F"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="bV4-o3-4rh">
+                            <connections>
+                                <action selector="editExercise:" destination="3tJ-Vx-ySk" id="wsw-Cr-GRT"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="editButton" destination="bV4-o3-4rh" id="Ba0-fQ-8Lx"/>
                         <outlet property="tableView" destination="RYJ-a0-q69" id="z5i-UZ-KZx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AKF-ZJ-eo1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4236" y="-36"/>
+            <point key="canvasLocation" x="-4236" y="-36.431784107946029"/>
         </scene>
     </scenes>
     <resources>

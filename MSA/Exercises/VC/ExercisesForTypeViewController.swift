@@ -8,8 +8,10 @@
 
 import UIKit
 import SDWebImage
+import RealmSwift
 
 let lightBlue = UIColor(rgb: 0x007AFF)
+let lightGrey = UIColor(rgb: 0x030D15)
 
 class ExercisesForTypeViewController: UIViewController {
 
@@ -36,7 +38,7 @@ class ExercisesForTypeViewController: UIViewController {
     func initialDataFilling() {
         filters = presenter?.getCurrentFilters() ?? []
         let allFilter = ExerciseTypeFilter()
-        allFilter.name = "ВСЕ УПРАЖНЕНИЯ"
+        allFilter.name = "ВСЕ В КАТЕГОРИИ"
         filters.insert(allFilter, at: 0)
         selectedFilter = filters.first?.name ?? ""
         exercisesByFIlter = presenter?.getCurrentTypeExerceses()
@@ -46,6 +48,10 @@ class ExercisesForTypeViewController: UIViewController {
         super.viewWillAppear(animated)
         configurateSearchController()
         hideableNavigationBar(false)
+        if exercisesByFIlter?.first?.typeId == 12 {
+            exercisesByFIlter = Array(RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
+            tableView.reloadData()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,16 +104,17 @@ class ExercisesForTypeViewController: UIViewController {
             let button = UIButton()
             let label = UILabel()
             label.text = item.name
-            label.font = UIFont(name: "Rubik", size: 18)
+            label.font = UIFont(name: "Rubik", size: 14)
             label.textColor = .black
             
-            let width = label.intrinsicContentSize.width + 30
+            let width = label.intrinsicContentSize.width + 20
             if selectedFilter == item.name {
                 button.backgroundColor = lightBlue
             } else {
-                button.backgroundColor = .gray
+                button.backgroundColor = lightGrey
             }
             button.setTitle(item.name, for: .normal)
+            button.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 13)
             button.tag = filters.index(of: item) ?? -1
             button.setTitleColor(.white, for: .normal)
             button.layer.cornerRadius = 15
@@ -122,7 +129,7 @@ class ExercisesForTypeViewController: UIViewController {
     @objc func filterTapped(_ sender: UIButton) {
         exercisesByFIlter?.removeAll()
         selectedFilter = filters[sender.tag].name
-        if selectedFilter == "ВСЕ УПРАЖНЕНИЯ" {
+        if selectedFilter == "ВСЕ В КАТЕГОРИИ" {
             exercisesByFIlter = presenter?.getCurrentTypeExerceses()
         } else {
             for ex in (presenter?.getCurrentTypeExerceses())! {

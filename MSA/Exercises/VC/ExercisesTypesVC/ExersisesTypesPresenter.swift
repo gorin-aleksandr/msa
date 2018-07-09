@@ -137,6 +137,9 @@ class ExersisesTypesPresenter {
             type.filterIDs = filIds
             items.append(type)
         }
+        items.sort {
+            return $0.id < $1.id
+        }
         DispatchQueue.main.async {
             self.realmManager.saveObjectsArray(items)
         }
@@ -243,6 +246,7 @@ class ExersisesTypesPresenter {
             }
             let exercise = Exercise()
             exercise.id = s.childSnapshot(forPath: "id").value as! Int
+            exercise.realTypeId = s.childSnapshot(forPath: "realTypeId").value as? Int ?? -1
             exercise.name = s.childSnapshot(forPath: "name").value as! String
             exercise.pictures = picturesUrls
             exercise.typeId = s.childSnapshot(forPath: "typeId").value as! Int

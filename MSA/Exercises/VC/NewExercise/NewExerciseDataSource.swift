@@ -12,7 +12,19 @@ class NewExerciseDataSource {
     
     static let shared = NewExerciseDataSource()
 
-    var newExerciseModel = Exercise()
+    var imagesEdited = false
+    var editMode = false
+    var newExerciseModel = Exercise() {
+        didSet {
+            name = newExerciseModel.name
+            typeId = newExerciseModel.realTypeId
+            filterId = newExerciseModel.filterIDs.first?.id ?? -1
+            descript = newExerciseModel.exerciseDescriprion
+            howToDo = newExerciseModel.howToDo
+            picturesUrls = Array(newExerciseModel.pictures)
+            videoUrl = newExerciseModel.videoUrl
+        }
+    }
  
     var name = ""
     var typeId = -1

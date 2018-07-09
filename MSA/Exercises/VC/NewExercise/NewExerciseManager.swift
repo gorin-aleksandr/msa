@@ -84,16 +84,62 @@ class NewExerciseManager {
     
     func uploadVideo(_ path: String, success: @escaping (_ bool: Bool)->()) {
         if let _ = AuthModule.currUser.id {
-            Storage.storage().reference().child("ExercisesVideoUrls").child(path).putFile(from: URL(string:path)!, metadata: nil, completion: { (metadata, error) in
-                if error != nil {
-                    self.view?.errorOccurred(err: error?.localizedDescription ?? "")
-                    success(false)
-                } else {
-                    self.view?.videoLoaded(url: (metadata?.downloadURL()?.absoluteString)!)
-                    success(true)
-                }
-            })
+            if path == "" {
+                success(true)
+            } else {
+                Storage.storage().reference().child("ExercisesVideoUrls").child(path).putFile(from: URL(string:path)!, metadata: nil, completion: { (metadata, error) in
+                    if error != nil {
+                        self.view?.errorOccurred(err: error?.localizedDescription ?? "")
+                        success(false)
+                    } else {
+                        self.view?.videoLoaded(url: (metadata?.downloadURL()?.absoluteString)!)
+                        success(true)
+                    }
+                })
+            }
         }
+    }
+    
+    func sendNewExerciseInfoBlock(id: String) {
+        let newInfo = makeExerciseForFirebase(id: id, or: false)
+        Database.database().reference().child("ExercisesByTrainers").child(id).child("\(index)").setValue(newInfo) { (error, databaseFer) in
+            self.view?.finishLoading()
+            if error == nil {
+                self.view?.exerciseCreated()
+                self.finish()
+            } else {
+                self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
+            }
+        }
+    }
+    
+    func makeExerciseForFirebase(id: String, or edit: Bool) -> [String:Any] {
+        var filters = [[String:Any]]()
+        filters.append(["id":self.dataSource.filterId])
+        var pictures = [[String:Any]]()
+        for url in self.dataSource.picturesUrls {
+            pictures.append(["url": url.url])
+        }
+        var index = Int()
+        if edit {
+            index = dataSource.newExerciseModel.id
+        } else {
+            index = RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0
+        }
+        return [
+            "description": self.dataSource.descript,
+            "howToDo": self.dataSource.howToDo,
+            "filterIDs": filters,
+            "id": index,
+            "link": self.dataSource.newExerciseModel.link,
+            "name": self.dataSource.name,
+            "pictures": pictures,
+            "trainerId": id,
+            "realTypeId": self.dataSource.typeId,
+            "typeId": 12,
+            "videoUrl": self.dataSource.videoUrl,
+            "own": 1
+            ] as [String:Any]
     }
     
     func createNewExerciseInFirebase() {
@@ -109,38 +155,75 @@ class NewExerciseManager {
                     }
                     self.uploadPhoto(images: images, success: { (success) in
                         if success {
-                            var filters = [[String:Any]]()
-                            filters.append(["id":self.dataSource.filterId])
-                            var pictures = [[String:Any]]()
-                            for url in self.dataSource.picturesUrls {
-                                pictures.append(["url": url.url])
-                            }
-                            let index = RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0
-                            let newInfo = [
-                                "description": self.dataSource.descript,
-                                "howToDo": self.dataSource.howToDo,
-                                "filterIDs":filters,
-                                "id":index,
-                                "link": self.dataSource.newExerciseModel.link,
-                                "name": self.dataSource.name,
-                                "pictures": pictures,
-                                "trainerId": id,
-                                "typeId": 12,
-                                "videoUrl": self.dataSource.videoUrl
-                                ] as [String:Any]
-                            Database.database().reference().child("ExercisesByTrainers").child(id).child("\(index)").setValue(newInfo) { (error, databaseFer) in
-                                self.view?.finishLoading()
-                                if error == nil {
-                                    self.view?.exerciseCreated()
-                                    self.finish()
-                                } else {
-                                    self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
-                                }
-                            }
+                            self.sendNewExerciseInfoBlock(id: id)
                         } else {
                             self.view?.finishLoading()
                         }
                     })
+                } else {
+                    self.view?.finishLoading()
+                }
+            }
+        }
+    }
+    
+    func updateExerciseBlock(id: String) {
+        let newInfo = makeExerciseForFirebase(id: id, or: true)
+        Database.database().reference().child("ExercisesByTrainers").child(id).child("\(self.dataSource.newExerciseModel.id)").updateChildValues(newInfo) { (error, databaseFer) in
+            self.view?.finishLoading()
+            if error == nil {
+                DispatchQueue.main.async {
+                    RealmManager.shared.saveObject(self.makeModel(), update: true)
+                    self.view?.exerciseUpdated()
+                    self.finish()
+                }
+            } else {
+                self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
+            }
+        }
+    }
+    
+    func makeModel() -> Exercise {
+        let exercise = Exercise()
+        exercise.id = dataSource.newExerciseModel.id
+        exercise.exerciseDescriprion = dataSource.descript
+        let filt = Id()
+        filt.id = dataSource.filterId
+        exercise.filterIDs.append(filt)
+        exercise.howToDo = dataSource.howToDo
+        exercise.name = dataSource.name
+        for image in dataSource.picturesUrls {
+            exercise.pictures.append(image)
+        }
+        exercise.realTypeId = dataSource.typeId
+        exercise.trainerId = AuthModule.currUser.id ?? ""
+        exercise.typeId = 12
+        exercise.videoUrl = dataSource.videoUrl
+        return exercise
+    }
+        
+    func updateNewExerciseInFirebase() {
+        if let id = AuthModule.currUser.id {
+            self.view?.startLoading()
+            uploadVideo(dataSource.videoPath) { (success) in
+                if success {
+                    var images = [UIImage]()
+                    if self.dataSource.imagesEdited {
+                        for image in self.dataSource.pictures {
+                            if let image = UIImage(data: image) {
+                                images.append(image)
+                            }
+                        }
+                        self.uploadPhoto(images: images, success: { (success) in
+                            if success {
+                                self.updateExerciseBlock(id: id)
+                            } else {
+                                self.view?.finishLoading()
+                            }
+                        })
+                    } else {
+                        self.updateExerciseBlock(id: id)
+                    }
                 } else {
                     self.view?.finishLoading()
                 }
