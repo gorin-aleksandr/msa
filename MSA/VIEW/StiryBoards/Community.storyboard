@@ -30,9 +30,53 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JcA-iT-roU">
                                 <rect key="frame" x="0.0" y="114" width="375" height="553"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="rOH-Nb-3d8">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K3L-m5-4V9" userLabel="Separator">
+                                            <rect key="frame" x="32" y="52.5" width="311" height="0.5"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="0.5" id="npB-1U-LEw"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="фильтровать по городу" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Vt8-bT-f0n">
+                                            <rect key="frame" x="32" y="25.5" width="322" height="19"/>
+                                            <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropdown_black" translatesAutoresizingMaskIntoConstraints="NO" id="SYN-VS-scL">
+                                            <rect key="frame" x="354" y="29.5" width="16" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="16" id="2jG-OJ-P1F"/>
+                                                <constraint firstAttribute="width" constant="16" id="wnw-Lv-aEe"/>
+                                            </constraints>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IPZ-cI-kQm">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="IPZ-cI-kQm" secondAttribute="trailing" id="3wv-Uc-9RU"/>
+                                        <constraint firstAttribute="height" constant="60" id="7dE-T5-Q8I"/>
+                                        <constraint firstItem="Vt8-bT-f0n" firstAttribute="leading" secondItem="K3L-m5-4V9" secondAttribute="leading" id="9dc-vf-elQ"/>
+                                        <constraint firstItem="SYN-VS-scL" firstAttribute="centerY" secondItem="rOH-Nb-3d8" secondAttribute="centerY" id="UkV-fH-fjl"/>
+                                        <constraint firstItem="K3L-m5-4V9" firstAttribute="leading" secondItem="rOH-Nb-3d8" secondAttribute="leading" constant="32" id="Xf6-Z2-PJW"/>
+                                        <constraint firstItem="SYN-VS-scL" firstAttribute="leading" secondItem="Vt8-bT-f0n" secondAttribute="trailing" id="Xfb-2Q-rcJ"/>
+                                        <constraint firstAttribute="trailing" secondItem="SYN-VS-scL" secondAttribute="trailing" constant="5" id="mHV-wd-HxE"/>
+                                        <constraint firstItem="IPZ-cI-kQm" firstAttribute="top" secondItem="rOH-Nb-3d8" secondAttribute="top" id="moD-X5-V24"/>
+                                        <constraint firstAttribute="bottom" secondItem="IPZ-cI-kQm" secondAttribute="bottom" id="oPl-vn-wxv"/>
+                                        <constraint firstAttribute="bottom" secondItem="K3L-m5-4V9" secondAttribute="bottom" constant="22" id="smM-ig-23p"/>
+                                        <constraint firstItem="IPZ-cI-kQm" firstAttribute="leading" secondItem="rOH-Nb-3d8" secondAttribute="leading" id="xPN-kz-1bE"/>
+                                        <constraint firstItem="K3L-m5-4V9" firstAttribute="top" secondItem="Vt8-bT-f0n" secondAttribute="bottom" constant="8" id="xvX-oH-eHr"/>
+                                        <constraint firstAttribute="trailing" secondItem="K3L-m5-4V9" secondAttribute="trailing" constant="32" id="yEt-gv-7pz"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonTableViewCell" rowHeight="68" id="Paf-dT-Z5R" customClass="PersonTableViewCell" customModule="MSA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="68"/>
+                                        <rect key="frame" x="0.0" y="103" width="375" height="68"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Paf-dT-Z5R" id="mxT-I0-urb">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="67.5"/>
@@ -151,6 +195,7 @@
         <image name="Plus" width="18" height="18"/>
         <image name="avatarPlaceholder" width="626" height="626"/>
         <image name="bell_icon" width="27" height="25"/>
+        <image name="dropdown_black" width="16" height="16"/>
         <image name="location_icon" width="12" height="15"/>
     </resources>
 </document>
