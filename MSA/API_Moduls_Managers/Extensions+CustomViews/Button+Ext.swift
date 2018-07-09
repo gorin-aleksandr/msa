@@ -11,6 +11,7 @@ import UIKit
 extension UIButton {
     func configureAsFilterButton(title: String, xOffset: CGFloat, padding: CGFloat) {
         self.setTitle(title, for: .normal)
+        self.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 13)
         let width = self.intrinsicContentSize.width + 30
         self.setTitleColor(.white, for: .normal)
         self.layer.cornerRadius = 15
