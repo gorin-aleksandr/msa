@@ -10,6 +10,7 @@ import UIKit
 
 protocol CommunityListViewProtocol: class {
     func updateTableView()
+    func configureFilterView(dataSource: [String])
 }
 
 class CommunityListViewController: UIViewController, CommunityListViewProtocol {
@@ -20,6 +21,9 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     
     var presenter: CommunityListPresenterProtocol!
     let searchController = UISearchController(searchResultsController: nil)
+    
+    let button = UIButton()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +46,18 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     
     func updateTableView() {
         communityTableView.reloadData()
+    }
+    
+    func configureFilterView(dataSource: [String]) {
+        var xOffset: CGFloat = 8
+        let buttonPadding: CGFloat = 10
+        for filterName in dataSource {
+            let button = UIButton()
+            button.configureAsFilterButton(title: filterName, xOffset: xOffset, padding: buttonPadding)
+            xOffset = xOffset + buttonPadding + button.frame.size.width
+            filterScrollView.addSubview(button)
+        }
+        filterScrollView.contentSize = CGSize(width: xOffset, height: filterScrollView.frame.height)
     }
     
     private func configureSearchController() {
