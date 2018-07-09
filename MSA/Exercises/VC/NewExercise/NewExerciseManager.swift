@@ -102,9 +102,11 @@ class NewExerciseManager {
     
     func sendNewExerciseInfoBlock(id: String) {
         let newInfo = makeExerciseForFirebase(id: id, or: false)
+        let index = RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0
         Database.database().reference().child("ExercisesByTrainers").child(id).child("\(index)").setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
+                RealmManager.shared.saveObject(self.makeModel(), update: true)
                 self.view?.exerciseCreated()
                 self.finish()
             } else {
@@ -169,6 +171,7 @@ class NewExerciseManager {
     
     func updateExerciseBlock(id: String) {
         let newInfo = makeExerciseForFirebase(id: id, or: true)
+//        let child = [self.dataSource.newExerciseModel.id:newInfo] as! [Int:Any]
         Database.database().reference().child("ExercisesByTrainers").child(id).child("\(self.dataSource.newExerciseModel.id)").updateChildValues(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {

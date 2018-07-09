@@ -269,11 +269,12 @@ class ExersisesTypesPresenter {
             myExerc.id = AuthModule.currUser.id ?? ""
             for item in items {
                 myExerc.myExercises.append(item)
+//                self.exercises.allExersises.append(item)
             }
             DispatchQueue.main.async {
                 self.realmManager.saveObject(myExerc)
             }
-            self.exercises.ownExercises = Array(myExerc.myExercises)
+            self.exercises.ownExercises = Array(Set(myExerc.myExercises))
             self.view?.myExercisesLoaded()
         }
     }
@@ -283,6 +284,13 @@ class ExersisesTypesPresenter {
             exercises.currentTypeExercisesArray = exercises.ownExercises
         } else {
             exercises.currentTypeExercisesArray = self.realmManager.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "typeId = %d", id))
+            var exerc = [Exercise]()
+            for e in exercises.ownExercises {
+                if e.realTypeId == id {
+                    exerc.append(e)
+                }
+            }
+            exercises.currentTypeExercisesArray.append(contentsOf: exerc)
         }
     }
     

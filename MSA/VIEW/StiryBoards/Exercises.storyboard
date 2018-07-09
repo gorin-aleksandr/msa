@@ -11,6 +11,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Rubik-Medium.ttf">
+            <string>Rubik-Medium</string>
+        </array>
         <array key="Rubik-Regular.ttf">
             <string>Rubik-Regular</string>
         </array>
@@ -24,6 +27,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qce-Oq-HWx">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exerciseTableCell" rowHeight="70" id="fcm-9Y-nLR" customClass="ExercisesTableViewCell" customModule="MSA" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fcm-9Y-nLR" id="8Sa-lj-nBr">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-d3-o3A">
+                                                    <rect key="frame" x="10" y="9.5" width="50" height="50.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="RRL-lx-dy3"/>
+                                                        <constraint firstAttribute="height" constant="50" id="krY-tA-tTt"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" LKLKLK" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9m-yw-7rE">
+                                                    <rect key="frame" x="65" y="5" width="300" height="59.5"/>
+                                                    <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t5M-c8-lXB">
+                                                    <rect key="frame" x="65" y="68.5" width="310" height="1"/>
+                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="oHY-sQ-i4R"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="yRM-rs-2oV"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="k9m-yw-7rE" secondAttribute="trailing" constant="10" id="1QK-Yk-8aG"/>
+                                                <constraint firstItem="k9m-yw-7rE" firstAttribute="leading" secondItem="Zda-d3-o3A" secondAttribute="trailing" constant="5" id="dx5-bx-ve1"/>
+                                                <constraint firstItem="Zda-d3-o3A" firstAttribute="leading" secondItem="8Sa-lj-nBr" secondAttribute="leading" constant="10" id="fSu-W8-0A7"/>
+                                                <constraint firstItem="t5M-c8-lXB" firstAttribute="leading" secondItem="k9m-yw-7rE" secondAttribute="leading" id="h7M-vY-v4C"/>
+                                                <constraint firstAttribute="bottom" secondItem="t5M-c8-lXB" secondAttribute="bottom" id="kja-gY-34g"/>
+                                                <constraint firstAttribute="bottom" secondItem="k9m-yw-7rE" secondAttribute="bottom" constant="5" id="pui-YU-nOC"/>
+                                                <constraint firstAttribute="trailing" secondItem="t5M-c8-lXB" secondAttribute="trailing" id="tfN-rC-oYx"/>
+                                                <constraint firstItem="k9m-yw-7rE" firstAttribute="top" secondItem="8Sa-lj-nBr" secondAttribute="top" constant="5" id="vLy-uU-2jW"/>
+                                                <constraint firstItem="Zda-d3-o3A" firstAttribute="centerY" secondItem="8Sa-lj-nBr" secondAttribute="centerY" id="zkX-WC-XOJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="exerciseImage" destination="Zda-d3-o3A" id="qSz-yB-YIh"/>
+                                            <outlet property="exercisename" destination="k9m-yw-7rE" id="ZJo-Fw-47w"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JHu-ec-Gqu">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -76,7 +131,7 @@
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тренировка" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LHs-Oa-gC3">
                                                     <rect key="frame" x="13" y="118.5" width="131" height="20.5"/>
-                                                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -99,58 +154,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Qce-Oq-HWx">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="exerciseTableCell" rowHeight="70" id="fcm-9Y-nLR" customClass="ExercisesTableViewCell" customModule="MSA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fcm-9Y-nLR" id="8Sa-lj-nBr">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zda-d3-o3A">
-                                                    <rect key="frame" x="10" y="9.5" width="50" height="50.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="RRL-lx-dy3"/>
-                                                        <constraint firstAttribute="height" constant="50" id="krY-tA-tTt"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" LKLKLK" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k9m-yw-7rE">
-                                                    <rect key="frame" x="65" y="5" width="300" height="59.5"/>
-                                                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t5M-c8-lXB">
-                                                    <rect key="frame" x="65" y="68.5" width="310" height="1"/>
-                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="oHY-sQ-i4R"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="yRM-rs-2oV"/>
-                                                    </constraints>
-                                                </view>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="k9m-yw-7rE" secondAttribute="trailing" constant="10" id="1QK-Yk-8aG"/>
-                                                <constraint firstItem="k9m-yw-7rE" firstAttribute="leading" secondItem="Zda-d3-o3A" secondAttribute="trailing" constant="5" id="dx5-bx-ve1"/>
-                                                <constraint firstItem="Zda-d3-o3A" firstAttribute="leading" secondItem="8Sa-lj-nBr" secondAttribute="leading" constant="10" id="fSu-W8-0A7"/>
-                                                <constraint firstItem="t5M-c8-lXB" firstAttribute="leading" secondItem="k9m-yw-7rE" secondAttribute="leading" id="h7M-vY-v4C"/>
-                                                <constraint firstAttribute="bottom" secondItem="t5M-c8-lXB" secondAttribute="bottom" id="kja-gY-34g"/>
-                                                <constraint firstAttribute="bottom" secondItem="k9m-yw-7rE" secondAttribute="bottom" constant="5" id="pui-YU-nOC"/>
-                                                <constraint firstAttribute="trailing" secondItem="t5M-c8-lXB" secondAttribute="trailing" id="tfN-rC-oYx"/>
-                                                <constraint firstItem="k9m-yw-7rE" firstAttribute="top" secondItem="8Sa-lj-nBr" secondAttribute="top" constant="5" id="vLy-uU-2jW"/>
-                                                <constraint firstItem="Zda-d3-o3A" firstAttribute="centerY" secondItem="8Sa-lj-nBr" secondAttribute="centerY" id="zkX-WC-XOJ"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="exerciseImage" destination="Zda-d3-o3A" id="qSz-yB-YIh"/>
-                                            <outlet property="exercisename" destination="k9m-yw-7rE" id="ZJo-Fw-47w"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -183,7 +186,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pt2-mo-18u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5818.3999999999996" y="-56.221889055472268"/>
+            <point key="canvasLocation" x="-6183" y="-535"/>
         </scene>
         <!--Новое упражнение-->
         <scene sceneID="R8Q-pG-cRT">
@@ -314,7 +317,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a0o-fi-ymO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5026.3999999999996" y="-687.7061469265368"/>
+            <point key="canvasLocation" x="-5273" y="-534"/>
         </scene>
         <!--Вид упражнения-->
         <scene sceneID="nbO-GR-tuW">
@@ -345,7 +348,7 @@
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Упражнение" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Gy-Ze-Ylq">
                                                     <rect key="frame" x="65" y="16" width="285" height="43"/>
-                                                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -417,6 +420,7 @@
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="plus:" destination="4k3-NL-KPv" id="YCX-vb-ZlC"/>
+                                <segue destination="bbY-NJ-TFA" kind="show" id="XRk-e6-TPL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -430,7 +434,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oxt-8u-QzL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5026.3999999999996" y="316.19190404797604"/>
+            <point key="canvasLocation" x="-6183" y="312"/>
         </scene>
         <!--Упражнения-->
         <scene sceneID="lO0-X1-Z5a">
@@ -486,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AKF-ZJ-eo1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4236" y="-36.431784107946029"/>
+            <point key="canvasLocation" x="-5204" y="312"/>
         </scene>
     </scenes>
     <resources>
@@ -496,5 +500,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="YYF-uH-imQ"/>
+        <segue reference="t8y-vQ-BrH"/>
     </inferredMetricsTieBreakers>
 </document>

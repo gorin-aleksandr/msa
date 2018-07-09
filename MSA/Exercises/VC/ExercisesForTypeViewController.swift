@@ -30,12 +30,19 @@ class ExercisesForTypeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        presenter?.attachView(view: self)
         initialDataFilling()
         configureFilterScrollView()
         configureTable_CollectionView()
     }
     
     func initialDataFilling() {
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        navigationItem.title = presenter?.getCurrentExetcisesType().name
+        if presenter?.getCurrentExetcisesType().name == "" {
+           navigationItem.title = "Мои упражнения"
+        }
         filters = presenter?.getCurrentFilters() ?? []
         let allFilter = ExerciseTypeFilter()
         allFilter.name = "ВСЕ В КАТЕГОРИИ"
@@ -46,12 +53,12 @@ class ExercisesForTypeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configurateSearchController()
-        hideableNavigationBar(false)
-        if exercisesByFIlter?.first?.typeId == 12 {
+        if presenter?.getCurrentExetcisesType().name == "" {
             exercisesByFIlter = Array(RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
             tableView.reloadData()
         }
+        configurateSearchController()
+        hideableNavigationBar(false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -111,7 +118,7 @@ class ExercisesForTypeViewController: UIViewController {
             if selectedFilter == item.name {
                 button.backgroundColor = lightBlue
             } else {
-                button.backgroundColor = lightGrey
+                button.backgroundColor = UIColor.lightGray
             }
             button.setTitle(item.name, for: .normal)
             button.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 13)
@@ -205,7 +212,10 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
 }
 
 extension ExercisesForTypeViewController: ExercisesTypesDataProtocol {
-    func myExercisesLoaded() {}
+    func myExercisesLoaded() {
+            exercisesByFIlter = presenter?.getOwnExercises()
+            tableView.reloadData()
+    }
     func startLoading() {}
     func finishLoading() {}
     func exercisesTypesLoaded() {}

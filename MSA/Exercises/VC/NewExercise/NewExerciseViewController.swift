@@ -48,6 +48,7 @@ class NewExerciseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         initialConfigurations()
         configureTableView()
     }
@@ -99,6 +100,7 @@ class NewExerciseViewController: UIViewController {
 
     @IBAction func back(_ sender: Any) {
         if exercManager.dataSource.editMode {
+            exercManager.dataSource.editMode = false
             self.dismiss(animated: true, completion: nil)
         } else {
             navigationController?.popViewController(animated: true)

@@ -32,8 +32,8 @@
                             <constraint firstAttribute="width" constant="40" id="bbY-bD-BpQ"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Загрузить изображения" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r8z-W2-kya">
-                        <rect key="frame" x="50" y="10.5" width="197.5" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Загрузить изображения" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="r8z-W2-kya">
+                        <rect key="frame" x="50" y="10.5" width="328" height="20.5"/>
                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -60,6 +60,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="MiV-xH-xgH"/>
+                        </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tQG-gW-rcX">
                         <rect key="frame" x="5" y="168.5" width="408" height="1"/>
@@ -92,6 +95,7 @@
                     </collectionView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="MD5-Hl-6z8" firstAttribute="leading" secondItem="r8z-W2-kya" secondAttribute="trailing" constant="5" id="4GM-St-wVc"/>
                     <constraint firstItem="Y6D-5O-syg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="9Q5-vq-Lmy"/>
                     <constraint firstItem="R1P-MY-Aax" firstAttribute="top" secondItem="gg4-pM-JnP" secondAttribute="bottom" constant="10" id="APM-Hg-Kkz"/>
                     <constraint firstItem="gg4-pM-JnP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="B0q-a6-F2M"/>
