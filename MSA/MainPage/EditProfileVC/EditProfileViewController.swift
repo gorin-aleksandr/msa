@@ -139,13 +139,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func openGallary() {
-        myPicker.allowsEditing = false
+        myPicker.allowsEditing = true
         myPicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         present(myPicker, animated: true, completion: nil)
     }
     
     func openCamera() {
-        myPicker.allowsEditing = false
+        myPicker.allowsEditing = true
         myPicker.sourceType = UIImagePickerControllerSourceType.camera
         present(myPicker, animated: true, completion: nil)
     }
@@ -156,7 +156,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
         dismiss(animated: true, completion: nil)
         presenter.updateUserAvatar(chosenImage)
     }

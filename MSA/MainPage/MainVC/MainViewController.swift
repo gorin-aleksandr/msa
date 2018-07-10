@@ -122,7 +122,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         
         AuthModule.userAvatar = customImageViev.image
         customImageViev.frame = CGRect(x: 0, y: 0, width: 70, height: 90)
-        customImageViev.contentMode = .scaleAspectFit
+        customImageViev.contentMode = .scaleAspectFill
         customImageViev.setNeedsLayout()
         userImage.addSubview(customImageViev)
         

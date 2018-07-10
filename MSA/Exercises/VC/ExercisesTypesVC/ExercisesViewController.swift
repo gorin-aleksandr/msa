@@ -27,6 +27,7 @@ class ExercisesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         presenter.attachView(view: self)
         configureTable_CollectionView()
         configurateSearchController()

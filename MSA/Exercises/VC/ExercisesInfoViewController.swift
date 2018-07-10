@@ -9,16 +9,19 @@
 import UIKit
 import AVKit
 import AVFoundation
+import RealmSwift
 
 class ExercisesInfoViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
     var execise: Exercise? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         configureTableView()
         // Do any additional setup after loading the view.
     }
@@ -35,7 +38,14 @@ class ExercisesInfoViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("Will")
+        execise = RealmManager.shared.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", execise?.id ?? 0)).first
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        if execise?.typeId == 12 {
+            navigationItem.rightBarButtonItem = self.editButton
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,6 +55,26 @@ class ExercisesInfoViewController: UIViewController {
     
     @IBAction func back(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+    @IBAction func editExercise(_ sender: Any) {
+        let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "NewExerciseViewController") as! NewExerciseViewController
+        let manager = NewExerciseManager.shared
+        manager.dataSource.editMode = true
+        manager.dataSource.newExerciseModel = execise ?? Exercise()
+        var pictures = [Data]()
+        if let images = execise?.pictures {
+            for image in images {
+                if let url = URL(string: image.url) {
+                    if let data = try? Data(contentsOf: url) {
+                        pictures.append(data)
+                    }
+                }
+            }
+        }
+        manager.dataSource.pictures = pictures
+        destinationVC.exercManager = manager
+        let navigationController = UINavigationController(rootViewController: destinationVC)
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     func playVideo(url: String) {

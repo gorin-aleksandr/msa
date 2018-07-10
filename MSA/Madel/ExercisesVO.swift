@@ -11,16 +11,17 @@ import Realm
 import RealmSwift
 
 class Exercise: Object {
-    @objc dynamic var id: Int = 0
+    @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
     var pictures = List<Image>()
-    @objc dynamic var typeId: Int = 0
+    @objc dynamic var typeId: Int = -1
     @objc dynamic var trainerId: String = ""
     @objc dynamic var videoUrl: String = ""
     @objc dynamic var exerciseDescriprion: String = "No description"
     @objc dynamic var howToDo: String = "No info about doing"
     @objc dynamic var link: String = "No attached link"
     var filterIDs = List<Id>()
+    @objc dynamic var realTypeId: Int = -1
 
     override static func primaryKey() -> String? {
         return "id"
@@ -51,11 +52,11 @@ class Image: Object {
 }
 
 class Id: Object {
-    @objc dynamic var id: Int = 0
+    @objc dynamic var id: Int = -1
 }
 
 class ExerciseType: Object {
-    @objc dynamic var id: Int = 0
+    @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
     @objc dynamic var picture: String = ""
     var exercisesIds = List<Id>()
@@ -72,7 +73,7 @@ class ExerciseType: Object {
 }
 
 class ExerciseTypeFilter: Object {
-    @objc dynamic var id: Int = 0
+    @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
     
     func incrementID() -> Int {

@@ -17,6 +17,7 @@ protocol NewExerciseProtocol: class {
     func photoUploaded()
     func videoLoaded(url: String)
     func exerciseCreated()
+    func exerciseUpdated()
     func errorOccurred(err: String)
 }
 
@@ -41,12 +42,13 @@ class NewExerciseViewController: UIViewController {
     @IBOutlet weak var picker: UIPickerView!
     
     var selectedRow = -1
-    let exercManager = NewExerciseManager.shared
+    var exercManager = NewExerciseManager.shared
     var imageManager: SelectingImagesManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         initialConfigurations()
         configureTableView()
     }
@@ -97,11 +99,22 @@ class NewExerciseViewController: UIViewController {
     }
 
     @IBAction func back(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        if exercManager.dataSource.editMode {
+            exercManager.dataSource.editMode = false
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func done(_ sender: Any) {
-        
+        if exercManager.dataSource.editMode {
+            updateExercise()
+        } else {
+            createExercise()
+        }
+        exercManager.dataSource.createButtonTapped = true
+        tableView.reloadData()
     }
 }
 
@@ -136,7 +149,7 @@ extension NewExerciseViewController: UITextViewDelegate {
         switch textView.tag {
             case 1: return numberOfChars < 151
             case 2: return numberOfChars < 601
-            case 3: return numberOfChars < 601
+            case 3: return numberOfChars < 1201
             default: return false
         }
     }
@@ -158,6 +171,7 @@ extension NewExerciseViewController: SelectingImagesManagerDelegate {
     }
     
     func imagesWasSelecting(images: [Data]) {
+        exercManager.dataSource.imagesEdited = true
         exercManager.dataSource.pictures.append(contentsOf: images)
         tableView.reloadData()
     }
@@ -216,11 +230,11 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureDescriptionCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewViewCounterTableViewCell", for:  indexPath) as! TextViewViewCounterTableViewCell
         cell.HeaderLabel.text = "Описание"
-        if exercManager.created() && (exercManager.dataSource.descript == ""){
-            cell.errorLabel.isHidden = false
-        } else {
+//        if exercManager.created() && (exercManager.dataSource.descript == ""){
+//            cell.errorLabel.isHidden = false
+//        } else {
             cell.errorLabel.isHidden = true
-        }
+//        }
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 2
         cell.infoTextView.text = "\(exercManager.dataSource.descript)"
@@ -236,15 +250,15 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureTechnicCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextViewViewCounterTableViewCell", for:  indexPath) as! TextViewViewCounterTableViewCell
         cell.HeaderLabel.text = "Техника"
-        if exercManager.created() && (exercManager.dataSource.howToDo == ""){
-            cell.errorLabel.isHidden = false
-        } else {
+//        if exercManager.created() && (exercManager.dataSource.howToDo == ""){
+//            cell.errorLabel.isHidden = false
+//        } else {
             cell.errorLabel.isHidden = true
-        }
+//        }
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 3
         cell.infoTextView.text = "\(exercManager.dataSource.howToDo)"
-        cell.maxLenght.text = "600"
+        cell.maxLenght.text = "1200"
         let c = exercManager.dataSource.howToDo.count
         if c == 0 {
             cell.numOfSymbuls.text = ""
@@ -257,14 +271,18 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func configureImagesCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AddImagesTableViewCell", for:  indexPath) as! AddImagesTableViewCell
         cell.delegate = self
-        if exercManager.created() && (exercManager.dataSource.pictures.count == 0) {
-            cell.errorLabel.isHidden = false
-            cell.collectionView.isHidden = true
-            cell.errorLabel.text = "Прикрепите изображения!"
-        } else {
+//        if exercManager.created() && (exercManager.dataSource.pictures.count == 0) {
+//            cell.errorLabel.isHidden = false
+//            cell.collectionView.isHidden = true
+//            cell.errorLabel.text = "Прикрепите изображения!"
+//        } else {
             cell.errorLabel.isHidden = true
+        if !exercManager.dataSource.pictures.isEmpty {
             cell.collectionView.isHidden = false
+        } else {
+            cell.collectionView.isHidden = true
         }
+//        }
         cell.addPictureButton.addTarget(self, action: #selector(self.handleAddPhoto(_:)), for: .touchUpInside)
         cell.images = exercManager.dataSource.pictures
         cell.photoCounter.text = "\(cell.images.count)"
@@ -273,22 +291,21 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     
     func configureVideoCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LoadVideoTableViewCell", for:  indexPath) as! LoadVideoTableViewCell
-        if exercManager.created() && (exercManager.dataSource.videoPath == "") {
-            cell.errorLabel.isHidden = false
-            cell.errorLabel.text = "Прикрепите видео файл!"
-            cell.img.isHidden = true
-            cell.deleteVideoButt.isHidden = true
-        } else {
+//        if exercManager.created() && (exercManager.dataSource.videoPath == "") {
+//            cell.errorLabel.isHidden = false
+//            cell.errorLabel.text = "Прикрепите видео файл!"
+//            cell.img.isHidden = true
+//            cell.deleteVideoButt.isHidden = true
+//        } else {
             if exercManager.dataSource.videoPath == "" {
                 cell.img.isHidden = true
                 cell.deleteVideoButt.isHidden = true
             } else {
-                cell.errorLabel.isHidden = true
                 cell.img.isHidden = false
                 cell.deleteVideoButt.isHidden = false
             }
             cell.errorLabel.isHidden = true
-        }
+//        }
         cell.deleteVideoButt.addTarget(self, action: #selector(self.deleteVideo(_:)), for: .touchUpInside)
         cell.addVideo.addTarget(self, action: #selector(self.addVideo(_:)), for: .touchUpInside)
         return cell
@@ -348,14 +365,27 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
                 self.viewWithPicker.alpha = 1
             }
         } else if selectedRow == 8 {
+            if exercManager.dataSource.editMode {
+                updateExercise()
+            } else {
+                createExercise()
+            }
             exercManager.dataSource.createButtonTapped = true
-            createExercise()
+            tableView.reloadData()
+        }
+    }
+    
+    func updateExercise() {
+        if exercManager.dataSource.name != "" && exercManager.dataSource.filterId != -1 &&  exercManager.dataSource.typeId != -1 {
+            exercManager.updateNewExerciseInFirebase()
+        } else {
+            AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
             tableView.reloadData()
         }
     }
     
     func createExercise() {
-        if exercManager.dataSource.name != "" && exercManager.dataSource.descript != "" && exercManager.dataSource.filterId != -1 && exercManager.dataSource.howToDo != "" && exercManager.dataSource.pictures.count != 0 && exercManager.dataSource.typeId != -1 && exercManager.dataSource.videoPath != "" {
+        if exercManager.dataSource.name != "" && exercManager.dataSource.filterId != -1 &&  exercManager.dataSource.typeId != -1 {
             exercManager.createNewExerciseInFirebase()
         } else {
             AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
@@ -400,6 +430,10 @@ extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 }
 
 extension NewExerciseViewController: NewExerciseProtocol {
+    func exerciseUpdated() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func exerciseCreated() {
         navigationController?.popViewController(animated: true)
         NotificationCenter.default.post(name: Notification.Name("Exercise_added"), object: nil, userInfo: nil)
@@ -440,6 +474,7 @@ extension NewExerciseViewController: ImagesProtocol {
         tableView.reloadData()
     }
     func deleteImage(at index: Int) {
+        exercManager.dataSource.imagesEdited = true
         exercManager.dataSource.pictures.remove(at: index)
         tableView.reloadData()
     }

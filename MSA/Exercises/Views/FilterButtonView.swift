@@ -12,5 +12,4 @@ class FilterButtonView: UIView {
 
     @IBOutlet weak var label: UILabel!
     
-    
 }
