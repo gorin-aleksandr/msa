@@ -55,7 +55,8 @@ class UserDataManager {
                 "heightType": user.heightType,
                 "weight": user.weight,
                 "weightType": user.weightType,
-                "type": user.type
+                "type": user.type,
+                "city": user.city
                 ] as [String:Any]
             userRef.child(key).setValue(newUser) { (error, ref) in
                 if error == nil {
@@ -141,7 +142,7 @@ class UserDataManager {
                           type: value["type"] as? String,
                           purpose: value["purpose"] as? String,
                           gallery: gallery,
-                          city: "Киев")
+                          city: value["city"] as? String)
         }
         return user
     }
@@ -160,7 +161,8 @@ class UserDataManager {
                 "heightType": user.heightType,
                 "weight": user.weight,
                 "weightType": user.weightType,
-                "type": user.type
+                "type": user.type,
+                "city": user.city
                 ] as [String:Any]
             userRef.child(key).updateChildValues(update, withCompletionBlock: { (error, ref) in
                 if error == nil {

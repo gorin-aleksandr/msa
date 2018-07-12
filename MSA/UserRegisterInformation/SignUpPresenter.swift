@@ -127,6 +127,9 @@ class SignUpPresenter {
     func setSurname(surname: String) {
         AuthModule.currUser.lastName = surname
     }
+    func setCity(city: String) {
+        AuthModule.currUser.city = city
+    }
     func setType(type: MSA_User_Type) {
         AuthModule.currUser.type = type.rawValue
     }

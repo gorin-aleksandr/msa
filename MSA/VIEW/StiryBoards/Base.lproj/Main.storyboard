@@ -1151,7 +1151,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LmI-tv-DEd">
-                                <rect key="frame" x="20" y="120" width="335" height="110"/>
+                                <rect key="frame" x="20" y="120" width="335" height="170"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YxM-WP-7s6">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
@@ -1227,6 +1227,43 @@
                                             <constraint firstAttribute="bottom" secondItem="MrK-Ha-xsL" secondAttribute="bottom" id="ypa-KN-IGr"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Y9-AU-E8D">
+                                        <rect key="frame" x="0.0" y="120" width="335" height="50"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Город" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hwz-0N-HgS" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
+                                                <rect key="frame" x="5" y="10" width="305" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="selectedTitleColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="selectedLineColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="hwz-0N-HgS" secondAttribute="trailing" constant="25" id="B23-LA-5lE"/>
+                                            <constraint firstItem="hwz-0N-HgS" firstAttribute="leading" secondItem="8Y9-AU-E8D" secondAttribute="leading" constant="5" id="MwW-b5-J1j"/>
+                                            <constraint firstAttribute="bottom" secondItem="hwz-0N-HgS" secondAttribute="bottom" id="RPO-Op-yZA"/>
+                                            <constraint firstItem="hwz-0N-HgS" firstAttribute="top" secondItem="8Y9-AU-E8D" secondAttribute="top" constant="10" id="gtP-Y7-nDL"/>
+                                            <constraint firstAttribute="height" constant="50" id="zzp-4J-QeP"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="st2-PJ-r3w">
@@ -1284,13 +1321,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тип учетной записи в MSA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W3C-Gd-8dW">
-                                <rect key="frame" x="20" y="240" width="335" height="20.5"/>
+                                <rect key="frame" x="20" y="300" width="335" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="KNP-UB-o29">
-                                <rect key="frame" x="20" y="280.5" width="251" height="30"/>
+                                <rect key="frame" x="20" y="340.5" width="251" height="30"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lLQ-uK-nce">
                                         <rect key="frame" x="0.0" y="0.0" width="110.5" height="30"/>
@@ -1380,7 +1417,7 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="6eO-fy-Yp1">
-                                <rect key="frame" x="169" y="320.5" width="37" height="37"/>
+                                <rect key="frame" x="169" y="380.5" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>
@@ -1418,6 +1455,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="6eO-fy-Yp1" id="sK1-Vc-rVj"/>
                         <outlet property="blurView" destination="5zO-uQ-cYJ" id="Upl-92-5rd"/>
+                        <outlet property="cityTF" destination="hwz-0N-HgS" id="MS0-0o-HEU"/>
                         <outlet property="nameTF" destination="Vmv-zg-8qm" id="KxL-h6-Qzd"/>
                         <outlet property="sportsmanImage" destination="HEP-cO-BI9" id="2hk-aY-dKd"/>
                         <outlet property="surnameTF" destination="MrK-Ha-xsL" id="Dra-2T-GHO"/>
