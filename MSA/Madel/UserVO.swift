@@ -25,7 +25,24 @@ struct UserVO {
     var type: String?
     var purpose: String?
     var gallery: [GalleryItemVO]?
+    var friends: [String]?
+    // FIXME: Change default value after testing
     var city: String? = "Киев"
+    
+    func getFullName() -> String {
+        guard let name = firstName else {
+            if let surname = lastName {
+                return surname
+            } else {
+                return ""
+            }
+        }
+        guard let surname = lastName else {
+            return name
+        }
+        return name + " " + surname
+    }
+    
 }
 
 enum Sex: String {

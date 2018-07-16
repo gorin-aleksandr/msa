@@ -237,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				29160B452035AA3B00DA7227 /* AppDelegate.swift */,
+				35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */,
 				2923304A203AFD3E00EFA2C5 /* API_Moduls_Managers */,
 				291950B520474829004891FF /* Madel */,
 				29C2D5F0207422F000E2B958 /* VIEW */,
@@ -278,7 +279,6 @@
 		2923304A203AFD3E00EFA2C5 /* API_Moduls_Managers */ = {
 			isa = PBXGroup;
 			children = (
-				35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */,
 				290CA6D0203AD6100073A8F0 /* AuthModule.swift */,
 				295A4EE4203DF78300124A07 /* UserDataManagerFirebase.swift */,
 				29D2CD6E20A170870073C838 /* StartCoordinator.swift */,

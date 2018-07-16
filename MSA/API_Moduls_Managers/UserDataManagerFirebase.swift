@@ -78,6 +78,7 @@ class UserDataManager {
             userRef.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? [String : Any]
+                print(value)
                 let user = self.makeUser(from: value)
                 callback(user)
             }) { (error) in
@@ -141,7 +142,8 @@ class UserDataManager {
                           type: value["type"] as? String,
                           purpose: value["purpose"] as? String,
                           gallery: gallery,
-                          city: "Киев")
+                          friends: value["friends"] as? [String],
+                          city: value["city"] as? String ?? "Киев")
         }
         return user
     }

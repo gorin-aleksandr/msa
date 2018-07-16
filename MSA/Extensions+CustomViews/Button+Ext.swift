@@ -15,7 +15,11 @@ extension UIButton {
         let width = self.intrinsicContentSize.width + 30
         self.setTitleColor(.white, for: .normal)
         self.layer.cornerRadius = 15
+        if self.isSelected {
+            self.backgroundColor = .lightBlue
+        } else {
+            self.backgroundColor = .lightGray
+        }
         self.frame = CGRect(x: xOffset, y: padding, width: width, height: 30)
-        self.backgroundColor = .lightBlue
     }
 }
