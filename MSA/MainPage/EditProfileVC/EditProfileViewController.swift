@@ -25,6 +25,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
+    @IBOutlet weak var findTrainerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var profilePhoto: UIView!
     @IBOutlet weak var changeImageButton: UIButton! {didSet{changeImageButton.imageView?.contentMode = .scaleAspectFit}}
@@ -48,6 +49,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
+    @IBOutlet weak var cityTF: SkyFloatingLabelTextField!
     
     @IBOutlet weak var pickerView: UIPickerView! {didSet{pickerView.alpha = 0}}
     
@@ -81,6 +83,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func configereProfile() {
         let user = AuthModule.currUser
+        setProfileImage(image: #imageLiteral(resourceName: "avatarPlaceholder"), url: nil)
         if let url = user.avatar {
             setProfileImage(image: nil, url: url)
         }
@@ -91,10 +94,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if let email = user.email {
             emailTextField.text = email
         }
+        if let city = user.city {
+            cityTF.text = city
+        }
 //        if let trainer = AuthModule.currUser.trainer {
-//
+//            findTrainerView.alpha = 0
+//        } else {
+//            findTrainerView.alpha = 1
 //        }
-//        trainerStackView.isHidden = true
         if user.type == "СПОРТСМЕН" {
             sportsmanTypeImage.image = #imageLiteral(resourceName: "selected")
             trainerTypeImage.image = #imageLiteral(resourceName: "notSelected")
@@ -200,6 +207,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if let email = AuthModule.currUser.email {
             presenter.setEmail(email: email)
         }
+        if let city = cityTF.text {
+            presenter.setCity(city: city)
+        }
         presenter.updateUserProfile(AuthModule.currUser)
     }
     
@@ -294,11 +304,17 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     @IBAction func hideTrainerView(_ sender: Any) {
-        if trainerStackView.isHidden {
-            trainerStackView.isHidden = false
+        
+        if findTrainerView.alpha == 1 {
+            findTrainerView.alpha = 0
         } else {
-            trainerStackView.isHidden = true
+            findTrainerView.alpha = 1
         }
+//        if trainerStackView.isHidden {
+//            trainerStackView.isHidden = false
+//        } else {
+//            trainerStackView.isHidden = true
+//        }
     }
     
 }

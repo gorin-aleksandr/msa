@@ -55,7 +55,8 @@ class UserDataManager {
                 "heightType": user.heightType,
                 "weight": user.weight,
                 "weightType": user.weightType,
-                "type": user.type
+                "type": user.type,
+                "city": user.city
                 ] as [String:Any]
             userRef.child(key).setValue(newUser) { (error, ref) in
                 if error == nil {
@@ -78,7 +79,6 @@ class UserDataManager {
             userRef.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? [String : Any]
-                print(value)
                 let user = self.makeUser(from: value)
                 callback(user)
             }) { (error) in
@@ -142,8 +142,7 @@ class UserDataManager {
                           type: value["type"] as? String,
                           purpose: value["purpose"] as? String,
                           gallery: gallery,
-                          friends: value["friends"] as? [String],
-                          city: value["city"] as? String ?? "Киев")
+                          city: value["city"] as? String)
         }
         return user
     }
@@ -162,7 +161,8 @@ class UserDataManager {
                 "heightType": user.heightType,
                 "weight": user.weight,
                 "weightType": user.weightType,
-                "type": user.type
+                "type": user.type,
+                "city": user.city
                 ] as [String:Any]
             userRef.child(key).updateChildValues(update, withCompletionBlock: { (error, ref) in
                 if error == nil {

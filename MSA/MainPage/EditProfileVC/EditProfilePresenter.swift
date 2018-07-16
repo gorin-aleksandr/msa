@@ -194,6 +194,9 @@ class EditProfilePresenter {
     func setEmail(email: String) {
         AuthModule.currUser.email = email
     }
+    func setCity(city: String) {
+        AuthModule.currUser.city = city
+    }
     func setAge(age: Int) {
         AuthModule.currUser.age = age
     }

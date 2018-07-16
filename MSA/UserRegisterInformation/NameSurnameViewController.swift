@@ -19,6 +19,7 @@ class NameSurnameViewController: BasicViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var nameTF: UITextField!
     @IBOutlet weak var surnameTF: UITextField!
+    @IBOutlet weak var cityTF: UITextField!
     @IBOutlet weak var sportsmanImage: UIImageView!
     @IBOutlet weak var trainerImage: UIImageView!
     
@@ -60,6 +61,9 @@ class NameSurnameViewController: BasicViewController {
         if let name = nameTF.text, let surname = surnameTF.text {
             anotherPresenter.setName(name: name)
             anotherPresenter.setSurname(surname: surname)
+            if let city = cityTF.text {
+                anotherPresenter.setCity(city: city)
+            }
             anotherPresenter.setType(type: type)
             if !AuthModule.facebookAuth {
                 if let email = AuthModule.currUser.email {
