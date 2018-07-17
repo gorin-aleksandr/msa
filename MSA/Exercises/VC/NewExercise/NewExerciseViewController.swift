@@ -58,6 +58,7 @@ class NewExerciseViewController: UIViewController {
             self.viewWithPicker.alpha = 0
         }
         tableView.reloadData()
+        
     }
     
     //MARK: Handle photo selecting
