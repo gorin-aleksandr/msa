@@ -113,6 +113,7 @@ class NewExerciseViewController: UIViewController {
         } else {
             createExercise()
         }
+        print("Done test")
         exercManager.dataSource.createButtonTapped = true
         tableView.reloadData()
     }
