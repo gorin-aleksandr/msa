@@ -72,6 +72,8 @@
 		299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B58F120868DB600CBE646 /* GalleryDataPresenter.swift */; };
 		29A169332048342C006864C2 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A169322048342C006864C2 /* Profile.storyboard */; };
 		29A16935204836C8006864C2 /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A16934204836C8006864C2 /* BasicViewController.swift */; };
+		29AADF8B21274FCE00548823 /* TimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29AADF8A21274FCE00548823 /* TimeView.xib */; };
+		29AADF8D21274FD900548823 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AADF8C21274FD900548823 /* TimeView.swift */; };
 		29AC912820CDA73E003F8152 /* Trannings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29AC912720CDA73E003F8152 /* Trannings.storyboard */; };
 		29AC912D20CDA83E003F8152 /* MyTranningsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */; };
 		29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0971F20D4D38500CA7219 /* ExercisesForTypeViewController.swift */; };
@@ -87,6 +89,9 @@
 		29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD6E20A170870073C838 /* StartCoordinator.swift */; };
 		29D2CD7120A175F40073C838 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD7020A175F40073C838 /* StartViewController.swift */; };
 		29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */; };
+		29E60F312125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */; };
+		29E60F382125DD7900A5EC38 /* NumberButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E60F372125DD7900A5EC38 /* NumberButtonView.swift */; };
+		29E60F3A2125DD8700A5EC38 /* NumberButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E60F392125DD8700A5EC38 /* NumberButtonView.xib */; };
 		29FF688620DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */; };
 		29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
@@ -167,6 +172,8 @@
 		299B58F120868DB600CBE646 /* GalleryDataPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDataPresenter.swift; sourceTree = "<group>"; };
 		29A169322048342C006864C2 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		29A16934204836C8006864C2 /* BasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
+		29AADF8A21274FCE00548823 /* TimeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeView.xib; sourceTree = "<group>"; };
+		29AADF8C21274FD900548823 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		29AC912720CDA73E003F8152 /* Trannings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Trannings.storyboard; sourceTree = "<group>"; };
 		29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTranningsViewController.swift; sourceTree = "<group>"; };
 		29B0971F20D4D38500CA7219 /* ExercisesForTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesForTypeViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +189,9 @@
 		29D2CD6E20A170870073C838 /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		29D2CD7020A175F40073C838 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureTranningExersViewController.swift; sourceTree = "<group>"; };
+		29E60F372125DD7900A5EC38 /* NumberButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberButtonView.swift; sourceTree = "<group>"; };
+		29E60F392125DD8700A5EC38 /* NumberButtonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberButtonView.xib; sourceTree = "<group>"; };
 		29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesPresenter.swift; sourceTree = "<group>"; };
 		29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesDataManager.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -444,7 +454,9 @@
 		29AC912B20CDA80F003F8152 /* Trannings */ = {
 			isa = PBXGroup;
 			children = (
+				29E60F322125DBDB00A5EC38 /* View */,
 				29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */,
+				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
 			);
 			path = Trannings;
 			sourceTree = "<group>";
@@ -458,6 +470,17 @@
 				29A169362048395D006864C2 /* StiryBoards */,
 			);
 			path = VIEW;
+			sourceTree = "<group>";
+		};
+		29E60F322125DBDB00A5EC38 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				29E60F372125DD7900A5EC38 /* NumberButtonView.swift */,
+				29E60F392125DD8700A5EC38 /* NumberButtonView.xib */,
+				29AADF8A21274FCE00548823 /* TimeView.xib */,
+				29AADF8C21274FD900548823 /* TimeView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		29FF688420DE9C0000C4FCC0 /* ExercisesTypesVC */ = {
@@ -580,6 +603,7 @@
 				299B549120A0D38B004E60A2 /* Rubik-BoldItalic.ttf in Resources */,
 				299B548720A0D38B004E60A2 /* Rubik-MediumItalic.ttf in Resources */,
 				29A169332048342C006864C2 /* Profile.storyboard in Resources */,
+				29E60F3A2125DD8700A5EC38 /* NumberButtonView.xib in Resources */,
 				2934807020E90AD60039028E /* LoadVideoTableViewCell.xib in Resources */,
 				29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */,
 				2934805A20E8F7B80039028E /* ChoosingItemTableViewCell.xib in Resources */,
@@ -596,6 +620,7 @@
 				29AC912820CDA73E003F8152 /* Trannings.storyboard in Resources */,
 				299B548E20A0D38B004E60A2 /* OFL.txt in Resources */,
 				29160B4D2035AA3B00DA7227 /* Assets.xcassets in Resources */,
+				29AADF8B21274FCE00548823 /* TimeView.xib in Resources */,
 				2940A36420D90E1E00EBAE84 /* TextViewTableViewCell.xib in Resources */,
 				299B548D20A0D38B004E60A2 /* Rubik-LightItalic.ttf in Resources */,
 				35CE070820EA4065006892B0 /* Community.storyboard in Resources */,
@@ -735,6 +760,7 @@
 				2940A35B20D908E400EBAE84 /* ImagesTableViewCell.swift in Sources */,
 				2934807220E92DF90039028E /* NewExerciseViewController.swift in Sources */,
 				299B58F020868D8900CBE646 /* GalleryDataManager.swift in Sources */,
+				29E60F382125DD7900A5EC38 /* NumberButtonView.swift in Sources */,
 				299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */,
 				298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */,
 				29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */,
@@ -746,6 +772,7 @@
 				295A4EEB203EC72B00124A07 /* EmailPasswordViewController.swift in Sources */,
 				291950B820474D5E004891FF /* MSA.xcdatamodeld in Sources */,
 				29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */,
+				29AADF8D21274FD900548823 /* TimeView.swift in Sources */,
 				2940A35520D9081B00EBAE84 /* TextTableViewCell.swift in Sources */,
 				29D2CD7120A175F40073C838 /* StartViewController.swift in Sources */,
 				2940A36320D90E1E00EBAE84 /* TextViewTableViewCell.swift in Sources */,
@@ -756,6 +783,7 @@
 				299B58EE208688E600CBE646 /* GalleryItemVO.swift in Sources */,
 				29A16935204836C8006864C2 /* BasicViewController.swift in Sources */,
 				29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */,
+				29E60F312125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift in Sources */,
 				35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
