@@ -40,6 +40,7 @@
 		2940A36420D90E1E00EBAE84 /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2940A36220D90E1E00EBAE84 /* TextViewTableViewCell.xib */; };
 		295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295123732086185E00D9035B /* EditProfilePresenter.swift */; };
 		295781B72039EFCB00EF8878 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295781B62039EFCB00EF8878 /* MainViewController.swift */; };
+		2957BC3E2129D7F300C46B2A /* CreateTemplateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */; };
 		295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A4EE4203DF78300124A07 /* UserDataManagerFirebase.swift */; };
 		295A4EE9203EB52600124A07 /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A4EE8203EB52600124A07 /* SignUpPresenter.swift */; };
 		295A4EEB203EC72B00124A07 /* EmailPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A4EEA203EC72B00124A07 /* EmailPasswordViewController.swift */; };
@@ -155,6 +156,7 @@
 		2940A36220D90E1E00EBAE84 /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		295123732086185E00D9035B /* EditProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfilePresenter.swift; sourceTree = "<group>"; };
 		295781B62039EFCB00EF8878 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTemplateViewController.swift; sourceTree = "<group>"; };
 		295A4EE4203DF78300124A07 /* UserDataManagerFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManagerFirebase.swift; sourceTree = "<group>"; };
 		295A4EE8203EB52600124A07 /* SignUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
 		295A4EEA203EC72B00124A07 /* EmailPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordViewController.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */,
 				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
 				29952EDD212988500007F799 /* CalendarViewController.swift */,
+				2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */,
 			);
 			path = Trannings;
 			sourceTree = "<group>";
@@ -812,6 +815,7 @@
 				2934806320E8FD860039028E /* CreateExerciseTableViewCell.swift in Sources */,
 				29E4F4C321298A4E00E67DBA /* VAFormatters.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
+				2957BC3E2129D7F300C46B2A /* CreateTemplateViewController.swift in Sources */,
 				2962D48520D2B6A900870953 /* ExercisesVO.swift in Sources */,
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
 				2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */,

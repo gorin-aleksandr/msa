@@ -39,9 +39,7 @@ class CalendarViewController: UIViewController {
     }
     
     private func configureUI() {
-        
         navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.title = "Календарь"
         let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
