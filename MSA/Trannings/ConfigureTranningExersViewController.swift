@@ -57,6 +57,7 @@ class ConfigureTranningExersViewController: UIViewController {
     }
 
     private func configureUI() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "back_"), for: .normal)
         button.setTitle(" Отмена", for: .normal)
@@ -64,6 +65,7 @@ class ConfigureTranningExersViewController: UIViewController {
         button.titleLabel?.font = font
         button.setTitleColor(.black, for: .normal)
         button.sizeToFit()
+        button.addTarget(self, action: #selector(back), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         self.navigationItem.title = "Настройки"
         let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
@@ -73,6 +75,7 @@ class ConfigureTranningExersViewController: UIViewController {
         configureWeightButtons()
         configureCountsButtons()
         configurePicker()
+        
         timeView.restButton.addTarget(self, action: #selector(showPicker), for: .touchUpInside)
         timeView.workButton.addTarget(self, action: #selector(showPicker), for: .touchUpInside)
         timeView.restButton.addTarget(self, action: #selector(tapRest), for: .touchUpInside)
@@ -82,8 +85,8 @@ class ConfigureTranningExersViewController: UIViewController {
     private func configurePicker() {
         timePicker.delegate = self
         timePicker.dataSource = self
-        self.timePickerBottom.constant -= self.view.frame.size.height*113/667
-        self.timePickerTop.constant += self.view.frame.size.height*113/667
+        self.timePickerBottom.constant -= timePicker.frame.size.height
+        self.timePickerTop.constant += timePicker.frame.size.height
     }
     
     private func reloadPicker() {
@@ -120,6 +123,11 @@ class ConfigureTranningExersViewController: UIViewController {
         heightDelete.numberButton.addTarget(self, action: #selector(deleteCounts), for: .touchUpInside)
     }
 
+    @objc
+    func back() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     @objc
     private func addWeight(sender: UIButton) {
         if !checklengh(text: weightLabel.text!) {

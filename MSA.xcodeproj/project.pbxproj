@@ -53,6 +53,7 @@
 		298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65A203C226800FB0180 /* SignInPresenter.swift */; };
 		298DF65F203C36B300FB0180 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65E203C36B300FB0180 /* AlertView.swift */; };
 		2993086220EA5264009C035E /* AddImagesManages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993086120EA5264009C035E /* AddImagesManages.swift */; };
+		29952EDE212988500007F799 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29952EDD212988500007F799 /* CalendarViewController.swift */; };
 		299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */; };
 		299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299AA10720E94E9A00BCCA12 /* NewExerciseDataSource.swift */; };
 		299B548720A0D38B004E60A2 /* Rubik-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 299B547C20A0D38A004E60A2 /* Rubik-MediumItalic.ttf */; };
@@ -89,6 +90,20 @@
 		29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD6E20A170870073C838 /* StartCoordinator.swift */; };
 		29D2CD7120A175F40073C838 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD7020A175F40073C838 /* StartViewController.swift */; };
 		29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */; };
+		29E4F4BB21298A4E00E67DBA /* VAMonthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4AC21298A4E00E67DBA /* VAMonthHeaderView.swift */; };
+		29E4F4BC21298A4E00E67DBA /* VAMonth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4AD21298A4E00E67DBA /* VAMonth.swift */; };
+		29E4F4BD21298A4E00E67DBA /* VADotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4AE21298A4E00E67DBA /* VADotView.swift */; };
+		29E4F4BE21298A4E00E67DBA /* VACalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4AF21298A4E00E67DBA /* VACalendar.swift */; };
+		29E4F4BF21298A4E00E67DBA /* VAWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B021298A4E00E67DBA /* VAWeekView.swift */; };
+		29E4F4C021298A4E00E67DBA /* VACalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B221298A4E00E67DBA /* VACalendarView.swift */; };
+		29E4F4C121298A4E00E67DBA /* VAWeekDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B321298A4E00E67DBA /* VAWeekDaysView.swift */; };
+		29E4F4C221298A4E00E67DBA /* VAWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B421298A4E00E67DBA /* VAWeek.swift */; };
+		29E4F4C321298A4E00E67DBA /* VAFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B521298A4E00E67DBA /* VAFormatters.swift */; };
+		29E4F4C421298A4E00E67DBA /* VADayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B621298A4E00E67DBA /* VADayView.swift */; };
+		29E4F4C521298A4E00E67DBA /* VADay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B721298A4E00E67DBA /* VADay.swift */; };
+		29E4F4C621298A4E00E67DBA /* VAMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B821298A4E00E67DBA /* VAMonthView.swift */; };
+		29E4F4C721298A4E00E67DBA /* VACalendarMonthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E4F4B921298A4E00E67DBA /* VACalendarMonthDelegate.swift */; };
+		29E4F4C821298A4E00E67DBA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29E4F4BA21298A4E00E67DBA /* Info.plist */; };
 		29E60F312125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */; };
 		29E60F382125DD7900A5EC38 /* NumberButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E60F372125DD7900A5EC38 /* NumberButtonView.swift */; };
 		29E60F3A2125DD8700A5EC38 /* NumberButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29E60F392125DD8700A5EC38 /* NumberButtonView.xib */; };
@@ -153,6 +168,7 @@
 		298DF65A203C226800FB0180 /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		298DF65E203C36B300FB0180 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		2993086120EA5264009C035E /* AddImagesManages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImagesManages.swift; sourceTree = "<group>"; };
+		29952EDD212988500007F799 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseManager.swift; sourceTree = "<group>"; };
 		299AA10720E94E9A00BCCA12 /* NewExerciseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseDataSource.swift; sourceTree = "<group>"; };
 		299B547C20A0D38A004E60A2 /* Rubik-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-MediumItalic.ttf"; sourceTree = "<group>"; };
@@ -189,6 +205,21 @@
 		29D2CD6E20A170870073C838 /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		29D2CD7020A175F40073C838 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		29E4F4AC21298A4E00E67DBA /* VAMonthHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAMonthHeaderView.swift; sourceTree = "<group>"; };
+		29E4F4AD21298A4E00E67DBA /* VAMonth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAMonth.swift; sourceTree = "<group>"; };
+		29E4F4AE21298A4E00E67DBA /* VADotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VADotView.swift; sourceTree = "<group>"; };
+		29E4F4AF21298A4E00E67DBA /* VACalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VACalendar.swift; sourceTree = "<group>"; };
+		29E4F4B021298A4E00E67DBA /* VAWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAWeekView.swift; sourceTree = "<group>"; };
+		29E4F4B121298A4E00E67DBA /* VACalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VACalendar.h; sourceTree = "<group>"; };
+		29E4F4B221298A4E00E67DBA /* VACalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VACalendarView.swift; sourceTree = "<group>"; };
+		29E4F4B321298A4E00E67DBA /* VAWeekDaysView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAWeekDaysView.swift; sourceTree = "<group>"; };
+		29E4F4B421298A4E00E67DBA /* VAWeek.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAWeek.swift; sourceTree = "<group>"; };
+		29E4F4B521298A4E00E67DBA /* VAFormatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAFormatters.swift; sourceTree = "<group>"; };
+		29E4F4B621298A4E00E67DBA /* VADayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VADayView.swift; sourceTree = "<group>"; };
+		29E4F4B721298A4E00E67DBA /* VADay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VADay.swift; sourceTree = "<group>"; };
+		29E4F4B821298A4E00E67DBA /* VAMonthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VAMonthView.swift; sourceTree = "<group>"; };
+		29E4F4B921298A4E00E67DBA /* VACalendarMonthDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VACalendarMonthDelegate.swift; sourceTree = "<group>"; };
+		29E4F4BA21298A4E00E67DBA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureTranningExersViewController.swift; sourceTree = "<group>"; };
 		29E60F372125DD7900A5EC38 /* NumberButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberButtonView.swift; sourceTree = "<group>"; };
 		29E60F392125DD8700A5EC38 /* NumberButtonView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberButtonView.xib; sourceTree = "<group>"; };
@@ -249,6 +280,7 @@
 				29160B452035AA3B00DA7227 /* AppDelegate.swift */,
 				2923304A203AFD3E00EFA2C5 /* API_Moduls_Managers */,
 				291950B520474829004891FF /* Madel */,
+				29A169362048395D006864C2 /* StoryBoards */,
 				29C2D5F0207422F000E2B958 /* VIEW */,
 				295A4EE3203DF74200124A07 /* UserRegisterInformation */,
 				298DF657203C1F4B00FB0180 /* SingIn */,
@@ -427,7 +459,7 @@
 			path = MainPage;
 			sourceTree = "<group>";
 		};
-		29A169362048395D006864C2 /* StiryBoards */ = {
+		29A169362048395D006864C2 /* StoryBoards */ = {
 			isa = PBXGroup;
 			children = (
 				29160B492035AA3B00DA7227 /* Main.storyboard */,
@@ -437,7 +469,7 @@
 				29AC912720CDA73E003F8152 /* Trannings.storyboard */,
 				29160B4E2035AA3B00DA7227 /* LaunchScreen.storyboard */,
 			);
-			path = StiryBoards;
+			path = StoryBoards;
 			sourceTree = "<group>";
 		};
 		29AC912920CDA7B7003F8152 /* MainVC */ = {
@@ -457,6 +489,7 @@
 				29E60F322125DBDB00A5EC38 /* View */,
 				29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */,
 				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
+				29952EDD212988500007F799 /* CalendarViewController.swift */,
 			);
 			path = Trannings;
 			sourceTree = "<group>";
@@ -464,12 +497,34 @@
 		29C2D5F0207422F000E2B958 /* VIEW */ = {
 			isa = PBXGroup;
 			children = (
+				29E4F4AB21298A4E00E67DBA /* VACalendar */,
 				29233049203AFD2700EFA2C5 /* BasicVC */,
 				29D2CD7020A175F40073C838 /* StartViewController.swift */,
 				29C2D5F12074231900E2B958 /* ProfileImageView.swift */,
-				29A169362048395D006864C2 /* StiryBoards */,
 			);
 			path = VIEW;
+			sourceTree = "<group>";
+		};
+		29E4F4AB21298A4E00E67DBA /* VACalendar */ = {
+			isa = PBXGroup;
+			children = (
+				29E4F4AC21298A4E00E67DBA /* VAMonthHeaderView.swift */,
+				29E4F4AD21298A4E00E67DBA /* VAMonth.swift */,
+				29E4F4AE21298A4E00E67DBA /* VADotView.swift */,
+				29E4F4AF21298A4E00E67DBA /* VACalendar.swift */,
+				29E4F4B021298A4E00E67DBA /* VAWeekView.swift */,
+				29E4F4B121298A4E00E67DBA /* VACalendar.h */,
+				29E4F4B221298A4E00E67DBA /* VACalendarView.swift */,
+				29E4F4B321298A4E00E67DBA /* VAWeekDaysView.swift */,
+				29E4F4B421298A4E00E67DBA /* VAWeek.swift */,
+				29E4F4B521298A4E00E67DBA /* VAFormatters.swift */,
+				29E4F4B621298A4E00E67DBA /* VADayView.swift */,
+				29E4F4B721298A4E00E67DBA /* VADay.swift */,
+				29E4F4B821298A4E00E67DBA /* VAMonthView.swift */,
+				29E4F4B921298A4E00E67DBA /* VACalendarMonthDelegate.swift */,
+				29E4F4BA21298A4E00E67DBA /* Info.plist */,
+			);
+			path = VACalendar;
 			sourceTree = "<group>";
 		};
 		29E60F322125DBDB00A5EC38 /* View */ = {
@@ -608,6 +663,7 @@
 				29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */,
 				2934805A20E8F7B80039028E /* ChoosingItemTableViewCell.xib in Resources */,
 				299B548F20A0D38B004E60A2 /* Rubik-BlackItalic.ttf in Resources */,
+				29E4F4C821298A4E00E67DBA /* Info.plist in Resources */,
 				2940A35620D9081B00EBAE84 /* TextTableViewCell.xib in Resources */,
 				2934806020E8FCB10039028E /* infoTextTableViewCell.xib in Resources */,
 				299B548820A0D38B004E60A2 /* Rubik-Bold.ttf in Resources */,
@@ -726,26 +782,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				290CA6D1203AD6100073A8F0 /* AuthModule.swift in Sources */,
+				29E4F4C021298A4E00E67DBA /* VACalendarView.swift in Sources */,
 				2934806F20E90AD60039028E /* LoadVideoTableViewCell.swift in Sources */,
+				29E4F4BE21298A4E00E67DBA /* VACalendar.swift in Sources */,
 				299B58EC208678F600CBE646 /* GalleryCollectionViewCell.swift in Sources */,
+				29E4F4BD21298A4E00E67DBA /* VADotView.swift in Sources */,
+				29E4F4C221298A4E00E67DBA /* VAWeek.swift in Sources */,
 				2934805F20E8FCB10039028E /* infoTextTableViewCell.swift in Sources */,
 				298DF65F203C36B300FB0180 /* AlertView.swift in Sources */,
 				29B0972620D4E9B600CA7219 /* FilterButtonView.swift in Sources */,
 				29C2D5FB2074F36300E2B958 /* Etentions.swift in Sources */,
 				2934805320E8EECC0039028E /* TextViewViewCounterTableViewCell.swift in Sources */,
+				29E4F4C721298A4E00E67DBA /* VACalendarMonthDelegate.swift in Sources */,
 				2934805920E8F7B80039028E /* ChoosingItemTableViewCell.swift in Sources */,
 				29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */,
 				35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */,
+				29E4F4C421298A4E00E67DBA /* VADayView.swift in Sources */,
+				29E4F4C121298A4E00E67DBA /* VAWeekDaysView.swift in Sources */,
 				2962D47D20D2A3B300870953 /* ExercisesViewController.swift in Sources */,
 				299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */,
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
 				295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */,
+				29E4F4BC21298A4E00E67DBA /* VAMonth.swift in Sources */,
 				29C4A3F12038A62200F2A1BB /* SignInViewController.swift in Sources */,
 				29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */,
 				298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */,
 				295A4EE9203EB52600124A07 /* SignUpPresenter.swift in Sources */,
 				295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */,
 				2934806320E8FD860039028E /* CreateExerciseTableViewCell.swift in Sources */,
+				29E4F4C321298A4E00E67DBA /* VAFormatters.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
 				2962D48520D2B6A900870953 /* ExercisesVO.swift in Sources */,
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
@@ -764,12 +829,16 @@
 				299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */,
 				298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */,
 				29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */,
+				29952EDE212988500007F799 /* CalendarViewController.swift in Sources */,
 				2993086220EA5264009C035E /* AddImagesManages.swift in Sources */,
 				295A4EED203EC73E00124A07 /* NameSurnameViewController.swift in Sources */,
 				2962D48320D2AAF000870953 /* ExercisesCollectionViewCell.swift in Sources */,
+				29E4F4C521298A4E00E67DBA /* VADay.swift in Sources */,
 				2940A35F20D90C9B00EBAE84 /* PlayVideoTableViewCell.swift in Sources */,
 				35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */,
+				29E4F4BB21298A4E00E67DBA /* VAMonthHeaderView.swift in Sources */,
 				295A4EEB203EC72B00124A07 /* EmailPasswordViewController.swift in Sources */,
+				29E4F4C621298A4E00E67DBA /* VAMonthView.swift in Sources */,
 				291950B820474D5E004891FF /* MSA.xcdatamodeld in Sources */,
 				29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */,
 				29AADF8D21274FD900548823 /* TimeView.swift in Sources */,
@@ -777,6 +846,7 @@
 				29D2CD7120A175F40073C838 /* StartViewController.swift in Sources */,
 				2940A36320D90E1E00EBAE84 /* TextViewTableViewCell.swift in Sources */,
 				35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */,
+				29E4F4BF21298A4E00E67DBA /* VAWeekView.swift in Sources */,
 				29C2D5F22074231900E2B958 /* ProfileImageView.swift in Sources */,
 				295781B72039EFCB00EF8878 /* MainViewController.swift in Sources */,
 				29FF688620DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift in Sources */,
