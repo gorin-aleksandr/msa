@@ -11,6 +11,18 @@ import UIKit
 
 private var maxLengths = [UITextField: Int]()
 
+extension UIView {
+    func setShadow(shadowOpacity: Float) {
+        self.clipsToBounds = false
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = shadowOpacity
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowRadius = 4
+        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 12).cgPath
+    }
+
+}
+
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")

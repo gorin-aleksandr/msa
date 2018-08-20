@@ -150,6 +150,7 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
     func configureFinalCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
         cell.icon.image = #imageLiteral(resourceName: "gantelya")
+        cell.textLabelMess.text = "Сохранить как шаблон"
         return cell
     }
     

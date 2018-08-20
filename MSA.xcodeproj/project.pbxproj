@@ -55,6 +55,9 @@
 		298DF65F203C36B300FB0180 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65E203C36B300FB0180 /* AlertView.swift */; };
 		2993086220EA5264009C035E /* AddImagesManages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993086120EA5264009C035E /* AddImagesManages.swift */; };
 		29952EDE212988500007F799 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29952EDD212988500007F799 /* CalendarViewController.swift */; };
+		299938DC212AE87800B443D6 /* WeightAndCapacityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */; };
+		299938DF212AF78300B443D6 /* ApproachTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299938DD212AF78300B443D6 /* ApproachTableViewCell.swift */; };
+		299938E0212AF78300B443D6 /* ApproachTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 299938DE212AF78300B443D6 /* ApproachTableViewCell.xib */; };
 		299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */; };
 		299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299AA10720E94E9A00BCCA12 /* NewExerciseDataSource.swift */; };
 		299B548720A0D38B004E60A2 /* Rubik-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 299B547C20A0D38A004E60A2 /* Rubik-MediumItalic.ttf */; };
@@ -171,6 +174,9 @@
 		298DF65E203C36B300FB0180 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		2993086120EA5264009C035E /* AddImagesManages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImagesManages.swift; sourceTree = "<group>"; };
 		29952EDD212988500007F799 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightAndCapacityViewController.swift; sourceTree = "<group>"; };
+		299938DD212AF78300B443D6 /* ApproachTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproachTableViewCell.swift; sourceTree = "<group>"; };
+		299938DE212AF78300B443D6 /* ApproachTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApproachTableViewCell.xib; sourceTree = "<group>"; };
 		299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseManager.swift; sourceTree = "<group>"; };
 		299AA10720E94E9A00BCCA12 /* NewExerciseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseDataSource.swift; sourceTree = "<group>"; };
 		299B547C20A0D38A004E60A2 /* Rubik-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rubik-MediumItalic.ttf"; sourceTree = "<group>"; };
@@ -493,6 +499,7 @@
 				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
 				29952EDD212988500007F799 /* CalendarViewController.swift */,
 				2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */,
+				299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */,
 			);
 			path = Trannings;
 			sourceTree = "<group>";
@@ -537,6 +544,8 @@
 				29E60F392125DD8700A5EC38 /* NumberButtonView.xib */,
 				29AADF8A21274FCE00548823 /* TimeView.xib */,
 				29AADF8C21274FD900548823 /* TimeView.swift */,
+				299938DD212AF78300B443D6 /* ApproachTableViewCell.swift */,
+				299938DE212AF78300B443D6 /* ApproachTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -685,6 +694,7 @@
 				35CE070820EA4065006892B0 /* Community.storyboard in Resources */,
 				299B548B20A0D38B004E60A2 /* Rubik-Black.ttf in Resources */,
 				2934806420E8FD860039028E /* CreateExerciseTableViewCell.xib in Resources */,
+				299938E0212AF78300B443D6 /* ApproachTableViewCell.xib in Resources */,
 				2934805420E8EECC0039028E /* TextViewViewCounterTableViewCell.xib in Resources */,
 				299B549020A0D38B004E60A2 /* Rubik-Regular.ttf in Resources */,
 				2962D47A20D2A17E00870953 /* Exercises.storyboard in Resources */,
@@ -820,6 +830,7 @@
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
 				2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */,
 				29AC912D20CDA83E003F8152 /* MyTranningsViewController.swift in Sources */,
+				299938DC212AE87800B443D6 /* WeightAndCapacityViewController.swift in Sources */,
 				35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */,
 				2962D48120D2AADE00870953 /* ExercisesTableViewCell.swift in Sources */,
 				299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */,
@@ -842,6 +853,7 @@
 				35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */,
 				29E4F4BB21298A4E00E67DBA /* VAMonthHeaderView.swift in Sources */,
 				295A4EEB203EC72B00124A07 /* EmailPasswordViewController.swift in Sources */,
+				299938DF212AF78300B443D6 /* ApproachTableViewCell.swift in Sources */,
 				29E4F4C621298A4E00E67DBA /* VAMonthView.swift in Sources */,
 				291950B820474D5E004891FF /* MSA.xcdatamodeld in Sources */,
 				29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */,
