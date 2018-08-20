@@ -20,6 +20,17 @@ extension UIView {
         self.layer.shadowRadius = 4
         self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: 12).cgPath
     }
+    
+    func image() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, isOpaque, 0)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return UIImage()
+        }
+        layer.render(in: context)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
 
 }
 

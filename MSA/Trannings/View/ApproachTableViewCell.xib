@@ -114,7 +114,7 @@
                 <outlet property="weightAndCountsLabel" destination="eet-w4-4KK" id="1eX-x4-Sii"/>
                 <outlet property="workTimeLabel" destination="egH-Bp-dKv" id="bzB-Fw-iE1"/>
             </connections>
-            <point key="canvasLocation" x="75" y="59"/>
+            <point key="canvasLocation" x="70" y="-96"/>
         </tableViewCell>
     </objects>
     <resources>
