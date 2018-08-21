@@ -24,6 +24,8 @@ class WeightAndCapacityViewController: UIViewController {
     @IBOutlet weak var playNextButton: UIButton!
     @IBOutlet weak var pulseLabel: UILabel!
     @IBOutlet weak var restLabel: UILabel!
+    @IBOutlet weak var restOrWorkImageView: UIImageView!
+    @IBOutlet weak var pulseImageView: UIImageView!
     
     @IBOutlet weak var tableView: UITableView!
     

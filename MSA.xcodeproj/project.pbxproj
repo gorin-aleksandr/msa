@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2909627E212C19AE00F42C29 /* CircleTrainingDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */; };
+		29096281212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2909627F212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift */; };
+		29096282212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29096280212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib */; };
 		290CA6D1203AD6100073A8F0 /* AuthModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA6D0203AD6100073A8F0 /* AuthModule.swift */; };
 		29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29160B452035AA3B00DA7227 /* AppDelegate.swift */; };
 		29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29160B492035AA3B00DA7227 /* Main.storyboard */; };
@@ -124,6 +127,9 @@
 
 /* Begin PBXFileReference section */
 		17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.release.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.release.xcconfig"; sourceTree = "<group>"; };
+		2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTrainingDayViewController.swift; sourceTree = "<group>"; };
+		2909627F212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTrainingExerciseTableViewCell.swift; sourceTree = "<group>"; };
+		29096280212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleTrainingExerciseTableViewCell.xib; sourceTree = "<group>"; };
 		290CA6D0203AD6100073A8F0 /* AuthModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModule.swift; sourceTree = "<group>"; };
 		29160B422035AA3B00DA7227 /* MSA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29160B452035AA3B00DA7227 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -500,6 +506,7 @@
 				29952EDD212988500007F799 /* CalendarViewController.swift */,
 				2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */,
 				299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */,
+				2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */,
 			);
 			path = Trannings;
 			sourceTree = "<group>";
@@ -546,6 +553,8 @@
 				29AADF8C21274FD900548823 /* TimeView.swift */,
 				299938DD212AF78300B443D6 /* ApproachTableViewCell.swift */,
 				299938DE212AF78300B443D6 /* ApproachTableViewCell.xib */,
+				2909627F212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift */,
+				29096280212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -694,6 +703,7 @@
 				35CE070820EA4065006892B0 /* Community.storyboard in Resources */,
 				299B548B20A0D38B004E60A2 /* Rubik-Black.ttf in Resources */,
 				2934806420E8FD860039028E /* CreateExerciseTableViewCell.xib in Resources */,
+				29096282212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib in Resources */,
 				299938E0212AF78300B443D6 /* ApproachTableViewCell.xib in Resources */,
 				2934805420E8EECC0039028E /* TextViewViewCounterTableViewCell.xib in Resources */,
 				299B549020A0D38B004E60A2 /* Rubik-Regular.ttf in Resources */,
@@ -797,6 +807,7 @@
 				290CA6D1203AD6100073A8F0 /* AuthModule.swift in Sources */,
 				29E4F4C021298A4E00E67DBA /* VACalendarView.swift in Sources */,
 				2934806F20E90AD60039028E /* LoadVideoTableViewCell.swift in Sources */,
+				2909627E212C19AE00F42C29 /* CircleTrainingDayViewController.swift in Sources */,
 				29E4F4BE21298A4E00E67DBA /* VACalendar.swift in Sources */,
 				299B58EC208678F600CBE646 /* GalleryCollectionViewCell.swift in Sources */,
 				29E4F4BD21298A4E00E67DBA /* VADotView.swift in Sources */,
@@ -823,6 +834,7 @@
 				295A4EE9203EB52600124A07 /* SignUpPresenter.swift in Sources */,
 				295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */,
 				2934806320E8FD860039028E /* CreateExerciseTableViewCell.swift in Sources */,
+				29096281212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift in Sources */,
 				29E4F4C321298A4E00E67DBA /* VAFormatters.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
 				2957BC3E2129D7F300C46B2A /* CreateTemplateViewController.swift in Sources */,
