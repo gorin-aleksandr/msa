@@ -413,12 +413,19 @@
                                 <action selector="backButtonAction:" destination="fYZ-mp-1UL" id="5xs-Rq-grc"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="save_icon" id="2K1-l3-7zE">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="saveButtonAction:" destination="fYZ-mp-1UL" id="hAC-bh-FAp"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="save_icon" id="2K1-l3-7zE">
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="saveButtonAction:" destination="fYZ-mp-1UL" id="hAC-bh-FAp"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="CircleGrey" id="ZjO-H0-Mwd">
+                                <inset key="imageInsets" minX="17" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="largeContentSizeImageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -952,6 +959,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CircleGrey" width="24" height="18"/>
         <image name="add" width="24" height="23"/>
         <image name="addday" width="24" height="23"/>
         <image name="back" width="13" height="22"/>
