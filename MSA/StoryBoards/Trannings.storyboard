@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fYZ-mp-1UL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GPB-2P-wpL">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -250,9 +250,44 @@
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="GPB-2P-wpL" customClass="MyTranningsViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LNc-aZ-cSD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7tx-8K-dZl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                <subviews>
+                                    <segmentedControl clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gnC-YS-xC0">
+                                        <rect key="frame" x="15" y="10.5" width="290" height="29"/>
+                                        <segments>
+                                            <segment title="Тренировки"/>
+                                            <segment title="Шаблоны"/>
+                                        </segments>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="gnC-YS-xC0" firstAttribute="centerY" secondItem="7tx-8K-dZl" secondAttribute="centerY" id="NKl-eo-SfK"/>
+                                    <constraint firstItem="gnC-YS-xC0" firstAttribute="leading" secondItem="7tx-8K-dZl" secondAttribute="leading" constant="15" id="dUS-Ur-poI"/>
+                                    <constraint firstAttribute="height" constant="50" id="m17-yC-HOE"/>
+                                    <constraint firstItem="gnC-YS-xC0" firstAttribute="centerX" secondItem="7tx-8K-dZl" secondAttribute="centerX" id="nh1-0a-nlB"/>
+                                    <constraint firstAttribute="trailing" secondItem="gnC-YS-xC0" secondAttribute="trailing" constant="15" id="wcy-UQ-5F4"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2yh-0u-sso">
+                                <rect key="frame" x="0.0" y="50" width="320" height="454"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="2yh-0u-sso" firstAttribute="leading" secondItem="802-ZD-21s" secondAttribute="leading" id="10u-bf-hKK"/>
+                            <constraint firstItem="802-ZD-21s" firstAttribute="bottom" secondItem="2yh-0u-sso" secondAttribute="bottom" id="O06-D7-5Pi"/>
+                            <constraint firstItem="2yh-0u-sso" firstAttribute="top" secondItem="7tx-8K-dZl" secondAttribute="bottom" id="frf-jN-2LT"/>
+                            <constraint firstItem="7tx-8K-dZl" firstAttribute="trailing" secondItem="802-ZD-21s" secondAttribute="trailing" id="kCG-Jd-324"/>
+                            <constraint firstItem="7tx-8K-dZl" firstAttribute="top" secondItem="802-ZD-21s" secondAttribute="top" id="lQW-qU-juh"/>
+                            <constraint firstItem="802-ZD-21s" firstAttribute="trailing" secondItem="2yh-0u-sso" secondAttribute="trailing" id="myI-ft-F6L"/>
+                            <constraint firstItem="7tx-8K-dZl" firstAttribute="leading" secondItem="802-ZD-21s" secondAttribute="leading" id="nDU-fb-gsp"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="802-ZD-21s"/>
                     </view>
                     <navigationItem key="navigationItem" title="Мои тренировки" id="UEQ-oF-J6p">
@@ -273,14 +308,23 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwU-Zn-IVn">
                                                 <rect key="frame" x="0.0" y="0.0" width="22.5" height="33"/>
                                                 <state key="normal" image="callendar"/>
+                                                <connections>
+                                                    <action selector="calendarButtonAction:" destination="GPB-2P-wpL" eventType="touchUpInside" id="nJI-xw-hDP"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q53-KY-Urf">
                                                 <rect key="frame" x="30.5" y="0.0" width="22" height="33"/>
                                                 <state key="normal" image="add"/>
+                                                <connections>
+                                                    <action selector="addButtonAction:" destination="GPB-2P-wpL" eventType="touchUpInside" id="Lg7-P8-eT3"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7B-Or-prS">
                                                 <rect key="frame" x="60.5" y="0.0" width="22.5" height="33"/>
                                                 <state key="normal" image="dots"/>
+                                                <connections>
+                                                    <action selector="optionsButton:" destination="GPB-2P-wpL" eventType="touchUpInside" id="jPu-RJ-ksM"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -295,11 +339,16 @@
                             </view>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="segmentControl" destination="gnC-YS-xC0" id="8jr-GH-rh4"/>
+                        <outlet property="tableView" destination="2yh-0u-sso" id="7xh-z8-O5B"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fjs-HQ-1Kr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2953" y="-2909"/>
+            <point key="canvasLocation" x="-2953.125" y="-2909.1549295774648"/>
         </scene>
         <!--Title-->
         <scene sceneID="2mT-H9-Zeb">
@@ -354,13 +403,13 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="64"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="146" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="f62-cp-tFm">
-                                                        <rect key="frame" x="0.0" y="0.0" width="99.5" height="64"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="97" height="64"/>
                                                         <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="64"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-08:15" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZC6-CZ-a7A">
-                                                        <rect key="frame" x="129.5" y="0.0" width="170.5" height="64"/>
+                                                        <rect key="frame" x="127" y="0.0" width="173" height="64"/>
                                                         <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="64"/>
                                                         <color key="textColor" red="0.96862745100000003" green="0.090196078430000007" blue="0.20784313730000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -469,7 +518,7 @@
                                 <rect key="frame" x="40" y="154" width="240" height="48"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Uev-vS-cK9">
-                                        <rect key="frame" x="39" y="16" width="164" height="16"/>
+                                        <rect key="frame" x="38" y="16" width="164" height="16"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_white" translatesAutoresizingMaskIntoConstraints="NO" id="bsL-2g-5Ho">
                                                 <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>

@@ -53,6 +53,12 @@
 		2962D48120D2AADE00870953 /* ExercisesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962D48020D2AADE00870953 /* ExercisesTableViewCell.swift */; };
 		2962D48320D2AAF000870953 /* ExercisesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962D48220D2AAF000870953 /* ExercisesCollectionViewCell.swift */; };
 		2962D48520D2B6A900870953 /* ExercisesVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962D48420D2B6A900870953 /* ExercisesVO.swift */; };
+		298B4602212D620800DB2273 /* ExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B4600212D620800DB2273 /* ExerciseTableViewCell.swift */; };
+		298B4603212D620800DB2273 /* ExerciseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 298B4601212D620800DB2273 /* ExerciseTableViewCell.xib */; };
+		298B4606212D639700DB2273 /* AddExerciseToDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B4604212D639700DB2273 /* AddExerciseToDayTableViewCell.swift */; };
+		298B4607212D639700DB2273 /* AddExerciseToDayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 298B4605212D639700DB2273 /* AddExerciseToDayTableViewCell.xib */; };
+		298B4609212D659500DB2273 /* TrainingDayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B4608212D659500DB2273 /* TrainingDayHeaderView.swift */; };
+		298B460B212D65A000DB2273 /* TrainingDayHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 298B460A212D65A000DB2273 /* TrainingDayHeaderView.xib */; };
 		298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF658203C1FAC00FB0180 /* UserVO.swift */; };
 		298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65A203C226800FB0180 /* SignInPresenter.swift */; };
 		298DF65F203C36B300FB0180 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65E203C36B300FB0180 /* AlertView.swift */; };
@@ -175,6 +181,12 @@
 		2962D48020D2AADE00870953 /* ExercisesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesTableViewCell.swift; sourceTree = "<group>"; };
 		2962D48220D2AAF000870953 /* ExercisesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesCollectionViewCell.swift; sourceTree = "<group>"; };
 		2962D48420D2B6A900870953 /* ExercisesVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesVO.swift; sourceTree = "<group>"; };
+		298B4600212D620800DB2273 /* ExerciseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseTableViewCell.swift; sourceTree = "<group>"; };
+		298B4601212D620800DB2273 /* ExerciseTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExerciseTableViewCell.xib; sourceTree = "<group>"; };
+		298B4604212D639700DB2273 /* AddExerciseToDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseToDayTableViewCell.swift; sourceTree = "<group>"; };
+		298B4605212D639700DB2273 /* AddExerciseToDayTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddExerciseToDayTableViewCell.xib; sourceTree = "<group>"; };
+		298B4608212D659500DB2273 /* TrainingDayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingDayHeaderView.swift; sourceTree = "<group>"; };
+		298B460A212D65A000DB2273 /* TrainingDayHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainingDayHeaderView.xib; sourceTree = "<group>"; };
 		298DF658203C1FAC00FB0180 /* UserVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVO.swift; sourceTree = "<group>"; };
 		298DF65A203C226800FB0180 /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		298DF65E203C36B300FB0180 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -555,6 +567,12 @@
 				299938DE212AF78300B443D6 /* ApproachTableViewCell.xib */,
 				2909627F212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift */,
 				29096280212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib */,
+				298B4600212D620800DB2273 /* ExerciseTableViewCell.swift */,
+				298B4601212D620800DB2273 /* ExerciseTableViewCell.xib */,
+				298B4604212D639700DB2273 /* AddExerciseToDayTableViewCell.swift */,
+				298B4605212D639700DB2273 /* AddExerciseToDayTableViewCell.xib */,
+				298B4608212D659500DB2273 /* TrainingDayHeaderView.swift */,
+				298B460A212D65A000DB2273 /* TrainingDayHeaderView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -693,9 +711,11 @@
 				299B548920A0D38B004E60A2 /* Rubik-Light.ttf in Resources */,
 				29B0972420D4E93A00CA7219 /* FilterButtonView.xib in Resources */,
 				299B548C20A0D38B004E60A2 /* Rubik-Italic.ttf in Resources */,
+				298B4607212D639700DB2273 /* AddExerciseToDayTableViewCell.xib in Resources */,
 				299B548A20A0D38B004E60A2 /* Rubik-Medium.ttf in Resources */,
 				29AC912820CDA73E003F8152 /* Trannings.storyboard in Resources */,
 				299B548E20A0D38B004E60A2 /* OFL.txt in Resources */,
+				298B460B212D65A000DB2273 /* TrainingDayHeaderView.xib in Resources */,
 				29160B4D2035AA3B00DA7227 /* Assets.xcassets in Resources */,
 				29AADF8B21274FCE00548823 /* TimeView.xib in Resources */,
 				2940A36420D90E1E00EBAE84 /* TextViewTableViewCell.xib in Resources */,
@@ -709,6 +729,7 @@
 				299B549020A0D38B004E60A2 /* Rubik-Regular.ttf in Resources */,
 				2962D47A20D2A17E00870953 /* Exercises.storyboard in Resources */,
 				29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */,
+				298B4603212D620800DB2273 /* ExerciseTableViewCell.xib in Resources */,
 				2940A36020D90C9B00EBAE84 /* PlayVideoTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -805,6 +826,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				290CA6D1203AD6100073A8F0 /* AuthModule.swift in Sources */,
+				298B4602212D620800DB2273 /* ExerciseTableViewCell.swift in Sources */,
 				29E4F4C021298A4E00E67DBA /* VACalendarView.swift in Sources */,
 				2934806F20E90AD60039028E /* LoadVideoTableViewCell.swift in Sources */,
 				2909627E212C19AE00F42C29 /* CircleTrainingDayViewController.swift in Sources */,
@@ -827,9 +849,11 @@
 				299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */,
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
 				295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */,
+				298B4606212D639700DB2273 /* AddExerciseToDayTableViewCell.swift in Sources */,
 				29E4F4BC21298A4E00E67DBA /* VAMonth.swift in Sources */,
 				29C4A3F12038A62200F2A1BB /* SignInViewController.swift in Sources */,
 				29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */,
+				298B4609212D659500DB2273 /* TrainingDayHeaderView.swift in Sources */,
 				298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */,
 				295A4EE9203EB52600124A07 /* SignUpPresenter.swift in Sources */,
 				295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */,
