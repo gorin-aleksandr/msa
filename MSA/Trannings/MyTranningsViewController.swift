@@ -29,6 +29,8 @@ class MyTranningsViewController: UIViewController {
         let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
+        segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 13)!],
+                                                for: .normal)
         configureTableView()
         
     }
@@ -52,23 +54,46 @@ class MyTranningsViewController: UIViewController {
     
     func showOptionsAlert() {
         let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let myString  = "Редактирование тренировки"
+        var myMutableString = NSMutableAttributedString()
+        myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!])
+        myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black, range: NSRange(location:0,length:myString.count))
+        alert.setValue(myMutableString, forKey: "attributedTitle")
+        
         let save = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
-            //
+            self.segmentControl.layer.borderColor = lightBlue.cgColor
         })
         let delete = UIAlertAction(title: "Удалить тренировку", style: .default, handler: { action in
-            
+            self.segmentControl.layer.borderColor = lightBlue.cgColor
         })
         let cancel = UIAlertAction(title: "Отмена", style: .default, handler: { action in
-            
+            self.segmentControl.layer.borderColor = lightBlue.cgColor
         })
-
+        
         alert.addAction(save)
         alert.addAction(delete)
-        alert.addAction(cancel
-        )
+        alert.addAction(cancel)
+        segmentControl.layer.borderColor = UIColor.lightGray.cgColor
         self.present(alert, animated: true, completion: nil)
+        setFont(action: save, text: "Сохранить как шаблон", regular: true)
+        setFont(action: delete, text: "Удалить тренировку", regular: true)
+        setFont(action: cancel, text: "Отмена", regular: false)
+
     }
 
+    private func setFont(action: UIAlertAction,text: String, regular: Bool) {
+        var fontName = "Rubik"
+        if !regular {
+            fontName = "Rubik-Medium"
+        }
+        let attributedText = NSMutableAttributedString(string: text)
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.addAttribute(kCTFontAttributeName as NSAttributedStringKey, value: UIFont(name: fontName, size: 17.0)!, range: range)
+        guard let label = (action.value(forKey: "__representer") as AnyObject).value(forKey: "label") as? UILabel else { return }
+        label.attributedText = attributedText
+    }
+    
 }
 
 extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource {
