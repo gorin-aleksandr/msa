@@ -25,13 +25,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_task_primary_48px" translatesAutoresizingMaskIntoConstraints="NO" id="q1m-fS-Juo">
-                        <rect key="frame" x="0.0" y="0.0" width="50" height="50.5"/>
+                        <rect key="frame" x="10" y="0.0" width="50" height="50.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="X9k-D7-9W6"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить упражнение" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmu-3Q-Lc5">
-                        <rect key="frame" x="60" y="0.0" width="265" height="50.5"/>
+                        <rect key="frame" x="70" y="0.0" width="255" height="50.5"/>
                         <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -43,7 +43,7 @@
                     <constraint firstItem="Kmu-3Q-Lc5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="NCe-wJ-bHm"/>
                     <constraint firstAttribute="trailing" secondItem="Kmu-3Q-Lc5" secondAttribute="trailing" id="Pwg-Be-aHf"/>
                     <constraint firstAttribute="bottom" secondItem="q1m-fS-Juo" secondAttribute="bottom" id="Rem-a7-45I"/>
-                    <constraint firstItem="q1m-fS-Juo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="bHN-yu-43J"/>
+                    <constraint firstItem="q1m-fS-Juo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="bHN-yu-43J"/>
                     <constraint firstItem="q1m-fS-Juo" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="quz-aG-3OL"/>
                 </constraints>
             </tableViewCellContentView>

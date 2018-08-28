@@ -21,21 +21,16 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TrainingDayHeaderView" customModule="MSA" customModuleProvider="target">
-            <connections>
-                <outlet property="dateLabel" destination="oEx-Ro-hix" id="Vmu-MQ-gBD"/>
-                <outlet property="dayLabel" destination="8Tp-fa-rx0" id="AM0-A8-JW8"/>
-                <outlet property="nameLabel" destination="cOV-jG-RM1" id="6Tu-q3-pu5"/>
-                <outlet property="openHideExercisesButton" destination="hdd-P2-JFp" id="t8Z-FR-kdg"/>
-                <outlet property="sircleTrainingButton" destination="iUb-TR-vRM" id="EhC-Re-n2b"/>
-                <outlet property="startTrainingButton" destination="E4V-ZF-cv6" id="dI1-pB-0wd"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="64"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TrainingDayHeaderView" customModule="MSA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="65"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TH7-jf-I4o">
+                    <rect key="frame" x="0.0" y="0.0" width="394" height="65"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9Gd-ze-AAv">
                     <rect key="frame" x="10" y="10" width="131" height="15.5"/>
                     <subviews>
@@ -54,13 +49,13 @@
                     </subviews>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Грудь-спина" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-jG-RM1">
-                    <rect key="frame" x="10" y="33.5" width="112" height="20.5"/>
+                    <rect key="frame" x="10" y="34.5" width="112" height="20.5"/>
                     <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                     <color key="textColor" red="0.01176470588" green="0.050980392159999999" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zPq-B2-0qR">
-                    <rect key="frame" x="258" y="25" width="126" height="32"/>
+                    <rect key="frame" x="258" y="26" width="126" height="32"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4V-ZF-cv6">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -81,15 +76,27 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="TH7-jf-I4o" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="1cD-V3-KjH"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="zPq-B2-0qR" secondAttribute="bottom" constant="7" id="A79-Hc-Ywu"/>
                 <constraint firstItem="9Gd-ze-AAv" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="B8h-xS-6ry"/>
+                <constraint firstItem="TH7-jf-I4o" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="HvN-jP-0X7"/>
                 <constraint firstItem="9Gd-ze-AAv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="Tep-0f-fkZ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="cOV-jG-RM1" secondAttribute="bottom" constant="10" id="cvN-mx-LUa"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="TH7-jf-I4o" secondAttribute="trailing" id="iih-J8-9Uw"/>
+                <constraint firstAttribute="bottom" secondItem="TH7-jf-I4o" secondAttribute="bottom" id="kJE-jR-w7B"/>
                 <constraint firstItem="cOV-jG-RM1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="o9z-Dl-Lbc"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zPq-B2-0qR" secondAttribute="trailing" constant="10" id="t1m-Yd-CM1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="dateLabel" destination="oEx-Ro-hix" id="gf1-jj-HtO"/>
+                <outlet property="dayLabel" destination="8Tp-fa-rx0" id="wdD-Bs-bN4"/>
+                <outlet property="nameLabel" destination="cOV-jG-RM1" id="5O1-Be-LO2"/>
+                <outlet property="openHideExercisesButton" destination="hdd-P2-JFp" id="0b7-Sb-nUe"/>
+                <outlet property="sircleTrainingButton" destination="iUb-TR-vRM" id="7hy-dK-vDo"/>
+                <outlet property="startTrainingButton" destination="E4V-ZF-cv6" id="LTB-qj-KeZ"/>
+            </connections>
             <point key="canvasLocation" x="92" y="-280"/>
         </view>
     </objects>

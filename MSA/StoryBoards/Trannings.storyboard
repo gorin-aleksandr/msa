@@ -141,22 +141,22 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7W-NB-JNs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2094" y="-2909"/>
+            <point key="canvasLocation" x="-2094" y="-2812"/>
         </scene>
         <!--Новый шаблон-->
         <scene sceneID="Rre-Pq-2FC">
             <objects>
                 <viewController id="Wzt-nP-B6d" customClass="CreateTemplateViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QOh-lR-jqy">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RLF-tW-LxJ">
-                                <rect key="frame" x="30" y="20" width="260" height="548"/>
+                                <rect key="frame" x="30" y="0.0" width="260" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1IV-AW-c3u">
-                                <rect key="frame" x="0.0" y="368" width="320" height="200"/>
+                                <rect key="frame" x="0.0" y="304" width="320" height="200"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w2f-M6-KM6">
                                         <rect key="frame" x="0.0" y="1" width="320" height="199"/>
@@ -242,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4IG-7E-7W4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2094.375" y="-769.0140845070423"/>
+            <point key="canvasLocation" x="-3077" y="-2811"/>
         </scene>
         <!--Мои тренировки-->
         <scene sceneID="QqP-qP-tf1">
@@ -272,20 +272,40 @@
                                     <constraint firstAttribute="trailing" secondItem="gnC-YS-xC0" secondAttribute="trailing" constant="15" id="wcy-UQ-5F4"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2yh-0u-sso">
-                                <rect key="frame" x="0.0" y="50" width="320" height="454"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KtD-Us-gHi">
+                                <rect key="frame" x="0.0" y="50" width="320" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Неделя #1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFe-5g-Ocd">
+                                        <rect key="frame" x="117" y="15.5" width="86" height="20"/>
+                                        <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="kFe-5g-Ocd" firstAttribute="centerY" secondItem="KtD-Us-gHi" secondAttribute="centerY" id="SOF-Z8-yUt"/>
+                                    <constraint firstAttribute="height" constant="50" id="Xw3-QH-DHR"/>
+                                    <constraint firstItem="kFe-5g-Ocd" firstAttribute="centerX" secondItem="KtD-Us-gHi" secondAttribute="centerX" id="bjs-gN-JTW"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2yh-0u-sso" customClass="FZAccordionTableView">
+                                <rect key="frame" x="0.0" y="100" width="320" height="404"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="2yh-0u-sso" firstAttribute="leading" secondItem="802-ZD-21s" secondAttribute="leading" id="10u-bf-hKK"/>
+                            <constraint firstItem="KtD-Us-gHi" firstAttribute="trailing" secondItem="802-ZD-21s" secondAttribute="trailing" id="MSK-o5-eAR"/>
                             <constraint firstItem="802-ZD-21s" firstAttribute="bottom" secondItem="2yh-0u-sso" secondAttribute="bottom" id="O06-D7-5Pi"/>
-                            <constraint firstItem="2yh-0u-sso" firstAttribute="top" secondItem="7tx-8K-dZl" secondAttribute="bottom" id="frf-jN-2LT"/>
+                            <constraint firstItem="KtD-Us-gHi" firstAttribute="leading" secondItem="802-ZD-21s" secondAttribute="leading" id="YkU-7E-TOV"/>
                             <constraint firstItem="7tx-8K-dZl" firstAttribute="trailing" secondItem="802-ZD-21s" secondAttribute="trailing" id="kCG-Jd-324"/>
                             <constraint firstItem="7tx-8K-dZl" firstAttribute="top" secondItem="802-ZD-21s" secondAttribute="top" id="lQW-qU-juh"/>
                             <constraint firstItem="802-ZD-21s" firstAttribute="trailing" secondItem="2yh-0u-sso" secondAttribute="trailing" id="myI-ft-F6L"/>
                             <constraint firstItem="7tx-8K-dZl" firstAttribute="leading" secondItem="802-ZD-21s" secondAttribute="leading" id="nDU-fb-gsp"/>
+                            <constraint firstItem="2yh-0u-sso" firstAttribute="top" secondItem="KtD-Us-gHi" secondAttribute="bottom" id="rda-p9-2Nv"/>
+                            <constraint firstItem="KtD-Us-gHi" firstAttribute="top" secondItem="7tx-8K-dZl" secondAttribute="bottom" id="rx0-fl-nUR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="802-ZD-21s"/>
                     </view>
@@ -308,15 +328,14 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="22.5" height="33"/>
                                                 <state key="normal" image="callendar"/>
                                                 <connections>
-                                                    <action selector="calendarButtonAction:" destination="GPB-2P-wpL" eventType="touchUpInside" id="nJI-xw-hDP"/>
-                                                    <segue destination="xFK-2I-Nsn" kind="show" id="1jh-xu-kUA"/>
+                                                    <action selector="showCalendar:" destination="GPB-2P-wpL" eventType="touchUpInside" id="aNp-jZ-HSP"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q53-KY-Urf">
                                                 <rect key="frame" x="30.5" y="0.0" width="22" height="33"/>
                                                 <state key="normal" image="add"/>
                                                 <connections>
-                                                    <action selector="addButtonAction:" destination="GPB-2P-wpL" eventType="touchUpInside" id="Lg7-P8-eT3"/>
+                                                    <action selector="saveTemplate:" destination="GPB-2P-wpL" eventType="touchUpInside" id="gXc-9w-uIM"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7B-Or-prS">
@@ -343,12 +362,16 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="segmentControl" destination="gnC-YS-xC0" id="8jr-GH-rh4"/>
-                        <outlet property="tableView" destination="2yh-0u-sso" id="7xh-z8-O5B"/>
+                        <outlet property="tableView" destination="2yh-0u-sso" id="r3l-nC-ofs"/>
+                        <segue destination="6gS-42-vvy" kind="show" identifier="showExerciseInTraining" id="upa-IH-cmV"/>
+                        <segue destination="fYZ-mp-1UL" kind="show" identifier="roundTraining" id="MqG-Hy-gPd"/>
+                        <segue destination="Wzt-nP-B6d" kind="show" identifier="createTemplate" id="p5J-Ap-hz8"/>
+                        <segue destination="xFK-2I-Nsn" kind="show" identifier="showCalendar" id="zvp-OL-TWB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fjs-HQ-1Kr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2953.125" y="-2909.1549295774648"/>
+            <point key="canvasLocation" x="-3032" y="-3661"/>
         </scene>
         <!--Title-->
         <scene sceneID="2mT-H9-Zeb">
@@ -492,7 +515,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z0o-4j-LUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2984" y="-2183"/>
+            <point key="canvasLocation" x="-2094" y="-4385"/>
         </scene>
         <!--Нагрузка-->
         <scene sceneID="bqX-Wk-Bzo">
@@ -683,11 +706,12 @@
                         <outlet property="stopButton" destination="Mru-mo-tCy" id="XhZ-I5-bGt"/>
                         <outlet property="tableView" destination="BiF-N4-3KC" id="s2F-bd-jlh"/>
                         <outlet property="traningLabel" destination="kiN-mi-Otj" id="LU0-JJ-c6P"/>
+                        <segue destination="axL-0g-7M8" kind="show" identifier="configureRepeat" id="on4-i6-qrc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qxL-gF-YBj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2985" y="-1459.8591549295775"/>
+            <point key="canvasLocation" x="-2094" y="-3661"/>
         </scene>
         <!--Configure Tranning Exers View Controller-->
         <scene sceneID="pHh-HG-Kbu">
@@ -1004,7 +1028,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nOO-hJ-Hho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2094" y="-1458"/>
+            <point key="canvasLocation" x="-1185" y="-3661"/>
         </scene>
     </scenes>
     <resources>
