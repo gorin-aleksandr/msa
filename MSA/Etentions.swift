@@ -11,6 +11,7 @@ import UIKit
 
 private var maxLengths = [UITextField: Int]()
 
+
 extension UINavigationItem {
     func setTitle(title:String, subtitle:String) {
         let titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: 0, height: 0))

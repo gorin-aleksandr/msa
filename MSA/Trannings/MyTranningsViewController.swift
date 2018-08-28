@@ -47,6 +47,26 @@ class MyTranningsViewController: UIViewController {
     @IBAction func addButtonAction(_ sender: Any) {
     }
     @IBAction func optionsButton(_ sender: Any) {
+        showOptionsAlert()
+    }
+    
+    func showOptionsAlert() {
+        let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let save = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
+            //
+        })
+        let delete = UIAlertAction(title: "Удалить тренировку", style: .default, handler: { action in
+            
+        })
+        let cancel = UIAlertAction(title: "Отмена", style: .default, handler: { action in
+            
+        })
+
+        alert.addAction(save)
+        alert.addAction(delete)
+        alert.addAction(cancel
+        )
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
