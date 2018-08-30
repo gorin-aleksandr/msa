@@ -8,33 +8,29 @@
 
 import UIKit
 import FZAccordionTableView
-
-protocol TrainingsDelegate {
-    
-}
-
-protocol TrainingsDataSource {
-    
-}
+import SDWebImage
 
 class MyTranningsViewController: UIViewController {
 
     @IBOutlet weak var tableView: FZAccordionTableView!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
-//    var days = [TrainingDay]()
-    
-    var dataSource: TrainingsDataSource?
-    var delegate: TrainingsDelegate?
-    
+    let manager = TrainingManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initialViewConfiguration()
+        initialDataLoading()
     }
 
+    private func initialDataLoading() {
+        manager.initDataSource(dataSource: TrainingsDataSource.shared)
+        manager.initView(view: self)
+        manager.loadTrainings()
+    }
     
-    func initialViewConfiguration() {
+     private func initialViewConfiguration() {
         segmentControl.layer.masksToBounds = true
         segmentControl.layer.cornerRadius = 13
         segmentControl.layer.borderColor = lightBlue.cgColor
@@ -128,11 +124,11 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
         
-//        let day = days[section]
-//        headerView.dateLabel.text = day.date
-//        headerView.dayLabel.text = "День #\(section)"
-//        headerView.nameLabel.text = day.name
-        
+        if let day = manager.getTrainings()?.first?.weeks.first?.days[section] {
+            headerView.dateLabel.text = day.date
+            headerView.dayLabel.text = "День #\(section + 1)"
+            headerView.nameLabel.text = day.name
+        }
         headerView.sircleTrainingButton.tag = section
         headerView.startTrainingButton.tag = section
         headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
@@ -148,23 +144,27 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         return 60
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 2 {
+        if indexPath.row == (manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises.count ?? 0) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddExerciseToDayTableViewCell", for: indexPath) as? AddExerciseToDayTableViewCell else {return UITableViewCell()}
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExerciseTableViewCell", for: indexPath) as? ExerciseTableViewCell else {return UITableViewCell()}
+            if let exercise = manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises[indexPath.row] {
+                if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", exercise.exerciseId)) {
+                    cell.exerciseNameLable.text = ex.name
+                    cell.exerciseImageView.sd_setImage(with: URL(string: ex.pictures.first?.url ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                }
+            }
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return days[section].exercises.count
-        return 3
+        return manager.getTrainings()?.first?.weeks.first?.days[section].exercises.count ?? 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-//        return days.count
-        return 2
+        return manager.getTrainings()?.first?.weeks.first?.days.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -181,4 +181,24 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
         guard let sectionHeader = header as? TrainingDayHeaderView else { return }
         sectionHeader.headerState.toggle()
     }
+}
+
+extension MyTranningsViewController: TrainingsViewDelegate {
+    func startLoading() {
+        print("Start")
+    }
+    
+    func finishLoading() {
+        print("Finish")
+    }
+    
+    func trainingsLoaded() {
+        tableView.reloadData()
+    }
+    
+    func errorOccurred(err: String) {
+        print("Error")
+    }
+    
+    
 }

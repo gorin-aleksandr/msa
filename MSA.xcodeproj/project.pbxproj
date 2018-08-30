@@ -48,6 +48,8 @@
 		295A4EE9203EB52600124A07 /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A4EE8203EB52600124A07 /* SignUpPresenter.swift */; };
 		295A4EEB203EC72B00124A07 /* EmailPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A4EEA203EC72B00124A07 /* EmailPasswordViewController.swift */; };
 		295A4EED203EC73E00124A07 /* NameSurnameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295A4EEC203EC73E00124A07 /* NameSurnameViewController.swift */; };
+		295BA2E32137C7F300609966 /* TrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295BA2E22137C7F300609966 /* TrainingManager.swift */; };
+		295BA2E52137C94C00609966 /* TrainingsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 295BA2E42137C94C00609966 /* TrainingsDataSource.swift */; };
 		2960A0A7213586FB006D1CA9 /* TrainingsVo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960A0A6213586FB006D1CA9 /* TrainingsVo.swift */; };
 		2962D47A20D2A17E00870953 /* Exercises.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2962D47920D2A17E00870953 /* Exercises.storyboard */; };
 		2962D47D20D2A3B300870953 /* ExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962D47C20D2A3B300870953 /* ExercisesViewController.swift */; };
@@ -177,6 +179,8 @@
 		295A4EE8203EB52600124A07 /* SignUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
 		295A4EEA203EC72B00124A07 /* EmailPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailPasswordViewController.swift; sourceTree = "<group>"; };
 		295A4EEC203EC73E00124A07 /* NameSurnameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSurnameViewController.swift; sourceTree = "<group>"; };
+		295BA2E22137C7F300609966 /* TrainingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingManager.swift; sourceTree = "<group>"; };
+		295BA2E42137C94C00609966 /* TrainingsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingsDataSource.swift; sourceTree = "<group>"; };
 		2960A0A6213586FB006D1CA9 /* TrainingsVo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingsVo.swift; sourceTree = "<group>"; };
 		2962D47920D2A17E00870953 /* Exercises.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Exercises.storyboard; sourceTree = "<group>"; };
 		2962D47C20D2A3B300870953 /* ExercisesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesViewController.swift; sourceTree = "<group>"; };
@@ -379,6 +383,19 @@
 			path = UserRegisterInformation;
 			sourceTree = "<group>";
 		};
+		295BA2E12137C7CA00609966 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */,
+				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
+				29952EDD212988500007F799 /* CalendarViewController.swift */,
+				2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */,
+				299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */,
+				2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		2962D47B20D2A3A200870953 /* Exercises */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,12 +533,9 @@
 			isa = PBXGroup;
 			children = (
 				29E60F322125DBDB00A5EC38 /* View */,
-				29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */,
-				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
-				29952EDD212988500007F799 /* CalendarViewController.swift */,
-				2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */,
-				299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */,
-				2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */,
+				295BA2E12137C7CA00609966 /* VC */,
+				295BA2E22137C7F300609966 /* TrainingManager.swift */,
+				295BA2E42137C94C00609966 /* TrainingsDataSource.swift */,
 			);
 			path = Trannings;
 			sourceTree = "<group>";
@@ -840,6 +854,7 @@
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
 				295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */,
 				298B4606212D639700DB2273 /* AddExerciseToDayTableViewCell.swift in Sources */,
+				295BA2E52137C94C00609966 /* TrainingsDataSource.swift in Sources */,
 				29E4F4BC21298A4E00E67DBA /* VAMonth.swift in Sources */,
 				29C4A3F12038A62200F2A1BB /* SignInViewController.swift in Sources */,
 				29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */,
@@ -861,6 +876,7 @@
 				2962D48120D2AADE00870953 /* ExercisesTableViewCell.swift in Sources */,
 				299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */,
 				2934806720E8FF290039028E /* AddImagesTableViewCell.swift in Sources */,
+				295BA2E32137C7F300609966 /* TrainingManager.swift in Sources */,
 				29C4A3F32038B68F00F2A1BB /* UserInfoViewController.swift in Sources */,
 				2934806B20E904520039028E /* ImageCollectionViewCell.swift in Sources */,
 				2940A35B20D908E400EBAE84 /* ImagesTableViewCell.swift in Sources */,

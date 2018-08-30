@@ -32,6 +32,7 @@ class Training: Object {
     @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
     @objc dynamic var trianerId: Int = -1
+    @objc dynamic var userId: Int = -1
     var weeks = List<TrainingWeek>()
     
     override static func primaryKey() -> String? {
