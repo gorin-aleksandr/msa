@@ -67,6 +67,7 @@ class MyTranningsViewController: UIViewController {
         self.performSegue(withIdentifier: "showCalendar", sender: nil)
     }
     @IBAction func saveTemplate(_ sender: Any) {
+        manager.setCurrent(training: manager.getTrainings()?.first)
         self.performSegue(withIdentifier: "createTemplate", sender: nil)
     }
     
@@ -117,6 +118,30 @@ class MyTranningsViewController: UIViewController {
         
     }
     
+    @objc
+    private func startRoundTraining(sender: UIButton) {
+        manager.setCurrent(day: manager.getTrainings()?.first?.weeks.first?.days[sender.tag])
+        self.performSegue(withIdentifier: "roundTraining", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showExerciseInTraining":
+            guard let vc = segue.destination as? IterationsViewController else {return}
+            vc.manager = self.manager
+        case "showCalendar":
+            guard let vc = segue.destination as? CalendarViewController else {return}
+            vc.manager = self.manager
+        case "createTemplate":
+            guard let vc = segue.destination as? CreateTemplateViewController else {return}
+            vc.manager = self.manager
+        case "roundTraining":
+            guard let vc = segue.destination as? CircleTrainingDayViewController else {return}
+            vc.manager = self.manager
+        default:
+            return
+        }
+    }
 }
 
 extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -132,7 +157,8 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         headerView.sircleTrainingButton.tag = section
         headerView.startTrainingButton.tag = section
         headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
-        
+        headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
+
         return headerView
     }
     
@@ -153,6 +179,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
                 if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", exercise.exerciseId)) {
                     cell.exerciseNameLable.text = ex.name
                     cell.exerciseImageView.sd_setImage(with: URL(string: ex.pictures.first?.url ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                    
                 }
             }
             return cell
@@ -168,6 +195,8 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let ex = manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises[indexPath.row] else {return}
+        manager.setCurrent(exercise: ex)
         self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
     }
 }

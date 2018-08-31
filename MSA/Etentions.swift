@@ -11,6 +11,15 @@ import UIKit
 
 private var maxLengths = [UITextField: Int]()
 
+extension String {
+    
+    func getDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        return dateFormatter.date(from: self)
+    }
+    
+}
 
 extension UINavigationItem {
     func setTitle(title:String, subtitle:String) {

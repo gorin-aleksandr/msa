@@ -44,11 +44,11 @@ class ConfigureTranningExersViewController: UIViewController {
     
     var workTime: (Int, Int) = (0, 0)
     var restTime: (Int, Int) = (0, 0)
-    var weight: Int = 0
-    var counts: Int = 0
     var workActive: Bool = true
     var buttonsW: [NumberButtonView] = []
     var buttonsH: [NumberButtonView] = []
+    
+    var manager = TrainingManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +56,26 @@ class ConfigureTranningExersViewController: UIViewController {
         configureUI()
     }
 
+    func initialDataFilling() {
+        guard let iteration = manager.getCurrentIteration() else {return}
+        weightLabel.text = "\(iteration.weight)"
+        countsLabel.text = "\(iteration.counts)"
+        let wMin = Int(iteration.workTime/60)
+        let rMin = Int(iteration.restTime/60)
+        let wSec = Int(iteration.workTime-wMin*60)
+        let rSec = Int(iteration.restTime-rMin*60)
+        workTime = (wMin,wSec)
+        restTime = (rMin,rSec)
+        timeView.workMinutes.text = wMin<10 ? "0\(wMin)" : "\(wMin)"
+        timeView.workSeconds.text = wSec<10 ? "0\(wSec)" : "\(wSec)"
+        timeView.restMinutes.text = rMin<10 ? "0\(rMin)" : "\(rMin)"
+        timeView.restSeconds.text = rSec<10 ? "0\(rSec)" : "\(rSec)"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        initialDataFilling()
+    }
+    
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         let button = UIButton(type: .custom)
@@ -100,7 +120,6 @@ class ConfigureTranningExersViewController: UIViewController {
     }
     
     private func configureWeightButtons() {
-        weightLabel.text = "\(weight)"
         buttonsW = [weightZero,weightOne,weightTwo,weightThree,weightFour,weightFive,weightSix,weightSeven,weightEight,weightNine]
         for (index,button) in buttonsW.enumerated() {
             button.numberButton.tag = index
@@ -112,7 +131,6 @@ class ConfigureTranningExersViewController: UIViewController {
     }
     
     private func configureCountsButtons() {
-        countsLabel.text = "\(counts)"
         buttonsH = [heightZero,heightOne,heightTwo,heightThree,heightFour,heightFive,heightSix,heightSeven,heightEight,heightNine]
         for (index,button) in buttonsH.enumerated() {
             button.numberButton.tag = index + 10

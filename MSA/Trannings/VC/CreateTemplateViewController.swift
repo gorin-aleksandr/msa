@@ -17,6 +17,7 @@ class CreateTemplateViewController: UIViewController {
     }
     @IBOutlet weak var picker: UIPickerView!
     
+    var manager = TrainingManager()
     var selectedRow = -1
     
     override func viewDidLoad() {
@@ -112,9 +113,9 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
         cell.errorLabel.isHidden = true
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 1
-        cell.infoTextView.text = ""
+        cell.infoTextView.text = manager.getCurrentTraining()?.name
         cell.maxLenght.text = "150"
-        let c = cell.numOfSymbuls.text?.count
+        let c = cell.infoTextView.text?.count
         if c == 0 {
             cell.numOfSymbuls.text = ""
         } else {
@@ -129,7 +130,11 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
         cell.errorLabel.isHidden = true
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 2
-        cell.infoTextView.text = ""
+        var daysAmount = 0
+        for week in (manager.getCurrentTraining()?.weeks)! {
+            daysAmount += week.days.count
+        }
+        cell.infoTextView.text = "\(daysAmount)"
         cell.maxLenght.text = "3"
         let c = cell.numOfSymbuls.text?.count
         if c == 0 {

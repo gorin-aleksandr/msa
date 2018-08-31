@@ -67,7 +67,7 @@
 		298DF65F203C36B300FB0180 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65E203C36B300FB0180 /* AlertView.swift */; };
 		2993086220EA5264009C035E /* AddImagesManages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993086120EA5264009C035E /* AddImagesManages.swift */; };
 		29952EDE212988500007F799 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29952EDD212988500007F799 /* CalendarViewController.swift */; };
-		299938DC212AE87800B443D6 /* WeightAndCapacityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */; };
+		299938DC212AE87800B443D6 /* IterationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299938DB212AE87800B443D6 /* IterationsViewController.swift */; };
 		299938DF212AF78300B443D6 /* ApproachTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299938DD212AF78300B443D6 /* ApproachTableViewCell.swift */; };
 		299938E0212AF78300B443D6 /* ApproachTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 299938DE212AF78300B443D6 /* ApproachTableViewCell.xib */; };
 		299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */; };
@@ -198,7 +198,7 @@
 		298DF65E203C36B300FB0180 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		2993086120EA5264009C035E /* AddImagesManages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImagesManages.swift; sourceTree = "<group>"; };
 		29952EDD212988500007F799 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightAndCapacityViewController.swift; sourceTree = "<group>"; };
+		299938DB212AE87800B443D6 /* IterationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IterationsViewController.swift; sourceTree = "<group>"; };
 		299938DD212AF78300B443D6 /* ApproachTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApproachTableViewCell.swift; sourceTree = "<group>"; };
 		299938DE212AF78300B443D6 /* ApproachTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApproachTableViewCell.xib; sourceTree = "<group>"; };
 		299AA10520E94E7C00BCCA12 /* NewExerciseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseManager.swift; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
 				29952EDD212988500007F799 /* CalendarViewController.swift */,
 				2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */,
-				299938DB212AE87800B443D6 /* WeightAndCapacityViewController.swift */,
+				299938DB212AE87800B443D6 /* IterationsViewController.swift */,
 				2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */,
 			);
 			path = VC;
@@ -871,7 +871,7 @@
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
 				2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */,
 				29AC912D20CDA83E003F8152 /* MyTranningsViewController.swift in Sources */,
-				299938DC212AE87800B443D6 /* WeightAndCapacityViewController.swift in Sources */,
+				299938DC212AE87800B443D6 /* IterationsViewController.swift in Sources */,
 				35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */,
 				2962D48120D2AADE00870953 /* ExercisesTableViewCell.swift in Sources */,
 				299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */,

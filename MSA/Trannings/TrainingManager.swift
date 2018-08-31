@@ -35,6 +35,33 @@ class TrainingManager {
         return dataSource?.trainings
     }
     
+    func setCurrent(day: TrainingDay?) {
+        dataSource?.currentDay = day
+    }
+    func getCurrentday() -> TrainingDay? {
+        return dataSource?.currentDay
+    }
+    
+    func setCurrent(training: Training?) {
+        dataSource?.currentTraining = training
+    }
+    func getCurrentTraining() -> Training? {
+        return dataSource?.currentTraining
+    }
+    func setCurrent(exercise: ExerciseInTraining) {
+        dataSource?.currentExerciseInDay = exercise
+    }
+    func getCurrentExercise() -> ExerciseInTraining? {
+        return dataSource?.currentExerciseInDay
+    }
+    
+    func setCurrent(iteration: Iteration) {
+        dataSource?.currentIteration = iteration
+    }
+    func getCurrentIteration() -> Iteration? {
+        return dataSource?.currentIteration
+    }
+    
     func getTrainingsFromRealm() -> [Training]? {
         return realm.getArray(ofType: Training.self)
     }
@@ -84,7 +111,7 @@ class TrainingManager {
     }
     
     func loadTrainings() {
-        if let _ = AuthModule.currUser.id {
+        if let id = AuthModule.currUser.id {
             self.view?.startLoading()
             Database.database().reference().child("Trainings").observeSingleEvent(of: .value) { (snapchot) in
                 self.observeTrainings(snapchot: snapchot)

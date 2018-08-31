@@ -11,7 +11,7 @@ import UIKit
 public let lightGREEN = UIColor(red: 4/255, green: 232/255, blue: 36/255, alpha: 1)
 public let lightRED = UIColor(red: 247/255, green: 23/255, blue: 53/255, alpha: 1)
 
-class WeightAndCapacityViewController: UIViewController {
+class IterationsViewController: UIViewController {
 
     @IBOutlet weak var traningLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
@@ -29,6 +29,8 @@ class WeightAndCapacityViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    var manager = TrainingManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,6 +46,8 @@ class WeightAndCapacityViewController: UIViewController {
         let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
+        self.traningLabel.text = manager.getCurrentExercise()?.name
+        
         configureTableView()
     }
     
@@ -73,17 +77,26 @@ class WeightAndCapacityViewController: UIViewController {
         return mutable as String
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "configureIteration" {
+            guard let vc = segue.destination as? ConfigureTranningExersViewController else {return}
+            vc.manager = self.manager
+        }
+    }
+    
 }
 
-extension WeightAndCapacityViewController: UITableViewDelegate, UITableViewDataSource {
+extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ApproachTableViewCell", for: indexPath) as? ApproachTableViewCell else {return UITableViewCell()}
-        
+        if let iteration = manager.getCurrentExercise()?.iterations[indexPath.row] {
+            cell.configureCell(iteration: iteration, indexPath: indexPath)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return manager.getCurrentExercise()?.iterations.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -94,7 +107,12 @@ extension WeightAndCapacityViewController: UITableViewDelegate, UITableViewDataS
         return true
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let iteration = manager.getCurrentExercise()?.iterations[indexPath.row] {
+            manager.setCurrent(iteration: iteration)
+            performSegue(withIdentifier: "configureIteration", sender: nil)
+        }
+    }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = getDeleteAction()

@@ -21,6 +21,8 @@ class CircleTrainingDayViewController: UIViewController {
     @IBOutlet weak var restOrWorkImageView: UIImageView!
     @IBOutlet weak var pulseImageView: UIImageView!
     
+    var manager = TrainingManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,7 +31,7 @@ class CircleTrainingDayViewController: UIViewController {
 
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.setTitle(title: "Грудь-спина", subtitle: "День #1. Упражнений: 3")
+        self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День # . Упражнений: \(manager.getCurrentday()?.exercises.count ?? 0)")
         
         configureTableView()
     }
@@ -53,12 +55,20 @@ class CircleTrainingDayViewController: UIViewController {
 extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CircleTrainingExerciseTableViewCell", for: indexPath) as? CircleTrainingExerciseTableViewCell else {return UITableViewCell()}
+        if let ex = manager.getCurrentday()?.exercises[indexPath.row] {
+            if let e = manager.realm.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", ex.exerciseId)).first {
+                cell.picture.sd_setImage(with: URL(string: (e.pictures.first?.url)!), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                cell.nameLabel.text = e.name
+                // TODO:!!!
+            }
+            
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return manager.getCurrentday()?.exercises.count ?? 0
         }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

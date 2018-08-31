@@ -520,7 +520,7 @@
         <!--Нагрузка-->
         <scene sceneID="bqX-Wk-Bzo">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="6gS-42-vvy" customClass="WeightAndCapacityViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="6gS-42-vvy" customClass="IterationsViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DdJ-cj-GCC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -706,7 +706,7 @@
                         <outlet property="stopButton" destination="Mru-mo-tCy" id="XhZ-I5-bGt"/>
                         <outlet property="tableView" destination="BiF-N4-3KC" id="s2F-bd-jlh"/>
                         <outlet property="traningLabel" destination="kiN-mi-Otj" id="LU0-JJ-c6P"/>
-                        <segue destination="axL-0g-7M8" kind="show" identifier="configureRepeat" id="on4-i6-qrc"/>
+                        <segue destination="axL-0g-7M8" kind="show" identifier="configureIteration" id="on4-i6-qrc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qxL-gF-YBj" userLabel="First Responder" sceneMemberID="firstResponder"/>

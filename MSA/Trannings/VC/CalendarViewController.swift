@@ -21,6 +21,8 @@ class CalendarViewController: UIViewController {
     
     var calendarView: VACalendarView!
     
+    var manager = TrainingManager()
+    
     @IBAction func backAction(_ sender: Any) {
         back()
     }
@@ -45,7 +47,17 @@ class CalendarViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         
         setCalendarVieW()
-        calendarView.selectDates([Date()])
+        selectCalendarDays()
+    }
+    
+    private func selectCalendarDays() {
+        var days = [TrainingDay]()
+        for week in (manager.getTrainings()?.first?.weeks)! {
+            for day in week.days {
+                days.append(day)
+            }
+        }
+        calendarView.selectDates(days.map {$0.date.getDate()!.addingTimeInterval(TimeInterval(exactly: 14400)!)})
     }
     
     @objc

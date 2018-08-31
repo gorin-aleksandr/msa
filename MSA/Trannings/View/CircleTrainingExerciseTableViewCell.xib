@@ -45,7 +45,7 @@
                         </constraints>
                         <color key="progressTintColor" red="0.015686274509803921" green="0.90980392156862744" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                     </progressView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DTD-7h-H3J">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DTD-7h-H3J">
                         <rect key="frame" x="40" y="44.5" width="238" height="194"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подход #1 из 6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4lL-Ln-RM5">
