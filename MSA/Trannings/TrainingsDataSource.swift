@@ -13,11 +13,12 @@ class TrainingsDataSource {
     static let shared = TrainingsDataSource()
     
     var trainings: [Training] = []
+    var templates: [TrainingTemplate] = []
     var currentTraining: Training? = nil
     var currentDay: TrainingDay? = nil
     var currentExerciseInDay: ExerciseInTraining? = nil
     var currentIteration: Iteration? = nil
-    var newTemplate = TrainingTemplate()
+    var newTemplate: TrainingTemplate? = nil
     
     func set(trainings: [Training]) {
         self.trainings = trainings
@@ -25,6 +26,10 @@ class TrainingsDataSource {
     
     func setCurrent(training: Training) {
         self.currentTraining = training
+    }
+    
+    func templateCreated() {
+        newTemplate = nil
     }
     
 }

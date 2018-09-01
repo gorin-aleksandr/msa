@@ -18,11 +18,13 @@ class CreateTemplateViewController: UIViewController {
     @IBOutlet weak var picker: UIPickerView!
     
     var manager = TrainingManager()
+    var createTapped = false
     var selectedRow = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        initialDataFill()
         configureTableView()
         picker.delegate = self
     }
@@ -38,6 +40,15 @@ class CreateTemplateViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
+    func initialDataFill() {
+        var daysAmount = 0
+        for week in (manager.getCurrentTraining()?.weeks)! {
+            daysAmount += week.days.count
+        }
+        manager.dataSource?.newTemplate?.name = manager.getCurrentTraining()?.name ?? ""
+        manager.dataSource?.newTemplate?.days = daysAmount
+    }
+    
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -50,14 +61,22 @@ class CreateTemplateViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
     }
     @IBAction func doneButton(_ sender: Any) {
+        hide()
+        tableView.reloadData()
+    }
+    
+    func hide() {
         UIView.animate(withDuration: 0.3) {
             self.viewWithPicker.alpha = 0
         }
-        tableView.reloadData()
     }
 }
 
 extension CreateTemplateViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        hide()
+    }
     
     func textViewDidChange(_ textView: UITextView) {
         tableView.beginUpdates()
@@ -66,12 +85,15 @@ extension CreateTemplateViewController: UITextViewDelegate {
             guard let cell = tableView.cellForRow(at: IndexPath(item: 0, section: 0)) as? TextViewViewCounterTableViewCell else {return}
             cell.numOfSymbuls.text = "\(textView.text.count)"
             cell.infoTextView.text = textView.text
+            manager.dataSource?.newTemplate?.name = textView.text
         case 2:
             guard let cell = tableView.cellForRow(at: IndexPath(item: 1, section: 0)) as? TextViewViewCounterTableViewCell else {return}
             cell.numOfSymbuls.text = "\(textView.text.count)"
             cell.infoTextView.text = textView.text
+            manager.dataSource?.newTemplate?.days = Int(textView.text) ?? 0
         default: return
         }
+        
         tableView.endUpdates()
         textView.becomeFirstResponder()
     }
@@ -113,7 +135,12 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
         cell.errorLabel.isHidden = true
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 1
-        cell.infoTextView.text = manager.getCurrentTraining()?.name
+        cell.infoTextView.text = manager.dataSource?.newTemplate?.name
+        if createTapped && (manager.dataSource?.newTemplate?.name == ""){
+            cell.errorLabel.isHidden = false
+        } else {
+            cell.errorLabel.isHidden = true
+        }
         cell.maxLenght.text = "150"
         let c = cell.infoTextView.text?.count
         if c == 0 {
@@ -130,11 +157,13 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
         cell.errorLabel.isHidden = true
         cell.infoTextView.delegate = self
         cell.infoTextView.tag = 2
-        var daysAmount = 0
-        for week in (manager.getCurrentTraining()?.weeks)! {
-            daysAmount += week.days.count
+        cell.infoTextView.keyboardType = .numberPad
+        cell.infoTextView.text = "\(manager.dataSource?.newTemplate?.days ?? 0)"
+        if createTapped && (manager.dataSource?.newTemplate?.days == 0){
+            cell.errorLabel.isHidden = false
+        } else {
+            cell.errorLabel.isHidden = true
         }
-        cell.infoTextView.text = "\(daysAmount)"
         cell.maxLenght.text = "3"
         let c = cell.numOfSymbuls.text?.count
         if c == 0 {
@@ -148,7 +177,16 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
     func configureTypeCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChoosingItemTableViewCell", for:  indexPath) as! ChoosingItemTableViewCell
         cell.headerLabel.text = "Вид спорта"
-        cell.errorLabel.isHidden = true
+        if createTapped && (manager.dataSource?.newTemplate?.typeId == -1){
+            cell.errorLabel.isHidden = false
+        } else {
+            if manager.dataSource?.newTemplate?.typeId != -1 {
+                if let type = manager.realm.getElement(ofType: ExerciseType.self, filterWith: NSPredicate(format: "id = %d", (manager.dataSource?.newTemplate?.typeId)!)) {
+                    cell.elementChoosed.text = type.name
+                }
+            }
+            cell.errorLabel.isHidden = true
+        }
         return cell
     }
     
@@ -166,13 +204,26 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedRow = indexPath.row
-        if selectedRow == 2{
+        switch indexPath.row {
+        case 0,1:
+            UIView.animate(withDuration: 0.3) {
+                self.viewWithPicker.alpha = 0
+            }
+        case 2:
             picker.reloadAllComponents()
             UIView.animate(withDuration: 0.3) {
+                self.view.endEditing(true)
                 self.viewWithPicker.alpha = 1
             }
-        } else if selectedRow == 3 {
-            back()
+        default:
+            if manager.dataSource?.newTemplate?.name != "" && manager.dataSource?.newTemplate?.days != 0 && manager.dataSource?.newTemplate?.typeId != -1 {
+                manager.saveTemplate()
+                back()
+            } else {
+                createTapped = true
+                AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
+                tableView.reloadData()
+            }
         }
     }
     
@@ -200,10 +251,40 @@ extension CreateTemplateViewController: UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-           let name = RealmManager.shared.getArray(ofType: ExerciseType.self)[row].name
+           let type = RealmManager.shared.getArray(ofType: ExerciseType.self)[row]
            tableView.beginUpdates()
            guard let cell = tableView.cellForRow(at: IndexPath(item: 2, section: 0)) as? ChoosingItemTableViewCell else {return}
-           cell.elementChoosed.text = name
+           cell.elementChoosed.text = type.name
+           manager.dataSource?.newTemplate?.typeId = type.id
            tableView.endUpdates()
     }
+}
+
+extension CreateTemplateViewController: TrainingsViewDelegate {
+    func templatesLoaded() {
+        
+    }
+    
+    func templateCreated() {
+        manager.dataSource?.templateCreated()
+        back()
+    }
+    
+    func startLoading() {
+        print("Start")
+    }
+    
+    func finishLoading() {
+        print("Finish")
+    }
+    
+    func trainingsLoaded() {
+
+    }
+    
+    func errorOccurred(err: String) {
+        print("Error")
+    }
+    
+    
 }

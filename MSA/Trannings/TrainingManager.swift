@@ -10,17 +10,20 @@ import Foundation
 import RealmSwift
 import Firebase
 
+
 protocol TrainingsViewDelegate {
     func startLoading()
     func finishLoading()
     func trainingsLoaded()
+    func templateCreated()
+    func templatesLoaded()
     func errorOccurred(err: String)
 }
 
 class TrainingManager {
     
     let realm = RealmManager.shared
-    private var dataSource: TrainingsDataSource?
+    var dataSource: TrainingsDataSource?
     private var view: TrainingsViewDelegate?
     
     func initDataSource(dataSource: TrainingsDataSource) {
@@ -66,6 +69,10 @@ class TrainingManager {
         return realm.getArray(ofType: Training.self)
     }
     
+    func getTemplatesFromRealm() -> [TrainingTemplate]? {
+        return realm.getArray(ofType: TrainingTemplate.self)
+    }
+    
     func getDay(by id: Int) -> TrainingDay? {
         return realm.getElement(ofType: TrainingDay.self, filterWith: NSPredicate(format: "id = %d", id))
     }
@@ -86,8 +93,8 @@ class TrainingManager {
         return realm.getArray(ofType: TrainingTemplate.self, filterWith: NSPredicate(format: "trianerId = %d", id))
     }
     
-    func saveTemplateToRealm(template: TrainingTemplate) {
-        realm.saveObject(template)
+    func saveTemplateToRealm(templates: [TrainingTemplate]) {
+        realm.saveObjectsArray(templates)
     }
     
     func saveTrainingsToRealm(trainings: [Training]) {
@@ -110,6 +117,43 @@ class TrainingManager {
         realm.saveObjectsArray(iterations)
     }
     
+    func saveTemplate() {
+        if let id = AuthModule.currUser.id {
+            self.view?.startLoading()
+            let index = dataSource?.newTemplate?.incrementID() ?? 0
+            let newInfo = makeTemplateForFirebase(trainerId: id, edit: false)
+            Database.database().reference().child("Templates").child(id).child("\(index)").setValue(newInfo) { (error, databaseFer) in
+                self.view?.finishLoading()
+                if error == nil {
+                    guard let newTemplate = self.dataSource?.newTemplate else {return}
+            
+                    self.realm.saveObject(newTemplate, update: false)
+                    self.view?.templateCreated()
+                } else {
+                    self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
+                }
+            }
+        }
+    }
+    
+    func makeTemplateForFirebase(trainerId: String, edit: Bool) -> [String:Any] {
+        var index = Int()
+        if edit {
+            index = dataSource?.newTemplate?.id ?? 0
+        } else {
+            index = dataSource?.newTemplate?.incrementID() ?? 0
+        }
+        dataSource?.newTemplate?.id = index
+        return [
+        "id": dataSource?.newTemplate?.id ?? 0,
+        "name": dataSource?.newTemplate?.name ?? "",
+        "trainerId": trainerId,
+        "typeId": dataSource?.newTemplate?.typeId ?? -1,
+        "days": dataSource?.newTemplate?.days ?? 0,
+        "trainingId": dataSource?.newTemplate?.trainingId ?? -1
+        ]
+    }
+    
     func loadTrainings() {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
@@ -117,6 +161,35 @@ class TrainingManager {
                 self.observeTrainings(snapchot: snapchot)
             }
         }
+    }
+    
+    func loadTemplates() {
+        if let id = AuthModule.currUser.id {
+            self.view?.startLoading()
+            Database.database().reference().child("Templates").child(id).observeSingleEvent(of: .value) { (snapchot) in
+                self.observeTemplates(snapchot: snapchot)
+            }
+        }
+    }
+    
+    func observeTemplates(snapchot: DataSnapshot) {
+        self.view?.finishLoading()
+        var items = [TrainingTemplate]()
+        for snap in snapchot.children {
+            let s = snap as! DataSnapshot
+            if let _ = s.childSnapshot(forPath: "id").value as? NSNull {return}
+            let template = TrainingTemplate()
+            template.id = s.childSnapshot(forPath: "id").value as! Int
+            template.name = s.childSnapshot(forPath: "name").value as! String
+            template.trianerId = s.childSnapshot(forPath: "trainerId").value as! String
+            template.trainingId = s.childSnapshot(forPath: "trainingId").value as! Int
+            template.days = s.childSnapshot(forPath: "days").value as! Int
+            template.typeId = s.childSnapshot(forPath: "typeId").value as! Int
+            items.append(template)
+        }
+        self.dataSource?.templates = items
+        self.saveTemplateToRealm(templates: items)
+        self.view?.templatesLoaded()
     }
     
     func observeTrainings(snapchot: DataSnapshot) {
@@ -130,7 +203,7 @@ class TrainingManager {
             let training = Training()
             training.id = s.childSnapshot(forPath: "id").value as! Int
             training.name = s.childSnapshot(forPath: "name").value as! String
-            training.trianerId = s.childSnapshot(forPath: "trainerId").value as! Int
+            training.trianerId = s.childSnapshot(forPath: "trainerId").value as! String
             training.userId = s.childSnapshot(forPath: "userId").value as! Int
 
             if let weeks = s.childSnapshot(forPath: "weeks").value as? NSArray {

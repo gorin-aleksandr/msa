@@ -13,7 +13,7 @@ import RealmSwift
 class TrainingTemplate: Object {
     @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
-    @objc dynamic var trianerId: Int = -1
+    @objc dynamic var trianerId: String = ""
     @objc dynamic var typeId: Int = -1
     @objc dynamic var days: Int = 0
     @objc dynamic var trainingId: Int = -1
@@ -31,7 +31,7 @@ class TrainingTemplate: Object {
 class Training: Object {
     @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
-    @objc dynamic var trianerId: Int = -1
+    @objc dynamic var trianerId: String = ""
     @objc dynamic var userId: Int = -1
     var weeks = List<TrainingWeek>()
     

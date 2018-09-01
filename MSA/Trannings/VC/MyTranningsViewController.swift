@@ -49,7 +49,6 @@ class MyTranningsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
-//        tableView.separatorColor = .clear
         self.tableView.tableFooterView = UIView()
         tableView.allowMultipleSectionsOpen = true
         tableView.register(UINib(nibName: "TrainingDayHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "TrainingDayHeaderView")
@@ -68,6 +67,7 @@ class MyTranningsViewController: UIViewController {
     }
     @IBAction func saveTemplate(_ sender: Any) {
         manager.setCurrent(training: manager.getTrainings()?.first)
+        manager.dataSource?.newTemplate = TrainingTemplate()
         self.performSegue(withIdentifier: "createTemplate", sender: nil)
     }
     
@@ -213,6 +213,14 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
 }
 
 extension MyTranningsViewController: TrainingsViewDelegate {
+    func templatesLoaded() {
+        
+    }
+    
+    func templateCreated() {
+        
+    }
+    
     func startLoading() {
         print("Start")
     }
@@ -223,6 +231,8 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     
     func trainingsLoaded() {
         tableView.reloadData()
+        manager.loadTemplates()
+
     }
     
     func errorOccurred(err: String) {
