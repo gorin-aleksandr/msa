@@ -138,10 +138,13 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="fYZ-mp-1UL" kind="show" identifier="showTrainingDay" id="yjt-ct-Kzj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h7W-NB-JNs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2094" y="-2812"/>
+            <point key="canvasLocation" x="-3034" y="-4386"/>
         </scene>
         <!--Новый шаблон-->
         <scene sceneID="Rre-Pq-2FC">
@@ -242,7 +245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4IG-7E-7W4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3077" y="-2811"/>
+            <point key="canvasLocation" x="-3034" y="-2865"/>
         </scene>
         <!--Мои тренировки-->
         <scene sceneID="QqP-qP-tf1">
@@ -1048,4 +1051,7 @@
         <image name="title_timer" width="71" height="17"/>
         <image name="title_timer_1" width="70" height="22"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="yjt-ct-Kzj"/>
+    </inferredMetricsTieBreakers>
 </document>

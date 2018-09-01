@@ -20,7 +20,7 @@ class CalendarViewController: UIViewController {
     }()
     
     var calendarView: VACalendarView!
-    
+    var days = [TrainingDay]()
     var manager = TrainingManager()
     
     @IBAction func backAction(_ sender: Any) {
@@ -38,6 +38,36 @@ class CalendarViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupCalendarView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(getDate(notification:)), name: NSNotification.Name(rawValue: "dayTapped"), object: nil)
+    }
+    
+    @objc
+    func getDate(notification: NSNotification) {
+        if let date = notification.userInfo?["date"] as? Date {
+            for day in days {
+                if day.date == stringFrom(date: date) {
+                    manager.setCurrent(day: day)
+                    performSegue(withIdentifier: "showTrainingDay", sender: nil)
+                }
+            }
+        }
+    }
+    
+    func stringFrom(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyy"
+        return formatter.string(from: date)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "showTrainingDay":
+            guard let vc = segue.destination as? CircleTrainingDayViewController else {return}
+            vc.manager = self.manager
+        default:
+            return
+        }
     }
     
     private func configureUI() {
@@ -51,7 +81,6 @@ class CalendarViewController: UIViewController {
     }
     
     private func selectCalendarDays() {
-        var days = [TrainingDay]()
         for week in (manager.getTrainings()?.first?.weeks)! {
             for day in week.days {
                 days.append(day)
@@ -100,12 +129,8 @@ class CalendarViewController: UIViewController {
         self.view.insertSubview(calendarView, at: 0)
     }
     
-//    private func setDatesPlusOneDay(dates: [Date]) {
-//        let newDates = dates.map({$0.addingTimeInterval(TimeInterval(86400))})
-//        calendarView.selectDates(newDates)
-//    }
-    
 }
+
 
 extension CalendarViewController: VAMonthViewAppearanceDelegate {
     

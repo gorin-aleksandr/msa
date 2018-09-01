@@ -278,17 +278,18 @@ extension VACalendarView: VACalendarDelegate {
 extension VACalendarView: VAMonthViewDelegate {
     
     func dayStateChanged(_ day: VADay, in month: VAMonth) {
-        switch selectionStyle {
-        case .single:
-            guard day.state == .available else { return }
-            
-            calendar.deselectAll()
-            calendar.setDaySelectionState(day, state: .selected)
-            calendarDelegate?.selectedDate?(day.date)
-            
-        case .multi:
-            calendar.setDaySelectionState(day, state: day.reverseSelectionState)
-        }
+        NotificationCenter.default.post(name: Notification.Name("dayTapped"), object: nil, userInfo: ["date":day.date])
+//        switch selectionStyle {
+//        case .single:
+//            guard day.state == .available else { return }
+//
+//            calendar.deselectAll()
+//            calendar.setDaySelectionState(day, state: .selected)
+//            calendarDelegate?.selectedDate?(day.date)
+//
+//        case .multi:
+//            calendar.setDaySelectionState(day, state: day.reverseSelectionState)
+//        }
     }
     
 }
