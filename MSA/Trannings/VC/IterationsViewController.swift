@@ -37,6 +37,10 @@ class IterationsViewController: UIViewController {
         configureUI()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     override func viewWillLayoutSubviews() {
         addPodhodButton.setShadow(shadowOpacity: 0.4)
     }

@@ -49,70 +49,56 @@ class TrainingManager {
         dataSource?.currentTraining = training
     }
     func getCurrentTraining() -> Training? {
-        return dataSource?.currentTraining
+        return realm.getElement(ofType: Training.self, filterWith: NSPredicate(format: "id = %d", dataSource?.currentTraining?.id ?? -1))
     }
     func setCurrent(exercise: ExerciseInTraining) {
         dataSource?.currentExerciseInDay = exercise
     }
     func getCurrentExercise() -> ExerciseInTraining? {
-        return dataSource?.currentExerciseInDay
+        return realm.getElement(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "id = %d", dataSource?.currentExerciseInDay?.id ?? -1))
     }
-    
     func setCurrent(iteration: Iteration) {
         dataSource?.currentIteration = iteration
     }
     func getCurrentIteration() -> Iteration? {
         return dataSource?.currentIteration
     }
-    
     func getTrainingsFromRealm() -> [Training]? {
         return realm.getArray(ofType: Training.self)
     }
-    
     func getTemplatesFromRealm() -> [TrainingTemplate]? {
         return realm.getArray(ofType: TrainingTemplate.self)
     }
-    
     func getDay(by id: Int) -> TrainingDay? {
         return realm.getElement(ofType: TrainingDay.self, filterWith: NSPredicate(format: "id = %d", id))
     }
-    
     func getWeek(by id: Int) -> TrainingWeek? {
         return realm.getElement(ofType: TrainingWeek.self, filterWith: NSPredicate(format: "id = %d", id))
     }
-    
     func getExercise(by id: Int) -> ExerciseInTraining? {
         return realm.getElement(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "id = %d", id))
     }
-    
     func getIteration(by id: Int) -> Iteration? {
         return realm.getElement(ofType: Iteration.self, filterWith: NSPredicate(format: "id = %d", id))
     }
-    
     func getTemplatesby(trainer id: Int) -> [TrainingTemplate]? {
         return realm.getArray(ofType: TrainingTemplate.self, filterWith: NSPredicate(format: "trianerId = %d", id))
     }
-    
     func saveTemplateToRealm(templates: [TrainingTemplate]) {
         realm.saveObjectsArray(templates)
     }
-    
     func saveTrainingsToRealm(trainings: [Training]) {
         realm.saveObjectsArray(trainings)
     }
-    
     func saveDaysToRealm(days: [TrainingDay]) {
         realm.saveObjectsArray(days)
     }
-    
     func saveWeeksToRealm(weeks: [TrainingWeek]) {
         realm.saveObjectsArray(weeks)
     }
-    
     func saveExersInTrainingToRealm(ex: [ExerciseInTraining]) {
         realm.saveObjectsArray(ex)
     }
-    
     func saveIterationsToRealm(iterations: [Iteration]) {
         realm.saveObjectsArray(iterations)
     }
@@ -154,10 +140,25 @@ class TrainingManager {
         ]
     }
     
+    func editTraining(wiht id: Int) {
+        if let userId = AuthModule.currUser.id {
+            self.view?.startLoading()
+            let newInfo = makeTrainingForFirebase(id: id, or: true)
+            Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
+                self.view?.finishLoading()
+                if error == nil {
+                    
+                } else {
+                    self.view?.errorOccurred(err: error?.localizedDescription ?? "")
+                }
+            }
+        }
+    }
+    
     func loadTrainings() {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
-            Database.database().reference().child("Trainings").observeSingleEvent(of: .value) { (snapchot) in
+            Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
                 self.observeTrainings(snapchot: snapchot)
             }
         }
@@ -198,6 +199,56 @@ class TrainingManager {
                 }
             }
         }
+    }
+    
+    func makeTrainingForFirebase(id: Int, or edit: Bool) -> [String:Any] {
+        var newiterations = [[String:Any]]()
+        var newexercises = [[String:Any]]()
+        var newdays = [[String:Any]]()
+        var newWeeks = [[String:Any]]()
+
+        let training = dataSource?.currentTraining
+        if let weeks = training?.weeks {
+            for week in weeks {
+                for day in week.days {
+                    for e in day.exercises {
+                        for i in e.iterations {
+                            newiterations.append([
+                                    "id": i.id,
+                                    "exerciseInTrainingId": i.exerciseInTrainingId,
+                                    "weight": i.weight,
+                                    "counts": i.counts,
+                                    "workTime": i.workTime,
+                                    "restTime": i.restTime
+                                ])
+                        }
+                        newexercises.append([
+                               "id": e.id,
+                               "name": e.name,
+                               "exerciseId": e.exerciseId,
+                               "iterations": newiterations
+                            ])
+                    }
+                    newdays.append([
+                           "id": day.id,
+                           "name": day.name,
+                           "date": day.date,
+                           "exercises": newexercises
+                        ])
+                }
+                newWeeks.append([
+                    "id": week.id,
+                    "days": newdays
+                    ])
+            }
+        }
+        return [
+            "id": dataSource?.currentTraining?.id ?? "",
+            "name": dataSource?.currentTraining?.name ?? "",
+            "trainerId": dataSource?.currentTraining?.trianerId ?? "",
+            "userId": dataSource?.currentTraining?.userId ?? "",
+            "weeks": newWeeks
+        ]
     }
     
     func observeTemplates(snapchot: DataSnapshot) {
@@ -280,6 +331,7 @@ class TrainingManager {
             items.append(training)
         }
         dataSource?.set(trainings: items)
+        dataSource?.currentTraining = items.first
         self.saveTrainingsToRealm(trainings: items)
         self.view?.trainingsLoaded()
     }

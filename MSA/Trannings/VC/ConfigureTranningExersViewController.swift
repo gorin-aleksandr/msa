@@ -76,6 +76,22 @@ class ConfigureTranningExersViewController: UIViewController {
         initialDataFilling()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        saveChanges()
+    }
+    
+    func saveChanges() {
+        let iteration = manager.realm.getElement(ofType: Iteration.self, filterWith: NSPredicate(format: "id = %d", manager.getCurrentIteration()?.id ?? -1))
+        try! manager.realm.performWrite {
+            iteration?.workTime = (workTime.0 * 60) + workTime.1
+            iteration?.restTime = (restTime.0 * 60) + restTime.1
+            iteration?.counts = Int(countsLabel.text ?? "0") ?? 0
+            iteration?.weight = Int(weightLabel.text ?? "0") ?? 0
+        }
+        
+        manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? 0)
+    }
+    
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         let button = UIButton(type: .custom)
@@ -105,8 +121,6 @@ class ConfigureTranningExersViewController: UIViewController {
     private func configurePicker() {
         timePicker.delegate = self
         timePicker.dataSource = self
-        self.timePickerBottom.constant -= timePicker.frame.size.height
-        self.timePickerTop.constant += timePicker.frame.size.height
     }
     
     private func reloadPicker() {

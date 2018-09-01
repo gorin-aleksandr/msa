@@ -42,7 +42,6 @@ class MyTranningsViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 13)!],for: .normal)
         configureTableView()
-        
     }
     
     private func configureTableView() {
@@ -159,7 +158,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
         
-        if let day = manager.getTrainings()?.first?.weeks.first?.days[section] {
+        if let day = manager.getCurrentTraining()?.weeks.first?.days[section] {
             headerView.dateLabel.text = day.date
             headerView.dayLabel.text = "День #\(section + 1)"
             headerView.nameLabel.text = day.name
@@ -180,16 +179,15 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         return 60
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == (manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises.count ?? 0) {
+        if indexPath.row == (manager.getCurrentTraining()?.weeks.first?.days[indexPath.section].exercises.count ?? 0) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddExerciseToDayTableViewCell", for: indexPath) as? AddExerciseToDayTableViewCell else {return UITableViewCell()}
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExerciseTableViewCell", for: indexPath) as? ExerciseTableViewCell else {return UITableViewCell()}
-            if let exercise = manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises[indexPath.row] {
+            if let exercise = manager.getCurrentTraining()?.weeks.first?.days[indexPath.section].exercises[indexPath.row] {
                 if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", exercise.exerciseId)) {
                     cell.exerciseNameLable.text = ex.name
                     cell.exerciseImageView.sd_setImage(with: URL(string: ex.pictures.first?.url ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
-                    
                 }
             }
             return cell
@@ -197,17 +195,19 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (manager.getTrainings()?.first?.weeks.first?.days[section].exercises.count ?? 0) + 1
+        return (manager.getCurrentTraining()?.weeks.first?.days[section].exercises.count ?? 0) + 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return manager.getTrainings()?.first?.weeks.first?.days.count ?? 0
+        return manager.getCurrentTraining()?.weeks.first?.days.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row != manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises.count {
-            guard let ex = manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises[indexPath.row] else {return}
+        if indexPath.row != manager.getCurrentTraining()?.weeks.first?.days[indexPath.section].exercises.count {
+            guard let ex = manager.getCurrentTraining()?.weeks.first?.days[indexPath.section].exercises[indexPath.row] else {return}
+            guard let day = manager.getCurrentTraining()?.weeks.first?.days[indexPath.section] else {return}
             manager.setCurrent(exercise: ex)
+            manager.setCurrent(day: day)
             self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
         }
     }
