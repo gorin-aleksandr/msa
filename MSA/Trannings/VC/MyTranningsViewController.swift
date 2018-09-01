@@ -187,7 +187,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return manager.getTrainings()?.first?.weeks.first?.days[section].exercises.count ?? 0
+        return (manager.getTrainings()?.first?.weeks.first?.days[section].exercises.count ?? 0) + 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -195,9 +195,11 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let ex = manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises[indexPath.row] else {return}
-        manager.setCurrent(exercise: ex)
-        self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
+        if indexPath.row != manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises.count {
+            guard let ex = manager.getTrainings()?.first?.weeks.first?.days[indexPath.section].exercises[indexPath.row] else {return}
+            manager.setCurrent(exercise: ex)
+            self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
+        }
     }
 }
 
