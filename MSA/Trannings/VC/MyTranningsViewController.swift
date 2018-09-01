@@ -66,9 +66,17 @@ class MyTranningsViewController: UIViewController {
         self.performSegue(withIdentifier: "showCalendar", sender: nil)
     }
     @IBAction func saveTemplate(_ sender: Any) {
+        saveTemplate()
+    }
+
+    func saveTemplate() {
         manager.setCurrent(training: manager.getTrainings()?.first)
         manager.dataSource?.newTemplate = TrainingTemplate()
         self.performSegue(withIdentifier: "createTemplate", sender: nil)
+    }
+    
+    func deleteTraining() {
+        manager.deleteTraining(with: "\(manager.dataSource?.currentTraining?.id ?? -1)")
     }
     
     func showOptionsAlert() {
@@ -82,9 +90,11 @@ class MyTranningsViewController: UIViewController {
         
         let save = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
             self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.saveTemplate()
         })
         let delete = UIAlertAction(title: "Удалить тренировку", style: .default, handler: { action in
             self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.deleteTraining()
         })
         let cancel = UIAlertAction(title: "Отмена", style: .default, handler: { action in
             self.segmentControl.layer.borderColor = lightBlue.cgColor

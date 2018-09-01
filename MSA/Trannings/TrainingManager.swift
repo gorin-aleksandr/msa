@@ -172,6 +172,34 @@ class TrainingManager {
         }
     }
     
+    func deleteTraining(with id: String) {
+        if let userId = AuthModule.currUser.id {
+            self.view?.startLoading()
+            Database.database().reference().child("Trainings").child(userId).child(id).removeValue { (error, ref) in
+                self.view?.finishLoading()
+                if error == nil {
+                    // DELETED
+                } else {
+                    self.view?.errorOccurred(err: error?.localizedDescription ?? "")
+                }
+            }
+        }
+    }
+    
+    func deleteTemplate(with id: String) {
+        if let userId = AuthModule.currUser.id {
+            self.view?.startLoading()
+            Database.database().reference().child("Templates").child(userId).child(id).removeValue { (error, ref) in
+                self.view?.finishLoading()
+                if error == nil {
+                    // DELETED
+                } else {
+                    self.view?.errorOccurred(err: error?.localizedDescription ?? "")
+                }
+            }
+        }
+    }
+    
     func observeTemplates(snapchot: DataSnapshot) {
         self.view?.finishLoading()
         var items = [TrainingTemplate]()
