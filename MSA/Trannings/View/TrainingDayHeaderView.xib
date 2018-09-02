@@ -57,12 +57,21 @@
                                 <constraint firstItem="9Gd-ze-AAv" firstAttribute="top" secondItem="rcR-Pg-wwi" secondAttribute="top" constant="10" id="kVy-HH-imC"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Грудь-спина" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-jG-RM1">
-                            <rect key="frame" x="10" y="44.5" width="112" height="20.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-jG-RM1">
+                            <rect key="frame" x="10" y="65" width="0.0" height="0.0"/>
                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                             <color key="textColor" red="0.01176470588" green="0.050980392159999999" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0H7-nG-SYb">
+                            <rect key="frame" x="10" y="45" width="234" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="2Fu-Wv-Idp"/>
+                            </constraints>
+                            <color key="textColor" red="0.40000000000000002" green="0.43529411764705883" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zPq-B2-0qR">
                             <rect key="frame" x="258" y="36" width="126" height="32"/>
                             <subviews>
@@ -85,6 +94,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="0H7-nG-SYb" secondAttribute="bottom" constant="10" id="DHM-au-9y8"/>
                         <constraint firstAttribute="bottom" secondItem="rcR-Pg-wwi" secondAttribute="bottom" id="HBb-Xz-X2C"/>
                         <constraint firstAttribute="bottom" secondItem="cOV-jG-RM1" secondAttribute="bottom" constant="10" id="JVe-Ji-j1U"/>
                         <constraint firstItem="cOV-jG-RM1" firstAttribute="leading" secondItem="TH7-jf-I4o" secondAttribute="leading" constant="10" id="MFb-3w-Ffe"/>
@@ -92,7 +102,9 @@
                         <constraint firstAttribute="bottom" secondItem="zPq-B2-0qR" secondAttribute="bottom" constant="7" id="NGq-fi-SXH"/>
                         <constraint firstItem="rcR-Pg-wwi" firstAttribute="leading" secondItem="TH7-jf-I4o" secondAttribute="leading" id="Znn-ux-evV"/>
                         <constraint firstItem="rcR-Pg-wwi" firstAttribute="top" secondItem="TH7-jf-I4o" secondAttribute="top" constant="9" id="ehk-PN-xvl"/>
+                        <constraint firstItem="0H7-nG-SYb" firstAttribute="leading" secondItem="TH7-jf-I4o" secondAttribute="leading" constant="10" id="nch-CS-7Zv"/>
                         <constraint firstAttribute="trailing" secondItem="rcR-Pg-wwi" secondAttribute="trailing" id="oXF-9Z-Pg1"/>
+                        <constraint firstAttribute="trailing" secondItem="0H7-nG-SYb" secondAttribute="trailing" constant="150" id="wLp-gS-Zz7"/>
                     </constraints>
                 </view>
             </subviews>
@@ -109,6 +121,7 @@
                 <outlet property="dateLabel" destination="oEx-Ro-hix" id="gf1-jj-HtO"/>
                 <outlet property="dayLabel" destination="8Tp-fa-rx0" id="wdD-Bs-bN4"/>
                 <outlet property="nameLabel" destination="cOV-jG-RM1" id="5O1-Be-LO2"/>
+                <outlet property="nameTextField" destination="0H7-nG-SYb" id="7Zu-KU-T18"/>
                 <outlet property="openHideExercisesButton" destination="hdd-P2-JFp" id="0b7-Sb-nUe"/>
                 <outlet property="sircleTrainingButton" destination="iUb-TR-vRM" id="7hy-dK-vDo"/>
                 <outlet property="startTrainingButton" destination="E4V-ZF-cv6" id="LTB-qj-KeZ"/>

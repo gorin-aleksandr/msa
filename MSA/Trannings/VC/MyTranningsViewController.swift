@@ -225,9 +225,9 @@ class MyTranningsViewController: UIViewController {
         manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
         weekLabel.text = "Неделя #\(weekNumber+1)"
         if plus {
-            UIView.transition(with: self.tableView, duration: 0.6, options: .transitionCurlUp, animations: { self.tableView.reloadData() })
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
         } else {
-            UIView.transition(with: self.tableView, duration: 0.6, options: .transitionCurlDown, animations: { self.tableView.reloadData() })
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
         }
     }
 }
@@ -240,7 +240,10 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         if let day = manager.dataSource?.currentWeek?.days[section] {
             headerView.dateLabel.text = day.date == "" ? "______" : day.date
             headerView.dayLabel.text = "День #\(section + 1)"
-            headerView.nameLabel.text = day.name == "" ? "______" : day.name
+//            headerView.nameLabel.text = day.name == "" ? "______" : day.name
+            headerView.nameTextField.text = day.name == "" ? "______" : day.name
+            headerView.nameTextField.tag = section
+            headerView.nameTextField.delegate = self
         }
         headerView.sircleTrainingButton.tag = section
         headerView.startTrainingButton.tag = section
@@ -327,7 +330,7 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
 }
 
 extension MyTranningsViewController: TrainingsViewDelegate {
-    func exerciseAdded() {}
+    func trainingEdited() {}
     
     func templatesLoaded() {}
     
@@ -351,4 +354,14 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     }
     
     
+}
+
+extension MyTranningsViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        try! manager.realm.performWrite {
+            guard let object = manager.dataSource?.currentWeek?.days[textField.tag] else {return}
+            object.name = textField.text ?? ""
+            self.manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1)
+        }
+    }
 }

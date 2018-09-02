@@ -261,7 +261,7 @@ extension CreateTemplateViewController: UIPickerViewDelegate, UIPickerViewDataSo
 }
 
 extension CreateTemplateViewController: TrainingsViewDelegate {
-    func exerciseAdded() {}
+    func trainingEdited() {}
     
     func templatesLoaded() {}
     

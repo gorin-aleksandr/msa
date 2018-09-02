@@ -17,7 +17,7 @@ protocol TrainingsViewDelegate {
     func trainingsLoaded()
     func templateCreated()
     func templatesLoaded()
-    func exerciseAdded()
+    func trainingEdited()
     func errorOccurred(err: String)
 }
 
@@ -147,7 +147,7 @@ class TrainingManager {
             let newInfo = makeTrainingForFirebase(id: id, or: true)
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
                 self.view?.finishLoading()
-                self.view?.exerciseAdded()
+                self.view?.trainingEdited()
                 if error == nil {
                     
                 } else {

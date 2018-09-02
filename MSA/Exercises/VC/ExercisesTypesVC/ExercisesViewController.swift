@@ -139,6 +139,7 @@ class ExercisesViewController: UIViewController {
                 guard let IDS = presenter.getFiltersByType(with: ids.map ({return $0.id}) ) else {return}
                 presenter.setCurrentFilters(filt: IDS)
                 destination.presenter = self.presenter
+                destination.trainingManager = self.trainingManager
             }
         case SegueIDs.oneExerciseSegueId.rawValue:
             if let destination = segue.destination as? ExercisesInfoViewController {
@@ -296,7 +297,7 @@ extension ExercisesViewController: UISearchResultsUpdating {
 }
 
 extension ExercisesViewController: TrainingsViewDelegate {
-    func exerciseAdded() {
+    func trainingEdited() {
         back()
     }
     

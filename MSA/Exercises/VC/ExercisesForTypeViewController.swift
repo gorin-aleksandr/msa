@@ -21,6 +21,7 @@ class ExercisesForTypeViewController: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     var presenter: ExersisesTypesPresenter? = nil
+    var trainingManager: TrainingManager? = nil
     
     var exercisesByFIlter: [Exercise]? = nil
     var filteredArray: [Exercise] = []
@@ -30,7 +31,7 @@ class ExercisesForTypeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        trainingManager?.initView(view: self)
         presenter?.attachView(view: self)
         initialDataFilling()
         configureFilterScrollView()
@@ -173,6 +174,15 @@ class ExercisesForTypeViewController: UIViewController {
             print("default")
         }
     }
+    
+    func back() {
+        for controller in self.navigationController!.viewControllers as Array {
+            if controller.isKind(of: MyTranningsViewController.self) {
+                self.navigationController!.popToViewController(controller, animated: true)
+                break
+            }
+        }
+    }
 
 }
 
@@ -206,7 +216,19 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             guard let ex = exercisesByFIlter?[indexPath.row] else {return}
             exercise = ex
         }
-        performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
+        if let manager = trainingManager {
+            let newExercise = exercise
+            let ex = ExerciseInTraining()
+            ex.id = ex.incrementID()
+            ex.name = newExercise.name 
+            ex.exerciseId = newExercise.id
+            try! manager.realm.performWrite {
+                manager.getCurrentday()?.exercises.append(ex)
+                manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1)
+            }
+        } else {
+            performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
@@ -247,4 +269,13 @@ extension ExercisesForTypeViewController: UISearchResultsUpdating {
         updateSearchData()
     }
     
+}
+
+extension ExercisesForTypeViewController: TrainingsViewDelegate {
+    func trainingEdited() {
+        back()
+    }
+    func trainingsLoaded() {}
+    func templateCreated() {}
+    func templatesLoaded() {}
 }
