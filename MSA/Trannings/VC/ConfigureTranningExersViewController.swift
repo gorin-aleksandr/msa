@@ -116,7 +116,7 @@ class ConfigureTranningExersViewController: UIViewController {
             iteration?.counts = Int(countsLabel.text ?? "0") ?? 0
             iteration?.weight = Int(weightLabel.text ?? "0") ?? 0
         }
-        manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? 0)
+        manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? 0, success: {})
     }
     
     private func configureUI() {
@@ -343,6 +343,8 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
 }
 
 extension ConfigureTranningExersViewController: TrainingsViewDelegate {
+    func synced() {}
+
     func startLoading() {}
     
     func finishLoading() {}

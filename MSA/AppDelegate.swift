@@ -21,8 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
-        start.start()
+        
         let config = Realm.Configuration(
             schemaVersion: realmVersion,
             migrationBlock: { migration, oldSchemaVersion in
@@ -35,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         IQKeyboardManager.sharedManager().enable = true
         
+        let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
+        start.start()
         
         // Override point for customization after application launch.
         return true

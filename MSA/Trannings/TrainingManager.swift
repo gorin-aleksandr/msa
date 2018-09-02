@@ -19,6 +19,7 @@ protocol TrainingsViewDelegate {
     func templatesLoaded()
     func trainingEdited()
     func errorOccurred(err: String)
+    func synced()
 }
 
 class TrainingManager {
@@ -141,7 +142,7 @@ class TrainingManager {
         ]
     }
     
-    func editTraining(wiht id: Int) {
+    func editTraining(wiht id: Int, success: @escaping()->()) {
         if let userId = AuthModule.currUser.id {
             self.view?.startLoading()
             let newInfo = makeTrainingForFirebase(id: id, or: true)
@@ -149,7 +150,8 @@ class TrainingManager {
                 self.view?.finishLoading()
                 self.view?.trainingEdited()
                 if error == nil {
-                    
+                    self.setSynced()
+                    success()
                 } else {
                     self.view?.errorOccurred(err: error?.localizedDescription ?? "")
                 }
@@ -349,6 +351,53 @@ class TrainingManager {
         self.view?.trainingsLoaded()
     }
     
+    func syncUnsyncedTrainings() {
+        let trainings = realm.getArray(ofType: Training.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+        let weeks = realm.getArray(ofType: TrainingWeek.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+        let days = realm.getArray(ofType: TrainingDay.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+        let ex = realm.getArray(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+        let iterations = realm.getArray(ofType: Iteration.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+
+        let dispatch = DispatchGroup()
+        
+        if trainings.contains(where: {$0.wasSync == false}) || weeks.contains(where: {$0.wasSync == false}) || days.contains(where: {$0.wasSync == false}) || ex.contains(where: {$0.wasSync == false}) || iterations.contains(where: {$0.wasSync == false}) {
+            for training in trainings {
+                dispatch.enter()
+                dataSource?.currentTraining = training
+                self.editTraining(wiht: training.id, success: {
+                    dispatch.leave()
+                })
+            }
+            dispatch.notify(queue: .main) {
+               self.setSynced()
+            }
+        }
+        self.view?.synced()
+    }
     
+    func setSynced() {
+        try! self.realm.performWrite {
+            let trainings = realm.getArray(ofType: Training.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+            let weeks = realm.getArray(ofType: TrainingWeek.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+            let days = realm.getArray(ofType: TrainingDay.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+            let ex = realm.getArray(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+            let iterations = realm.getArray(ofType: Iteration.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+            for training in trainings {
+                training.wasSync = true
+            }
+            for week in weeks {
+                week.wasSync = true
+            }
+            for day in days {
+                day.wasSync = true
+            }
+            for e in ex {
+                e.wasSync = true
+            }
+            for i in iterations {
+                i.wasSync = true
+            }
+        }
+    }
     
 }

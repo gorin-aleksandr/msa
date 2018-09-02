@@ -34,7 +34,7 @@ class MyTranningsViewController: UIViewController {
         manager.initDataSource(dataSource: TrainingsDataSource.shared)
         manager.initView(view: self)
         manager.loadTrainingsFromRealm()
-        manager.loadTrainings()
+        manager.syncUnsyncedTrainings()
     }
     
      private func initialViewConfiguration() {
@@ -173,7 +173,7 @@ class MyTranningsViewController: UIViewController {
             let newDay = TrainingDay()
             newDay.id = newDay.incrementID()
             week.days.append(newDay)
-            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1)
+            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
         }
     }
     func addWeek() {
@@ -185,7 +185,7 @@ class MyTranningsViewController: UIViewController {
             newDay.id = newDay.incrementID()
             newWeek.days.append(newDay)
             training.weeks.append(newWeek)
-            self.manager.editTraining(wiht: training.id)
+            self.manager.editTraining(wiht: training.id, success: {})
         }
     }
     
@@ -208,7 +208,7 @@ class MyTranningsViewController: UIViewController {
                 formatter.dateFormat = "dd.MM.yyyy"
                 try! self.manager.realm.performWrite {
                     self.manager.dataSource?.currentDay?.date = formatter.string(from: dt)
-                    self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1)
+                    self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
                 }
             }
         }
@@ -332,7 +332,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         let delete = UITableViewRowAction(style: .destructive, title: "Удалить") { (action, indexPath) in
             guard let object = self.manager.dataSource?.currentWeek?.days[indexPath.section].exercises[indexPath.row] else {return}
             self.manager.realm.deleteObject(object)
-            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1)
+            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
             UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
         }
 
@@ -353,6 +353,11 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
 }
 
 extension MyTranningsViewController: TrainingsViewDelegate {
+    
+    func synced() {
+        manager.loadTrainings()
+    }
+
     func trainingEdited() {
         self.tableView.reloadData()
     }
@@ -384,7 +389,7 @@ extension MyTranningsViewController: UITextFieldDelegate {
         try! manager.realm.performWrite {
             guard let object = manager.dataSource?.currentWeek?.days[textField.tag] else {return}
             object.name = textField.text ?? ""
-            self.manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1)
+            self.manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {})
         }
     }
 }

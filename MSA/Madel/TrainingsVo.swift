@@ -18,6 +18,10 @@ class TrainingTemplate: Object {
     @objc dynamic var days: Int = 0
     @objc dynamic var trainingId: Int = -1
     
+    @objc dynamic var wasSync: Bool = false
+    
+    
+    
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -35,6 +39,8 @@ class Training: Object {
     @objc dynamic var userId: Int = -1
     var weeks = List<TrainingWeek>()
     
+    @objc dynamic var wasSync: Bool = false
+
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -48,6 +54,8 @@ class Training: Object {
 class TrainingWeek: Object {
     @objc dynamic var id: Int = -1
     var days = List<TrainingDay>()
+
+    @objc dynamic var wasSync: Bool = false
 
     override static func primaryKey() -> String? {
         return "id"
@@ -66,6 +74,8 @@ class TrainingDay: Object {
     @objc dynamic var roundTraining: Bool = false
     var exercises = List<ExerciseInTraining>()
     
+    @objc dynamic var wasSync: Bool = false
+
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -82,6 +92,8 @@ class ExerciseInTraining: Object {
     @objc dynamic var exerciseId: Int = -1
     var iterations = List<Iteration>()
     
+    @objc dynamic var wasSync: Bool = false
+
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -100,6 +112,8 @@ class Iteration: Object {
     @objc dynamic var workTime: Int = 0
     @objc dynamic var restTime: Int = 0
 
+    @objc dynamic var wasSync: Bool = false
+    
     override static func primaryKey() -> String? {
         return "id"
     }

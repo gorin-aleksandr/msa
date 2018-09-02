@@ -78,7 +78,7 @@ class IterationsViewController: UIViewController {
             newIteration.id = newIteration.incrementID()
             newIteration.exerciseInTrainingId = manager.getCurrentExercise()?.id ?? -1
             manager.getCurrentExercise()?.iterations.append(newIteration)
-            manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1)
+            manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {})
         }
         UIView.transition(with: tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
     }
@@ -155,7 +155,7 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         let delete = UITableViewRowAction(style: .normal, title: ".") { (action, indexPath) in
             guard let object = self.manager.getCurrentExercise()?.iterations[indexPath.row] else {return}
             self.manager.realm.deleteObject(object)
-            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1)
+            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
             UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
 
         }
