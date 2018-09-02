@@ -390,11 +390,11 @@
 			isa = PBXGroup;
 			children = (
 				29AC912C20CDA83E003F8152 /* MyTranningsViewController.swift */,
+				299938DB212AE87800B443D6 /* IterationsViewController.swift */,
 				29E60F302125B3BF00A5EC38 /* ConfigureTranningExersViewController.swift */,
+				2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */,
 				29952EDD212988500007F799 /* CalendarViewController.swift */,
 				2957BC3D2129D7F300C46B2A /* CreateTemplateViewController.swift */,
-				299938DB212AE87800B443D6 /* IterationsViewController.swift */,
-				2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";

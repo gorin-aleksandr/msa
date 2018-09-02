@@ -26,9 +26,7 @@ class CalendarViewController: UIViewController {
     @IBAction func backAction(_ sender: Any) {
         back()
     }
-    @IBAction func optionsAction(_ sender: Any) {
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

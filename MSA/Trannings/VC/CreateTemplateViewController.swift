@@ -24,6 +24,7 @@ class CreateTemplateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        manager.initView(view: self)
         initialDataFill()
         configureTableView()
         picker.delegate = self
@@ -33,7 +34,7 @@ class CreateTemplateViewController: UIViewController {
         back()
     }
     @IBAction func okButtonAction(_ sender: Any) {
-        
+        createTemplate()
     }
     
     private func back() {
@@ -42,8 +43,10 @@ class CreateTemplateViewController: UIViewController {
 
     func initialDataFill() {
         var daysAmount = 0
-        for week in (manager.getCurrentTraining()?.weeks)! {
-            daysAmount += week.days.count
+        if let weeks = manager.getCurrentTraining()?.weeks {
+            for week in weeks {
+                daysAmount += week.days.count
+            }
         }
         manager.dataSource?.newTemplate?.name = manager.getCurrentTraining()?.name ?? ""
         manager.dataSource?.newTemplate?.days = daysAmount
@@ -216,14 +219,18 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
                 self.viewWithPicker.alpha = 1
             }
         default:
-            if manager.dataSource?.newTemplate?.name != "" && manager.dataSource?.newTemplate?.days != 0 && manager.dataSource?.newTemplate?.typeId != -1 {
-                manager.saveTemplate()
-                back()
-            } else {
-                createTapped = true
-                AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
-                tableView.reloadData()
-            }
+            self.createTemplate()
+        }
+    }
+    
+    private func createTemplate() {
+        if manager.dataSource?.newTemplate?.name != "" && manager.dataSource?.newTemplate?.days != 0 && manager.dataSource?.newTemplate?.typeId != -1 {
+            manager.saveTemplate()
+            back()
+        } else {
+            createTapped = true
+            AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
+            tableView.reloadData()
         }
     }
     

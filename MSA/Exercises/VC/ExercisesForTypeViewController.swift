@@ -67,6 +67,10 @@ class ExercisesForTypeViewController: UIViewController {
         hideableNavigationBar(true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        trainingManager = nil
+    }
+    
     private func configureTable_CollectionView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -176,10 +180,12 @@ class ExercisesForTypeViewController: UIViewController {
     }
     
     func back() {
-        for controller in self.navigationController!.viewControllers as Array {
-            if controller.isKind(of: MyTranningsViewController.self) {
-                self.navigationController!.popToViewController(controller, animated: true)
-                break
+        if let NVC = self.navigationController {
+            for controller in NVC.viewControllers as Array {
+                if controller.isKind(of: MyTranningsViewController.self) {
+                    self.navigationController!.popToViewController(controller, animated: true)
+                    break
+                }
             }
         }
     }

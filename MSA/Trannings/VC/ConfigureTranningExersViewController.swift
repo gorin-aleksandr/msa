@@ -66,9 +66,14 @@ class ConfigureTranningExersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        manager.initView(view: self)
         configureUI()
     }
-
+    @IBAction func saveChangesAction(_ sender: Any) {
+        saveChanges()
+        back()
+    }
+    
     func initialDataFilling() {
         guard let iteration = manager.getCurrentIteration() else {return}
         weightLabel.text = "\(iteration.weight)"
@@ -90,7 +95,7 @@ class ConfigureTranningExersViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        saveChanges()
+
     }
     
     @objc
@@ -335,4 +340,21 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
         }
     }
     
+}
+
+extension ConfigureTranningExersViewController: TrainingsViewDelegate {
+    func startLoading() {}
+    
+    func finishLoading() {}
+    
+    func trainingsLoaded() {}
+    
+    func templateCreated() {}
+    
+    func templatesLoaded() {}
+    
+    func trainingEdited() {
+        back()
+    }
+    func errorOccurred(err: String) {}
 }

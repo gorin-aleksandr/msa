@@ -166,6 +166,13 @@ class TrainingManager {
         }
     }
     
+    func loadTrainingsFromRealm() {
+        let trainings = Array(realm.getArray(ofType: Training.self))
+        dataSource?.set(trainings: trainings)
+        dataSource?.currentTraining = trainings.first
+        self.view?.trainingsLoaded()
+    }
+    
     func loadTemplates() {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()

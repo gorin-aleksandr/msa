@@ -33,6 +33,7 @@ class MyTranningsViewController: UIViewController {
     private func initialDataLoading() {
         manager.initDataSource(dataSource: TrainingsDataSource.shared)
         manager.initView(view: self)
+        manager.loadTrainingsFromRealm()
         manager.loadTrainings()
     }
     
@@ -264,7 +265,6 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             headerView.nameTextField.text = day.name == "" ? "______" : day.name
             headerView.nameTextField.tag = section
             headerView.nameTextField.delegate = self
-            
         }
         headerView.sircleTrainingButton.tag = section
         headerView.startTrainingButton.tag = section
@@ -308,7 +308,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let day = manager.getCurrentTraining()?.weeks.first?.days[indexPath.section] else {return}
+        guard let day = manager.dataSource?.currentWeek?.days[indexPath.section] else {return}
         manager.setCurrent(day: day)
         if indexPath.row != manager.dataSource?.currentWeek?.days[indexPath.section].exercises.count {
             guard let ex = manager.dataSource?.currentWeek?.days[indexPath.section].exercises[indexPath.row] else {return}
@@ -377,8 +377,6 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     func errorOccurred(err: String) {
         print("Error")
     }
-    
-    
 }
 
 extension MyTranningsViewController: UITextFieldDelegate {
