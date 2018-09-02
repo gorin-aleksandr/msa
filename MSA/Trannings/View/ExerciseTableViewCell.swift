@@ -11,7 +11,11 @@ import UIKit
 class ExerciseTableViewCell: UITableViewCell {
     
     @IBOutlet weak var exerciseNameLable: UILabel!
-    @IBOutlet weak var exerciseImageView: UIImageView!
+    @IBOutlet weak var exerciseImageView: UIImageView! {
+        didSet {
+            exerciseImageView.layer.cornerRadius = 15
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

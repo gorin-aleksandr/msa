@@ -11,6 +11,12 @@ import UIKit
 
 private var maxLengths = [UITextField: Int]()
 
+extension UITableView {
+//    func reloadData(with animation: UITableViewRowAnimation) {
+//        reloadSections(IndexSet(integersIn: 0..<numberOfSections), with: animation)
+//    }
+}
+
 extension String {
     
     func getDate() -> Date? {

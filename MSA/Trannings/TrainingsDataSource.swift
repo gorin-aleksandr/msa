@@ -15,6 +15,7 @@ class TrainingsDataSource {
     var trainings: [Training] = []
     var templates: [TrainingTemplate] = []
     var currentTraining: Training? = nil
+    var currentWeek: TrainingWeek? = nil
     var currentDay: TrainingDay? = nil
     var currentExerciseInDay: ExerciseInTraining? = nil
     var currentIteration: Iteration? = nil
