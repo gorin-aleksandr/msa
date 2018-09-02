@@ -17,6 +17,7 @@ protocol TrainingsViewDelegate {
     func trainingsLoaded()
     func templateCreated()
     func templatesLoaded()
+    func exerciseAdded()
     func errorOccurred(err: String)
 }
 
@@ -146,6 +147,7 @@ class TrainingManager {
             let newInfo = makeTrainingForFirebase(id: id, or: true)
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
                 self.view?.finishLoading()
+                self.view?.exerciseAdded()
                 if error == nil {
                     
                 } else {
@@ -209,9 +211,13 @@ class TrainingManager {
 
         let training = dataSource?.currentTraining
         if let weeks = training?.weeks {
+            newWeeks.removeAll()
             for week in weeks {
+                newdays.removeAll()
                 for day in week.days {
+                    newexercises.removeAll()
                     for e in day.exercises {
+                        newiterations.removeAll()
                         for i in e.iterations {
                             newiterations.append([
                                     "id": i.id,

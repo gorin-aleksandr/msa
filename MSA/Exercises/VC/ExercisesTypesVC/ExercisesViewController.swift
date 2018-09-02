@@ -23,23 +23,37 @@ class ExercisesViewController: UIViewController {
     var filteredArray: [Exercise] = []
 
     let presenter = ExersisesTypesPresenter(exercises: ExersisesDataManager())
+    var trainingManager: TrainingManager? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         presenter.attachView(view: self)
+        trainingManager?.initView(view: self)
         configureTable_CollectionView()
         configurateSearchController()
         initialDataPreparing()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAdded), name: Notification.Name("Exercise_added"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
 
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hideableNavigationBar(false)
+        
+        guard let _ = trainingManager else { return }
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "back_"), for: .normal)
+        button.addTarget(self, action: #selector(back), for: .touchUpInside)
+        let barButt = UIBarButtonItem(customView: button)
+        navigationItem.leftBarButtonItem = barButt
+    }
+    
+    @objc
+    func back() {
+        navigationController?.popViewController(animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,10 +61,10 @@ class ExercisesViewController: UIViewController {
     }
     
     private func initialDataPreparing() {
-//        presenter.getExercisesFromRealm()
-//        presenter.getTypesFromRealm()
-//        presenter.getFiltersFromRealm()
-//        presenter.getMyExercisesFromRealm()
+        presenter.getExercisesFromRealm()
+        presenter.getTypesFromRealm()
+        presenter.getFiltersFromRealm()
+        presenter.getMyExercisesFromRealm()
         
 //        if presenter.getFilters().isEmpty {
             presenter.getAllFilters()
@@ -72,7 +86,7 @@ class ExercisesViewController: UIViewController {
         presenter.getMyExercises()
     }
     
-    @objc func exerciseAdded(notfication: NSNotification) {
+    @objc func exerciseAddedN(notfication: NSNotification) {
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
 //        presenter.getAllFilters()
 //        presenter.getAllExersises()
@@ -164,7 +178,19 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             presenter.setCurrentExercise(exerc: presenter.getExercises()[indexPath.row])
         }
-        self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
+        if let manager = trainingManager {
+            let newExercise = presenter.getCurrentExercise()
+            let ex = ExerciseInTraining()
+            ex.id = ex.incrementID()
+            ex.name = newExercise.name
+            ex.exerciseId = newExercise.id
+            try! manager.realm.performWrite {
+                manager.getCurrentday()?.exercises.append(ex)
+                manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1)
+            }
+        } else {
+            self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
+        }
     }
 }
 
@@ -267,4 +293,16 @@ extension ExercisesViewController: UISearchResultsUpdating {
         updateSearchData()
     }
     
+}
+
+extension ExercisesViewController: TrainingsViewDelegate {
+    func exerciseAdded() {
+        back()
+    }
+    
+    func trainingsLoaded() {}
+    
+    func templateCreated() {}
+    
+    func templatesLoaded() {}
 }

@@ -245,7 +245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4IG-7E-7W4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3034" y="-2865"/>
+            <point key="canvasLocation" x="-3034" y="-2838"/>
         </scene>
         <!--Мои тренировки-->
         <scene sceneID="QqP-qP-tf1">
@@ -370,6 +370,7 @@
                         <segue destination="fYZ-mp-1UL" kind="show" identifier="roundTraining" id="MqG-Hy-gPd"/>
                         <segue destination="Wzt-nP-B6d" kind="show" identifier="createTemplate" id="p5J-Ap-hz8"/>
                         <segue destination="xFK-2I-Nsn" kind="show" identifier="showCalendar" id="zvp-OL-TWB"/>
+                        <segue destination="9gy-3W-HJG" kind="show" identifier="addExercise" id="u8w-bO-CYM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fjs-HQ-1Kr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -716,6 +717,14 @@
             </objects>
             <point key="canvasLocation" x="-2094" y="-3661"/>
         </scene>
+        <!--Exercises-->
+        <scene sceneID="pTB-VP-h0s">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Exercises" id="9gy-3W-HJG" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fnq-NR-6YN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2135" y="-3167"/>
+        </scene>
         <!--Configure Tranning Exers View Controller-->
         <scene sceneID="pHh-HG-Kbu">
             <objects>
@@ -738,13 +747,13 @@
                                         <rect key="frame" x="10" y="10" width="139.5" height="288"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вес, кг" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5L-D0-oik">
-                                                <rect key="frame" x="0.0" y="0.0" width="139.5" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="139.5" height="17"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                                                 <color key="textColor" red="0.011764705882352941" green="0.050980392156862744" blue="0.082352941176470587" alpha="0.54963077910958902" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0f-6N-qxn">
-                                                <rect key="frame" x="0.0" y="23.5" width="139.5" height="39.5"/>
+                                                <rect key="frame" x="0.0" y="20" width="139.5" height="43"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="36"/>
                                                 <color key="textColor" red="0.01176470588" green="0.050980392159999999" blue="0.08235294118" alpha="0.54963077910000002" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>

@@ -261,9 +261,9 @@ extension CreateTemplateViewController: UIPickerViewDelegate, UIPickerViewDataSo
 }
 
 extension CreateTemplateViewController: TrainingsViewDelegate {
-    func templatesLoaded() {
-        
-    }
+    func exerciseAdded() {}
+    
+    func templatesLoaded() {}
     
     func templateCreated() {
         manager.dataSource?.templateCreated()
@@ -278,9 +278,7 @@ extension CreateTemplateViewController: TrainingsViewDelegate {
         print("Finish")
     }
     
-    func trainingsLoaded() {
-
-    }
+    func trainingsLoaded() {}
     
     func errorOccurred(err: String) {
         print("Error")

@@ -24,6 +24,10 @@ class MyTranningsViewController: UIViewController {
         initialDataLoading()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     private func initialDataLoading() {
         manager.initDataSource(dataSource: TrainingsDataSource.shared)
         manager.initView(view: self)
@@ -147,6 +151,9 @@ class MyTranningsViewController: UIViewController {
         case "roundTraining":
             guard let vc = segue.destination as? CircleTrainingDayViewController else {return}
             vc.manager = self.manager
+        case "addExercise":
+            guard let vc = segue.destination as? ExercisesViewController else {return}
+            vc.trainingManager = self.manager
         default:
             return
         }
@@ -203,14 +210,37 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let day = manager.getCurrentTraining()?.weeks.first?.days[indexPath.section] else {return}
+        manager.setCurrent(day: day)
         if indexPath.row != manager.getCurrentTraining()?.weeks.first?.days[indexPath.section].exercises.count {
             guard let ex = manager.getCurrentTraining()?.weeks.first?.days[indexPath.section].exercises[indexPath.row] else {return}
-            guard let day = manager.getCurrentTraining()?.weeks.first?.days[indexPath.section] else {return}
             manager.setCurrent(exercise: ex)
-            manager.setCurrent(day: day)
             self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
+        } else {
+            self.performSegue(withIdentifier: "addExercise", sender: nil)
         }
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = getDeleteAction()
+        return [delete]
+    }
+    
+    private func getDeleteAction() -> UITableViewRowAction {
+        let delete = UITableViewRowAction(style: .destructive, title: "Удалить") { (action, indexPath) in
+            guard let object = self.manager.getCurrentTraining()?.weeks.first?.days[indexPath.section].exercises[indexPath.row] else {return}
+            self.manager.realm.deleteObject(object)
+            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1)
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+        }
+
+        return delete
+    }
+    
 }
 
 extension MyTranningsViewController: FZAccordionTableViewDelegate {
@@ -225,13 +255,11 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
 }
 
 extension MyTranningsViewController: TrainingsViewDelegate {
-    func templatesLoaded() {
-        
-    }
+    func exerciseAdded() {}
     
-    func templateCreated() {
-        
-    }
+    func templatesLoaded() {}
+    
+    func templateCreated() {}
     
     func startLoading() {
         print("Start")
