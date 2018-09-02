@@ -111,7 +111,6 @@ class ConfigureTranningExersViewController: UIViewController {
             iteration?.counts = Int(countsLabel.text ?? "0") ?? 0
             iteration?.weight = Int(weightLabel.text ?? "0") ?? 0
         }
-        
         manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? 0)
     }
     

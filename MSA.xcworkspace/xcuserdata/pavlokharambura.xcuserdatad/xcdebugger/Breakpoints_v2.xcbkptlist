@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "557492837.792237"
+            timestampString = "557570311.624427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "210"
@@ -36,61 +36,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "557492837.792308"
+            timestampString = "557570311.624526"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "216"
             endingLineNumber = "216"
             landmarkName = "makeTrainingForFirebase(id:or:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MSA/Trannings/VC/IterationsViewController.swift"
-            timestampString = "557569654.0646369"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "addIteration()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MSA.IterationsViewController.addIteration() -&gt; ()"
-                  moduleName = "MSA"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/VC/IterationsViewController.swift"
-                  timestampString = "557569654.372686"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "76"
-                  endingLineNumber = "76"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in MSA.IterationsViewController.addIteration() -&gt; ()"
-                  moduleName = "MSA"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/VC/IterationsViewController.swift"
-                  timestampString = "557569654.37703"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "77"
-                  endingLineNumber = "77"
-                  offsetFromSymbolStart = "17">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

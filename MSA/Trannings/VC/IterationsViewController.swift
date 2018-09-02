@@ -78,9 +78,9 @@ class IterationsViewController: UIViewController {
             newIteration.id = newIteration.incrementID()
             newIteration.exerciseInTrainingId = manager.getCurrentExercise()?.id ?? -1
             manager.getCurrentExercise()?.iterations.append(newIteration)
+            manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1)
         }
-        tableView.reloadData()
-
+        UIView.transition(with: tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
     }
     
     fileprivate func whitespaceString(font: UIFont = UIFont(name: "Rubik-Medium", size: 17)!, width: CGFloat) -> String {
@@ -153,7 +153,11 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func getDeleteAction() -> UITableViewRowAction {
         let delete = UITableViewRowAction(style: .normal, title: ".") { (action, indexPath) in
-            // TODO !!!
+            guard let object = self.manager.getCurrentExercise()?.iterations[indexPath.row] else {return}
+            self.manager.realm.deleteObject(object)
+            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1)
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+
         }
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 55))
         view.backgroundColor = UIColor.white
