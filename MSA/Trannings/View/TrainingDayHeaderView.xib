@@ -34,27 +34,34 @@
                             <rect key="frame" x="0.0" y="9" width="394" height="66"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9Gd-ze-AAv">
-                                    <rect key="frame" x="10" y="10" width="131" height="15.5"/>
+                                    <rect key="frame" x="10" y="5" width="131" height="30"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="День #1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Tp-fa-rx0">
-                                            <rect key="frame" x="0.0" y="0.0" width="50.5" height="15.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50.5" height="30"/>
                                             <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 янв 2017" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEx-Ro-hix">
-                                            <rect key="frame" x="60.5" y="0.0" width="70.5" height="15.5"/>
+                                            <rect key="frame" x="60.5" y="0.0" width="70.5" height="30"/>
                                             <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
                                             <color key="textColor" red="0.011764705882352941" green="0.050980392156862744" blue="0.082352941176470587" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgg-cA-FYa">
+                                    <rect key="frame" x="70.5" y="5" width="70.5" height="30"/>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="Jgg-cA-FYa" firstAttribute="top" secondItem="oEx-Ro-hix" secondAttribute="top" id="8Nj-VH-KC5"/>
                                 <constraint firstItem="9Gd-ze-AAv" firstAttribute="leading" secondItem="rcR-Pg-wwi" secondAttribute="leading" constant="10" id="Oib-RK-tly"/>
-                                <constraint firstItem="9Gd-ze-AAv" firstAttribute="top" secondItem="rcR-Pg-wwi" secondAttribute="top" constant="10" id="kVy-HH-imC"/>
+                                <constraint firstItem="Jgg-cA-FYa" firstAttribute="bottom" secondItem="oEx-Ro-hix" secondAttribute="bottom" id="Xcq-pO-RpO"/>
+                                <constraint firstItem="Jgg-cA-FYa" firstAttribute="trailing" secondItem="oEx-Ro-hix" secondAttribute="trailing" id="b63-mh-c4T"/>
+                                <constraint firstItem="Jgg-cA-FYa" firstAttribute="leading" secondItem="oEx-Ro-hix" secondAttribute="leading" id="hwv-Vj-1vi"/>
+                                <constraint firstItem="9Gd-ze-AAv" firstAttribute="top" secondItem="rcR-Pg-wwi" secondAttribute="top" constant="5" id="kVy-HH-imC"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-jG-RM1">
@@ -118,6 +125,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="changeDateButton" destination="Jgg-cA-FYa" id="m0s-bq-raT"/>
                 <outlet property="dateLabel" destination="oEx-Ro-hix" id="gf1-jj-HtO"/>
                 <outlet property="dayLabel" destination="8Tp-fa-rx0" id="wdD-Bs-bN4"/>
                 <outlet property="nameLabel" destination="cOV-jG-RM1" id="5O1-Be-LO2"/>

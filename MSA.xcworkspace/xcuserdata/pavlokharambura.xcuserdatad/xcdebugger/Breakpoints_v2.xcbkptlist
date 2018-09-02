@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/VC/MyTranningsViewController.swift"
-            timestampString = "557581765.53907"
+            timestampString = "557589514.281548"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "previousWeek(_:)"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "datePickerTapped()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -36,12 +36,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/VC/MyTranningsViewController.swift"
-            timestampString = "557581765.539862"
+            timestampString = "557589514.281625"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "nextWeek(_:)"
+            startingLineNumber = "357"
+            endingLineNumber = "357"
+            landmarkName = "trainingEdited()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

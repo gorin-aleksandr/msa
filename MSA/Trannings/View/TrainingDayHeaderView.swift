@@ -15,6 +15,7 @@ protocol Toggable {
 
 class TrainingDayHeaderView: FZAccordionTableViewHeaderView {
     
+    @IBOutlet weak var changeDateButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!

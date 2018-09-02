@@ -194,6 +194,26 @@ class MyTranningsViewController: UIViewController {
     }
     
     @objc
+    private func changeDate(sender: UIButton) {
+        manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
+        datePickerTapped()
+    }
+    
+    func datePickerTapped() {
+        DatePickerDialog(buttonColor: lightBlue_).show("Выберите дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
+            (date) -> Void in
+            if let dt = date {
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd.MM.yyyy"
+                try! self.manager.realm.performWrite {
+                    self.manager.dataSource?.currentDay?.date = formatter.string(from: dt)
+                    self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1)
+                }
+            }
+        }
+    }
+    
+    @objc
     private func startRoundTraining(sender: UIButton) {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
         self.performSegue(withIdentifier: "roundTraining", sender: nil)
@@ -244,9 +264,12 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             headerView.nameTextField.text = day.name == "" ? "______" : day.name
             headerView.nameTextField.tag = section
             headerView.nameTextField.delegate = self
+            
         }
         headerView.sircleTrainingButton.tag = section
         headerView.startTrainingButton.tag = section
+        headerView.changeDateButton.tag = section
+        headerView.changeDateButton.addTarget(self, action: #selector(changeDate(sender:)), for: .touchUpInside)
         headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
         headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
 
@@ -330,7 +353,9 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
 }
 
 extension MyTranningsViewController: TrainingsViewDelegate {
-    func trainingEdited() {}
+    func trainingEdited() {
+        self.tableView.reloadData()
+    }
     
     func templatesLoaded() {}
     

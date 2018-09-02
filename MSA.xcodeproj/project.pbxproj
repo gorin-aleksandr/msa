@@ -10,6 +10,7 @@
 		2909627E212C19AE00F42C29 /* CircleTrainingDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */; };
 		29096281212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2909627F212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift */; };
 		29096282212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29096280212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib */; };
+		290B66DC213C1E8C003332CB /* DatePickerAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B66DB213C1E8C003332CB /* DatePickerAlert.swift */; };
 		290CA6D1203AD6100073A8F0 /* AuthModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA6D0203AD6100073A8F0 /* AuthModule.swift */; };
 		29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29160B452035AA3B00DA7227 /* AppDelegate.swift */; };
 		29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29160B492035AA3B00DA7227 /* Main.storyboard */; };
@@ -139,6 +140,7 @@
 		2909627D212C19AE00F42C29 /* CircleTrainingDayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTrainingDayViewController.swift; sourceTree = "<group>"; };
 		2909627F212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTrainingExerciseTableViewCell.swift; sourceTree = "<group>"; };
 		29096280212C19FA00F42C29 /* CircleTrainingExerciseTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CircleTrainingExerciseTableViewCell.xib; sourceTree = "<group>"; };
+		290B66DB213C1E8C003332CB /* DatePickerAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerAlert.swift; sourceTree = "<group>"; };
 		290CA6D0203AD6100073A8F0 /* AuthModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModule.swift; sourceTree = "<group>"; };
 		29160B422035AA3B00DA7227 /* MSA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29160B452035AA3B00DA7227 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				2962D47B20D2A3A200870953 /* Exercises */,
 				35CE070920ECC644006892B0 /* Community */,
 				298DF65E203C36B300FB0180 /* AlertView.swift */,
+				290B66DB213C1E8C003332CB /* DatePickerAlert.swift */,
 				29C2D5FA2074F36300E2B958 /* Etentions.swift */,
 				299B547B20A0D38A004E60A2 /* Rubik */,
 				29160B4C2035AA3B00DA7227 /* Assets.xcassets */,
@@ -854,6 +857,7 @@
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
 				295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */,
 				298B4606212D639700DB2273 /* AddExerciseToDayTableViewCell.swift in Sources */,
+				290B66DC213C1E8C003332CB /* DatePickerAlert.swift in Sources */,
 				295BA2E52137C94C00609966 /* TrainingsDataSource.swift in Sources */,
 				29E4F4BC21298A4E00E67DBA /* VAMonth.swift in Sources */,
 				29C4A3F12038A62200F2A1BB /* SignInViewController.swift in Sources */,
