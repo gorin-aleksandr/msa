@@ -47,10 +47,10 @@ class ExercisesViewController: UIViewController {
     }
     
     private func initialDataPreparing() {
-        presenter.getExercisesFromRealm()
-        presenter.getTypesFromRealm()
-        presenter.getFiltersFromRealm()
-        presenter.getMyExercisesFromRealm()
+//        presenter.getExercisesFromRealm()
+//        presenter.getTypesFromRealm()
+//        presenter.getFiltersFromRealm()
+//        presenter.getMyExercisesFromRealm()
         
 //        if presenter.getFilters().isEmpty {
             presenter.getAllFilters()

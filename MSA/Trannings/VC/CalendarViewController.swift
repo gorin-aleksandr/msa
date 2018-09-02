@@ -81,12 +81,14 @@ class CalendarViewController: UIViewController {
     }
     
     private func selectCalendarDays() {
-        for week in (manager.getTrainings()?.first?.weeks)! {
-            for day in week.days {
-                days.append(day)
+        if let weeks = manager.getTrainings()?.first?.weeks {
+            for week in weeks {
+                for day in week.days {
+                    days.append(day)
+                }
             }
+            calendarView.selectDates(days.map {$0.date.getDate()!.addingTimeInterval(TimeInterval(exactly: 14400)!)})
         }
-        calendarView.selectDates(days.map {$0.date.getDate()!.addingTimeInterval(TimeInterval(exactly: 14400)!)})
     }
     
     @objc

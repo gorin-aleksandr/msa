@@ -243,7 +243,7 @@ extension CreateTemplateViewController: UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return RealmManager.shared.getArray(ofType: ExerciseTypeFilter.self).count
+        return RealmManager.shared.getArray(ofType: ExerciseType.self).count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

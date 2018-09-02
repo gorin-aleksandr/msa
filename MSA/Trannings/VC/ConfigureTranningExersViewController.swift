@@ -10,6 +10,9 @@ import UIKit
 
 class ConfigureTranningExersViewController: UIViewController {
     
+    @IBOutlet weak var checkBoxButton: UIButton!
+    @IBOutlet weak var checkBoxLabel: UILabel!
+    
     @IBOutlet weak var weightLabel: UILabel!
     @IBOutlet weak var numbersViewHeight: NSLayoutConstraint!
     @IBOutlet weak var weightOne: NumberButtonView!
@@ -44,10 +47,20 @@ class ConfigureTranningExersViewController: UIViewController {
     
     var workTime: (Int, Int) = (0, 0)
     var restTime: (Int, Int) = (0, 0)
-    var workActive: Bool = true
+    var workActive: Bool = true {
+        didSet {
+            if workActive {
+                checkBoxButton.alpha = 1
+                checkBoxLabel.alpha = 1
+            } else {
+                checkBoxButton.alpha = 0
+                checkBoxLabel.alpha = 0
+            }
+        }
+    }
+    var startCheckOn00 = false
     var buttonsW: [NumberButtonView] = []
     var buttonsH: [NumberButtonView] = []
-    
     var manager = TrainingManager()
     
     override func viewDidLoad() {
@@ -78,6 +91,16 @@ class ConfigureTranningExersViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         saveChanges()
+    }
+    
+    @objc
+    func checkBoxTapped() {
+        startCheckOn00 = !startCheckOn00
+        if startCheckOn00 {
+            checkBoxButton.setImage(#imageLiteral(resourceName: "yesCheck"), for: .normal)
+        } else {
+            checkBoxButton.setImage(#imageLiteral(resourceName: "noCheck"), for: .normal)
+        }
     }
     
     func saveChanges() {
@@ -111,6 +134,7 @@ class ConfigureTranningExersViewController: UIViewController {
         configureWeightButtons()
         configureCountsButtons()
         configurePicker()
+        checkBoxButton.addTarget(self, action: #selector(checkBoxTapped), for: .touchUpInside)
         
         timeView.restButton.addTarget(self, action: #selector(showPicker), for: .touchUpInside)
         timeView.workButton.addTarget(self, action: #selector(showPicker), for: .touchUpInside)
@@ -140,6 +164,10 @@ class ConfigureTranningExersViewController: UIViewController {
             button.numberButton.setTitle("\(index)", for: .normal)
             button.numberButton.addTarget(self, action: #selector(addWeight(sender:)), for: .touchUpInside)
         }
+        weightDelete.backgroundColor = .clear
+        weightDelete.contentView.backgroundColor = .clear
+        weightDelete.blackBiew.isHidden = true
+        weightDelete.whiteView.isHidden = true
         weightDelete.numberButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
         weightDelete.numberButton.addTarget(self, action: #selector(deleteWeight), for: .touchUpInside)
     }
@@ -151,6 +179,10 @@ class ConfigureTranningExersViewController: UIViewController {
             button.numberButton.setTitle("\(index)", for: .normal)
             button.numberButton.addTarget(self, action: #selector(addCounts(sender:)), for: .touchUpInside)
         }
+        heightDelete.backgroundColor = .clear
+        heightDelete.contentView.backgroundColor = .clear
+        heightDelete.blackBiew.isHidden = true
+        heightDelete.whiteView.isHidden = true
         heightDelete.numberButton.setImage(#imageLiteral(resourceName: "delete"), for: .normal)
         heightDelete.numberButton.addTarget(self, action: #selector(deleteCounts), for: .touchUpInside)
     }

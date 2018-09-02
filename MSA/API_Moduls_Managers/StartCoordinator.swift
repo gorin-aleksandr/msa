@@ -49,6 +49,7 @@ class StratCoordinator {
             if let _ = loggedUser.id {
                 AuthModule.currUser = loggedUser
             }
+            
             if let _ = AuthModule.currUser.id {
                 let storyBoard = UIStoryboard(name: "Profile", bundle:nil)
                 let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController

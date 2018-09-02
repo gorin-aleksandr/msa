@@ -51,7 +51,7 @@ class IterationsViewController: UIViewController {
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         self.traningLabel.text = manager.getCurrentExercise()?.name
-        
+        self.addButton.addTarget(self, action: #selector(addIteration), for: .touchUpInside)
         configureTableView()
     }
     
@@ -69,6 +69,18 @@ class IterationsViewController: UIViewController {
     @objc
     func back() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    func addIteration() {
+        try! manager.realm.performWrite {
+            let newIteration = Iteration()
+            newIteration.id = newIteration.incrementID()
+            newIteration.exerciseInTrainingId = manager.getCurrentExercise()?.id ?? -1
+            manager.getCurrentExercise()?.iterations.append(newIteration)
+        }
+        tableView.reloadData()
+
     }
     
     fileprivate func whitespaceString(font: UIFont = UIFont(name: "Rubik-Medium", size: 17)!, width: CGFloat) -> String {
