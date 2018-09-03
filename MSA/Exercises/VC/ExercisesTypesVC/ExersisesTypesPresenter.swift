@@ -272,6 +272,7 @@ class ExersisesTypesPresenter {
 //                self.exercises.allExersises.append(item)
             }
             DispatchQueue.main.async {
+                
                 self.realmManager.saveObject(myExerc)
             }
             self.exercises.ownExercises = Array(Set(myExerc.myExercises))

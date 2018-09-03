@@ -90,6 +90,7 @@ class ExerciseInTraining: Object {
     @objc dynamic var id: Int = -1
     @objc dynamic var name: String = ""
     @objc dynamic var exerciseId: Int = -1
+    @objc dynamic var byTrainer: Bool = false
     var iterations = List<Iteration>()
     
     @objc dynamic var wasSync: Bool = false

@@ -47,12 +47,23 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var dreamView: UIView! { didSet{dreamView.layer.cornerRadius = 10 }}
     
     private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
+    let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
 
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        p.getExercisesFromRealm()
+        p.getTypesFromRealm()
+        p.getFiltersFromRealm()
+        p.getMyExercisesFromRealm()
+        
+        p.getAllExersises()
+        p.getAllTypes()
+        p.getAllFilters()
+        p.getMyExercises()
         
         configureButtonsView()
         presenter.attachView(view: self)

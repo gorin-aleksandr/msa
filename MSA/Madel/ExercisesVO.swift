@@ -33,6 +33,29 @@ class Exercise: Object {
     }
 }
 
+class SpecialExercises: Object {
+    @objc dynamic var id: Int = -1
+    @objc dynamic var name: String = ""
+    var pictures = List<Image>()
+    @objc dynamic var typeId: Int = -1
+    @objc dynamic var trainerId: String = ""
+    @objc dynamic var videoUrl: String = ""
+    @objc dynamic var exerciseDescriprion: String = "No description"
+    @objc dynamic var howToDo: String = "No info about doing"
+    @objc dynamic var link: String = "No attached link"
+    var filterIDs = List<Id>()
+    @objc dynamic var realTypeId: Int = -1
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
+    func incrementID() -> Int {
+        let realm = try! Realm()
+        return (realm.objects(SpecialExercises.self).max(ofProperty: "id") as Int? ?? 0) + 1
+    }
+}
+
 class MyExercises: Object {
     @objc dynamic var id: String = ""
     var myExercises = List<Exercise>()
