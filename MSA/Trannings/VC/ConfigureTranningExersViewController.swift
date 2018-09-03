@@ -10,6 +10,7 @@ import UIKit
 
 class ConfigureTranningExersViewController: UIViewController {
     
+    @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var checkBoxButton: UIButton!
     @IBOutlet weak var checkBoxLabel: UILabel!
     
@@ -92,6 +93,7 @@ class ConfigureTranningExersViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         initialDataFilling()
+        loadingView.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -345,9 +347,13 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
 extension ConfigureTranningExersViewController: TrainingsViewDelegate {
     func synced() {}
 
-    func startLoading() {}
+    func startLoading() {
+        loadingView.isHidden = false
+    }
     
-    func finishLoading() {}
+    func finishLoading() {
+        loadingView.isHidden = true
+    }
     
     func trainingsLoaded() {}
     

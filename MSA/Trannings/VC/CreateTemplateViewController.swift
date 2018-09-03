@@ -11,6 +11,7 @@ import RealmSwift
 
 class CreateTemplateViewController: UIViewController {
 
+    @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewWithPicker: UIView!{
         didSet{viewWithPicker.alpha = 0}
@@ -24,10 +25,8 @@ class CreateTemplateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        manager.initView(view: self)
-        initialDataFill()
-        configureTableView()
-        picker.delegate = self
+        initialConfigurations()
+
     }
     
     @IBAction func backButtonAction(_ sender: Any) {
@@ -41,6 +40,14 @@ class CreateTemplateViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
+    private func initialConfigurations() {
+        manager.initView(view: self)
+        initialDataFill()
+        configureTableView()
+        picker.delegate = self
+        loadingView.isHidden = true
+    }
+    
     func initialDataFill() {
         var daysAmount = 0
         if let weeks = manager.getCurrentTraining()?.weeks {
@@ -280,11 +287,11 @@ extension CreateTemplateViewController: TrainingsViewDelegate {
     }
     
     func startLoading() {
-        print("Start")
+        loadingView.isHidden = false
     }
     
     func finishLoading() {
-        print("Finish")
+        loadingView.isHidden = true
     }
     
     func trainingsLoaded() {}

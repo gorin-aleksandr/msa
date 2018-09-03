@@ -13,6 +13,7 @@ public let lightRED = UIColor(red: 247/255, green: 23/255, blue: 53/255, alpha: 
 
 class IterationsViewController: UIViewController {
 
+    @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var traningLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var addPodhodButton: UIView!{didSet{addPodhodButton.layer.cornerRadius=12}}
@@ -34,6 +35,7 @@ class IterationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        manager.initView(view: self)
         configureUI()
     }
 
@@ -46,6 +48,7 @@ class IterationsViewController: UIViewController {
     }
         
     private func configureUI() {
+        loadingView.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: true)
         let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
@@ -169,5 +172,29 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
 
         return delete
     }
+    
+}
+
+extension IterationsViewController: TrainingsViewDelegate {
+    func startLoading() {
+        loadingView.isHidden = false
+    }
+    
+    func finishLoading() {
+        loadingView.isHidden = true
+    }
+    
+    func trainingsLoaded() {    }
+    
+    func templateCreated() {}
+    
+    func templatesLoaded() {}
+    
+    func trainingEdited() {}
+    
+    func errorOccurred(err: String) {}
+    
+    func synced() {}
+    
     
 }

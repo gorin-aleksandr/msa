@@ -12,6 +12,8 @@ import SDWebImage
 
 class MyTranningsViewController: UIViewController {
 
+    @IBOutlet weak var loadingView: UIView!
+    
     @IBOutlet weak var tableView: FZAccordionTableView!
     @IBOutlet weak var weekLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
@@ -24,6 +26,7 @@ class MyTranningsViewController: UIViewController {
 
         initialViewConfiguration()
         initialDataLoading()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +41,7 @@ class MyTranningsViewController: UIViewController {
     }
     
      private func initialViewConfiguration() {
+        loadingView.isHidden = true
         segmentControl.layer.masksToBounds = true
         segmentControl.layer.cornerRadius = 13
         segmentControl.layer.borderColor = lightBlue.cgColor
@@ -367,11 +371,11 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     func templateCreated() {}
     
     func startLoading() {
-        print("Start")
+        loadingView.isHidden = false
     }
     
     func finishLoading() {
-        print("Finish")
+        loadingView.isHidden = true
     }
     
     func trainingsLoaded() {
