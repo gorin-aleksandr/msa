@@ -161,7 +161,7 @@ class TrainingManager {
     
     func loadTrainings() {
         if let id = AuthModule.currUser.id {
-            self.view?.startLoading()
+//            self.view?.startLoading()
             Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
                 self.observeTrainings(snapchot: snapchot)
             }
