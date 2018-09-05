@@ -404,7 +404,7 @@ extension MyTranningsViewController: UITextFieldDelegate {
         try! manager.realm.performWrite {
             guard let object = manager.dataSource?.currentWeek?.days[textField.tag] else {return}
             object.name = textField.text ?? ""
-            self.manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {})
+            self.manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
         }
     }
 }

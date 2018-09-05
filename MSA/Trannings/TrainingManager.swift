@@ -152,6 +152,9 @@ class TrainingManager {
                 self.view?.trainingEdited()
                 if error == nil {
                     self.setSynced()
+                    if let object = self.dataSource?.currentTraining {
+                        self.realm.saveObject(object)
+                    }
                     success()
                 } else {
                     self.view?.errorOccurred(err: error?.localizedDescription ?? "")
@@ -164,7 +167,7 @@ class TrainingManager {
             let newDay = TrainingDay()
             newDay.id = newDay.incrementID()
             week.days.append(newDay)
-            self.editTraining(wiht: self.getCurrentTraining()?.id ?? -1, success: {})
+            self.editTraining(wiht: self.dataSource?.currentTraining?.id ?? -1, success: {})
         }
     }
     

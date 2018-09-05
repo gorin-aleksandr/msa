@@ -187,7 +187,7 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
             ex.exerciseId = newExercise.id
             try! manager.realm.performWrite {
                 manager.getCurrentday()?.exercises.append(ex)
-                manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {})
+                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
             }
         } else {
             self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)

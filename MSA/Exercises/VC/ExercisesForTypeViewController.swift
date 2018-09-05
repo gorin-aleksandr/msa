@@ -230,7 +230,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             ex.exerciseId = newExercise.id
             try! manager.realm.performWrite {
                 manager.getCurrentday()?.exercises.append(ex)
-                manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {})
+                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
             }
         } else {
             performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
