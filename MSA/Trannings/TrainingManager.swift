@@ -11,13 +11,14 @@ import RealmSwift
 import Firebase
 
 
-protocol TrainingsViewDelegate {
+@objc protocol TrainingsViewDelegate {
     func startLoading()
     func finishLoading()
     func trainingsLoaded()
     func templateCreated()
     func templatesLoaded()
     func trainingEdited()
+    @objc optional func trainingDeleted()
     func errorOccurred(err: String)
     func synced()
 }
@@ -158,6 +159,28 @@ class TrainingManager {
             }
         }
     }
+    func addDay(week: TrainingWeek) {
+        try! realm.performWrite {
+            let newDay = TrainingDay()
+            newDay.id = newDay.incrementID()
+            week.days.append(newDay)
+            self.editTraining(wiht: self.getCurrentTraining()?.id ?? -1, success: {})
+        }
+    }
+    
+    func createWeak(in training: Training) {
+        try! realm.performWrite {
+            let newWeek = TrainingWeek()
+            newWeek.id = newWeek.incrementID()
+            let newDay = TrainingDay()
+            newDay.id = newDay.incrementID()
+            newWeek.days.append(newDay)
+            training.weeks.append(newWeek)
+            dataSource?.currentTraining = training
+            dataSource?.currentWeek = newWeek
+            self.editTraining(wiht: training.id, success: {})
+        }
+    }
     
     func loadTrainings() {
         if let id = AuthModule.currUser.id {
@@ -190,7 +213,9 @@ class TrainingManager {
             Database.database().reference().child("Trainings").child(userId).child(id).removeValue { (error, ref) in
                 self.view?.finishLoading()
                 if error == nil {
-                    // DELETED
+                    guard let object = RealmManager.shared.getElement(ofType: Training.self, filterWith: NSPredicate(format: "id = %d", Int(id) ?? -1)) else {return}
+                    RealmManager.shared.deleteObject(object)
+                    self.view?.trainingDeleted!()
                 } else {
                     self.view?.errorOccurred(err: error?.localizedDescription ?? "")
                 }

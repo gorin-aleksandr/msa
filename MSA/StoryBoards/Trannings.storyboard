@@ -426,6 +426,8 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="loadingView" destination="KY2-GL-vuc" id="XWy-mC-Jnl"/>
+                        <outlet property="nextWeekButton" destination="yCh-lz-zdy" id="7G5-LJ-91z"/>
+                        <outlet property="prevWeekButton" destination="ayy-Rh-MlK" id="1TT-I7-6gQ"/>
                         <outlet property="segmentControl" destination="gnC-YS-xC0" id="8jr-GH-rh4"/>
                         <outlet property="tableView" destination="2yh-0u-sso" id="r3l-nC-ofs"/>
                         <outlet property="weekLabel" destination="kFe-5g-Ocd" id="p8u-cZ-tBf"/>

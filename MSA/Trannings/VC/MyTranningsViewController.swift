@@ -17,6 +17,8 @@ class MyTranningsViewController: UIViewController {
     @IBOutlet weak var tableView: FZAccordionTableView!
     @IBOutlet weak var weekLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
+    @IBOutlet weak var nextWeekButton: UIButton!
+    @IBOutlet weak var prevWeekButton: UIButton!
     
     let manager = TrainingManager()
     var weekNumber = 0
@@ -173,25 +175,21 @@ class MyTranningsViewController: UIViewController {
             AlertDialog.showAlert("Нельзя добавить день!", message: "Сначала добавьте неделю", viewController: self)
             return
         }
-        try! manager.realm.performWrite {
-            let newDay = TrainingDay()
-            newDay.id = newDay.incrementID()
-            week.days.append(newDay)
-            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
-        }
+        manager.addDay(week: week)
+        
     }
     func addWeek() {
-        guard let training = manager.dataSource?.currentTraining else {return}
-        try! manager.realm.performWrite {
-            let newWeek = TrainingWeek()
-            newWeek.id = newWeek.incrementID()
-            let newDay = TrainingDay()
-            newDay.id = newDay.incrementID()
-            newWeek.days.append(newDay)
-            training.weeks.append(newWeek)
-            self.manager.editTraining(wiht: training.id, success: {})
+        if let training = manager.dataSource?.currentTraining {
+            manager.createWeak(in: training)
+        } else {
+            let training = Training()
+            training.id = training.incrementID()
+            training.name = "Новая тренировка"
+            manager.createWeak(in: training)
         }
     }
+    
+
     
     @objc
     private func startTraining(sender: UIButton) {
@@ -249,6 +247,14 @@ class MyTranningsViewController: UIViewController {
     func changeWeek(plus: Bool) {
         manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
         weekLabel.text = "Неделя #\(weekNumber+1)"
+        if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
+            nextWeekButton.isHidden = false
+            prevWeekButton.isHidden = false
+        } else {
+            weekLabel.text = "Добавьте неделю"
+            nextWeekButton.isHidden = true
+            prevWeekButton.isHidden = true
+        }
         if plus {
             UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
         } else {
@@ -358,11 +364,16 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
 
 extension MyTranningsViewController: TrainingsViewDelegate {
     
+    func trainingDeleted() {
+        manager.loadTrainingsFromRealm()
+    }
+    
     func synced() {
         manager.loadTrainings()
     }
 
     func trainingEdited() {
+        changeWeek(plus: true)
         self.tableView.reloadData()
     }
     

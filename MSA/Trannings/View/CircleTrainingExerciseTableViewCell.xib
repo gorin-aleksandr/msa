@@ -38,7 +38,7 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="HfE-Iu-59y">
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="HfE-Iu-59y">
                         <rect key="frame" x="15" y="36.5" width="288" height="6"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="6" id="59Z-cl-cXO"/>
@@ -46,7 +46,7 @@
                         <color key="progressTintColor" red="0.015686274509803921" green="0.90980392156862744" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                     </progressView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DTD-7h-H3J">
-                        <rect key="frame" x="40" y="44.5" width="238" height="194"/>
+                        <rect key="frame" x="50" y="44.5" width="218" height="194"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подход #1 из 6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4lL-Ln-RM5">
                         <rect key="frame" x="16" y="252" width="112" height="19"/>
@@ -92,7 +92,7 @@
                     <constraint firstItem="HfE-Iu-59y" firstAttribute="top" secondItem="Y5u-UO-PDx" secondAttribute="bottom" constant="5" id="CuF-G8-a6E"/>
                     <constraint firstAttribute="trailing" secondItem="cZe-dZ-DqE" secondAttribute="trailing" constant="15" id="DwL-vs-jnT"/>
                     <constraint firstAttribute="bottom" secondItem="cZe-dZ-DqE" secondAttribute="bottom" constant="20" id="LnG-7p-vda"/>
-                    <constraint firstItem="DTD-7h-H3J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="NSP-HJ-BHd"/>
+                    <constraint firstItem="DTD-7h-H3J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="50" id="NSP-HJ-BHd"/>
                     <constraint firstItem="cZe-dZ-DqE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4lL-Ln-RM5" secondAttribute="trailing" constant="5" id="OVo-1b-hvF"/>
                     <constraint firstItem="DTD-7h-H3J" firstAttribute="top" secondItem="HfE-Iu-59y" secondAttribute="bottom" constant="2" id="XAv-ZB-JEA"/>
                     <constraint firstItem="Y5u-UO-PDx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="aGX-r1-ATp"/>
@@ -101,7 +101,7 @@
                     <constraint firstItem="cZe-dZ-DqE" firstAttribute="top" secondItem="DTD-7h-H3J" secondAttribute="bottom" constant="10" id="eg1-am-fCF"/>
                     <constraint firstAttribute="trailing" secondItem="Y5u-UO-PDx" secondAttribute="trailing" constant="15" id="h93-Eb-PAC"/>
                     <constraint firstItem="Y5u-UO-PDx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="iAk-eC-L6f"/>
-                    <constraint firstAttribute="trailing" secondItem="DTD-7h-H3J" secondAttribute="trailing" constant="40" id="jPZ-th-tqC"/>
+                    <constraint firstAttribute="trailing" secondItem="DTD-7h-H3J" secondAttribute="trailing" constant="50" id="jPZ-th-tqC"/>
                     <constraint firstItem="4lL-Ln-RM5" firstAttribute="centerY" secondItem="cZe-dZ-DqE" secondAttribute="centerY" id="kJL-Uo-2Yf"/>
                     <constraint firstItem="4lL-Ln-RM5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="li6-xp-eOb"/>
                     <constraint firstAttribute="trailing" secondItem="9hO-lz-lzC" secondAttribute="trailing" id="nDi-1R-OC0"/>
