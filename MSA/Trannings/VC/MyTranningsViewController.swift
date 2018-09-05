@@ -176,6 +176,7 @@ class MyTranningsViewController: UIViewController {
             return
         }
         manager.addDay(week: week)
+        tableView.reloadData()
         
     }
     func addWeek() {
@@ -185,8 +186,12 @@ class MyTranningsViewController: UIViewController {
             let training = Training()
             training.id = training.incrementID()
             training.name = "Новая тренировка"
+            manager.realm.saveObject(training)
             manager.createWeak(in: training)
         }
+        weekNumber = (manager.dataSource?.currentTraining?.weeks.count ?? 0) - 1
+        changeWeek(plus: true)
+        tableView.reloadData()
     }
     
 
@@ -212,8 +217,10 @@ class MyTranningsViewController: UIViewController {
                     self.manager.dataSource?.currentDay?.date = formatter.string(from: dt)
                     self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
                 }
+                self.tableView.reloadData()
             }
         }
+        
     }
     
     @objc
@@ -255,11 +262,7 @@ class MyTranningsViewController: UIViewController {
             nextWeekButton.isHidden = true
             prevWeekButton.isHidden = true
         }
-        if plus {
-            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
-        } else {
-            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
-        }
+        UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
     }
 }
 
@@ -404,6 +407,7 @@ extension MyTranningsViewController: UITextFieldDelegate {
         try! manager.realm.performWrite {
             guard let object = manager.dataSource?.currentWeek?.days[textField.tag] else {return}
             object.name = textField.text ?? ""
+            self.tableView.reloadData()
             self.manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
         }
     }

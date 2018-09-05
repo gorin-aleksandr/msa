@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/VC/MyTranningsViewController.swift"
-            timestampString = "557830326.38132"
+            timestampString = "557859029.452166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
+            startingLineNumber = "327"
+            endingLineNumber = "327"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -52,7 +52,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "557830326.3821959"
+            timestampString = "557859029.4574521"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
@@ -67,13 +67,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "557830326.383231"
+            filePath = "MSA/Trannings/VC/MyTranningsViewController.swift"
+            timestampString = "557859029.457534"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "createWeak(in:)"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
+            landmarkName = "startLoading()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSA/Trannings/VC/MyTranningsViewController.swift"
+            timestampString = "557859029.457875"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "392"
+            endingLineNumber = "392"
+            landmarkName = "finishLoading()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSA/Trannings/VC/MyTranningsViewController.swift"
+            timestampString = "557859029.458203"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "initialDataLoading()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSA/Trannings/VC/MyTranningsViewController.swift"
+            timestampString = "557859029.458522"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "initialDataLoading()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -84,12 +132,120 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "557830368.1164221"
+            timestampString = "557859029.458832"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "editTraining(wiht:success:)"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
+            landmarkName = "syncUnsyncedTrainings()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MSA.TrainingManager.syncUnsyncedTrainings() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/TrainingManager.swift"
+                  timestampString = "557858691.447116"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "395"
+                  endingLineNumber = "395"
+                  offsetFromSymbolStart = "1809">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (MSA.Training) -&gt; Swift.Bool in MSA.TrainingManager.syncUnsyncedTrainings() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/TrainingManager.swift"
+                  timestampString = "557858691.450537"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "395"
+                  endingLineNumber = "395"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (MSA.TrainingWeek) -&gt; Swift.Bool in implicit closure #1 : @autoclosure () throws -&gt; Swift.Bool in MSA.TrainingManager.syncUnsyncedTrainings() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/TrainingManager.swift"
+                  timestampString = "557858691.454936"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "395"
+                  endingLineNumber = "395"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (MSA.TrainingDay) -&gt; Swift.Bool in implicit closure #2 : @autoclosure () throws -&gt; Swift.Bool in MSA.TrainingManager.syncUnsyncedTrainings() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/TrainingManager.swift"
+                  timestampString = "557858691.45903"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "395"
+                  endingLineNumber = "395"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (MSA.ExerciseInTraining) -&gt; Swift.Bool in implicit closure #3 : @autoclosure () throws -&gt; Swift.Bool in MSA.TrainingManager.syncUnsyncedTrainings() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/TrainingManager.swift"
+                  timestampString = "557858691.464113"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "395"
+                  endingLineNumber = "395"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 (MSA.Iteration) -&gt; Swift.Bool in implicit closure #4 : @autoclosure () throws -&gt; Swift.Bool in MSA.TrainingManager.syncUnsyncedTrainings() -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Trannings/TrainingManager.swift"
+                  timestampString = "557858691.4688129"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "395"
+                  endingLineNumber = "395"
+                  offsetFromSymbolStart = "12">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSA/Trannings/TrainingManager.swift"
+            timestampString = "557859029.458904"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
+            landmarkName = "observeTrainings(snapchot:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

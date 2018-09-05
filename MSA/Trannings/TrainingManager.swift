@@ -145,7 +145,7 @@ class TrainingManager {
     
     func editTraining(wiht id: Int, success: @escaping()->()) {
         if let userId = AuthModule.currUser.id {
-            self.view?.startLoading()
+//            self.view?.startLoading()
             let newInfo = makeTrainingForFirebase(id: id, or: true)
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
                 self.view?.finishLoading()
@@ -203,7 +203,7 @@ class TrainingManager {
     
     func loadTemplates() {
         if let id = AuthModule.currUser.id {
-            self.view?.startLoading()
+//            self.view?.startLoading()
             Database.database().reference().child("Templates").child(id).observeSingleEvent(of: .value) { (snapchot) in
                 self.observeTemplates(snapchot: snapchot)
             }
@@ -372,6 +372,10 @@ class TrainingManager {
                 }
             }
             items.append(training)
+        }
+        if items.isEmpty {
+            let objects = realm.getArray(ofType: Training.self)
+            realm.deleteObjectsArray(objects)
         }
         dataSource?.set(trainings: items)
         dataSource?.currentTraining = items.first

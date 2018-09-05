@@ -231,6 +231,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             try! manager.realm.performWrite {
                 manager.getCurrentday()?.exercises.append(ex)
                 manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+                self.back()
             }
         } else {
             performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
@@ -280,9 +281,7 @@ extension ExercisesForTypeViewController: UISearchResultsUpdating {
 extension ExercisesForTypeViewController: TrainingsViewDelegate {
     func synced() {}
     
-    func trainingEdited() {
-        back()
-    }
+    func trainingEdited() {}
     func trainingsLoaded() {}
     func templateCreated() {}
     func templatesLoaded() {}

@@ -188,6 +188,7 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
             try! manager.realm.performWrite {
                 manager.getCurrentday()?.exercises.append(ex)
                 manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+                self.back()
             }
         } else {
             self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
@@ -299,9 +300,7 @@ extension ExercisesViewController: UISearchResultsUpdating {
 extension ExercisesViewController: TrainingsViewDelegate {
     func synced() {}
     
-    func trainingEdited() {
-        back()
-    }
+    func trainingEdited() {}
     
     func trainingsLoaded() {}
     
