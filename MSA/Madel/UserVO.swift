@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+enum UserType {
+    case sportsman
+    case trainer
+}
+
 struct UserVO {
     var id: String?
     var email: String?
@@ -26,8 +31,18 @@ struct UserVO {
     var purpose: String?
     var gallery: [GalleryItemVO]?
     var friends: [String]?
+    var trainerId: String?
+    var requests: [String]?
     // FIXME: Change default value after testing
     var city: String? = "Киев"
+    var userType: UserType {
+        switch  type  {
+        case "ТРЕНЕР":
+            return .trainer
+        default:
+            return .sportsman
+        }
+    }
     
     func getFullName() -> String {
         guard let name = firstName else {

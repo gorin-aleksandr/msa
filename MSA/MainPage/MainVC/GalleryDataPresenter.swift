@@ -11,10 +11,13 @@ import CoreData
 import Firebase
 import UIKit
 
-class GalleryDataPresenter {
+class GalleryDataPresenter: ProfileGalleryDataPresenterProtocol {
+    
+    
     
     private let gallery: GalleryDataManager
     private weak var view: GalleryDataProtocol?
+    private weak var profileView: ProfileViewController?
     
     init(gallery: GalleryDataManager) {
         self.gallery = gallery
@@ -23,6 +26,11 @@ class GalleryDataPresenter {
     func attachView(view: GalleryDataProtocol){
         self.view = view
     }
+    
+    func attachView(view: ProfileViewController) {
+        self.profileView = view
+    }
+
     
     func addItem(item: GalleryItemVO) {
         GalleryDataManager.addItem(item: item)

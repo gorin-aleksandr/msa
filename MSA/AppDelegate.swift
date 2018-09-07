@@ -12,6 +12,7 @@ import IQKeyboardManagerSwift
 import FBSDKCoreKit
 import CoreData
 import RealmSwift
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -35,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         IQKeyboardManager.sharedManager().enable = true
         
+        configureProgressHud()
         
         // Override point for customization after application launch.
         return true
@@ -118,6 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    private func configureProgressHud() {
+        SVProgressHUD.setBackgroundColor(.white)
+        SVProgressHUD.setForegroundColor(.lightBlue)
     }
 
 

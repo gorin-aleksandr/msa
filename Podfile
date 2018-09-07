@@ -21,5 +21,6 @@ target 'MSA' do
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'NYTPhotoViewer'
   pod 'RealmSwift'
+  pod 'SVProgressHUD'
 
 end

@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol CommunityListViewProtocol: class {
     func updateTableView()
     func configureFilterView(dataSource: [String], selectedFilterIndex: Int)
     func setCityFilterTextField(name: String?)
+    func showAlertFor(user: UserVO, isTrainerEnabled: Bool)
     
 }
 
@@ -21,8 +23,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var filterScrollView: UIScrollView!
     @IBOutlet weak var cityTextField: UITextField!
-    
-    
+    @IBOutlet weak var myCommunityButton: UIBarButtonItem!
     
     let cityPicker = UIPickerView()
     
@@ -34,7 +35,6 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         presenter = CommunityListPresenter(view: self)
         communityTableView.delegate = self
         communityTableView.dataSource = self
@@ -44,6 +44,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationBar()
         configureSearchController()
         configureCityPicker()
         hideableNavigationBar(false)
@@ -57,6 +58,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     
     func updateTableView() {
         communityTableView.reloadData()
+        SVProgressHUD.dismiss()
     }
     
     func setCityFilterTextField(name: String?) {
@@ -85,7 +87,30 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
         filterScrollView.contentSize = CGSize(width: xOffset, height: filterScrollView.frame.height)
     }
     
+    func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
+        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Вы можете перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
+        let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
+            print("Cancel")
+        }
+        let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
+            self?.presenter.addToFriends(user: user)
+            SVProgressHUD.show()
+            
+        })
+        alert.addAction(cancelActionButton)
+        alert.addAction(addFriendAction)
+        if isTrainerEnabled {
+            let addTrainerAction = UIAlertAction(title: "Добавить в тренеры", style: .default, handler: { [weak self] _ in
+                self?.presenter.addAsTrainer(user: user)
+                SVProgressHUD.show()
+            })
+        alert.addAction(addTrainerAction)
+        }
+        self.present(alert, animated: true)
+    }
+    
     @objc func filterButtonTapped(_ sender: UIButton) {
+        print(sender.tag)
         presenter.setFilterForState(index: sender.tag)
     }
     
@@ -98,7 +123,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     
     private func configureSearchController() {
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Enter search text..."
+        searchController.searchBar.placeholder = "Поиск"
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         if #available(iOS 9.1, *) {
@@ -115,6 +140,22 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
             navigationItem.hidesSearchBarWhenScrolling = hide
         }
     }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+    }
+    
+    private func moveToUserViewController() {
+        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    
+    @IBAction func myCommunityButtonTapped(_ sender: Any) {
+        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
+        destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
 }
 
 
@@ -130,8 +171,17 @@ extension CommunityListViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonTableViewCell", for: indexPath) as! PersonTableViewCell
-        cell.configure(with: presenter.communityDataSource[indexPath.row])
+        let person = presenter.communityDataSource[indexPath.row]
+        let personState =  presenter.getPersonState(person: person)
+        cell.configure(with: person)
+        cell.addButtonHandler = { [weak self] in self?.presenter?.addButtonTapped(at: indexPath.row)
+        }
+        cell.setupCell(basedOn: personState)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        moveToUserViewController()
     }
 }
 

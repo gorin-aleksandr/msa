@@ -91,7 +91,6 @@ class UserDataManager {
     func loadAllUsers(callback: @escaping (_ community: [UserVO]) -> ()) {
         userRef.observeSingleEvent(of: .value) { (snapshot) in
             guard let data = snapshot.value as? [String : [String : Any]] else {
-                print(snapshot.value)
                 print("Error occured while parsing community for key from database")
                 return
             }
@@ -127,6 +126,11 @@ class UserDataManager {
                     gallery.append(item)
                 }
             }
+            var friends = [String]()
+            if let friendsData = value["friends"] as? [String : Bool] {
+                friends = Array(friendsData.keys)
+                print(friends)
+            }
             user = UserVO(id: value["id"] as? String,
                           email: value["email"] as? String,
                           firstName: value["name"] as? String,
@@ -142,8 +146,12 @@ class UserDataManager {
                           type: value["type"] as? String,
                           purpose: value["purpose"] as? String,
                           gallery: gallery,
+                          friends: friends,
+                          trainerId: value["trainer"] as? String,
+                          requests: value["friendRequest"] as? [String],
                           city: value["city"] as? String)
         }
+        print(user?.friends)
         return user
     }
     
@@ -171,6 +179,80 @@ class UserDataManager {
                     callback(false,error)
                 }
             })
+        }
+    }
+    
+    func addToFriend(with id: String, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+        if let key = AuthModule.currUser.id {
+            userRef.child(key).child("friends").child(id).setValue(true) { error, success in
+                if let error = error {
+                    callback(false, error)
+                } else {
+                    callback(true, nil)
+                }
+            }
+        } else {
+            print("error occe")
+        }
+       
+    }
+    
+    func addAsTrainer(with id: String, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+        if let key = AuthModule.currUser.id {
+            userRef.child(key).child("trainer").setValue(id) { error, success in
+                if let error = error {
+                    callback(false, error)
+                } else {
+                    callback(true, nil)
+                }
+            }
+        } else {
+            print("error occe")
+        }
+        
+    }
+    
+    func removeFromRequests(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+            userRef.child(userId).child("requests").child(idToRemove).removeValue() {
+                error, success in
+                if let error = error {
+                    callback(false, error)
+                } else {
+                    callback(true, nil)
+                }
+            }
+    }
+    
+    func removeFromFriends(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        userRef.child(userId).child("friends").child(idToRemove).removeValue() {
+            error, success in
+            if let error = error {
+                callback(false, error)
+            } else {
+                callback(true, nil)
+            }
+        }
+    }
+    
+    func addToRequests(idToAdd: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        userRef.child(userId).child("requests").child(idToAdd).setValue(true) {
+            error, success in
+            if let error = error {
+                callback(false, error)
+            } else {
+                callback(true, nil)
+            }
+        }
+    }
+    
+    func addToSportsmen(idToAdd: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        userRef.child(userId).child("sportsmen").child(idToAdd).setValue(true) {
+            error, success in
+            if let error = error {
+                callback(false, error)
+            } else {
+                callback(true, nil)
+            }
         }
     }
     

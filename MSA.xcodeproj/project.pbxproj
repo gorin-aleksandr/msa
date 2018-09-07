@@ -89,10 +89,15 @@
 		29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */; };
 		29FF688620DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */; };
 		29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */; };
+		352355F9212E06080001255E /* UserCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355F8212E06080001255E /* UserCommunityViewController.swift */; };
+		352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355FA212E06220001255E /* UserCommunityPresenter.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
 		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
 		35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */; };
 		35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */; };
+		35D09C4C21314B4C00229A83 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D09C4B21314B4C00229A83 /* Fonts.swift */; };
+		35D5C01421372FEB0014D450 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5C01321372FEB0014D450 /* ProfileViewController.swift */; };
+		35D5C018213734510014D450 /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5C017213734510014D450 /* ProfileViewPresenter.swift */; };
 		35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC83F420EFBDDF00AECFC8 /* Button+Ext.swift */; };
 		35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC83F720F37AB800AECFC8 /* UIColor+Ext.swift */; };
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
@@ -184,10 +189,15 @@
 		29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29FF688520DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesPresenter.swift; sourceTree = "<group>"; };
 		29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesDataManager.swift; sourceTree = "<group>"; };
+		352355F8212E06080001255E /* UserCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityViewController.swift; sourceTree = "<group>"; };
+		352355FA212E06220001255E /* UserCommunityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityPresenter.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
 		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
 		35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListPresenter.swift; sourceTree = "<group>"; };
 		35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
+		35D09C4B21314B4C00229A83 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		35D5C01321372FEB0014D450 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		35D5C017213734510014D450 /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
 		35FC83F420EFBDDF00AECFC8 /* Button+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Ext.swift"; sourceTree = "<group>"; };
 		35FC83F720F37AB800AECFC8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -478,10 +488,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		352355F6212E05C80001255E /* ComunityDetails */ = {
+			isa = PBXGroup;
+			children = (
+				352355F8212E06080001255E /* UserCommunityViewController.swift */,
+				352355FA212E06220001255E /* UserCommunityPresenter.swift */,
+			);
+			path = ComunityDetails;
+			sourceTree = "<group>";
+		};
 		35CE070920ECC644006892B0 /* Community */ = {
 			isa = PBXGroup;
 			children = (
 				35CE070A20ECC6BF006892B0 /* CommunityListVC */,
+				352355F6212E05C80001255E /* ComunityDetails */,
+				35D5C01221372F6D0014D450 /* ProfileVC */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -504,11 +525,21 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		35D5C01221372F6D0014D450 /* ProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				35D5C01321372FEB0014D450 /* ProfileViewController.swift */,
+				35D5C017213734510014D450 /* ProfileViewPresenter.swift */,
+			);
+			path = ProfileVC;
+			sourceTree = "<group>";
+		};
 		35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */ = {
 			isa = PBXGroup;
 			children = (
 				35FC83F420EFBDDF00AECFC8 /* Button+Ext.swift */,
 				35FC83F720F37AB800AECFC8 /* UIColor+Ext.swift */,
+				35D09C4B21314B4C00229A83 /* Fonts.swift */,
 			);
 			path = "Extensions+CustomViews";
 			sourceTree = "<group>";
@@ -665,6 +696,7 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -684,6 +716,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -707,18 +740,22 @@
 				298DF65F203C36B300FB0180 /* AlertView.swift in Sources */,
 				29B0972620D4E9B600CA7219 /* FilterButtonView.swift in Sources */,
 				29C2D5FB2074F36300E2B958 /* Etentions.swift in Sources */,
+				35D5C018213734510014D450 /* ProfileViewPresenter.swift in Sources */,
 				2934805320E8EECC0039028E /* TextViewViewCounterTableViewCell.swift in Sources */,
 				2934805920E8F7B80039028E /* ChoosingItemTableViewCell.swift in Sources */,
 				29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */,
 				35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */,
 				2962D47D20D2A3B300870953 /* ExercisesViewController.swift in Sources */,
+				352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */,
 				299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */,
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
 				295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */,
 				29C4A3F12038A62200F2A1BB /* SignInViewController.swift in Sources */,
 				29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */,
+				35D09C4C21314B4C00229A83 /* Fonts.swift in Sources */,
 				298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */,
 				295A4EE9203EB52600124A07 /* SignUpPresenter.swift in Sources */,
+				35D5C01421372FEB0014D450 /* ProfileViewController.swift in Sources */,
 				295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */,
 				2934806320E8FD860039028E /* CreateExerciseTableViewCell.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
@@ -727,6 +764,7 @@
 				2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */,
 				29AC912D20CDA83E003F8152 /* MyTranningsViewController.swift in Sources */,
 				35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */,
+				352355F9212E06080001255E /* UserCommunityViewController.swift in Sources */,
 				2962D48120D2AADE00870953 /* ExercisesTableViewCell.swift in Sources */,
 				299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */,
 				2934806720E8FF290039028E /* AddImagesTableViewCell.swift in Sources */,
@@ -896,7 +934,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
+				DEVELOPMENT_TEAM = 3398483R66;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -915,7 +953,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
+				DEVELOPMENT_TEAM = 3398483R66;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
