@@ -121,8 +121,8 @@
                   symbolName = "closure #1 (Swift.Bool) -&gt; () in MSA.NewExerciseManager.updateNewExerciseInFirebase() -&gt; ()"
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "553075072.976271"
+                  urlString = "file:///Users/pavlokharambura/Documents/M_S_A/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+                  timestampString = "558344683.480415"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "220"
@@ -136,8 +136,8 @@
                   symbolName = "closure #1 (Swift.Bool) -&gt; () in closure #1 (Swift.Bool) -&gt; () in MSA.NewExerciseManager.updateNewExerciseInFirebase() -&gt; ()"
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "553075072.9790421"
+                  urlString = "file:///Users/pavlokharambura/Documents/M_S_A/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+                  timestampString = "558344683.4839309"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "221"
@@ -169,8 +169,8 @@
                   symbolName = "MSA.NewExerciseManager.updateNewExerciseInFirebase() -&gt; ()"
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "553075072.993975"
+                  urlString = "file:///Users/pavlokharambura/Documents/M_S_A/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+                  timestampString = "558344683.497336"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "211"
@@ -184,8 +184,8 @@
                   symbolName = "closure #1 (Swift.Bool) -&gt; () in MSA.NewExerciseManager.updateNewExerciseInFirebase() -&gt; ()"
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "553075073.002624"
+                  urlString = "file:///Users/pavlokharambura/Documents/M_S_A/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
+                  timestampString = "558344683.501714"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "212"
@@ -281,22 +281,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/Exercises/VC/ExercisesForTypeViewController.swift"
-            timestampString = "552870161.122581"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "initialDataFilling()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "MSA/Exercises/VC/ExercisesTypesVC/ExersisesTypesPresenter.swift"
             timestampString = "552870161.123386"
             startingColumnNumber = "9223372036854775807"
@@ -313,22 +297,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/Exercises/VC/ExercisesForTypeViewController.swift"
-            timestampString = "552870161.1235189"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "myExercisesLoaded()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "MSA/Exercises/VC/ExercisesTypesVC/ExersisesTypesPresenter.swift"
             timestampString = "552870161.124126"
             startingColumnNumber = "9223372036854775807"
@@ -336,22 +304,6 @@
             startingLineNumber = "278"
             endingLineNumber = "278"
             landmarkName = "observeExercises(snapchot:all:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MSA/Exercises/VC/ExercisesTypesVC/ExercisesViewController.swift"
-            timestampString = "552870161.124238"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "myExercisesLoaded()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -393,8 +345,8 @@
                   symbolName = "MSA.SignUpPresenter.createNewUser(newUser: MSA.UserVO) -&gt; ()"
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/UserRegisterInformation/SignUpPresenter.swift"
-                  timestampString = "553075073.149875"
+                  urlString = "file:///Users/pavlokharambura/Documents/M_S_A/MSA/UserRegisterInformation/SignUpPresenter.swift"
+                  timestampString = "558344683.594413"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "44"
@@ -408,8 +360,8 @@
                   symbolName = "closure #1 (Swift.Bool) -&gt; () in MSA.SignUpPresenter.createNewUser(newUser: MSA.UserVO) -&gt; ()"
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavlokharambura/Documents/msa/MSA/UserRegisterInformation/SignUpPresenter.swift"
-                  timestampString = "553075073.15856"
+                  urlString = "file:///Users/pavlokharambura/Documents/M_S_A/MSA/UserRegisterInformation/SignUpPresenter.swift"
+                  timestampString = "558344683.598742"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "45"

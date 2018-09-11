@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 class ExercisesViewController: UIViewController {
-
+    
     enum SegueIDs: String {
         case exercisesSegueId = "exercisesSegueId"
         case oneExerciseSegueId = "oneExerciseSegueId"
@@ -21,25 +21,39 @@ class ExercisesViewController: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     var filteredArray: [Exercise] = []
-
+    
     let presenter = ExersisesTypesPresenter(exercises: ExersisesDataManager())
+    var trainingManager: TrainingManager? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         presenter.attachView(view: self)
+        trainingManager?.initView(view: self)
         configureTable_CollectionView()
         configurateSearchController()
         initialDataPreparing()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAdded), name: Notification.Name("Exercise_added"), object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
+        
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hideableNavigationBar(false)
+        
+        guard let _ = trainingManager else { return }
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "back_"), for: .normal)
+        button.addTarget(self, action: #selector(back), for: .touchUpInside)
+        let barButt = UIBarButtonItem(customView: button)
+        navigationItem.leftBarButtonItem = barButt
+    }
+    
+    @objc
+    func back() {
+        navigationController?.popViewController(animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,31 +66,31 @@ class ExercisesViewController: UIViewController {
         presenter.getFiltersFromRealm()
         presenter.getMyExercisesFromRealm()
         
-//        if presenter.getFilters().isEmpty {
-            presenter.getAllFilters()
-//        } else {
-//            presenter.detectFiltersChanges()
-//        }
-
-//        if presenter.getExercises().isEmpty {
-            presenter.getAllExersises()
-//        } else {
-//            presenter.detectExersisesChanges()
-//        }
+        //        if presenter.getFilters().isEmpty {
+        presenter.getAllFilters()
+        //        } else {
+        //            presenter.detectFiltersChanges()
+        //        }
         
-//        if presenter.getTypes().isEmpty {
-            presenter.getAllTypes()
-//        } else {
-//            presenter.detectTypesChanges()
-//        }
+        //        if presenter.getExercises().isEmpty {
+        presenter.getAllExersises()
+        //        } else {
+        //            presenter.detectExersisesChanges()
+        //        }
+        
+        //        if presenter.getTypes().isEmpty {
+        presenter.getAllTypes()
+        //        } else {
+        //            presenter.detectTypesChanges()
+        //        }
         presenter.getMyExercises()
     }
     
-    @objc func exerciseAdded(notfication: NSNotification) {
+    @objc func exerciseAddedN(notfication: NSNotification) {
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
-//        presenter.getAllFilters()
-//        presenter.getAllExersises()
-//        presenter.getAllTypes()
+        //        presenter.getAllFilters()
+        //        presenter.getAllExersises()
+        //        presenter.getAllTypes()
         presenter.getMyExercises()
     }
     
@@ -116,7 +130,7 @@ class ExercisesViewController: UIViewController {
     func updateSearchData() {
         tableView.reloadData()
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case SegueIDs.exercisesSegueId.rawValue:
@@ -125,6 +139,7 @@ class ExercisesViewController: UIViewController {
                 guard let IDS = presenter.getFiltersByType(with: ids.map ({return $0.id}) ) else {return}
                 presenter.setCurrentFilters(filt: IDS)
                 destination.presenter = self.presenter
+                destination.trainingManager = self.trainingManager
             }
         case SegueIDs.oneExerciseSegueId.rawValue:
             if let destination = segue.destination as? ExercisesInfoViewController {
@@ -164,7 +179,20 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             presenter.setCurrentExercise(exerc: presenter.getExercises()[indexPath.row])
         }
-        self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
+        if let manager = trainingManager {
+            let newExercise = presenter.getCurrentExercise()
+            let ex = ExerciseInTraining()
+            ex.id = ex.incrementID()
+            ex.name = newExercise.name
+            ex.exerciseId = newExercise.id
+            try! manager.realm.performWrite {
+                manager.getCurrentday()?.exercises.append(ex)
+                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+                self.back()
+            }
+        } else {
+            self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
+        }
     }
 }
 
@@ -230,7 +258,7 @@ extension ExercisesViewController: ExercisesTypesDataProtocol {
     func myExercisesLoaded() {
         collectionView.reloadData()
     }
-
+    
     func exercisesLoaded() {
         print("Exercises")
         tableView.reloadData()
@@ -267,4 +295,16 @@ extension ExercisesViewController: UISearchResultsUpdating {
         updateSearchData()
     }
     
+}
+
+extension ExercisesViewController: TrainingsViewDelegate {
+    func synced() {}
+    
+    func trainingEdited() {}
+    
+    func trainingsLoaded() {}
+    
+    func templateCreated() {}
+    
+    func templatesLoaded() {}
 }

@@ -22,5 +22,6 @@ target 'MSA' do
   pod 'NYTPhotoViewer'
   pod 'RealmSwift'
   pod 'SVProgressHUD'
+  pod 'FZAccordionTableView'
 
 end

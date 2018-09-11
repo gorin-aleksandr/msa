@@ -10,6 +10,7 @@ import UIKit
 
 class CreateExerciseTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var textLabelMess: UILabel!
     @IBOutlet weak var bgView: UIView! {didSet{bgView.layer.cornerRadius = 12}}
     override func awakeFromNib() {

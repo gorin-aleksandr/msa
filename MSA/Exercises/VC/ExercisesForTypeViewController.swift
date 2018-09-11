@@ -14,13 +14,14 @@ let lightBlue = UIColor(rgb: 0x007AFF)
 let lightGrey = UIColor(rgb: 0x030D15)
 
 class ExercisesForTypeViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewWithScroll: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
     let searchController = UISearchController(searchResultsController: nil)
     var presenter: ExersisesTypesPresenter? = nil
+    var trainingManager: TrainingManager? = nil
     
     var exercisesByFIlter: [Exercise]? = nil
     var filteredArray: [Exercise] = []
@@ -29,8 +30,8 @@ class ExercisesForTypeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        trainingManager?.initView(view: self)
         presenter?.attachView(view: self)
         initialDataFilling()
         configureFilterScrollView()
@@ -41,7 +42,7 @@ class ExercisesForTypeViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         navigationItem.title = presenter?.getCurrentExetcisesType().name
         if presenter?.getCurrentExetcisesType().name == "" {
-           navigationItem.title = "Мои упражнения"
+            navigationItem.title = "Мои упражнения"
         }
         filters = presenter?.getCurrentFilters() ?? []
         let allFilter = ExerciseTypeFilter()
@@ -64,6 +65,10 @@ class ExercisesForTypeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         hideableNavigationBar(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        trainingManager = nil
     }
     
     private func configureTable_CollectionView() {
@@ -173,7 +178,18 @@ class ExercisesForTypeViewController: UIViewController {
             print("default")
         }
     }
-
+    
+    func back() {
+        if let NVC = self.navigationController {
+            for controller in NVC.viewControllers as Array {
+                if controller.isKind(of: MyTranningsViewController.self) {
+                    self.navigationController!.popToViewController(controller, animated: true)
+                    break
+                }
+            }
+        }
+    }
+    
 }
 
 //MARK: - TableView
@@ -206,15 +222,28 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             guard let ex = exercisesByFIlter?[indexPath.row] else {return}
             exercise = ex
         }
-        performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
+        if let manager = trainingManager {
+            let newExercise = exercise
+            let ex = ExerciseInTraining()
+            ex.id = ex.incrementID()
+            ex.name = newExercise.name
+            ex.exerciseId = newExercise.id
+            try! manager.realm.performWrite {
+                manager.getCurrentday()?.exercises.append(ex)
+                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+                self.back()
+            }
+        } else {
+            performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 extension ExercisesForTypeViewController: ExercisesTypesDataProtocol {
     func myExercisesLoaded() {
-            exercisesByFIlter = presenter?.getOwnExercises()
-            tableView.reloadData()
+        exercisesByFIlter = presenter?.getOwnExercises()
+        tableView.reloadData()
     }
     func startLoading() {}
     func finishLoading() {}
@@ -247,4 +276,13 @@ extension ExercisesForTypeViewController: UISearchResultsUpdating {
         updateSearchData()
     }
     
+}
+
+extension ExercisesForTypeViewController: TrainingsViewDelegate {
+    func synced() {}
+    
+    func trainingEdited() {}
+    func trainingsLoaded() {}
+    func templateCreated() {}
+    func templatesLoaded() {}
 }

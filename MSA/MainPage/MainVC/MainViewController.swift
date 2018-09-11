@@ -23,9 +23,9 @@ protocol GalleryDataProtocol: class {
 }
 
 class MainViewController: BasicViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate {
-
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
+    
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var buttViewHeight: NSLayoutConstraint!
     @IBOutlet weak var imagePreviewView: UIView!
@@ -47,24 +47,35 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var dreamView: UIView! { didSet{dreamView.layer.cornerRadius = 10 }}
     
     private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
-
+    let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
+    
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        p.getExercisesFromRealm()
+        p.getTypesFromRealm()
+        p.getFiltersFromRealm()
+        p.getMyExercisesFromRealm()
+        
+        p.getAllExersises()
+        p.getAllTypes()
+        p.getAllFilters()
+        p.getMyExercises()
+        
         configureButtonsView()
         presenter.attachView(view: self)
-//        presenter.getGallery(context: context)
-//        if GalleryDataManager.GalleryItems.count == 0 {
+        //        presenter.getGallery(context: context)
+        //        if GalleryDataManager.GalleryItems.count == 0 {
         presenter.getGallery()
-//        }
+        //        }
         myPicker.delegate = self
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         configureProfile()
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -149,8 +160,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     }
     @IBAction func addButton(_ sender: Any) {
         let alert = UIAlertController(title: "Загрузить с:", message: nil, preferredStyle: .actionSheet)
-//        alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
-//        }))
+        //        alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
+        //        }))
         alert.addAction(UIAlertAction(title: "Галлереи", style: .default, handler: { _ in
             self.openGallary()
         }))
@@ -227,7 +238,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     self.imagePreviewView.alpha = 1
                     self.tabBarController?.tabBar.isHidden = true
                     if let imgUrl = URL(string: url) {
-                       self.previewImage.sd_setImage(with: imgUrl, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                        self.previewImage.sd_setImage(with: imgUrl, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
                     }
                 }
             }
