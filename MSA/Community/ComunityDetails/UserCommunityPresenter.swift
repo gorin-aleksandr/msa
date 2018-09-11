@@ -34,6 +34,7 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
     }
     
     func start() {
+        print("Community and trainings merge")
         setTrainerDataSource()
     }
     
