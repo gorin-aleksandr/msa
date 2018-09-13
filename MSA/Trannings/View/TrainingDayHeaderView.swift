@@ -50,7 +50,7 @@ class TrainingDayHeaderView: FZAccordionTableViewHeaderView {
         case .unselected:
             openHideExercisesButton.setImage(#imageLiteral(resourceName: "cevron_down_disabled_24px"), for: .normal)
         case .selected:
-            openHideExercisesButton.setImage(nil, for: .normal)
+            openHideExercisesButton.setImage(#imageLiteral(resourceName: "cevron_up_disabled_24px"), for: .normal)
         }
     }
 }

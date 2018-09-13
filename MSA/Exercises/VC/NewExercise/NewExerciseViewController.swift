@@ -33,7 +33,6 @@ class NewExerciseViewController: UIViewController {
             greyView.isHidden = true
         }
     }
-    @IBOutlet weak var bottom: NSLayoutConstraint!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewWithPicker: UIView!{
@@ -55,6 +54,7 @@ class NewExerciseViewController: UIViewController {
 
     @IBAction func pickerDoneButton(_ sender: Any) {
         UIView.animate(withDuration: 0.3) {
+            self.greyView.isHidden = true
             self.viewWithPicker.alpha = 0
         }
         tableView.reloadData()
@@ -82,6 +82,7 @@ class NewExerciseViewController: UIViewController {
         imageManager = ImageManager(presentingViewController: self)
         exercManager.attachView(view: self)
         picker.delegate = self
+        setShadow(outerView: viewWithPicker, shadowOpacity: 0.5)
     }
     
     func configureTableView() {
@@ -152,10 +153,6 @@ extension NewExerciseViewController: UITextViewDelegate {
             case 3: return numberOfChars < 1201
             default: return false
         }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-//        tableView.reloadData()
     }
     
 }
@@ -362,6 +359,7 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         if selectedRow == 2 || selectedRow == 3 {
             picker.reloadAllComponents()
             UIView.animate(withDuration: 0.3) {
+                self.greyView.isHidden = false
                 self.viewWithPicker.alpha = 1
             }
         } else if selectedRow == 8 {

@@ -45,8 +45,8 @@ class CalendarViewController: UIViewController {
         if let date = notification.userInfo?["date"] as? Date {
             for day in days {
                 if day.date == stringFrom(date: date) {
-                    manager.setCurrent(day: day)
-                    performSegue(withIdentifier: "showTrainingDay", sender: nil)
+                    manager.setWeekFromDay(day: day)
+                    navigationController?.popViewController(animated: true)
                 }
             }
         }
@@ -79,7 +79,7 @@ class CalendarViewController: UIViewController {
     }
     
     private func selectCalendarDays() {
-        if let weeks = manager.getTrainings()?.first?.weeks {
+        if let weeks = manager.getCurrentTraining()?.weeks {
             for week in weeks {
                 for day in week.days {
                     if day.date != "" {

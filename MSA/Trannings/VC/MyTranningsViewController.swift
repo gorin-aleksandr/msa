@@ -28,10 +28,11 @@ class MyTranningsViewController: UIViewController {
 
         initialViewConfiguration()
         initialDataLoading()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        weekNumber = manager.getWeekNumber()
+        weekLabel.text = "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
         tableView.reloadData()
     }
     
@@ -63,6 +64,7 @@ class MyTranningsViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
         tableView.allowMultipleSectionsOpen = true
+        
         tableView.register(UINib(nibName: "TrainingDayHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "TrainingDayHeaderView")
         tableView.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "ExerciseTableViewCell")
         tableView.register(UINib(nibName: "AddExerciseToDayTableViewCell", bundle: nil), forCellReuseIdentifier: "AddExerciseToDayTableViewCell")
@@ -83,15 +85,33 @@ class MyTranningsViewController: UIViewController {
     @IBAction func previousWeek(_ sender: Any) {
         if weekNumber != 0 {
             weekNumber -= 1
-            changeWeek(plus: false)
+            changeWeek()
         }
     }
     @IBAction func nextWeek(_ sender: Any) {
         guard let weekCount = manager.getCurrentTraining()?.weeks.count else {return}
         if weekCount != 0 && weekNumber != weekCount - 1 {
             weekNumber += 1
-            changeWeek(plus: true)
+            changeWeek()
         }
+    }
+    @IBAction func renameWeek(_ sender: Any) {
+        let alert = UIAlertController(title: "Новое название", message: "Введите новое название для недели", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let action = UIAlertAction(title: "Подтвердить", style: .default) { (alertAction) in
+            let textField = alert.textFields![0] as UITextField
+            self.manager.renameWeek(name: textField.text)
+            self.changeWeek()
+        }
+        let action2 = UIAlertAction(title: "Отменить", style: .default) { (alertAction) in }
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Введите название недели"
+        }
+        
+        alert.addAction(action)
+        alert.addAction(action2)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func showAddDayWeekAlert() {
@@ -177,7 +197,9 @@ class MyTranningsViewController: UIViewController {
         }
         manager.addDay(week: week)
         tableView.reloadData()
-        
+        let section = (manager.dataSource?.currentWeek?.days.count ?? 1) - 1
+        tableView.toggleSection(section)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .bottom, animated: true)
     }
     func addWeek() {
         if let training = manager.dataSource?.currentTraining {
@@ -190,8 +212,9 @@ class MyTranningsViewController: UIViewController {
             manager.createWeak(in: training)
         }
         weekNumber = (manager.dataSource?.currentTraining?.weeks.count ?? 0) - 1
-        changeWeek(plus: true)
+        changeWeek()
         tableView.reloadData()
+        tableView.toggleSection(0)
     }
     
 
@@ -251,9 +274,9 @@ class MyTranningsViewController: UIViewController {
         }
     }
     
-    func changeWeek(plus: Bool) {
+    func changeWeek() {
         manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
-        weekLabel.text = "Неделя #\(weekNumber+1)"
+        weekLabel.text =  "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
         if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
             nextWeekButton.isHidden = false
             prevWeekButton.isHidden = false
@@ -377,7 +400,7 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     }
 
     func trainingEdited() {
-        changeWeek(plus: true)
+        changeWeek()
         self.tableView.reloadData()
     }
     
@@ -394,7 +417,7 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     }
     
     func trainingsLoaded() {
-        changeWeek(plus: true)
+        changeWeek()
         manager.loadTemplates()
     }
     
