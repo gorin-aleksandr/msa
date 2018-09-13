@@ -286,6 +286,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
         headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
 
+        
         return headerView
     }
     
@@ -403,10 +404,15 @@ extension MyTranningsViewController: TrainingsViewDelegate {
 }
 
 extension MyTranningsViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.text = ""
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         try! manager.realm.performWrite {
             guard let object = manager.dataSource?.currentWeek?.days[textField.tag] else {return}
-            object.name = textField.text ?? ""
+            object.name = (textField.text ?? "").capitalizingFirstLetter()
             self.tableView.reloadData()
             self.manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
         }

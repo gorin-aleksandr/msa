@@ -267,14 +267,14 @@ class TrainingManager {
                         }
                         newexercises.append([
                                "id": e.id,
-                               "name": e.name,
+                               "name": e.name.capitalizingFirstLetter(),
                                "exerciseId": e.exerciseId,
                                "iterations": newiterations
                             ])
                     }
                     newdays.append([
                            "id": day.id,
-                           "name": day.name,
+                           "name": day.name.capitalizingFirstLetter(),
                            "date": day.date,
                            "exercises": newexercises
                         ])
@@ -287,7 +287,7 @@ class TrainingManager {
         }
         return [
             "id": dataSource?.currentTraining?.id ?? "",
-            "name": dataSource?.currentTraining?.name ?? "",
+            "name": (dataSource?.currentTraining?.name ?? "").capitalizingFirstLetter(),
             "trainerId": dataSource?.currentTraining?.trianerId ?? "",
             "userId": dataSource?.currentTraining?.userId ?? "",
             "weeks": newWeeks

@@ -16,7 +16,7 @@ class NewExerciseManager {
     var dataSource = NewExerciseDataSource()
     private weak var view: NewExerciseProtocol?
     let exerciseRef = Database.database().reference().child("Exercise")
-//    let typesRef = Database.database().reference().child("<#T##pathString: String##String#>")
+    //    let typesRef = Database.database().reference().child("<#T##pathString: String##String#>")
     func setName(name: String) {
         dataSource.name = name
     }
@@ -102,7 +102,7 @@ class NewExerciseManager {
     
     func sendNewExerciseInfoBlock(id: String) {
         let newInfo = makeExerciseForFirebase(id: id, or: false)
-        let index = RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0
+        let index = (RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0) + ((RealmManager.shared.getArray(ofType: Exercise.self)).count)
         Database.database().reference().child("ExercisesByTrainers").child(id).child("\(index)").setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
@@ -126,7 +126,7 @@ class NewExerciseManager {
         if edit {
             index = dataSource.newExerciseModel.id
         } else {
-            index = RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0
+            index = (RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0) + ((RealmManager.shared.getArray(ofType: Exercise.self)).count)
         }
         return [
             "description": self.dataSource.descript,
@@ -171,7 +171,7 @@ class NewExerciseManager {
     
     func updateExerciseBlock(id: String) {
         let newInfo = makeExerciseForFirebase(id: id, or: true)
-//        let child = [self.dataSource.newExerciseModel.id:newInfo] as! [Int:Any]
+        //        let child = [self.dataSource.newExerciseModel.id:newInfo] as! [Int:Any]
         Database.database().reference().child("ExercisesByTrainers").child(id).child("\(self.dataSource.newExerciseModel.id)").updateChildValues(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
@@ -204,7 +204,7 @@ class NewExerciseManager {
         exercise.videoUrl = dataSource.videoUrl
         return exercise
     }
-        
+    
     func updateNewExerciseInFirebase() {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
@@ -236,7 +236,7 @@ class NewExerciseManager {
     
     func uploadPhoto(images: [UIImage], success: @escaping (_ bool: Bool)->()) {
         let dispatchGroup = DispatchGroup()
-    
+        
         var pictureUrls = [String]()
         var errors = [Error]()
         
