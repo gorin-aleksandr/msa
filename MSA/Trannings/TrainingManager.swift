@@ -267,27 +267,28 @@ class TrainingManager {
                         }
                         newexercises.append([
                                "id": e.id,
-                               "name": e.name,
+                               "name": e.name.capitalizingFirstLetter(),
                                "exerciseId": e.exerciseId,
                                "iterations": newiterations
                             ])
                     }
                     newdays.append([
                            "id": day.id,
-                           "name": day.name,
+                           "name": day.name.capitalizingFirstLetter(),
                            "date": day.date,
                            "exercises": newexercises
                         ])
                 }
                 newWeeks.append([
                     "id": week.id,
+                    "name": week.name,
                     "days": newdays
                     ])
             }
         }
         return [
             "id": dataSource?.currentTraining?.id ?? "",
-            "name": dataSource?.currentTraining?.name ?? "",
+            "name": (dataSource?.currentTraining?.name ?? "").capitalizingFirstLetter(),
             "trainerId": dataSource?.currentTraining?.trianerId ?? "",
             "userId": dataSource?.currentTraining?.userId ?? "",
             "weeks": newWeeks
@@ -332,6 +333,7 @@ class TrainingManager {
                 for w in (weeks as! [[String:Any]]) {
                     let week = TrainingWeek()
                     week.id = w["id"] as! Int
+                    week.name = w["name"] as? String ?? ""
                     let daysInWeek = List<TrainingDay>()
                     if let days = w["days"] as? [[String:Any]] {
                         for d in days {
@@ -379,6 +381,7 @@ class TrainingManager {
         }
         dataSource?.set(trainings: items)
         dataSource?.currentTraining = items.first
+        setSynced()
         self.saveTrainingsToRealm(trainings: items)
         self.view?.trainingsLoaded()
     }
@@ -430,6 +433,40 @@ class TrainingManager {
                 i.wasSync = true
             }
         }
+    }
+    
+    func setWeekFromDay(day: TrainingDay) {
+        if let weeks = getCurrentTraining()?.weeks {
+            for week in weeks {
+                if week.days.contains(day) {
+                    dataSource?.currentWeek = week
+                    return
+                }
+            }
+        }
+    }
+    
+    func getWeekNumber() -> Int {
+        var i = 0
+        if let weeks = getCurrentTraining()?.weeks {
+            for week_ in weeks {
+                if dataSource?.currentWeek?.id == week_.id {
+                    return i
+                } else {
+                    i += 1
+                }
+            }
+        }
+        return i
+    }
+    
+    func renameWeek(name: String?) {
+        try! realm.performWrite {
+            self.dataSource?.currentWeek?.name = name ?? ""
+            self.dataSource?.currentWeek?.wasSync = false
+        }
+        guard let id = dataSource?.currentTraining?.id else {return}
+        editTraining(wiht: id, success: {})
     }
     
 }

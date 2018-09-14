@@ -86,15 +86,6 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         buttViewHeight.constant = CGFloat(20.0 + (w*111.0/164.0))
     }
     
-    func setShadow(outerView: UIView, shadowOpacity: Float) {
-        outerView.clipsToBounds = false
-        outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOpacity = shadowOpacity
-        outerView.layer.shadowOffset = CGSize.zero
-        outerView.layer.shadowRadius = 10
-        outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
-    }
-    
     func configureProfile() {
         setShadow(outerView: profileView, shadowOpacity: 0.3)
         setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)

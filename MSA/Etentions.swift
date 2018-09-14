@@ -11,6 +11,15 @@ import UIKit
 
 private var maxLengths = [UITextField: Int]()
 
+public func setShadow(outerView: UIView, shadowOpacity: Float) {
+    outerView.clipsToBounds = false
+    outerView.layer.shadowColor = UIColor.black.cgColor
+    outerView.layer.shadowOpacity = shadowOpacity
+    outerView.layer.shadowOffset = CGSize.zero
+    outerView.layer.shadowRadius = 10
+    outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
+}
+
 extension UITableView {
     //    func reloadData(with animation: UITableViewRowAnimation) {
     //        reloadSections(IndexSet(integersIn: 0..<numberOfSections), with: animation)
@@ -23,6 +32,14 @@ extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
         return dateFormatter.date(from: self)
+    }
+    
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
     }
     
 }
