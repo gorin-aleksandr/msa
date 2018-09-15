@@ -238,6 +238,42 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        var exercise = Exercise()
+        if isFiltering() {
+            exercise = filteredArray[indexPath.row]
+        } else {
+            guard let ex = exercisesByFIlter?[indexPath.row] else {return false}
+            exercise = ex
+        }
+        if exercise.typeId == 12 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .normal, title: "Delete") { (action, indexPath) in
+            var exercise = Exercise()
+            if self.isFiltering() {
+                exercise = self.filteredArray[indexPath.row]
+                self.filteredArray.remove(at: indexPath.row)
+            } else {
+                if let ex = self.exercisesByFIlter?[indexPath.row] {
+                    exercise = ex
+                    self.exercisesByFIlter?.remove(at: indexPath.row)
+                }
+            }
+            tableView.reloadData()
+            self.presenter?.deleteExercise(with: exercise.id)
+        }
+        delete.backgroundColor = .red
+        
+        return [delete]
+    }
+    
 }
 
 extension ExercisesForTypeViewController: ExercisesTypesDataProtocol {
@@ -251,6 +287,9 @@ extension ExercisesForTypeViewController: ExercisesTypesDataProtocol {
     func errorOccurred(err: String) {}
     func filtersLoaded() {}
     func exercisesLoaded() {}
+    func exerciseDeleted(with id: Int) {
+        
+    }
 }
 
 //MARK: - Search Results Updating
