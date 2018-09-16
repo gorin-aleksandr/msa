@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 import Firebase
+import RealmSwift
 
 class EditProfilePresenter {
     
@@ -145,6 +146,13 @@ class EditProfilePresenter {
         }
     }
     
+    func clearRealm() {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
+        }
+    }
+    
     func setUser(user: UserVO, context: NSManagedObjectContext) {
         AuthModule.currUser = user
         saveUser(context: context, user: user)
@@ -222,5 +230,7 @@ class EditProfilePresenter {
     deinit {
         print("deinit")
     }
+    
+    
     
 }

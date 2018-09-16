@@ -31,7 +31,7 @@ class CircleTrainingDayViewController: UIViewController {
 
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День # . Упражнений: \(manager.getCurrentday()?.exercises.count ?? 0)")
+        self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День #\(manager.numberOfDay()) . Упражнений: \(manager.exercisesCount())")
         
         configureTableView()
     }
@@ -69,7 +69,7 @@ extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return manager.getCurrentday()?.exercises.count ?? 0
-        }
+    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 300

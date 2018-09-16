@@ -41,7 +41,6 @@ class ExercisesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hideableNavigationBar(false)
-        getFromRealm()
         guard let _ = trainingManager else { return }
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "back_"), for: .normal)
@@ -57,6 +56,7 @@ class ExercisesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        getFromRealm()
     }
     
     private func getFromRealm() {
