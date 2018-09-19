@@ -69,7 +69,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         presenter.attachView(view: self)
         //        presenter.getGallery(context: context)
         //        if GalleryDataManager.GalleryItems.count == 0 {
-        presenter.getGallery()
+        presenter.getGallery(for: AuthModule.currUser.id)
         //        }
         myPicker.delegate = self
         

@@ -8,11 +8,10 @@
 
 import Foundation
 
-// Mock data for UI Replace after UI is ready
-
 protocol CommunityListPresenterProtocol {
     func start() -> ()
     var communityDataSource: [UserVO] { get }
+    var isTrainerEnabled: Bool { get }
     func setFilterForState(index: Int)
     func selectCityAt(index: Int)
     func getCities() -> [String]
@@ -22,6 +21,7 @@ protocol CommunityListPresenterProtocol {
     func createNextPresenter(for view: UserCommunityViewProtocol) -> UserCommunityPresenterProtocol
     func addButtonTapped(at index: Int)
     func addAsTrainer(user: UserVO)
+    func createProfilePresenter(user: UserVO, for view: ProfileViewProtocol) -> ProfilePresenterProtocol
 }
 
 enum CommunityFilterState: Int {
@@ -63,7 +63,22 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         }
     }
     
-    var currentUser: UserVO?
+    var currentUser: UserVO? {
+        return AuthModule.currUser
+    }
+    
+    var isTrainerEnabled: Bool {
+        if let _ = AuthModule.currUser.trainerId {
+            return false
+        }
+        return true
+    }
+    
+    var pendingRequestExist: Bool {
+        if let requests = AuthModule.currUser.trainerId {
+            return false
+        }
+    }
     
     
     private var typeFilterState: CommunityFilterState = .all
@@ -82,10 +97,13 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     func start() {
         selectFilter()
         dataLoader.getUser { [weak self] user in
-            self?.currentUser = user
+            //self?.currentUser = user
+            if let user = user {
+                AuthModule.currUser = user
+            }
         }
         dataLoader.loadAllUsers { [weak self] (users) in
-            self?.users = users
+            self?.users = users.filter { $0.id != self?.currentUser?.id }
             self?.setCitiesDataSource(from: users)
             self?.view.updateTableView()
         }
@@ -138,6 +156,9 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         if let isFriend = currentUser?.friends?.contains(personId), isFriend {
             return PersonState.friend
         }
+        if let isSportsman = currentUser?.sportsmen?.contains(personId), isSportsman {
+            return PersonState.trainersSportsman
+        }
         return PersonState.all
     }
     
@@ -189,7 +210,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
             } else {
                 guard let currentId = self?.currentUser?.id, currentId == userId else {return}
                 if let index = self?.currentUser?.requests?.index(of: idToRemove) {
-                    self?.currentUser?.requests?.remove(at: index)
+                    AuthModule.currUser.requests?.remove(at: index)
                 }
             }
         })
@@ -204,12 +225,12 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     }
     
     private func updateFriendInDatasource(for id: String) {
-        currentUser?.friends?.append(id)
+        AuthModule.currUser.friends?.append(id)
         view.updateTableView()
     }
     
     private func updateTrainerInDataSource(for id: String) {
-        currentUser?.trainerId = id
+        AuthModule.currUser.trainerId = id
         view.updateTableView()
     }
     
@@ -227,9 +248,32 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     }
     
     func createNextPresenter(for view: UserCommunityViewProtocol) -> UserCommunityPresenterProtocol {
-        print(users)
         let presenter = UserCommunityPresenter(view: view, loadedUsers: users)
         return presenter
+    }
+    
+    func createProfilePresenter(user: UserVO, for view: ProfileViewProtocol) -> ProfilePresenterProtocol {
+        let presenter = ProfilePresenter(user: user, view: view)
+        presenter.iconsDataSource = preparedIconsForProfile(for: user)
+        return presenter
+    }
+    
+    private func preparedIconsForProfile(for user: UserVO) -> [String] {
+        switch user.userType {
+        case .sportsman:
+            guard let userTainerId = user.trainerId, let trainer = users.first(where: { $0.id == userTainerId }), let photo = trainer.avatar  else  { return [] }
+            return [photo]
+        case .trainer:
+            guard let sporsmenIds = user.sportsmen else { return [] }
+            var trainerSportsmen = [UserVO]()
+            for id in sporsmenIds {
+                if let sportsman = users.first(where: {$0.id == id }) {
+                    trainerSportsmen.append(sportsman)
+                }
+            }
+            let photos = trainerSportsmen.compactMap { $0.avatar }
+            return photos
+        }
     }
     
     private func applyCityFilter() {

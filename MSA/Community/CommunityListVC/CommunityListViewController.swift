@@ -14,7 +14,6 @@ protocol CommunityListViewProtocol: class {
     func configureFilterView(dataSource: [String], selectedFilterIndex: Int)
     func setCityFilterTextField(name: String?)
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool)
-    
 }
 
 class CommunityListViewController: UIViewController, CommunityListViewProtocol {
@@ -48,7 +47,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
         configureSearchController()
         configureCityPicker()
         hideableNavigationBar(false)
-        
+        updateTableView()
+        //presenter.applyFilters(with: cityTextField.text)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -92,13 +92,17 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
             print("Cancel")
         }
-        let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
-            self?.presenter.addToFriends(user: user)
-            SVProgressHUD.show()
-            
-        })
+        if presenter.getPersonState(person: user) != .friend {
+            let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
+                self?.presenter.addToFriends(user: user)
+                SVProgressHUD.show()
+                
+            })
+             alert.addAction(addFriendAction)
+        }
+        
         alert.addAction(cancelActionButton)
-        alert.addAction(addFriendAction)
+       
         if isTrainerEnabled {
             let addTrainerAction = UIAlertAction(title: "Добавить в тренеры", style: .default, handler: { [weak self] _ in
                 self?.presenter.addAsTrainer(user: user)
@@ -146,10 +150,12 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
     }
     
-    private func moveToUserViewController() {
+    private func moveToUserViewController(with user: UserVO) {
         let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
         navigationController?.pushViewController(destinationVC, animated: true)
     }
+
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
         let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
@@ -173,15 +179,15 @@ extension CommunityListViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonTableViewCell", for: indexPath) as! PersonTableViewCell
         let person = presenter.communityDataSource[indexPath.row]
         let personState =  presenter.getPersonState(person: person)
-        cell.configure(with: person)
+        cell.configure(with: person, userCommunityState: .friends)
         cell.addButtonHandler = { [weak self] in self?.presenter?.addButtonTapped(at: indexPath.row)
         }
-        cell.setupCell(basedOn: personState)
+        cell.setupCell(basedOn: personState, isTrainerEnabled: presenter.isTrainerEnabled)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moveToUserViewController()
+        moveToUserViewController(with: presenter.communityDataSource[indexPath.row])
     }
 }
 

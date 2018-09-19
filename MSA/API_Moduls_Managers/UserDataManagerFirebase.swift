@@ -129,7 +129,14 @@ class UserDataManager {
             var friends = [String]()
             if let friendsData = value["friends"] as? [String : Bool] {
                 friends = Array(friendsData.keys)
-                print(friends)
+            }
+            var requests = [String]()
+            if let requestsData = value["friendRequest"] as? [String : Bool] {
+                requests = Array(requestsData.keys)
+            }
+            var sportsmen = [String]()
+            if let sportsmenData = value["sportsmen"] as? [String : Bool] {
+                sportsmen = Array(sportsmenData.keys)
             }
             user = UserVO(id: value["id"] as? String,
                           email: value["email"] as? String,
@@ -148,10 +155,10 @@ class UserDataManager {
                           gallery: gallery,
                           friends: friends,
                           trainerId: value["trainer"] as? String,
-                          requests: value["friendRequest"] as? [String],
+                          sportsmen: sportsmen,
+                          requests: requests,
                           city: value["city"] as? String)
         }
-        print(user?.friends)
         return user
     }
     
@@ -212,15 +219,38 @@ class UserDataManager {
         
     }
     
-    func removeFromRequests(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
-            userRef.child(userId).child("requests").child(idToRemove).removeValue() {
-                error, success in
+    func removeTrainer(with id: String, from userId: String, callback callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+            userRef.child(userId).child("trainer").removeValue() { error, success in
                 if let error = error {
                     callback(false, error)
                 } else {
                     callback(true, nil)
                 }
             }
+    }
+    
+    func removeFromRequests(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+            userRef.child(userId).child("friendRequest").child(idToRemove).removeValue() {
+                error, success in
+                print(idToRemove)
+                if let error = error {
+                    callback(false, error)
+                } else {
+                    callback(true, nil)
+                }
+            }
+    }
+    
+    func removeFromSportsmen(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        userRef.child(userId).child("sportsmen").child(idToRemove).removeValue() {
+            error, success in
+            print(idToRemove)
+            if let error = error {
+                callback(false, error)
+            } else {
+                callback(true, nil)
+            }
+        }
     }
     
     func removeFromFriends(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
@@ -235,7 +265,7 @@ class UserDataManager {
     }
     
     func addToRequests(idToAdd: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
-        userRef.child(userId).child("requests").child(idToAdd).setValue(true) {
+        userRef.child(userId).child("friendRequest").child(idToAdd).setValue(true) {
             error, success in
             if let error = error {
                 callback(false, error)

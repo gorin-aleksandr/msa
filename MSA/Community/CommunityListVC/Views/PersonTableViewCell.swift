@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 enum PersonState {
-    case friend, userTrainer, all
+    case friend, userTrainer, trainersSportsman, all
 }
 
 enum PersonTableViewCellState {
@@ -18,6 +18,8 @@ enum PersonTableViewCellState {
 }
 
 typealias AddButtonHandler = () -> ()
+typealias AcceptButtonHandler = () -> ()
+typealias DeleteButtonHandler = () -> ()
 
 class PersonTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -33,6 +35,8 @@ class PersonTableViewCell: UITableViewCell {
     var state: PersonTableViewCellState = .communityList
     
     var addButtonHandler: AddButtonHandler!
+    var acceptButtonHandler: AcceptButtonHandler!
+    var deleteButtonHandler: DeleteButtonHandler!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,7 +47,7 @@ class PersonTableViewCell: UITableViewCell {
         selectionStyle = .none
     }
 
-    func configure(with person: UserVO) {
+    func configure(with person: UserVO, userCommunityState: UserCommunityState) {
         guard var fullName = person.firstName else {
             return
         }
@@ -56,6 +60,8 @@ class PersonTableViewCell: UITableViewCell {
         locationIcon.isHidden = person.city == nil
         if let stringUrl = person.avatar, !stringUrl.isEmpty, let url = URL(string: stringUrl) {
             avatarImageView.sd_setImage(with: url, completed: nil)
+        } else {
+            avatarImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
         }
         switch person.userType {
         case .sportsman:
@@ -63,15 +69,19 @@ class PersonTableViewCell: UITableViewCell {
         case .trainer:
             typeIconImage.image = #imageLiteral(resourceName: "coach-icon")
         }
-        acceptButton.isHidden = state == .communityList
-        deleteButton.isHidden = state == .communityList
+        acceptButton.isHidden = state == .communityList || userCommunityState != .requests
+        deleteButton.isHidden = state == .communityList 
         addButton.isHidden = state != .communityList
 
     }
     
-    func setupCell(basedOn state: PersonState) {
+    func setupCell(basedOn state: PersonState, isTrainerEnabled: Bool) {
         switch state {
         case .friend:
+            setAvatarBorder(width: 2, color: UIColor.lightBlue.cgColor)
+            userTypeView.backgroundColor = .lightBlue
+            addButton.isEnabled = isTrainerEnabled
+        case .trainersSportsman:
             setAvatarBorder(width: 2, color: UIColor.lightBlue.cgColor)
             userTypeView.backgroundColor = .lightBlue
             addButton.isEnabled = false
@@ -89,6 +99,13 @@ class PersonTableViewCell: UITableViewCell {
     private func setAvatarBorder(width: CGFloat, color: CGColor?) {
         avatarImageView.layer.borderWidth = width
         avatarImageView.layer.borderColor = color
+    }
+    @IBAction func acceptButtonPressed(_ sender: Any) {
+        acceptButtonHandler()
+    }
+    
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        deleteButtonHandler()
     }
     
     @IBAction func addButtonPressed(_ sender: Any) {
