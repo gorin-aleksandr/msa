@@ -128,13 +128,14 @@
 		29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */; };
 		352355F9212E06080001255E /* UserCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355F8212E06080001255E /* UserCommunityViewController.swift */; };
 		352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355FA212E06220001255E /* UserCommunityPresenter.swift */; };
+		35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
 		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
 		35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */; };
 		35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */; };
 		35D09C4C21314B4C00229A83 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D09C4B21314B4C00229A83 /* Fonts.swift */; };
 		35D5C01421372FEB0014D450 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5C01321372FEB0014D450 /* ProfileViewController.swift */; };
-		35D5C018213734510014D450 /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5C017213734510014D450 /* ProfileViewPresenter.swift */; };
+		35D5C018213734510014D450 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5C017213734510014D450 /* ProfilePresenter.swift */; };
 		35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC83F420EFBDDF00AECFC8 /* Button+Ext.swift */; };
 		35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC83F720F37AB800AECFC8 /* UIColor+Ext.swift */; };
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
@@ -266,13 +267,14 @@
 		29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesDataManager.swift; sourceTree = "<group>"; };
 		352355F8212E06080001255E /* UserCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityViewController.swift; sourceTree = "<group>"; };
 		352355FA212E06220001255E /* UserCommunityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityPresenter.swift; sourceTree = "<group>"; };
+		35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
 		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
 		35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListPresenter.swift; sourceTree = "<group>"; };
 		35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		35D09C4B21314B4C00229A83 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		35D5C01321372FEB0014D450 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		35D5C017213734510014D450 /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
+		35D5C017213734510014D450 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		35FC83F420EFBDDF00AECFC8 /* Button+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Ext.swift"; sourceTree = "<group>"; };
 		35FC83F720F37AB800AECFC8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -666,7 +668,8 @@
 			isa = PBXGroup;
 			children = (
 				35D5C01321372FEB0014D450 /* ProfileViewController.swift */,
-				35D5C017213734510014D450 /* ProfileViewPresenter.swift */,
+				35D5C017213734510014D450 /* ProfilePresenter.swift */,
+				35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -875,8 +878,9 @@
 				298DF65F203C36B300FB0180 /* AlertView.swift in Sources */,
 				29B0972620D4E9B600CA7219 /* FilterButtonView.swift in Sources */,
 				29C2D5FB2074F36300E2B958 /* Etentions.swift in Sources */,
-				35D5C018213734510014D450 /* ProfileViewPresenter.swift in Sources */,
+				35D5C018213734510014D450 /* ProfilePresenter.swift in Sources */,
 				2934805320E8EECC0039028E /* TextViewViewCounterTableViewCell.swift in Sources */,
+				35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */,
 				2934805920E8F7B80039028E /* ChoosingItemTableViewCell.swift in Sources */,
 				29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */,
 				35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */,

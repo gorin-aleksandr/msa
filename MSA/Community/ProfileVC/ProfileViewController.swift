@@ -10,25 +10,37 @@ import UIKit
 import AVKit
 import AVFoundation
 import SDWebImage
+import SVProgressHUD
 
-class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, UINavigationControllerDelegate {
-    
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+protocol ProfileViewProtocol: class {
+    func updateProfile(with user: UserVO)
+    func configureViewBasedOnState(state: PersonState)
+    func reloadIconsCollectionView()
+    func showDeleteAlert(for user: UserVO)
+    func dismiss()
+    func showAddAlertFor(user: UserVO, isTrainerEnabled: Bool)
+}
+
+class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, UINavigationControllerDelegate, ProfileViewProtocol {
     
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var buttViewHeight: NSLayoutConstraint!
     @IBOutlet weak var imagePreviewView: UIView!
     @IBOutlet weak var previewImage: UIImageView!
+    @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var viewWithButtons: UIView!
     @IBOutlet weak var scrollView: UIView!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!{didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var galleryCollectionView: UICollectionView!
-    @IBOutlet weak var galleryView: UIView! {didSet{galleryView.layer.cornerRadius = 10}}
+    @IBOutlet weak var galleryView: UIView! {didSet{galleryView.layer.cornerRadius = 12}}
     @IBOutlet weak var profileViewbg: UIView! {didSet{profileViewbg.layer.cornerRadius = 10}}
     @IBOutlet weak var userImage: UIView!
-    @IBOutlet weak var trainerImage: UIImageView!
+    
+    @IBOutlet weak var relatedCollectionView: UICollectionView!
+    @IBOutlet weak var relatedWidthConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userLevel: UILabel!
     @IBOutlet weak var dailyTraining: UILabel!
@@ -40,29 +52,24 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         
     }
     
-    
-    private let presenter: ProfileGalleryDataPresenterProtocol = GalleryDataPresenter(gallery: GalleryDataManager())
+    var profilePresenter: ProfilePresenterProtocol!
     
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        relatedCollectionView.dataSource = self
+        relatedCollectionView.delegate = self
+        relatedWidthConstraint.constant = CGFloat((profilePresenter.iconsDataSource.count - 1) * 12 + 32)
         configureButtonsView()
-        presenter.attachView(view: self)
-        //        presenter.getGallery(context: context)
-        //        if GalleryDataManager.GalleryItems.count == 0 {
-        presenter.getGallery()
-        //        }
-        
-        // Do any additional setup after loading the view.
+        profilePresenter.start()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        configureProfile()
+        configureProfileView()
         setNavigationBarTransparent()
-       
+        
         //navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -88,18 +95,39 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
     }
     
-    func configureProfile() {
+    func configureProfileView() {
         setShadow(outerView: profileView, shadowOpacity: 0.3)
         setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
-        setProfileImage(image: nil, url: AuthModule.currUser.avatar)
-        if let name = AuthModule.currUser.firstName, let surname = AuthModule.currUser.lastName {
+    }
+    
+    func configureViewBasedOnState(state: PersonState) {
+        SVProgressHUD.dismiss()
+        if state != .trainersSportsman {
+            containerViewHeightConstraint.constant -= viewWithButtons.frame.height
+            buttViewHeight.constant = 0
+        }
+        if state == .all {
+            navigationItem.rightBarButtonItem?.tintColor = .lightBlue
+            navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "plus_blue")
+        } else {
+            navigationItem.rightBarButtonItem?.tintColor = .red
+            navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "delete_red")
+        }
+    }
+    
+    func updateProfile(with user: UserVO) {
+        if let name = user.firstName, let surname = user.lastName {
             userName.text = name + " " + surname
         }
-        if let level = AuthModule.currUser.level {
+        if let level = user.level {
             userLevel.text = level
         }
-        if let dream = AuthModule.currUser.purpose {
+        if let dream = user.purpose {
             dailyTraining.text = dream
+        }
+        setProfileImage(image: nil, url: user.avatar)
+          if  user.userType == .trainer {
+            
         }
     }
     
@@ -123,8 +151,6 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         if let image = image {
             customImageViev.image = image
         }
-        
-        AuthModule.userAvatar = customImageViev.image
         customImageViev.frame = CGRect(x: 0, y: 0, width: 96, height: 120)
         customImageViev.contentMode = .scaleAspectFill
         customImageViev.setNeedsLayout()
@@ -137,7 +163,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     }
     
     @objc func openAvatar(sender: UIButton!) {
-        if let avatar = AuthModule.currUser.avatar {
+        if let avatar = profilePresenter.avatar {
             UIView.animate(withDuration: 0.5) {
                 self.imagePreviewView.alpha = 1
                 self.tabBarController?.tabBar.isHidden = true
@@ -148,20 +174,54 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
     }
     
-    @IBAction func cameraButon(_ sender: Any) {
-        self.openCamera()
+    func showDeleteAlert(for user: UserVO) {
+        let alert = UIAlertController(title: nil, message: "Вы дейсвительно хотите удалить из запросов/друзей/спортсменов? ", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            SVProgressHUD.show()
+            self?.profilePresenter.deleteAction(for: user)
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
-    @IBAction func addButton(_ sender: Any) {
-        let alert = UIAlertController(title: "Загрузить с:", message: nil, preferredStyle: .actionSheet)
-        //        alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
-        //        }))
-        alert.addAction(UIAlertAction(title: "Галлереи", style: .default, handler: { _ in
-            self.openGallary()
-        }))
-        alert.addAction(UIAlertAction.init(title: "Отменить", style: .cancel, handler: { _ in
-        }))
-        self.present(alert, animated: true, completion: nil)
+    
+    func showAddAlertFor(user: UserVO, isTrainerEnabled: Bool) {
+        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Вы можете перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
+        let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
+            print("Cancel")
+        }
+        let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
+            SVProgressHUD.show()
+            self?.profilePresenter.addToFriends(user: user)
+            
+        })
+        alert.addAction(cancelActionButton)
+        alert.addAction(addFriendAction)
+        if isTrainerEnabled {
+            let addTrainerAction = UIAlertAction(title: "Добавить в тренеры", style: .default, handler: { [weak self] _ in
+                SVProgressHUD.show()
+                self?.profilePresenter.addAsTrainer(user: user)
+            })
+            alert.addAction(addTrainerAction)
+        }
+        self.present(alert, animated: true)
     }
+    
+    func dismiss() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func reloadIconsCollectionView() {
+        // MARK: use for future refactoring
+        //relatedCollectionView.reloadData()
+    }
+    
+    @IBAction func rightBarButtonTapped(_ sender: Any) {
+        profilePresenter.addOrRemoveUserAction()
+    }
+    
+    
     @IBAction func statisticButton(_ sender: Any) {
     }
     @IBAction func infoWeightHeightEct(_ sender: Any) {
@@ -170,10 +230,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     }
     @IBAction func traningsButton(_ sender: Any) {
     }
-    @IBAction func settingsButton(_ sender: Any) {
-    }
-    @IBAction func setPurpose(_ sender: Any) {
-    }
+    
     @IBAction func closePreview(_ sender: Any) {
         UIView.animate(withDuration: 0.5) {
             self.imagePreviewView.alpha = 0
@@ -181,35 +238,40 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
             self.tabBarController?.tabBar.isHidden = false
         }
     }
-//    @IBAction func deleteItem(_ sender: UIButton) {
-//        let index = sender.tag
-//        let alert = UIAlertController(title: "Удаление с галлереи", message: nil, preferredStyle: .actionSheet)
-//        alert.addAction(UIAlertAction(title: "Удалить", style: .default, handler: { _ in
-//            self.presenter.deleteGaleryItem(index: index)
-//        }))
-//        alert.addAction(UIAlertAction.init(title: "Отменить", style: .cancel, handler: { _ in
-//        }))
-//        self.present(alert, animated: true, completion: nil)
-//    }
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.getItems().count
+        if collectionView == relatedCollectionView {
+            return profilePresenter.iconsDataSource.count
+        }
+        return profilePresenter.gallery.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if collectionView == relatedCollectionView {
+            let cell = relatedCollectionView.dequeueReusableCell(withReuseIdentifier: "RelatedUserCell", for: indexPath) as! RelatedUserCollectionViewCell
+            let imageUrl = profilePresenter.iconsDataSource[indexPath.row]
+            if let url = URL(string: imageUrl) {
+                cell.photoImageView.sd_setImage(with: url, completed: nil)
+            }
+            cell.typeImageView.image = profilePresenter.userType == .trainer ?  #imageLiteral(resourceName: "athlet-icon") : #imageLiteral(resourceName: "coach-icon")
+            return cell
+        }
+        
+        
         let cell = galleryCollectionView.dequeueReusableCell(withReuseIdentifier: "galleryPhotoCell", for: indexPath) as! GalleryCollectionViewCell
         let index = indexPath.row
-        cell.c.tag = index
+        cell.c.isHidden = true
         cell.activityIndicator.startAnimating()
-        if let url = presenter.getItems()[index].imageUrl {
+        if let url = profilePresenter.gallery[index].imageUrl {
             cell.photoImageView.sd_setImage(with: URL(string: url)!, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: { (img, err, cashe, url) in
                 cell.activityIndicator.stopAnimating()
             })
         }
-        if let video = presenter.getItems()[index].video_url, video != "" {
+        if let video = profilePresenter.gallery[index].video_url, video != "" {
             cell.video.alpha = 1
         } else {
             cell.video.alpha = 0
@@ -218,15 +280,20 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == relatedCollectionView {
+            return CGSize(width: 32, height: 32)
+        }
         return CGSize(width: galleryCollectionView.frame.width/3-10, height: (galleryCollectionView.frame.width/3-3)*140/110);
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == relatedCollectionView { return }
+        
         let index = indexPath.row
-        if let url = presenter.getItems()[index].video_url  {
+        if let url = profilePresenter.gallery[index].video_url  {
             playVideo(url: url)
         } else {
-            if let url = presenter.getItems()[index].imageUrl {
+            if let url = profilePresenter.gallery[index].imageUrl {
                 UIView.animate(withDuration: 0.5) {
                     self.imagePreviewView.alpha = 1
                     self.tabBarController?.tabBar.isHidden = true
@@ -238,7 +305,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             
         }
     }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
+        UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return -18
+    }
+
     
     func openGallary() {
         myPicker.allowsEditing = false
@@ -259,42 +330,22 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func playVideo(url: String) {
-                if let VideoURL = URL(string: url) {
-                    let player = AVPlayer(url: VideoURL)
-                    let playerViewController = AVPlayerViewController()
-                    playerViewController.player = player
-                    self.present(playerViewController, animated: true) {
-                        playerViewController.player!.play()
-                    }
-                }
+        if let VideoURL = URL(string: url) {
+            let player = AVPlayer(url: VideoURL)
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            self.present(playerViewController, animated: true) {
+                playerViewController.player!.play()
             }
-    
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            dismiss(animated: true, completion: nil)
-//            presenter.uploadPhoto(image: chosenImage)
-//        } else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
-//            do {
-//                let asset = AVURLAsset(url: videoURL, options: nil)
-//                let imgGenerator = AVAssetImageGenerator(asset: asset)
-//                imgGenerator.appliesPreferredTrackTransform = true
-//                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-//                let thumbnail = UIImage(cgImage: cgImage)
-//                presenter.uploadVideo(videoURL.absoluteString, thumbnail)
-//                presenter.setCurrentVideoPath(path: videoURL.absoluteString)
-//            } catch let error {
-//                print("*** Error generating thumbnail: \(error.localizedDescription)")
-//            }
-//            dismiss(animated: true, completion: nil)
-//        }
-//    }
-    
+        }
+    }
 }
 
 //extension ProfileViewController: GalleryDataProtocol {
+//
 //    func videoLoaded(url: String, and img: UIImage) {
-//        presenter.setCurrentVideoUrl(url: url)
-//        presenter.uploadPhoto(image: img)
+////        presenter.setCurrentVideoUrl(url: url)
+////        presenter.uploadPhoto(image: img)
 //    }
 //
 //    func errorOccurred(err: String) {
@@ -302,7 +353,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 //    }
 //
 //    func photoUploaded() {
-//        presenter.addItem(item: presenter.getCurrentItem())
+//       // presenter.addItem(item: presenter.getCurrentItem())
 //    }
 //
 //    func startLoading() {
@@ -319,24 +370,13 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 //
 //    func galleryLoaded() {
 //        DispatchQueue.main.async {
-//            self.presenter.updateGalleryItems(items: self.presenter.getItems())
-//            self.presenter.deleteGalleryBlock(context: self.context)
-//            self.presenter.saveGallery(context: self.context)
-//            self.galleryCollectionView.reloadData()
-//            self.presenter.clear()
-//            self.activityIndicator.stopAnimating()
-//            self.presenter.clear()
-//        }
-//    }
-//
-//    func playVideo(url: String) {
-//        if let VideoURL = URL(string: url) {
-//            let player = AVPlayer(url: VideoURL)
-//            let playerViewController = AVPlayerViewController()
-//            playerViewController.player = player
-//            self.present(playerViewController, animated: true) {
-//                playerViewController.player!.play()
-//            }
+////            self.galleryPresenter.updateGalleryItems(items: self.presenter.getItems())
+////            self.galleryPresenter.deleteGalleryBlock(context: self.context)
+////            self.galleryPresenter.saveGallery(context: self.context)
+////            self.galleryCollectionView.reloadData()
+////            self.galleryPresenter.clear()
+////            self.activityIndicator.stopAnimating()
+////            self.galleryPresenter.clear()
 //        }
 //    }
 //
@@ -344,5 +384,5 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 //
 //    }
 //
-//
 //}
+
