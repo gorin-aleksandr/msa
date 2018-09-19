@@ -34,7 +34,6 @@ class ExercisesViewController: UIViewController {
         configureTable_CollectionView()
         configurateSearchController()
         initialDataPreparing()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
         
     }
@@ -42,7 +41,6 @@ class ExercisesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         hideableNavigationBar(false)
-        
         guard let _ = trainingManager else { return }
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "back_"), for: .normal)
@@ -58,14 +56,20 @@ class ExercisesViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        getFromRealm()
     }
     
-    private func initialDataPreparing() {
+    private func getFromRealm() {
         presenter.getExercisesFromRealm()
         presenter.getTypesFromRealm()
         presenter.getFiltersFromRealm()
         presenter.getMyExercisesFromRealm()
-        
+        tableView.reloadData()
+        collectionView.reloadData()
+    }
+    
+    private func initialDataPreparing() {
+        getFromRealm()
         //        if presenter.getFilters().isEmpty {
         presenter.getAllFilters()
         //        } else {
@@ -88,9 +92,6 @@ class ExercisesViewController: UIViewController {
     
     @objc func exerciseAddedN(notfication: NSNotification) {
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
-        //        presenter.getAllFilters()
-        //        presenter.getAllExersises()
-        //        presenter.getAllTypes()
         presenter.getMyExercises()
     }
     

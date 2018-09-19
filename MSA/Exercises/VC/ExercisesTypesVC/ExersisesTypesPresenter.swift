@@ -11,7 +11,7 @@ import Firebase
 import RealmSwift
 import Realm
 
-protocol ExercisesTypesDataProtocol: class {
+@objc protocol ExercisesTypesDataProtocol: class {
     func startLoading()
     func finishLoading()
     func exercisesTypesLoaded()
@@ -19,6 +19,7 @@ protocol ExercisesTypesDataProtocol: class {
     func myExercisesLoaded()
     func filtersLoaded()
     func errorOccurred(err: String)
+    @objc optional func exerciseDeleted(with id: Int)
 }
 
 class ExersisesTypesPresenter {
@@ -101,6 +102,22 @@ class ExersisesTypesPresenter {
             self.view?.startLoading()
             Database.database().reference().child("ExerciseType").observeSingleEvent(of: .value) { (snapchot) in
                self.observeTypes(snapchot: snapchot)
+            }
+        }
+    }
+    
+    func deleteExercise(with id: Int) {
+        if let userId = AuthModule.currUser.id {
+            view?.startLoading()
+            guard let object = self.realmManager.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", id)) else {return}
+            self.realmManager.deleteObject(object)
+            Database.database().reference().child("ExercisesByTrainers").child(userId).child("\(id)").removeValue { (error, ref) in
+                self.view?.finishLoading()
+                if error == nil {
+                    self.view?.exerciseDeleted!(with: id)
+                } else {
+                    self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown Error")
+                }
             }
         }
     }

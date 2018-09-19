@@ -469,4 +469,11 @@ class TrainingManager {
         editTraining(wiht: id, success: {})
     }
     
+    func numberOfDay() -> Int {
+        guard let day = dataSource?.currentDay else {return 1}
+        return (dataSource?.currentWeek?.days.index(of: day) ?? 0) + 1
+    }
+    func exercisesCount() -> Int {
+        return getCurrentday()?.exercises.count ?? 0
+    }
 }
