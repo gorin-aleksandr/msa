@@ -28,6 +28,9 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
         userCommunityTableView.delegate = self
         userCommunityTableView.dataSource = self
         presenter.start()
+        if presenter.isTrainer {
+            stateSegmentedControl.insertSegment(withTitle: "Спортсмены", at: 3, animated: false)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,9 +85,6 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
         stateSegmentedControl.tintColor = UIColor.lightBlue
         stateSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.medium(13)],
                                                 for: .normal)
-        if presenter.isTrainer {
-            stateSegmentedControl.insertSegment(withTitle: "Спортсмены", at: 3, animated: false)
-        }
         
     }
     
