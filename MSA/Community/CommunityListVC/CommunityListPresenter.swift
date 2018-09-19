@@ -74,11 +74,11 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         return true
     }
     
-    var pendingRequestExist: Bool {
-        if let requests = AuthModule.currUser.trainerId {
-            return false
-        }
-    }
+//    var pendingRequestExist: Bool {
+//        if let requests = AuthModule.currUser.trainerId {
+//            return false
+//        }
+//    }
     
     
     private var typeFilterState: CommunityFilterState = .all
