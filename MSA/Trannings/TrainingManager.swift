@@ -557,6 +557,7 @@ class TrainingManager {
             currentWorkTime = currentIteration?.workTime ?? 0
             currentRestTime = currentIteration?.restTime ?? 0
         }
+        self.flowView?.higlightIteration(on: currentIterationNumber)
     }
     
     func eventWithTimer(time: Int) {
@@ -624,8 +625,10 @@ class TrainingManager {
         timer.invalidate()
         trainingStarted = false
         trainingInProgress = false
+        iterationState = .work
         currentIterationNumber = 0
         saveIterationsInfo()
+        self.flowView?.changeTime(time: "--:--", iterationState: iterationState)
     }
     
     func saveIterationsInfo() {

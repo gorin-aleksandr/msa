@@ -241,5 +241,15 @@ extension IterationsViewController: TrainingFlowDelegate {
         tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         let cell = tableView.cellForRow(at: indexPath)
         cell?.backgroundColor = lightBLUE
+        if on != 0 {
+            let prevIndexPath = IndexPath(row: on-1, section: 0)
+            let cell = tableView.cellForRow(at: prevIndexPath)
+            cell?.backgroundColor = .white
+        } else {
+            let row = (manager.getCurrentExercise()?.iterations.count ?? 0) - 1
+            let indexPath = IndexPath(row: row, section: 0)
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.backgroundColor = .white
+        }
     }
 }
