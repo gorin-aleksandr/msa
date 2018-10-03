@@ -48,6 +48,10 @@ class IterationsViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         addPodhodButton.setShadow(shadowOpacity: 0.4)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        manager.finish()
+    }
         
     private func configureUI() {
         loadingView.isHidden = true
@@ -69,7 +73,7 @@ class IterationsViewController: UIViewController {
     }
 
     @objc private func stopIteration(_ sender: UIButton) {
-        manager.stopIteration()
+        manager.fullStop()
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
@@ -78,6 +82,9 @@ class IterationsViewController: UIViewController {
     
     @objc private func resumeIteration(_ sender: UIButton) {
         manager.startOrContineIteration()
+    }
+    @objc private func startIteration(_ sender: UIButton) {
+        manager.startExercise(from: sender.tag)
     }
     
     private func configureTableView() {
@@ -133,6 +140,7 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ApproachTableViewCell", for: indexPath) as? ApproachTableViewCell else {return UITableViewCell()}
         if let iteration = manager.getCurrentExercise()?.iterations[indexPath.row] {
             cell.configureCell(iteration: iteration, indexPath: indexPath)
+            cell.restButton.addTarget(self, action: #selector(startIteration(_:)), for: .touchUpInside)
         }
         return cell
     }
@@ -215,6 +223,10 @@ extension IterationsViewController: TrainingsViewDelegate {
 }
 
 extension IterationsViewController: TrainingFlowDelegate {
+    
+    func rewriteIterations() {
+        tableView.reloadData()
+    }
     
     private func configureWorkView(time: String) {
         restLabel.textColor = lightGREEN

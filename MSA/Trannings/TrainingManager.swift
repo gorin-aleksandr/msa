@@ -26,6 +26,7 @@ import Firebase
 protocol TrainingFlowDelegate {
     func changeTime(time: String, iterationState: IterationState)
     func higlightIteration(on: Int)
+    func rewriteIterations()
 }
 
 enum TrainingState {
@@ -499,34 +500,45 @@ class TrainingManager {
     }
     
     // TRAINING FLOW
-
-    private var timer: Timer!
+    
+    private var timer = Timer()
+    private var secondomer = Timer()
+    
     private var iterationState: IterationState = .work
     private var trainingState: TrainingState = .normal
     private var trainingStarted: Bool = false
     private var trainingInProgress: Bool = false
+    private var secondomerStarted: Bool = false
     private var iterations: [Iteration]?
     private var currentIteration: Iteration?
     
     private var currentIterationNumber = 0
     private var currentRestTime = 0
     private var currentWorkTime = 0
+    private var secondomerTime = 0
+
     
-    private func createExerciseCopy() {
+    private func createExerciseCopy(i: Int) {
         iterations = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
-        currentIteration = iterations?.first
+        currentIteration = iterations?[i]
         currentWorkTime = currentIteration?.workTime ?? 0
         currentRestTime = currentIteration?.restTime ?? 0
     }
     
     private func startTimer() {
+        trainingInProgress = true
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
             if self.iterationState == .work {
                 if self.currentWorkTime != 0 {
                     self.currentWorkTime -= 1
                     self.eventWithTimer(time: self.currentWorkTime)
                 } else {
-                    self.nextIterationState()
+                    if (self.currentIteration?.startTimerOnZero)! && self.currentIteration?.workTime == 0 {
+                        self.stopIteration()
+                        self.startSecondomer()
+                    } else {
+                        self.nextIterationState()
+                    }
                 }
             } else {
                 if self.currentRestTime != 0 {
@@ -540,24 +552,52 @@ class TrainingManager {
         }
     }
     
+    private func startSecondomer() {
+        secondomerStarted = true
+        secondomer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
+            self.secondomerTime += 1
+            self.eventWithTimer(time: self.secondomerTime)
+        }
+    }
+    private func pauseSecondomer() {
+        secondomer.invalidate()
+    }
+    private func stopSecondomer() {
+        pauseSecondomer()
+        secondomerStarted = false
+        secondomerTime = 0
+    }
+    
     func startExercise() {
-        createExerciseCopy()
+        createExerciseCopy(i: currentIterationNumber)
         trainingStarted = true
         trainingInProgress = true
         startTimer()
         self.flowView?.higlightIteration(on: currentIterationNumber)
     }
     
+    func finish() {
+        trainingStarted = false
+        trainingInProgress = false
+        secondomerStarted = false
+        currentIterationNumber = 0
+        currentRestTime = 0
+        currentWorkTime = 0
+        secondomerTime = 0
+    }
+    
     func iterationsSwitcher() {
         if currentIterationNumber == (iterations?.count ?? 0) - 1 {
             stopIteration()
+            currentIterationNumber = 0
+            trainingStarted = false
+            trainingInProgress = false
         } else {
             currentIterationNumber += 1
             currentIteration = iterations?[currentIterationNumber]
             currentWorkTime = currentIteration?.workTime ?? 0
             currentRestTime = currentIteration?.restTime ?? 0
         }
-        self.flowView?.higlightIteration(on: currentIterationNumber)
     }
     
     func eventWithTimer(time: Int) {
@@ -570,26 +610,39 @@ class TrainingManager {
         minStr = min<10 ? "0\(min)" : "\(min)"
         secStr = sec<10 ? "0\(sec)" : "\(sec)"
         var timeString = "-"+minStr+":"+secStr
-        if iterationState == .rest {
+        if iterationState == .rest || secondomerStarted {
             timeString.removeFirst()
         }
         self.flowView?.changeTime(time: timeString, iterationState: iterationState)
-        
     }
     
-    func startExercise(from iteration: Iteration) {
-        
+    func startExercise(from i: Int) {
+        if trainingInProgress && trainingStarted {
+            self.stopIteration()
+            currentIterationNumber = 0
+            trainingStarted = false
+            trainingInProgress = false
+        }
+        currentIterationNumber = i
+        startExercise()
     }
     
     func pauseIteration() {
         timer.invalidate()
+        pauseSecondomer()
         trainingInProgress = false
+        trainingStarted = true
     }
     
     func startOrContineIteration() {
         if !trainingInProgress {
+            trainingInProgress = true
             if trainingStarted {
-                startTimer()
+                if secondomerStarted {
+                    startSecondomer()
+                } else {
+                    startTimer()
+                }
             } else {
                 startExercise()
             }
@@ -604,6 +657,7 @@ class TrainingManager {
     }
     
     func nextStateOrIteration() {
+        saveIterationsInfo()
         if trainingStarted {
             nextIterationState()
             var time = Int()
@@ -613,26 +667,49 @@ class TrainingManager {
             } else {
                 time = currentRestTime
             }
+            if secondomerStarted {
+                stopSecondomer()
+                startTimer()
+            }
             if trainingInProgress {
                 eventWithTimer(time: time)
             } else {
                 eventWithTimer(time: 0)
+                startExercise()
             }
         }
     }
     
     func stopIteration() {
         timer.invalidate()
+        stopSecondomer()
+        iterationState = .work
+    }
+    
+    func fullStop() {
+        stopIteration()
+        currentIterationNumber = 0
         trainingStarted = false
         trainingInProgress = false
-        iterationState = .work
-        currentIterationNumber = 0
-        saveIterationsInfo()
         self.flowView?.changeTime(time: "--:--", iterationState: iterationState)
     }
     
     func saveIterationsInfo() {
-        // TODO:
+        try! realm.performWrite {
+            switch iterationState {
+            case .work:
+                if secondomerStarted {
+                    currentIteration?.workTime = secondomerTime
+                } else {
+                    currentIteration?.workTime = (currentIteration?.workTime ?? 0) - currentWorkTime
+                }
+            case .rest:
+                currentIteration?.restTime = (currentIteration?.restTime ?? 0) - currentRestTime
+            }
+            currentIteration?.wasSync = false
+        }
+        editTraining(wiht: dataSource?.currentTraining?.id ?? 0, success: {})
+        self.flowView?.rewriteIterations()
     }
     
 }

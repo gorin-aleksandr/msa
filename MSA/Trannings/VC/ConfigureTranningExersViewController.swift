@@ -77,6 +77,8 @@ class ConfigureTranningExersViewController: UIViewController {
     
     func initialDataFilling() {
         guard let iteration = manager.getCurrentIteration() else {return}
+        startCheckOn00 = iteration.startTimerOnZero
+        checkBoxTapped()
         weightLabel.text = "\(iteration.weight)"
         countsLabel.text = "\(iteration.counts)"
         let wMin = Int(iteration.workTime/60)
@@ -117,6 +119,7 @@ class ConfigureTranningExersViewController: UIViewController {
             iteration?.restTime = (restTime.0 * 60) + restTime.1
             iteration?.counts = Int(countsLabel.text ?? "0") ?? 0
             iteration?.weight = Int(weightLabel.text ?? "0") ?? 0
+            iteration?.startTimerOnZero = !startCheckOn00
         }
         manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? 0, success: {})
     }
