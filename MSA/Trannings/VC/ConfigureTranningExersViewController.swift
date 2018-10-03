@@ -154,6 +154,7 @@ class ConfigureTranningExersViewController: UIViewController {
     }
     
     private func reloadPicker() {
+        timePicker.reloadAllComponents()
         if workActive {
             timePicker.selectRow(workTime.0, inComponent: 0, animated: true)
             timePicker.selectRow(workTime.1, inComponent: 1, animated: true)
@@ -288,7 +289,11 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
         case 0:
             return 61
         case 1:
-            return 60
+            if !workActive {
+                return 59
+            } else {
+                return 60
+            }
         default:
             return 60
         }
@@ -299,7 +304,11 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
         case 0:
             return "\(row) min"
         case 1:
-            return "\(row) sec"
+            if !workActive {
+                return "\(row+1) sec"
+            } else {
+                return "\(row) sec"
+            }
         default:
             return ""
         }
@@ -325,10 +334,10 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
             }
         default:
             if !workActive {
-                if row < 10 {
-                    timeView.restSeconds.text = "0\(row)"
+                if row < 9 {
+                    timeView.restSeconds.text = "0\(row+1)"
                 } else {
-                    timeView.restSeconds.text = "\(row)"
+                    timeView.restSeconds.text = "\(row+1)"
                 }
                 restTime.1 = row
             } else {

@@ -113,7 +113,7 @@ class Iteration: Object {
     @objc dynamic var counts: Int = 0
     @objc dynamic var workTime: Int = 0
     @objc dynamic var restTime: Int = 0
-
+    @objc dynamic var startTimerOnZero: Bool = false
     @objc dynamic var wasSync: Bool = false
     
     override static func primaryKey() -> String? {

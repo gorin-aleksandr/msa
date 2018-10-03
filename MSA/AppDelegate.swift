@@ -45,10 +45,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate func performMigration(migration: Migration, oldSchemaVersion: UInt64) {
         if (oldSchemaVersion < self.realmVersion) {
             //MARK: Migration of realm
-            
+//            migrationToNewVersion(migration: migration)
         }
     }
     
+    private func migrationToNewVersion(migration: Migration) {
+        migration.enumerateObjects(ofType: Iteration.className()) { (old, new) in
+            guard let _ = old, let newObgect = new else {
+                return
+            }
+            newObgect["startTimerOnZero"] = false
+        }
+    }
     
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
