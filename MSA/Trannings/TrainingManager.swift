@@ -530,27 +530,6 @@ class TrainingManager {
         currentRestTime = currentIteration?.restTime ?? 0
     }
     
-    
-//    func findExersAtIterationNum() -> (Bool,Int?,Int?) {
-//        var i = 0
-//        var k: Int? = nil
-//        for ex in exercises! {
-//            if ex.iterations.count > currentIterationNumber {
-//                if i != currentExerciseNumber {
-//                    return (true, k, i)
-//                } else {
-//                    k = i
-//                }
-//            }
-//            i += 1
-//        }
-//        if k != nil {
-//            return (true, k, nil)
-//        } else {
-//            return (false, nil, nil)
-//        }
-//    }
-    
     private func createDayExerciseCopy(exercise: Int, iteration: Int, success: @escaping ()-> ()) {
         exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
         if (exercises?.count ?? 0) > exercise {
@@ -602,7 +581,6 @@ class TrainingManager {
                         currentExerciseNumber += 1
                     } else {
                         fullStop()
-                        return
                     }
                     currentIterationNumber = 0
                     startTraining()
