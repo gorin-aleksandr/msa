@@ -239,7 +239,7 @@ extension IterationsViewController: TrainingFlowDelegate {
         restLabel.text = time
     }
     
-    func changeTime(time: String, iterationState: IterationState) {
+    func changeTime(time: String, iterationState: IterationState, i: (Int,Int)) {
         switch iterationState {
         case .work:
             configureWorkView(time: time)
