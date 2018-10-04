@@ -95,6 +95,7 @@ class ConfigureTranningExersViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         initialDataFilling()
+        reloadPicker()
         loadingView.isHidden = true
     }
     
@@ -163,7 +164,7 @@ class ConfigureTranningExersViewController: UIViewController {
             timePicker.selectRow(workTime.1, inComponent: 1, animated: true)
         } else {
             timePicker.selectRow(restTime.0, inComponent: 0, animated: true)
-            timePicker.selectRow(restTime.1, inComponent: 1, animated: true)
+            timePicker.selectRow(restTime.1-1, inComponent: 1, animated: true)
         }
     }
     

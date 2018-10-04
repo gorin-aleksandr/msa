@@ -536,6 +536,9 @@ class TrainingManager {
                     if (self.currentIteration?.startTimerOnZero)! && self.currentIteration?.workTime == 0 {
                         self.stopIteration()
                         self.startSecondomer()
+                    } else if !(self.currentIteration?.startTimerOnZero)! && self.currentIteration?.workTime == 0 {
+                        self.stopIteration()
+                        self.eventWithTimer(time: self.currentWorkTime)
                     } else {
                         self.nextIterationState()
                     }
@@ -606,7 +609,7 @@ class TrainingManager {
         var minStr = ""
         var secStr = ""
         min = Int(time/60)
-        sec = time - min
+        sec = time - min*60
         minStr = min<10 ? "0\(min)" : "\(min)"
         secStr = sec<10 ? "0\(sec)" : "\(sec)"
         var timeString = "-"+minStr+":"+secStr
@@ -673,6 +676,9 @@ class TrainingManager {
             }
             if trainingInProgress {
                 eventWithTimer(time: time)
+                if !timer.isValid {
+                    startTimer()
+                }
             } else {
                 eventWithTimer(time: 0)
                 startExercise()
@@ -687,11 +693,13 @@ class TrainingManager {
     }
     
     func fullStop() {
+        saveIterationsInfo()
         stopIteration()
         currentIterationNumber = 0
         trainingStarted = false
         trainingInProgress = false
         self.flowView?.changeTime(time: "--:--", iterationState: iterationState)
+        editTraining(wiht: dataSource?.currentTraining?.id ?? 0, success: {})
     }
     
     func saveIterationsInfo() {
@@ -708,7 +716,6 @@ class TrainingManager {
             }
             currentIteration?.wasSync = false
         }
-        editTraining(wiht: dataSource?.currentTraining?.id ?? 0, success: {})
         self.flowView?.rewriteIterations()
     }
     
