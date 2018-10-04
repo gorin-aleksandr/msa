@@ -86,7 +86,7 @@ extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataS
                 cell.nameLabel.text = e.name
             }
             cell.podhodCountLabel.text =  "Подход #  из \(ex.iterations.count)"
-            cell.circleButton.isHidden = true
+            cell.circleButton.isHidden = manager.trainingState == .round ? false : true
         }
         return cell
     }

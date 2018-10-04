@@ -506,7 +506,7 @@ class TrainingManager {
     private var secondomer = Timer()
     
     private var iterationState: IterationState = .work
-    private var trainingState: TrainingState = .normal
+    var trainingState: TrainingState = .normal
     private var trainingStarted: Bool = false
     private var trainingInProgress: Bool = false
     private var secondomerStarted: Bool = false
