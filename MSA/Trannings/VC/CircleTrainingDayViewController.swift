@@ -52,6 +52,7 @@ class CircleTrainingDayViewController: UIViewController {
    
     @IBAction func backButtonAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        manager.fullStop()
     }
     @IBAction func saveButtonAction(_ sender: Any) {
     }
@@ -84,6 +85,7 @@ extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataS
                 cell.picture.sd_setImage(with: URL(string: (e.pictures.first?.url)!), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
                 cell.nameLabel.text = e.name
             }
+            cell.podhodCountLabel.text =  "Подход #  из \(ex.iterations.count)"
             cell.circleButton.isHidden = true
         }
         return cell

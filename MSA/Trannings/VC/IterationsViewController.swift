@@ -38,6 +38,7 @@ class IterationsViewController: UIViewController {
 
         manager.initView(view: self)
         manager.initFlowView(view: self)
+        manager.setState(state: .iterationsOnly)
         configureUI()
     }
     
@@ -100,7 +101,7 @@ class IterationsViewController: UIViewController {
     
     @objc
     func back() {
-        manager.pauseIteration()
+        manager.fullStop()
         navigationController?.popViewController(animated: true)
     }
     
