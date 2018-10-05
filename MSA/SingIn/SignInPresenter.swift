@@ -28,7 +28,7 @@ class UserSignInPresenter {
         self.view?.startLoading()
         auth.loginUser(email: email, pass: password) { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: user?.level, age: user?.age, sex: user?.sex, height: user?.height, heightType: user?.heightType, weight: user?.weight,weightType: user?.weightType, type: user?.type, purpose: user?.purpose, gallery: user?.gallery, friends: user?.friends, trainerId: user?.trainerId, requests: user?.requests, city: user?.city)
+                let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: user?.level, age: user?.age, sex: user?.sex, height: user?.height, heightType: user?.heightType, weight: user?.weight,weightType: user?.weightType, type: user?.type, purpose: user?.purpose, gallery: user?.gallery, friends: user?.friends, trainerId: user?.trainerId, sportsmen: user?.sportsmen, requests: user?.requests, city: user?.city)
                     self.view?.setUser(user: user)
                     UserDataManager().getUser(callback: { (user) in
                         if let user = user {
@@ -52,7 +52,7 @@ class UserSignInPresenter {
         self.view?.startLoading()
         auth.registerUser(email: email, pass: password) { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.id, email: user?.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: AuthModule.currUser.type, purpose: user?.purpose, gallery: nil, friends: nil, trainerId: nil, requests: nil, city: nil)
+                let user = UserVO(id: user?.id, email: user?.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: AuthModule.currUser.type, purpose: user?.purpose, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
                 self.view?.setUser(user: user)
                 self.view?.registrated()
                 self.view?.finishLoading()
@@ -76,7 +76,7 @@ class UserSignInPresenter {
         AuthModule.facebookAuth = true
         auth.loginFacebook { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, requests: nil, city: nil)
+                let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
                 self.view?.setUser(user: user)
                 self.view?.loggedWithFacebook()
                 return

@@ -89,8 +89,9 @@ class GalleryDataPresenter: ProfileGalleryDataPresenterProtocol {
         }
     }
     
-    func getGallery() {
-        if let id = AuthModule.currUser.id {
+    func getGallery(for userID: String?) {
+        if let id = userID {
+            print(id)
            self.view?.startLoading()
             Database.database().reference().child("Users").child(id).child("gallery").observeSingleEvent(of: .value, with: { (snapchot) in
                 self.view?.finishLoading()

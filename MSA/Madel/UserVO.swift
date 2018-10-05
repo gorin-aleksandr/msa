@@ -32,6 +32,7 @@ struct UserVO {
     var gallery: [GalleryItemVO]?
     var friends: [String]?
     var trainerId: String?
+    var sportsmen: [String]?
     var requests: [String]?
     // FIXME: Change default value after testing
     var city: String? = "Киев"

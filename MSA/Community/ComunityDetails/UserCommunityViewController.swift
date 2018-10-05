@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 protocol UserCommunityViewProtocol: class {
-   func reloadData()
+    func reloadData()
+    func showAlert(for user: UserVO)
 }
 
 class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
@@ -26,6 +28,9 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
         userCommunityTableView.delegate = self
         userCommunityTableView.dataSource = self
         presenter.start()
+        if presenter.isTrainer {
+            stateSegmentedControl.insertSegment(withTitle: "Спортсмены", at: 3, animated: false)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,7 +46,19 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
     }
     
     func reloadData() {
+        SVProgressHUD.dismiss()
         userCommunityTableView.reloadData()
+    }
+    
+    func showAlert(for user: UserVO) {
+        let alert = UIAlertController(title: nil, message: "Вы дейсвительно хотите удалить из запросов/друзей? ", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            self?.presenter.deleteAction(for: user)
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
     
     private func configureSearchController() {
@@ -68,10 +85,12 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
         stateSegmentedControl.tintColor = UIColor.lightBlue
         stateSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.medium(13)],
                                                 for: .normal)
+        
     }
     
-    private func moveToUserViewController() {
+    private func moveToUserViewController(user: UserVO) {
         let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
         navigationController?.pushViewController(destinationVC, animated: true)
     }
 
@@ -91,12 +110,16 @@ extension UserCommunityViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonTableViewCell") as! PersonTableViewCell
         cell.state = .caseMyCommunity
-        cell.configure(with: presenter.userCommunityDataSource[indexPath.row])
+        cell.configure(with: presenter.userCommunityDataSource[indexPath.row], userCommunityState: presenter.state)
+        cell.acceptButtonHandler = { [weak self] in
+            SVProgressHUD.show()
+            self?.presenter.acceptRequest(atIndex: indexPath.row)}
+        cell.deleteButtonHandler = { [weak self] in self?.presenter.deleteButtonTapped(atIndex: indexPath.row)}
       return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moveToUserViewController()
+        moveToUserViewController(user: presenter.userCommunityDataSource[indexPath.row])
     }
 }
 
