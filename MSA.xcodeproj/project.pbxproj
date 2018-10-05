@@ -47,6 +47,10 @@
 		2962D48120D2AADE00870953 /* ExercisesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962D48020D2AADE00870953 /* ExercisesTableViewCell.swift */; };
 		2962D48320D2AAF000870953 /* ExercisesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962D48220D2AAF000870953 /* ExercisesCollectionViewCell.swift */; };
 		2962D48520D2B6A900870953 /* ExercisesVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2962D48420D2B6A900870953 /* ExercisesVO.swift */; };
+		297A441C21679F3400C6C292 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 297A441B21679F3400C6C292 /* NotificationCenter.framework */; };
+		297A441F21679F3400C6C292 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297A441E21679F3400C6C292 /* TodayViewController.swift */; };
+		297A442221679F3400C6C292 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 297A442021679F3400C6C292 /* MainInterface.storyboard */; };
+		297A442621679F3400C6C292 /* extention.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 297A441A21679F3400C6C292 /* extention.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF658203C1FAC00FB0180 /* UserVO.swift */; };
 		298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65A203C226800FB0180 /* SignInPresenter.swift */; };
 		298DF65F203C36B300FB0180 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298DF65E203C36B300FB0180 /* AlertView.swift */; };
@@ -141,6 +145,30 @@
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		297A442421679F3400C6C292 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29160B3A2035AA3B00DA7227 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 297A441921679F3400C6C292;
+			remoteInfo = extention;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		297A442A21679F3400C6C292 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				297A442621679F3400C6C292 /* extention.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.release.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.release.xcconfig"; sourceTree = "<group>"; };
 		290CA6D0203AD6100073A8F0 /* AuthModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModule.swift; sourceTree = "<group>"; };
@@ -185,6 +213,13 @@
 		2962D48020D2AADE00870953 /* ExercisesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesTableViewCell.swift; sourceTree = "<group>"; };
 		2962D48220D2AAF000870953 /* ExercisesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesCollectionViewCell.swift; sourceTree = "<group>"; };
 		2962D48420D2B6A900870953 /* ExercisesVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesVO.swift; sourceTree = "<group>"; };
+		297A441A21679F3400C6C292 /* extention.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = extention.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		297A441B21679F3400C6C292 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		297A441E21679F3400C6C292 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		297A442121679F3400C6C292 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		297A442321679F3400C6C292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		297A442B21679F5100C6C292 /* MSA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MSA.entitlements; sourceTree = "<group>"; };
+		297A442C2167A14B00C6C292 /* extention.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = extention.entitlements; sourceTree = "<group>"; };
 		298DF658203C1FAC00FB0180 /* UserVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVO.swift; sourceTree = "<group>"; };
 		298DF65A203C226800FB0180 /* SignInPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPresenter.swift; sourceTree = "<group>"; };
 		298DF65E203C36B300FB0180 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -290,6 +325,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		297A441721679F3400C6C292 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				297A441C21679F3400C6C292 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -306,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				29160B442035AA3B00DA7227 /* MSA */,
+				297A441D21679F3400C6C292 /* extention */,
 				29160B432035AA3B00DA7227 /* Products */,
 				0E2E10DE4BA09BD485BA04EC /* Pods */,
 				31648AF8CF9D89128F0538E1 /* Frameworks */,
@@ -316,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				29160B422035AA3B00DA7227 /* MSA.app */,
+				297A441A21679F3400C6C292 /* extention.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -323,6 +368,7 @@
 		29160B442035AA3B00DA7227 /* MSA */ = {
 			isa = PBXGroup;
 			children = (
+				297A442B21679F5100C6C292 /* MSA.entitlements */,
 				29160B452035AA3B00DA7227 /* AppDelegate.swift */,
 				35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */,
 				2923304A203AFD3E00EFA2C5 /* API_Moduls_Managers */,
@@ -449,6 +495,17 @@
 				29F9F2312147B534006EDC6A /* CreateExerciseTableViewCell.xib */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		297A441D21679F3400C6C292 /* extention */ = {
+			isa = PBXGroup;
+			children = (
+				297A442C2167A14B00C6C292 /* extention.entitlements */,
+				297A441E21679F3400C6C292 /* TodayViewController.swift */,
+				297A442021679F3400C6C292 /* MainInterface.storyboard */,
+				297A442321679F3400C6C292 /* Info.plist */,
+			);
+			path = extention;
 			sourceTree = "<group>";
 		};
 		298DF657203C1F4B00FB0180 /* SingIn */ = {
@@ -623,6 +680,7 @@
 			isa = PBXGroup;
 			children = (
 				4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */,
+				297A441B21679F3400C6C292 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -696,15 +754,34 @@
 				29160B3F2035AA3B00DA7227 /* Frameworks */,
 				29160B402035AA3B00DA7227 /* Resources */,
 				6D90A83F362A74F18D714161 /* [CP] Embed Pods Frameworks */,
+				297A442A21679F3400C6C292 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				297A442521679F3400C6C292 /* PBXTargetDependency */,
 			);
 			name = MSA;
 			productName = MSA;
 			productReference = 29160B422035AA3B00DA7227 /* MSA.app */;
 			productType = "com.apple.product-type.application";
+		};
+		297A441921679F3400C6C292 /* extention */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 297A442921679F3400C6C292 /* Build configuration list for PBXNativeTarget "extention" */;
+			buildPhases = (
+				297A441621679F3400C6C292 /* Sources */,
+				297A441721679F3400C6C292 /* Frameworks */,
+				297A441821679F3400C6C292 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = extention;
+			productName = extention;
+			productReference = 297A441A21679F3400C6C292 /* extention.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -712,13 +789,27 @@
 		29160B3A2035AA3B00DA7227 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0900;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Pavlo Kharambura";
 				TargetAttributes = {
 					29160B412035AA3B00DA7227 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+					297A441921679F3400C6C292 = {
+						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -736,6 +827,7 @@
 			projectRoot = "";
 			targets = (
 				29160B412035AA3B00DA7227 /* MSA */,
+				297A441921679F3400C6C292 /* extention */,
 			);
 		};
 /* End PBXProject section */
@@ -784,6 +876,14 @@
 				29F9F2262147AE82006EDC6A /* ExerciseTableViewCell.xib in Resources */,
 				2940A36020D90C9B00EBAE84 /* PlayVideoTableViewCell.xib in Resources */,
 				29F9F2522147B5B8006EDC6A /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		297A441821679F3400C6C292 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				297A442221679F3400C6C292 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -962,7 +1062,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		297A441621679F3400C6C292 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				297A441F21679F3400C6C292 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		297A442521679F3400C6C292 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 297A441921679F3400C6C292 /* extention */;
+			targetProxy = 297A442421679F3400C6C292 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		29160B492035AA3B00DA7227 /* Main.storyboard */ = {
@@ -979,6 +1095,14 @@
 				29160B4F2035AA3B00DA7227 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		297A442021679F3400C6C292 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				297A442121679F3400C6C292 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1095,14 +1219,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MSA/MSA.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "easyapps.solutions.MSA-MSA";
+				PRODUCT_BUNDLE_IDENTIFIER = easyapps.solutions.MSA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -1114,17 +1240,62 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MSA/MSA.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "easyapps.solutions.MSA-MSA";
+				PRODUCT_BUNDLE_IDENTIFIER = easyapps.solutions.MSA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		297A442721679F3400C6C292 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_ENTITLEMENTS = extention/extention.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
+				INFOPLIST_FILE = extention/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "easyapps.solutions.MSA-MSA.extention";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		297A442821679F3400C6C292 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_ENTITLEMENTS = extention/extention.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
+				INFOPLIST_FILE = extention/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "easyapps.solutions.MSA-MSA.extention";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1146,6 +1317,15 @@
 			buildConfigurations = (
 				29160B552035AA3B00DA7227 /* Debug */,
 				29160B562035AA3B00DA7227 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		297A442921679F3400C6C292 /* Build configuration list for PBXNativeTarget "extention" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				297A442721679F3400C6C292 /* Debug */,
+				297A442821679F3400C6C292 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
