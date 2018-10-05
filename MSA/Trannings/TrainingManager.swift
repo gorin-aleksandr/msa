@@ -219,7 +219,21 @@ class TrainingManager {
         let trainings = Array(realm.getArray(ofType: Training.self))
         dataSource?.set(trainings: trainings)
         dataSource?.currentTraining = trainings.first
+        UserDefaults.init(suiteName: "group.easyappsolutions.widget")?.set(getAllDates(), forKey: "dates")
         self.view?.trainingsLoaded()
+    }
+    
+    private func getAllDates() -> [String] {
+        var array = [String]()
+        if let weeks = dataSource?.currentTraining?.weeks {
+            for week in weeks {
+                let days = week.days
+                for day in days {
+                    array.append(day.date)
+                }
+            }
+        }
+        return array
     }
     
     func loadTemplates() {
