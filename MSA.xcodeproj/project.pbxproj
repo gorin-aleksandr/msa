@@ -79,6 +79,7 @@
 		29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0972120D4DFAA00CA7219 /* FilterCollectionViewCell.swift */; };
 		29B0972420D4E93A00CA7219 /* FilterButtonView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29B0972320D4E93A00CA7219 /* FilterButtonView.xib */; };
 		29B0972620D4E9B600CA7219 /* FilterButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0972520D4E9B600CA7219 /* FilterButtonView.swift */; };
+		29B1191C2168FCC800BB9023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29160B4C2035AA3B00DA7227 /* Assets.xcassets */; };
 		29C2D5F22074231900E2B958 /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2D5F12074231900E2B958 /* ProfileImageView.swift */; };
 		29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2D5F32074B99900E2B958 /* SetPurposeViewController.swift */; };
 		29C2D5FB2074F36300E2B958 /* Etentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2D5FA2074F36300E2B958 /* Etentions.swift */; };
@@ -884,6 +885,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29B1191C2168FCC800BB9023 /* Assets.xcassets in Resources */,
 				2958F1BC2167AA9600F8C2A1 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

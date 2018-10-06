@@ -12,6 +12,11 @@ import NotificationCenter
 class TodayViewController: UIViewController, NCWidgetProviding {
         
     @IBOutlet weak var labelTest: UILabel!
+    @IBOutlet weak var icon: UIImageView! {
+        didSet {
+            icon.layer.cornerRadius = 35
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
