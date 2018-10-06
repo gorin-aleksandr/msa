@@ -23,11 +23,29 @@ import Firebase
     func synced()
 }
 
+protocol TrainingFlowDelegate {
+    func changeTime(time: String, iterationState: IterationState, i: (Int,Int))
+    func higlightIteration(on: Int)
+    func rewriteIterations()
+}
+
+enum TrainingState {
+    case normal
+    case round
+    case iterationsOnly
+}
+enum IterationState {
+    case work
+    case rest
+}
+
 class TrainingManager {
     
     let realm = RealmManager.shared
     var dataSource: TrainingsDataSource?
+    var dataSourceCopy = TrainingsDataSource()
     private var view: TrainingsViewDelegate?
+    private var flowView: TrainingFlowDelegate?
     
     func initDataSource(dataSource: TrainingsDataSource) {
         self.dataSource = dataSource
@@ -35,6 +53,9 @@ class TrainingManager {
     
     func initView(view: TrainingsViewDelegate) {
         self.view = view
+    }
+    func initFlowView(view: TrainingFlowDelegate) {
+        self.flowView = view
     }
     
     func getTrainings() -> [Training]? {
@@ -262,7 +283,8 @@ class TrainingManager {
                                     "weight": i.weight,
                                     "counts": i.counts,
                                     "workTime": i.workTime,
-                                    "restTime": i.restTime
+                                    "restTime": i.restTime,
+                                    "startTimerOnZero": i.startTimerOnZero ? 1 : 0
                                 ])
                         }
                         newexercises.append([
@@ -358,6 +380,7 @@ class TrainingManager {
                                             iteration.weight = i["weight"] as! Int
                                             iteration.restTime = i["restTime"] as! Int
                                             iteration.workTime = i["workTime"] as! Int
+                                            iteration.startTimerOnZero = (i["startTimerOnZero"] as? Int ?? 0) == 1 ? true : false
                                             exerciseIterations.append(iteration)
                                         }
                                     }
@@ -476,4 +499,376 @@ class TrainingManager {
     func exercisesCount() -> Int {
         return getCurrentday()?.exercises.count ?? 0
     }
+    
+    // TRAINING FLOW
+    
+    private var timer = Timer()
+    private var secondomer = Timer()
+    
+    private var iterationState: IterationState = .work
+    var trainingState: TrainingState = .normal
+    private var trainingStarted: Bool = false
+    private var trainingInProgress: Bool = false
+    private var secondomerStarted: Bool = false
+    
+    private var exercises: [ExerciseInTraining]?
+    private var currentExercise: ExerciseInTraining?
+    private var iterations: [Iteration]?
+    private var currentIteration: Iteration?
+    private var iterationsForRound = [Iteration]()
+    private var currentExerciseNumber = 0
+    private var currentIterationNumber = 0
+    private var currentRestTime = 0
+    private var currentWorkTime = 0
+    private var secondomerTime = 0
+
+    
+    private func createIterationsCopy(i: Int) {
+        iterations = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
+        currentIteration = iterations?[i]
+        currentWorkTime = currentIteration?.workTime ?? 0
+        currentRestTime = currentIteration?.restTime ?? 0
+    }
+    
+    private func createDayExerciseCopy(exercise: Int, iteration: Int, success: @escaping ()-> ()) {
+        exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
+        if (exercises?.count ?? 0) > exercise {
+            currentExercise = exercises?[exercise]
+            iterations = Array(currentExercise?.iterations ?? List<Iteration>())
+            if iterations?.count != 0 {
+                currentIteration = iterations?[iteration]
+                currentWorkTime = currentIteration?.workTime ?? 0
+                currentRestTime = currentIteration?.restTime ?? 0
+                success()
+            } else {
+                currentExerciseNumber += 1
+                nextStateOrIteration()
+            }
+        }
+    }
+    
+    func getIterationsCount() -> Int {
+        return currentExercise?.iterations.count ?? 0
+    }
+    func getCurrentIterationInfo() -> Iteration {
+        return currentIteration!
+    }
+    
+    private func nextIterationState() {
+        switch iterationState {
+        case .work: iterationState = .rest
+        case .rest: iterationState = .work
+        }
+    }
+    
+    func checkForNotDoneIterations() -> Bool {
+        for exercise in exercises! {
+            if exercise.iterations.count > currentIterationNumber + 1 {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func iterationsSwitcher() {
+        if currentIterationNumber == (iterations?.count ?? 0) - 1 {
+            stopIteration()
+            trainingStarted = false
+            trainingInProgress = false
+            switch trainingState {
+                case .normal:
+                    if (exercises?.count ?? 0) > currentExerciseNumber + 1 {
+                        currentExerciseNumber += 1
+                    } else {
+                        fullStop()
+                    }
+                    currentIterationNumber = 0
+                    startTraining()
+                case .round:
+                    roundFlow(withStart: true)
+                case .iterationsOnly:
+                    currentIterationNumber = 0
+                    fullStop()
+            }
+        } else {
+            switch trainingState {
+                case .normal:
+                    currentIterationNumber += 1
+                case .round:
+                    roundFlow(withStart: false)
+                    currentExercise = exercises?[currentExerciseNumber]
+                    iterations = Array(currentExercise?.iterations ?? List<Iteration>())
+                case .iterationsOnly:
+                    currentIterationNumber += 1
+            }
+            currentIteration = iterations?[currentIterationNumber]
+            currentWorkTime = currentIteration?.workTime ?? 0
+            currentRestTime = currentIteration?.restTime ?? 0
+        }
+        if trainingState != .iterationsOnly {
+            self.flowView?.higlightIteration(on: currentExerciseNumber)
+        } else {
+            self.flowView?.higlightIteration(on: currentIterationNumber)
+        }
+    }
+    
+    private func roundFlow(withStart: Bool) {
+        let indexPath = getNext()
+        if indexPath != nil {
+            currentExerciseNumber = indexPath!.0
+            currentIterationNumber = indexPath!.1
+            if withStart {
+                startTraining()
+            }
+        } else {
+            fullStop()
+        }
+    }
+    
+    func setIterationsForRound() {
+        exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
+        var array = [Iteration]()
+        var len = 0
+        for e in exercises! {
+            if len < e.iterations.count {
+                len = e.iterations.count
+            }
+        }
+        for index in 1...len {
+            for e in exercises! {
+                if e.iterations.count >= index {
+                    array.append(e.iterations[index-1])
+                }
+            }
+        }
+       iterationsForRound = array
+    }
+    
+    private func getNext() -> (Int,Int)? {
+        var numInMainArray = 0
+        var exersN = 0
+        var iterN = 0
+        
+        for iteration in iterationsForRound {
+            let curIter = exercises?[currentExerciseNumber].iterations[currentIterationNumber]
+            if iteration.id == curIter!.id {
+                if numInMainArray == (iterationsForRound.count - 1) {
+                    return nil
+                } else {
+                    for ex in exercises ?? [] {
+                        iterN = 0
+                        for i in ex.iterations {
+                            if i.id == iterationsForRound[numInMainArray+1].id {
+                                return (exersN, iterN)
+                            }
+                            iterN += 1
+                        }
+                        exersN += 1
+                    }
+                }
+            } else {
+                numInMainArray += 1
+            }
+        }
+        return nil
+    }
+    
+    private func startTimer() {
+        trainingInProgress = true
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
+            if self.iterationState == .work {
+                if self.currentWorkTime != 0 {
+                    self.currentWorkTime -= 1
+                    self.eventWithTimer(time: self.currentWorkTime)
+                } else {
+                    if (self.currentIteration?.startTimerOnZero)! && self.currentIteration?.workTime == 0 {
+                        self.stopIteration()
+                        self.startSecondomer()
+                    } else if !(self.currentIteration?.startTimerOnZero)! && self.currentIteration?.workTime == 0 {
+                        self.stopIteration()
+                        self.eventWithTimer(time: self.currentWorkTime)
+                    } else {
+                        self.nextIterationState()
+                    }
+                }
+            } else {
+                if self.currentRestTime != 0 {
+                    self.currentRestTime -= 1
+                    self.eventWithTimer(time: self.currentRestTime)
+                } else {
+                    self.nextIterationState()
+                    self.iterationsSwitcher()
+                }
+            }
+        }
+    }
+    
+    private func startSecondomer() {
+        secondomerStarted = true
+        secondomer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
+            self.secondomerTime += 1
+            self.eventWithTimer(time: self.secondomerTime)
+        }
+    }
+    private func pauseSecondomer() {
+        secondomer.invalidate()
+    }
+    private func stopSecondomer() {
+        pauseSecondomer()
+        secondomerStarted = false
+        secondomerTime = 0
+    }
+    
+    func setState(state: TrainingState)  {
+        trainingState = state
+    }
+    
+    func startExercise() {
+        if trainingState == .iterationsOnly {
+            createIterationsCopy(i: currentIterationNumber)
+        } else {
+            startTraining()
+        }
+        trainingStarted = true
+        trainingInProgress = true
+        startTimer()
+        self.flowView?.higlightIteration(on: currentIterationNumber)
+    }
+    
+    func finish() {
+        trainingStarted = false
+        trainingInProgress = false
+        secondomerStarted = false
+        currentIterationNumber = 0
+        currentExerciseNumber = 0
+        currentRestTime = 0
+        currentWorkTime = 0
+        secondomerTime = 0
+    }
+
+    func startTraining() {
+        createDayExerciseCopy(exercise: currentExerciseNumber, iteration: currentIterationNumber, success: {
+            self.trainingStarted = true
+            self.trainingInProgress = true
+            self.startTimer()
+            self.flowView?.higlightIteration(on: self.currentExerciseNumber)
+        })
+    }
+    
+    func startExercise(from i: Int) {
+        if trainingInProgress && trainingStarted {
+            self.stopIteration()
+            currentIterationNumber = 0
+            trainingStarted = false
+            trainingInProgress = false
+        }
+        currentIterationNumber = i
+        startExercise()
+    }
+    
+    func pauseIteration() {
+        timer.invalidate()
+        pauseSecondomer()
+        trainingInProgress = false
+        trainingStarted = true
+    }
+    
+    func startOrContineIteration() {
+        trainingInProgress = true
+        if trainingStarted {
+            if secondomerStarted {
+                startSecondomer()
+            } else {
+                startTimer()
+            }
+        } else {
+            if trainingState == .normal || trainingState == .round {
+                startTraining()
+            } else {
+                startExercise()
+            }
+        }
+    }
+
+    func nextStateOrIteration() {
+        saveIterationsInfo()
+        if trainingStarted {
+            nextIterationState()
+            var time = Int()
+            if iterationState == .work {
+                self.iterationsSwitcher()
+                time = currentWorkTime
+            } else {
+                time = currentRestTime
+            }
+            if secondomerStarted {
+                stopSecondomer()
+                startTimer()
+            }
+            if trainingInProgress {
+                eventWithTimer(time: time)
+                if !timer.isValid {
+                    startTimer()
+                }
+            } else {
+                eventWithTimer(time: 0)
+                if trainingState == .normal {
+                    startTraining()
+                } else {
+                    startExercise()
+                }
+            }
+        }
+    }
+    
+    func stopIteration() {
+        timer.invalidate()
+        stopSecondomer()
+        iterationState = .work
+    }
+    
+    func fullStop() {
+        self.flowView?.higlightIteration(on: 0)
+        stopIteration()
+        currentIterationNumber = 0
+        trainingStarted = false
+        trainingInProgress = false
+        self.flowView?.changeTime(time: "--:--", iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
+        editTraining(wiht: dataSource?.currentTraining?.id ?? 0, success: {})
+        finish()
+    }
+    
+    func eventWithTimer(time: Int) {
+        var min = 0
+        var sec = 0
+        var minStr = ""
+        var secStr = ""
+        min = Int(time/60)
+        sec = time - min*60
+        minStr = min<10 ? "0\(min)" : "\(min)"
+        secStr = sec<10 ? "0\(sec)" : "\(sec)"
+        var timeString = "-"+minStr+":"+secStr
+        if iterationState == .rest || secondomerStarted {
+            timeString.removeFirst()
+        }
+        self.flowView?.changeTime(time: timeString, iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
+    }
+    
+    func saveIterationsInfo() {
+        try! realm.performWrite {
+            switch iterationState {
+            case .work:
+                if secondomerStarted {
+                    currentIteration?.workTime = secondomerTime
+                } else {
+                    currentIteration?.workTime = (currentIteration?.workTime ?? 0) - currentWorkTime
+                }
+            case .rest:
+                currentIteration?.restTime = (currentIteration?.restTime ?? 0) - currentRestTime
+            }
+            currentIteration?.wasSync = false
+        }
+        self.flowView?.rewriteIterations()
+    }
+    
 }

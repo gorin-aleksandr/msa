@@ -39,9 +39,10 @@ class ApproachTableViewCell: UITableViewCell {
         let wSecStr = wSec<10 ? "0\(wSec)" : "\(wSec)"
         let rMinStr = rMin<10 ? "0\(rMin)" : "\(rMin)"
         let rSecStr = rSec<10 ? "0\(rSec)" : "\(rSec)"
-        
         self.workTimeLabel.text = "\(wMinStr):\(wSecStr)"
         self.restTimeLabel.text = "\(rMinStr):\(rSecStr)"
+        
+        restButton.tag = indexPath.row
     }
     
 }

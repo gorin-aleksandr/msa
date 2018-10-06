@@ -222,6 +222,7 @@ class MyTranningsViewController: UIViewController {
     @objc
     private func startTraining(sender: UIButton) {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
+        manager.setState(state: .normal)
         self.performSegue(withIdentifier: "roundTraining", sender: nil )
     }
     
@@ -250,6 +251,8 @@ class MyTranningsViewController: UIViewController {
     @objc
     private func startRoundTraining(sender: UIButton) {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
+        manager.setState(state: .round)
+        manager.setIterationsForRound()
         self.performSegue(withIdentifier: "roundTraining", sender: nil)
     }
     

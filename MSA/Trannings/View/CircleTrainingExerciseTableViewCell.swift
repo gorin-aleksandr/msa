@@ -17,6 +17,7 @@ class CircleTrainingExerciseTableViewCell: UITableViewCell {
     @IBOutlet weak var podhodCountLabel: UILabel!
     @IBOutlet weak var kdButton: UIButton!
     @IBOutlet weak var counts: UIButton!
+    @IBOutlet weak var bgView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

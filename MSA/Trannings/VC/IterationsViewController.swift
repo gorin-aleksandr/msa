@@ -10,6 +10,7 @@ import UIKit
 
 public let lightGREEN = UIColor(red: 4/255, green: 232/255, blue: 36/255, alpha: 1)
 public let lightRED = UIColor(red: 247/255, green: 23/255, blue: 53/255, alpha: 1)
+public let lightBLUE = UIColor(red: 247/255, green: 247/255, blue: 255/255, alpha: 1)
 
 class IterationsViewController: UIViewController {
 
@@ -36,15 +37,21 @@ class IterationsViewController: UIViewController {
         super.viewDidLoad()
 
         manager.initView(view: self)
+        manager.initFlowView(view: self)
+        manager.setState(state: .iterationsOnly)
         configureUI()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
         addPodhodButton.setShadow(shadowOpacity: 0.4)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        manager.finish()
     }
         
     private func configureUI() {
@@ -56,6 +63,29 @@ class IterationsViewController: UIViewController {
         self.traningLabel.text = manager.getCurrentExercise()?.name
         self.addButton.addTarget(self, action: #selector(addIteration), for: .touchUpInside)
         configureTableView()
+        self.pauseButton.addTarget(self, action: #selector(pauseIteration(_:)), for: .touchUpInside)
+        self.playButton.addTarget(self, action: #selector(resumeIteration(_:)), for: .touchUpInside)
+        self.stopButton.addTarget(self, action: #selector(stopIteration(_:)), for: .touchUpInside)
+        self.playNextButton.addTarget(self, action: #selector(nextIterationstate(_:)), for: .touchUpInside)
+    }
+    
+    @objc private func nextIterationstate(_ sender: UIButton) {
+        manager.nextStateOrIteration()
+    }
+
+    @objc private func stopIteration(_ sender: UIButton) {
+        manager.fullStop()
+    }
+    
+    @objc private func pauseIteration(_ sender: UIButton) {
+        manager.pauseIteration()
+    }
+    
+    @objc private func resumeIteration(_ sender: UIButton) {
+        manager.startOrContineIteration()
+    }
+    @objc private func startIteration(_ sender: UIButton) {
+        manager.startExercise(from: sender.tag)
     }
     
     private func configureTableView() {
@@ -71,6 +101,7 @@ class IterationsViewController: UIViewController {
     
     @objc
     func back() {
+        manager.fullStop()
         navigationController?.popViewController(animated: true)
     }
     
@@ -110,6 +141,7 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ApproachTableViewCell", for: indexPath) as? ApproachTableViewCell else {return UITableViewCell()}
         if let iteration = manager.getCurrentExercise()?.iterations[indexPath.row] {
             cell.configureCell(iteration: iteration, indexPath: indexPath)
+            cell.restButton.addTarget(self, action: #selector(startIteration(_:)), for: .touchUpInside)
         }
         return cell
     }
@@ -183,18 +215,54 @@ extension IterationsViewController: TrainingsViewDelegate {
     func finishLoading() {
         loadingView.isHidden = true
     }
-    
-    func trainingsLoaded() {    }
-    
+    func trainingsLoaded() {}
     func templateCreated() {}
-    
     func templatesLoaded() {}
-    
     func trainingEdited() {}
-    
     func errorOccurred(err: String) {}
-    
     func synced() {}
+}
+
+extension IterationsViewController: TrainingFlowDelegate {
     
+    func rewriteIterations() {
+        tableView.reloadData()
+    }
     
+    private func configureWorkView(time: String) {
+        restLabel.textColor = lightGREEN
+        restOrWorkImageView.image = UIImage(named: "title_timer-1")
+        restLabel.text = time
+    }
+    private func configureRestView(time: String) {
+        restLabel.textColor = lightRED
+        restOrWorkImageView.image = UIImage(named: "title_timer_1")
+        restLabel.text = time
+    }
+    
+    func changeTime(time: String, iterationState: IterationState, i: (Int,Int)) {
+        switch iterationState {
+        case .work:
+            configureWorkView(time: time)
+        case .rest:
+            configureRestView(time: time)
+        }
+    }
+    
+    func higlightIteration(on: Int) {
+        let indexPath = IndexPath(row: on, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.backgroundColor = lightBLUE
+        if on != 0 {
+            let prevIndexPath = IndexPath(row: on-1, section: 0)
+            let cell = tableView.cellForRow(at: prevIndexPath)
+            cell?.backgroundColor = .white
+        } else {
+            let row = (manager.getCurrentExercise()?.iterations.count ?? 0) - 1
+            let indexPath = IndexPath(row: row, section: 0)
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.backgroundColor = .white
+        }
+    }
 }
