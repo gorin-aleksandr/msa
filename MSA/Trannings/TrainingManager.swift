@@ -540,8 +540,7 @@ class TrainingManager {
     private func createIterationsCopy(i: Int) {
         iterations = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
         currentIteration = iterations?[i]
-        currentWorkTime = currentIteration?.workTime ?? 0
-        currentRestTime = currentIteration?.restTime ?? 0
+        setCurrentTime()
     }
     
     private func createDayExerciseCopy(exercise: Int, iteration: Int, success: @escaping ()-> ()) {
@@ -551,14 +550,20 @@ class TrainingManager {
             iterations = Array(currentExercise?.iterations ?? List<Iteration>())
             if iterations?.count != 0 {
                 currentIteration = iterations?[iteration]
-                currentWorkTime = currentIteration?.workTime ?? 0
-                currentRestTime = currentIteration?.restTime ?? 0
+                setCurrentTime()
                 success()
             } else {
                 currentExerciseNumber += 1
                 nextStateOrIteration()
             }
         }
+    }
+    
+    private func setCurrentTime() {
+        currentWorkTime = currentIteration?.workTime ?? 0
+        currentRestTime = currentIteration?.restTime ?? 0
+        currentWorkTime = currentWorkTime == 0 ? currentWorkTime : currentWorkTime+1
+        currentRestTime = currentRestTime == 0 ? currentRestTime : currentRestTime+1
     }
     
     func getIterationsCount() -> Int {
@@ -616,8 +621,7 @@ class TrainingManager {
                     currentIterationNumber += 1
             }
             currentIteration = iterations?[currentIterationNumber]
-            currentWorkTime = currentIteration?.workTime ?? 0
-            currentRestTime = currentIteration?.restTime ?? 0
+            setCurrentTime()
         }
         if trainingState != .iterationsOnly {
             self.flowView?.higlightIteration(on: currentExerciseNumber)
@@ -710,8 +714,18 @@ class TrainingManager {
                     self.currentRestTime -= 1
                     self.eventWithTimer(time: self.currentRestTime)
                 } else {
-                    self.nextIterationState()
-                    self.iterationsSwitcher()
+                    if (self.currentIteration?.startTimerOnZero)! && self.currentIteration?.restTime == 0 {
+                        self.stopIteration()
+                        self.iterationState = .rest
+                        self.startSecondomer()
+                    } else if !(self.currentIteration?.startTimerOnZero)! && self.currentIteration?.restTime == 0 {
+                        self.stopIteration()
+                        self.iterationState = .rest
+                        self.eventWithTimer(time: self.currentRestTime)
+                    } else {
+                        self.nextIterationState()
+                        self.iterationsSwitcher()
+                    }
                 }
             }
         }
@@ -843,6 +857,7 @@ class TrainingManager {
     
     func fullStop() {
         self.flowView?.higlightIteration(on: 0)
+        saveIterationsInfo()
         stopIteration()
         currentIterationNumber = 0
         trainingStarted = false
@@ -878,7 +893,11 @@ class TrainingManager {
                     currentIteration?.workTime = (currentIteration?.workTime ?? 0) - currentWorkTime
                 }
             case .rest:
-                currentIteration?.restTime = (currentIteration?.restTime ?? 0) - currentRestTime
+                if secondomerStarted {
+                    currentIteration?.restTime = secondomerTime
+                } else {
+                    currentIteration?.restTime = (currentIteration?.restTime ?? 0) - currentRestTime
+                }
             }
             currentIteration?.wasSync = false
         }

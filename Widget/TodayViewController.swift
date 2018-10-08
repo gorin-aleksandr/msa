@@ -14,7 +14,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     @IBOutlet weak var labelTest: UILabel!
     @IBOutlet weak var icon: UIImageView! {
         didSet {
-            icon.layer.cornerRadius = 35
+            icon.layer.cornerRadius = 20
         }
     }
     

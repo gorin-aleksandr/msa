@@ -59,7 +59,7 @@ class ConfigureTranningExersViewController: UIViewController {
             }
         }
     }
-    var startCheckOn00 = false
+    var startCheckOn00 = true
     var buttonsW: [NumberButtonView] = []
     var buttonsH: [NumberButtonView] = []
     var manager = TrainingManager()
@@ -309,7 +309,7 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
             return "\(row) min"
         case 1:
             if !workActive {
-                return "\(row+1) sec"
+                return "\(row) sec"
             } else {
                 return "\(row) sec"
             }
@@ -339,9 +339,9 @@ extension ConfigureTranningExersViewController: UIPickerViewDelegate, UIPickerVi
         default:
             if !workActive {
                 if row < 9 {
-                    timeView.restSeconds.text = "0\(row+1)"
+                    timeView.restSeconds.text = "0\(row)"
                 } else {
-                    timeView.restSeconds.text = "\(row+1)"
+                    timeView.restSeconds.text = "\(row)"
                 }
                 restTime.1 = row
             } else {
