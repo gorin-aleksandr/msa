@@ -287,9 +287,7 @@ extension ExercisesForTypeViewController: ExercisesTypesDataProtocol {
     func errorOccurred(err: String) {}
     func filtersLoaded() {}
     func exercisesLoaded() {}
-    func exerciseDeleted(with id: Int) {
-        
-    }
+    func exerciseDeleted(with id: String) {}
 }
 
 //MARK: - Search Results Updating

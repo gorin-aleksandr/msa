@@ -102,8 +102,9 @@ class NewExerciseManager {
     
     func sendNewExerciseInfoBlock(id: String) {
         let newInfo = makeExerciseForFirebase(id: id, or: false)
-        let index = (RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0) + ((RealmManager.shared.getArray(ofType: Exercise.self)).count)
-        Database.database().reference().child("ExercisesByTrainers").child(id).child("\(index)").setValue(newInfo) { (error, databaseFer) in
+//        let index = (RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0) + ((RealmManager.shared.getArray(ofType: Exercise.self)).count)
+        guard let index = newInfo["id"] as? String else {return}
+        Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
                 RealmManager.shared.saveObject(self.makeModel(), update: true)
@@ -122,11 +123,11 @@ class NewExerciseManager {
         for url in self.dataSource.picturesUrls {
             pictures.append(["url": url.url])
         }
-        var index = Int()
+        var index = String()
         if edit {
             index = dataSource.newExerciseModel.id
         } else {
-            index = (RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0) + ((RealmManager.shared.getArray(ofType: Exercise.self)).count)
+            index = UUID().uuidString
         }
         return [
             "description": self.dataSource.descript,

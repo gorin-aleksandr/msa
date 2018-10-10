@@ -383,7 +383,7 @@ class TrainingManager {
                                     let exercise = ExerciseInTraining()
                                     exercise.id = e["id"] as! Int
                                     exercise.name = e["name"] as! String
-                                    exercise.exerciseId = e["exerciseId"] as! Int
+                                    exercise.exerciseId = e["exerciseId"] as! String
                                     let exerciseIterations = List<Iteration>()
                                     if let iterations = e["iterations"] as? [[String:Any]] {
                                         for i in iterations {

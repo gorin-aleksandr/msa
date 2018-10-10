@@ -19,7 +19,7 @@ import Realm
     func myExercisesLoaded()
     func filtersLoaded()
     func errorOccurred(err: String)
-    @objc optional func exerciseDeleted(with id: Int)
+    @objc optional func exerciseDeleted(with id: String)
 }
 
 class ExersisesTypesPresenter {
@@ -106,7 +106,7 @@ class ExersisesTypesPresenter {
         }
     }
     
-    func deleteExercise(with id: Int) {
+    func deleteExercise(with id: String) {
         if let userId = AuthModule.currUser.id {
             view?.startLoading()
             guard let object = self.realmManager.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", id)) else {return}
@@ -242,9 +242,10 @@ class ExersisesTypesPresenter {
         var items = [Exercise]()
         for snap in snapchot.children {
             let s = snap as! DataSnapshot
-            if let _ = s.childSnapshot(forPath: "id").value as? NSNull {
+            if let id = s.childSnapshot(forPath: "id").value as? NSNull {
                 return
             }
+            guard let i = s.childSnapshot(forPath: "id").value as? String else {continue}
             let picturesUrls = List<Image>()
             let filterIds = List<Id>()
             if let pictures = s.childSnapshot(forPath: "pictures").value as? NSArray {
@@ -262,9 +263,10 @@ class ExersisesTypesPresenter {
                 }
             }
             let exercise = Exercise()
-            exercise.id = s.childSnapshot(forPath: "id").value as! Int
+            
+            exercise.id = s.childSnapshot(forPath: "id").value as! String
             exercise.realTypeId = s.childSnapshot(forPath: "realTypeId").value as? Int ?? -1
-            exercise.name = s.childSnapshot(forPath: "name").value as! String
+            exercise.name = s.childSnapshot(forPath: "name").value as? String ?? ""
             exercise.pictures = picturesUrls
             exercise.typeId = s.childSnapshot(forPath: "typeId").value as! Int
             exercise.trainerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""

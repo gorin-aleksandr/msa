@@ -331,7 +331,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExerciseTableViewCell", for: indexPath) as? ExerciseTableViewCell else {return UITableViewCell()}
             if let exercise = manager.dataSource?.currentWeek?.days[indexPath.section].exercises[indexPath.row] {
-                if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", exercise.exerciseId)) {
+                if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", exercise.exerciseId)) {
                     cell.exerciseNameLable.text = ex.name
                     cell.exerciseImageView.sd_setImage(with: URL(string: ex.pictures.first?.url ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
                 }
