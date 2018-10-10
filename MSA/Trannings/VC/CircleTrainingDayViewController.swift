@@ -81,7 +81,7 @@ extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CircleTrainingExerciseTableViewCell", for: indexPath) as? CircleTrainingExerciseTableViewCell else {return UITableViewCell()}
         if let ex = manager.getCurrentday()?.exercises[indexPath.row] {
-            if let e = manager.realm.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", ex.exerciseId)).first {
+            if let e = manager.realm.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", ex.exerciseId)).first {
                 cell.picture.sd_setImage(with: URL(string: (e.pictures.first?.url)!), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
                 cell.nameLabel.text = e.name
             }
