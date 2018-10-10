@@ -11,7 +11,7 @@ import Realm
 import RealmSwift
 
 class Exercise: Object {
-    @objc dynamic var id: Int = -1
+    @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
     var pictures = List<Image>()
     @objc dynamic var typeId: Int = -1

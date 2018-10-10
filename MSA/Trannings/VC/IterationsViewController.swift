@@ -101,7 +101,7 @@ class IterationsViewController: UIViewController {
     
     @objc
     func back() {
-        manager.fullStop()
+//        manager.fullStop()
         navigationController?.popViewController(animated: true)
     }
     

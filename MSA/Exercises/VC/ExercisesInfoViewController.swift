@@ -38,7 +38,7 @@ class ExercisesInfoViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        execise = RealmManager.shared.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", execise?.id ?? 0)).first
+        execise = RealmManager.shared.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", execise?.id ?? "")).first
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         if execise?.typeId == 12 {
             navigationItem.rightBarButtonItem = self.editButton
