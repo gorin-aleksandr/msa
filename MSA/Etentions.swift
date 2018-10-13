@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+public let lightGREEN = UIColor(red: 4/255, green: 232/255, blue: 36/255, alpha: 1)
+public let lightRED = UIColor(red: 247/255, green: 23/255, blue: 53/255, alpha: 1)
+public let lightBLUE = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 0.10)
+public let lightBlue_ = UIColor(red: 72/255, green: 157/255, blue: 255/255, alpha: 1.0)
+public let darkCyanGreen = UIColor(red: 25/255, green: 100/255, blue: 126/255, alpha: 1.0)
+
 private var maxLengths = [UITextField: Int]()
 
 public func setShadow(outerView: UIView, shadowOpacity: Float) {

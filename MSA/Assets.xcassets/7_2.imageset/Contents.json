@@ -2,22 +2,25 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "7_2.png",
+      "filename" : "Group + Group 3 + Group 4 Mask 17.10.20.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "7@2x_2.png",
+      "filename" : "Group + Group 3 + Group 4 Mask@2x 17.10.20.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "7@3x_2.png",
+      "filename" : "Group + Group 3 + Group 4 Mask@3x 17.10.20.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
+  },
+  "properties" : {
+    "auto-scaling" : "auto"
   }
 }

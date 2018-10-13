@@ -8,8 +8,6 @@
 
 import UIKit
 
-let lightBlue_ = UIColor(red: 72 / 255, green: 157 / 255, blue: 255 / 255, alpha: 1.0)
-
 class CalendarViewController: UIViewController {
 
     let defaultCalendar: Calendar = {

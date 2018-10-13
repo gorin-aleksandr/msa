@@ -55,8 +55,8 @@ class SetPurposeViewController: UIViewController {
     func configureNavigationItem() {
         purposeTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
         let button1 = UIBarButtonItem(image: #imageLiteral(resourceName: "ok_blue"), style: .plain, target: self, action: #selector(self.save))
-        let button2 = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(self.back))
-        button2.tintColor = UIColor.black
+        let button2 = UIBarButtonItem(image: #imageLiteral(resourceName: "back_-1"), style: .plain, target: self, action: #selector(self.back))
+        button2.tintColor = darkCyanGreen
         self.navigationItem.leftBarButtonItem = button2
         self.navigationItem.rightBarButtonItem = button1
         self.navigationItem.title = "Цель тренировок"

@@ -8,10 +8,6 @@
 
 import UIKit
 
-public let lightGREEN = UIColor(red: 4/255, green: 232/255, blue: 36/255, alpha: 1)
-public let lightRED = UIColor(red: 247/255, green: 23/255, blue: 53/255, alpha: 1)
-public let lightBLUE = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 0.10)
-
 class IterationsViewController: UIViewController {
 
     @IBOutlet weak var loadingView: UIView!
