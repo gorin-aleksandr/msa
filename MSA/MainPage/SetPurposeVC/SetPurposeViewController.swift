@@ -60,6 +60,10 @@ class SetPurposeViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = button2
         self.navigationItem.rightBarButtonItem = button1
         self.navigationItem.title = "Цель тренировок"
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
+
     }
     
 }

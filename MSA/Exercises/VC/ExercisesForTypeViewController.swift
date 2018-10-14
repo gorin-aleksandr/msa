@@ -83,6 +83,9 @@ class ExercisesForTypeViewController: UIViewController {
     }
     
     private func configurateSearchController() {
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Enter search text..."
         definesPresentationContext = true
@@ -121,9 +124,9 @@ class ExercisesForTypeViewController: UIViewController {
             
             let width = label.intrinsicContentSize.width + 20
             if selectedFilter == item.name {
-                button.backgroundColor = lightBlue
+                button.backgroundColor = lightWhiteBlue
             } else {
-                button.backgroundColor = UIColor.lightGray
+                button.backgroundColor = darkCyanGreen45
             }
             button.setTitle(item.name, for: .normal)
             button.titleLabel?.font = UIFont(name: "Rubik-Medium", size: 13)

@@ -109,6 +109,9 @@ class ExercisesViewController: UIViewController {
     }
     
     private func configurateSearchController() {
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Enter search text..."
         searchController.dimsBackgroundDuringPresentation = false

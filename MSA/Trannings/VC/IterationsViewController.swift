@@ -35,10 +35,10 @@ class IterationsViewController: UIViewController {
         manager.initView(view: self)
         manager.initFlowView(view: self)
         manager.setState(state: .iterationsOnly)
-        configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        configureUI()
         tableView.reloadData()
     }
     
@@ -53,7 +53,7 @@ class IterationsViewController: UIViewController {
     private func configureUI() {
         loadingView.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: true)
-        let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         self.traningLabel.text = manager.getCurrentExercise()?.name

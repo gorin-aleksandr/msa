@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -105,7 +104,7 @@
                                     </constraints>
                                 </view>
                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RIA-DG-hvQ">
-                                    <rect key="frame" x="166" y="1" width="20" height="73"/>
+                                    <rect key="frame" x="165.5" y="1" width="20" height="73"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="20" id="YHx-Db-YPx"/>
@@ -126,7 +125,7 @@
                             <rect key="frame" x="186.5" y="1" width="187.5" height="73"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="VA4-7z-c2z">
-                                    <rect key="frame" x="20.5" y="6.5" width="104" height="60.5"/>
+                                    <rect key="frame" x="20" y="6.5" width="104" height="60.5"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zsv-l6-XsK">
                                             <rect key="frame" x="0.0" y="0.0" width="104" height="20.5"/>
@@ -168,7 +167,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="187.5" height="73"/>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" red="1" green="0.36862745098039218" blue="0.45098039215686275" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.96862745098039216" green="0.090196078431372548" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="VA4-7z-c2z" firstAttribute="centerY" secondItem="A5Q-aZ-ATM" secondAttribute="centerY" id="Jpz-RE-aOI"/>
                                 <constraint firstAttribute="trailing" secondItem="aLV-g3-csJ" secondAttribute="trailing" id="PqB-av-LT0"/>
@@ -179,8 +178,8 @@
                             </constraints>
                         </view>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YhY-FH-Cl2">
-                            <rect key="frame" x="187" y="1" width="20" height="73"/>
-                            <color key="backgroundColor" red="1" green="0.36862745098039218" blue="0.45098039215686275" alpha="1" colorSpace="calibratedRGB"/>
+                            <rect key="frame" x="186.5" y="1" width="20" height="73"/>
+                            <color key="backgroundColor" red="0.96862745098039216" green="0.090196078431372548" blue="0.20784313725490194" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="20" id="Gai-tF-YPE"/>
                             </constraints>

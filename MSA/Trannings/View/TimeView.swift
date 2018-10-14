@@ -10,8 +10,8 @@ import UIKit
 
 class TimeView: UIView {
 
-    let greenCol = UIColor(red: 90/255, green: 223/255, blue: 38/255, alpha: 1)
-    let redColler = UIColor(red: 255/255, green: 94/255, blue: 115/255, alpha: 1)
+//    let greenCol = UIColor(red: 90/255, green: 223/255, blue: 38/255, alpha: 1)
+//    let redColler = UIColor(red: 255/255, green: 94/255, blue: 115/255, alpha: 1)
     let greyColl = UIColor(red: 163/255, green: 173/255, blue: 175/255, alpha: 1)
     
     @IBOutlet var containerView: UIView!
@@ -55,12 +55,12 @@ class TimeView: UIView {
     
     @objc
     private func setWorkActive() {
-        whiteView.backgroundColor = greenCol
-        workHelpView.backgroundColor = greenCol
-        workLabel.textColor = .black
-        workDevider.textColor = .black
-        workMinutes.textColor = .black
-        workSeconds.textColor = .black
+        whiteView.backgroundColor = lightGREEN
+        workHelpView.backgroundColor = lightGREEN
+        workLabel.textColor = darkGreenColor
+        workDevider.textColor = darkGreenColor
+        workMinutes.textColor = darkGreenColor
+        workSeconds.textColor = darkGreenColor
         redView.backgroundColor = .white
         restLabel.textColor = greyColl
         restHelpView.backgroundColor = .white
@@ -77,12 +77,12 @@ class TimeView: UIView {
         workDevider.textColor = greyColl
         workMinutes.textColor = greyColl
         workSeconds.textColor = greyColl
-        redView.backgroundColor = redColler
-        restHelpView.backgroundColor = redColler
-        restLabel.textColor = .black
-        restDevider.textColor = .black
-        restMinutes.textColor = .black
-        restSeconds.textColor = .black
+        redView.backgroundColor = lightRED
+        restHelpView.backgroundColor = lightRED
+        restLabel.textColor = darkGreenColor
+        restDevider.textColor = darkGreenColor
+        restMinutes.textColor = darkGreenColor
+        restSeconds.textColor = darkGreenColor
     }
     
 }

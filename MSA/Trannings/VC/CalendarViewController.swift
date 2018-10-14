@@ -68,7 +68,7 @@ class CalendarViewController: UIViewController {
     
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
-        let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         
@@ -147,11 +147,11 @@ extension CalendarViewController: VAMonthViewAppearanceDelegate {
     }
     
     func verticalMonthTitleColor() -> UIColor {
-        return lightBlue_
+        return lightWhiteBlue
     }
     
     func verticalCurrentMonthTitleColor() -> UIColor {
-        return lightBlue_
+        return lightWhiteBlue
     }
     
 }
@@ -176,7 +176,7 @@ extension CalendarViewController: VADayViewAppearanceDelegate {
     func textBackgroundColor(for state: VADayState) -> UIColor {
         switch state {
         case .selected:
-            return lightBlue_
+            return lightWhiteBlue
         default:
             return .clear
         }

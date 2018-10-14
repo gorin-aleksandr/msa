@@ -47,7 +47,6 @@ class NewExerciseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         initialConfigurations()
         configureTableView()
     }
@@ -83,6 +82,9 @@ class NewExerciseViewController: UIViewController {
         exercManager.attachView(view: self)
         picker.delegate = self
         setShadow(outerView: viewWithPicker, shadowOpacity: 0.5)
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
     }
     
     func configureTableView() {

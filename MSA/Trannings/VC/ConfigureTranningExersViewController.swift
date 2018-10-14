@@ -132,12 +132,12 @@ class ConfigureTranningExersViewController: UIViewController {
         button.setTitle(" Отмена", for: .normal)
         let font = UIFont(name: "Rubik-Regular", size: 17)
         button.titleLabel?.font = font
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(darkCyanGreen, for: .normal)
         button.sizeToFit()
         button.addTarget(self, action: #selector(back), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         self.navigationItem.title = "Настройки"
-        let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
             NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         self.numbersViewHeight.constant = self.view.frame.size.width*308.0/375
@@ -164,7 +164,7 @@ class ConfigureTranningExersViewController: UIViewController {
             timePicker.selectRow(workTime.1, inComponent: 1, animated: true)
         } else {
             timePicker.selectRow(restTime.0, inComponent: 0, animated: true)
-            timePicker.selectRow(restTime.1-1, inComponent: 1, animated: true)
+            timePicker.selectRow(restTime.1, inComponent: 1, animated: true)
         }
     }
     

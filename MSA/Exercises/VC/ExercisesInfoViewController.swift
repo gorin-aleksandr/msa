@@ -21,7 +21,6 @@ class ExercisesInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         configureTableView()
         // Do any additional setup after loading the view.
     }
@@ -39,7 +38,9 @@ class ExercisesInfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         execise = RealmManager.shared.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", execise?.id ?? "")).first
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
         if execise?.typeId == 12 {
             navigationItem.rightBarButtonItem = self.editButton
         } else {

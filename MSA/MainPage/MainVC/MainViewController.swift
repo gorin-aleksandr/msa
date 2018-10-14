@@ -39,8 +39,14 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var galleryView: UIView! {didSet{galleryView.layer.cornerRadius = 10}}
     @IBOutlet weak var profileViewbg: UIView! {didSet{profileViewbg.layer.cornerRadius = 10}}
     @IBOutlet weak var userImage: UIView!
-    @IBOutlet weak var trainerImage: UIImageView! {didSet{trainerImage.layer.cornerRadius = 15}}
+    @IBOutlet weak var trainerImage: UIImageView! {didSet{trainerImage.layer.cornerRadius = 15
+        trainerImage.isHidden = true
+        }}
+    @IBOutlet weak var trainerName: UILabel!{
+        didSet{trainerName.isHidden = true}
+    }
     @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var userCity: UILabel!
     @IBOutlet weak var userLevel: UILabel!
     @IBOutlet weak var dailyTraining: UILabel!
     @IBOutlet weak var dreamInsideView: UIView! {didSet {dreamInsideView.layer.cornerRadius = 9}}
@@ -95,6 +101,9 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         }
         if let level = AuthModule.currUser.level {
             userLevel.text = level
+        }
+        if let city = AuthModule.currUser.city {
+            userCity.text = "г. "+city
         }
         if let dream = AuthModule.currUser.purpose {
             dailyTraining.text = dream
