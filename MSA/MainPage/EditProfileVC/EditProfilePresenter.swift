@@ -163,28 +163,28 @@ class EditProfilePresenter {
     }
     
     func getlevels() -> [String] {
-        return ["Дрищ", "Жирний", "Кач"]
+        return ["Новичок", "Любитель", "Бодибилдер"]
     }
     func getSexes() -> [String] {
         return [Sex.famale.rawValue, Sex.male.rawValue]
     }
     func getAges() -> [Int] {
         var ages = [Int]()
-        for i in 10...40 {
+        for i in 4...99 {
             ages.append(i)
         }
         return ages
     }
     func getWeight() -> [Int] {
         var weight = [Int]()
-        for i in 40...120 {
+        for i in 30...200 {
             weight.append(i)
         }
         return weight
     }
     func getHeight() -> [Int] {
         var height = [Int]()
-        for i in 40...120 {
+        for i in 40...220 {
             height.append(i)
         }
         return height

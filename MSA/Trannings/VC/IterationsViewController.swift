@@ -94,6 +94,9 @@ class IterationsViewController: UIViewController {
     @IBAction func backAction(_ sender: Any) {
         back()
     }
+    @IBAction func showExerciseInfo(_ sender: Any) {
+        performSegue(withIdentifier: "exerciseInfo", sender: nil)
+    }
     
     @objc
     func back() {
@@ -124,9 +127,15 @@ class IterationsViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "configureIteration" {
+        switch segue.identifier {
+        case "exerciseInfo":
+            guard let vc = segue.destination as? ExercisesInfoViewController else {return}
+            vc.execise = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", manager.getCurrentExercise()?.exerciseId ?? "")) ?? nil
+        case "configureIteration":
             guard let vc = segue.destination as? ConfigureTranningExersViewController else {return}
             vc.manager = self.manager
+        default:
+            return
         }
     }
     

@@ -69,6 +69,8 @@ class ExercisesForTypeViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         trainingManager = nil
+        navigationItem.searchController = nil
+        
     }
     
     private func configureTable_CollectionView() {
@@ -87,7 +89,7 @@ class ExercisesForTypeViewController: UIViewController {
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Enter search text..."
+        searchController.searchBar.placeholder = "Search"
         definesPresentationContext = true
         if #available(iOS 9.1, *) {
             searchController.obscuresBackgroundDuringPresentation = false

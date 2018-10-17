@@ -160,7 +160,7 @@ class MyTranningsViewController: UIViewController {
         alert.setValue(myMutableString, forKey: "attributedTitle")
         
         let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
-            self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             if addDayWeek {
                 self.addWeek()
             } else {
@@ -168,7 +168,7 @@ class MyTranningsViewController: UIViewController {
             }
         })
         let secondAction = UIAlertAction(title: "Удалить тренировку", style: .default, handler: { action in
-            self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             if addDayWeek {
                 self.addDay()
             } else {
@@ -176,7 +176,7 @@ class MyTranningsViewController: UIViewController {
             }
         })
         let cancel = UIAlertAction(title: "Отмена", style: .default, handler: { action in
-            self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
         })
         
         alert.addAction(firstAction)

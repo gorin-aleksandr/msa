@@ -32,7 +32,6 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var previewImage: UIImageView!
     
     @IBOutlet weak var viewWithButtons: UIView!
-    @IBOutlet weak var scrollView: UIView!
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!{didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var galleryCollectionView: UICollectionView!
@@ -40,11 +39,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var profileViewbg: UIView! {didSet{profileViewbg.layer.cornerRadius = 10}}
     @IBOutlet weak var userImage: UIView!
     @IBOutlet weak var trainerImage: UIImageView! {didSet{trainerImage.layer.cornerRadius = 15
-        trainerImage.isHidden = true
-        }}
-    @IBOutlet weak var trainerName: UILabel!{
-        didSet{trainerName.isHidden = true}
-    }
+        trainerImage.isHidden = true}}
+    @IBOutlet weak var trainerName: UILabel!{didSet{trainerName.isHidden = true}}
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userCity: UILabel!
     @IBOutlet weak var userLevel: UILabel!
@@ -132,12 +128,12 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         }
         
         AuthModule.userAvatar = customImageViev.image
-        customImageViev.frame = CGRect(x: 0, y: 0, width: 70, height: 90)
+        customImageViev.frame = CGRect(x: 0, y: 0, width: 99, height: 123)
         customImageViev.contentMode = .scaleAspectFill
         customImageViev.setNeedsLayout()
         userImage.addSubview(customImageViev)
         
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 70, height: 90))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 99, height: 123))
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(openAvatar), for: .touchUpInside)
         self.userImage.addSubview(button)
@@ -178,6 +174,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     @IBAction func traningsButton(_ sender: Any) {
     }
     @IBAction func settingsButton(_ sender: Any) {
+        print("Settings")
     }
     @IBAction func setPurpose(_ sender: Any) {
     }

@@ -27,7 +27,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="377" height="138.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" filevideo-24px" translatesAutoresizingMaskIntoConstraints="NO" id="uJL-Sg-oey">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filevideo-24px" translatesAutoresizingMaskIntoConstraints="NO" id="uJL-Sg-oey">
                         <rect key="frame" x="5" y="5" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="2Z1-rn-E7c"/>
@@ -35,13 +35,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Загрузить видео" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wrV-sr-WsS">
-                        <rect key="frame" x="55" y="12" width="143" height="26"/>
+                        <rect key="frame" x="55" y="15" width="143" height="20.5"/>
                         <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                         <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Не удалось загрузить файл! Проверьте подключение к сети." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Gv-iN-mb5">
-                        <rect key="frame" x="0.0" y="58" width="377" height="60.5"/>
+                        <rect key="frame" x="0.0" y="82.5" width="377" height="36"/>
                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="15"/>
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -77,7 +77,6 @@
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="3uM-PH-oML"/>
                     <constraint firstItem="BCV-KL-ZQt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4pC-9a-j37"/>
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EPV-Og-QHp"/>
-                    <constraint firstItem="9Gv-iN-mb5" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" constant="20" id="Ihu-iF-aVt"/>
                     <constraint firstItem="wrV-sr-WsS" firstAttribute="centerY" secondItem="uJL-Sg-oey" secondAttribute="centerY" id="JaV-Yz-DAA"/>
                     <constraint firstAttribute="trailing" secondItem="9Gv-iN-mb5" secondAttribute="trailing" id="Ml9-tA-kr7"/>
                     <constraint firstAttribute="bottomMargin" secondItem="WOb-Jr-nXo" secondAttribute="bottom" constant="10" id="N9h-6u-Pop"/>
@@ -85,7 +84,6 @@
                     <constraint firstItem="uJL-Sg-oey" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="VeV-Se-gaI"/>
                     <constraint firstItem="wrV-sr-WsS" firstAttribute="leading" secondItem="uJL-Sg-oey" secondAttribute="trailing" constant="10" id="X1o-M9-ck0"/>
                     <constraint firstItem="uJL-Sg-oey" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="ePy-LU-3qU"/>
-                    <constraint firstItem="WOb-Jr-nXo" firstAttribute="top" secondItem="wrV-sr-WsS" secondAttribute="bottom" constant="10" id="fAL-C0-MAg"/>
                     <constraint firstItem="uRC-HG-Ttc" firstAttribute="top" secondItem="WOb-Jr-nXo" secondAttribute="top" constant="-5" id="gDQ-3B-Z3A"/>
                     <constraint firstItem="BCV-KL-ZQt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="k5y-IV-zPf"/>
                     <constraint firstAttribute="trailing" secondItem="BCV-KL-ZQt" secondAttribute="trailing" id="lDK-ie-G6j"/>
@@ -107,8 +105,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name=" filevideo-24px" width="23" height="24"/>
         <image name=" filevideo-64px" width="59" height="64"/>
         <image name="X" width="14" height="14"/>
+        <image name="filevideo-24px" width="23" height="24"/>
     </resources>
 </document>
