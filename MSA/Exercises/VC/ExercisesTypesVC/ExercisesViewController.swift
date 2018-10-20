@@ -32,7 +32,6 @@ class ExercisesViewController: UIViewController {
         presenter.attachView(view: self)
         trainingManager?.initView(view: self)
         configureTable_CollectionView()
-        configurateSearchController()
         initialDataPreparing()
         NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
         
@@ -40,6 +39,7 @@ class ExercisesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        configurateSearchController()
         hideableNavigationBar(false)
         guard let _ = trainingManager else { return }
         let button = UIButton()
@@ -109,8 +109,10 @@ class ExercisesViewController: UIViewController {
     }
     
     private func configurateSearchController() {
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Enter search text..."
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         if #available(iOS 9.1, *) {
@@ -120,6 +122,7 @@ class ExercisesViewController: UIViewController {
             navigationItem.searchController = nil
             navigationItem.searchController = searchController
         }
+        searchController.searchBar.placeholder = "Search"
     }
     
     private func getSortedArray(of array: [Exercise]) -> [Exercise] {

@@ -53,8 +53,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var pickerView: UIPickerView! {didSet{pickerView.alpha = 0}}
     
+    @IBOutlet weak var approveEmail: UIButton! {
+        didSet {
+            approveEmail.layer.cornerRadius = 15
+            approveEmail.backgroundColor = .clear
+            approveEmail.layer.borderWidth = 1
+            approveEmail.layer.borderColor = darkCyanGreen.cgColor
+            approveEmail.titleLabel?.numberOfLines = 1
+            approveEmail.titleLabel?.adjustsFontSizeToFitWidth = true
+        }
+    }
     @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
-    @IBOutlet weak var changePass: UIButton! {didSet{changePass.layer.cornerRadius = 15}}
+    @IBOutlet weak var changePass: UIButton! {
+        didSet {
+            changePass.layer.cornerRadius = 15
+            changePass.titleLabel?.numberOfLines = 1
+            changePass.titleLabel?.adjustsFontSizeToFitWidth = true
+        }
+    }
     
     private let presenter = EditProfilePresenter(profile: UserDataManager())
     
@@ -175,10 +191,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func configureNavigationItem() {
         let button1 = UIBarButtonItem(image: #imageLiteral(resourceName: "ok_blue"), style: .plain, target: self, action: #selector(self.save))
         let button2 = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(self.back))
-        button2.tintColor = UIColor.black
+        button2.tintColor = darkCyanGreen
         self.navigationItem.leftBarButtonItem = button2
         self.navigationItem.rightBarButtonItem = button1
         self.navigationItem.title = "Настройки"
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
     }
     
     func setProfileImage(image: UIImage?, url: String?) {
@@ -194,6 +213,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         AuthModule.userAvatar = customImageViev.image
         customImageViev.frame = CGRect(x: 0, y: 0, width: 115, height: 145)
         customImageViev.setNeedsLayout()
+        customImageViev.contentMode = .scaleAspectFill
         profilePhoto.addSubview(customImageViev)
     }
     
@@ -306,16 +326,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     @IBAction func hideTrainerView(_ sender: Any) {
-        
-        if findTrainerView.alpha == 1 {
-            findTrainerView.alpha = 0
-        } else {
-            findTrainerView.alpha = 1
-        }
-//        if trainerStackView.isHidden {
-//            trainerStackView.isHidden = false
+//        if findTrainerView.alpha == 1 {
+//            findTrainerView.alpha = 0
 //        } else {
-//            trainerStackView.isHidden = true
+//            findTrainerView.alpha = 1
 //        }
     }
     

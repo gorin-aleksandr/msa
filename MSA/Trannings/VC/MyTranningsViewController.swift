@@ -26,11 +26,11 @@ class MyTranningsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        initialViewConfiguration()
         initialDataLoading()
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        initialViewConfiguration()
         weekNumber = manager.getWeekNumber()
         weekLabel.text = "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
         tableView.reloadData()
@@ -47,15 +47,29 @@ class MyTranningsViewController: UIViewController {
         loadingView.isHidden = true
         segmentControl.layer.masksToBounds = true
         segmentControl.layer.cornerRadius = 13
-        segmentControl.layer.borderColor = lightBlue.cgColor
+        segmentControl.layer.borderColor = lightWhiteBlue.cgColor
         segmentControl.layer.borderWidth = 1
         navigationController?.navigationBar.layer.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1).cgColor
         navigationController?.setNavigationBarHidden(false, animated: true)
-        let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 14)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 13)!],for: .normal)
         configureTableView()
+        showHideButtons()
+    }
+    
+    private func showHideButtons() {
+        if weekNumber == 0 {
+            prevWeekButton.alpha = 0
+        } else {
+            prevWeekButton.alpha = 1
+        }
+        if weekNumber == (manager.dataSource?.currentTraining?.weeks.count ?? 1) - 1 {
+            nextWeekButton.alpha = 0
+        } else {
+            nextWeekButton.alpha = 1
+        }
     }
     
     private func configureTableView() {
@@ -87,6 +101,7 @@ class MyTranningsViewController: UIViewController {
             weekNumber -= 1
             changeWeek()
         }
+        showHideButtons()
     }
     @IBAction func nextWeek(_ sender: Any) {
         guard let weekCount = manager.getCurrentTraining()?.weeks.count else {return}
@@ -94,6 +109,7 @@ class MyTranningsViewController: UIViewController {
             weekNumber += 1
             changeWeek()
         }
+        showHideButtons()
     }
     @IBAction func renameWeek(_ sender: Any) {
         let alert = UIAlertController(title: "Новое название", message: "Введите новое название для недели", preferredStyle: UIAlertControllerStyle.alert)
@@ -144,7 +160,7 @@ class MyTranningsViewController: UIViewController {
         alert.setValue(myMutableString, forKey: "attributedTitle")
         
         let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
-            self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             if addDayWeek {
                 self.addWeek()
             } else {
@@ -152,7 +168,7 @@ class MyTranningsViewController: UIViewController {
             }
         })
         let secondAction = UIAlertAction(title: "Удалить тренировку", style: .default, handler: { action in
-            self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             if addDayWeek {
                 self.addDay()
             } else {
@@ -160,7 +176,7 @@ class MyTranningsViewController: UIViewController {
             }
         })
         let cancel = UIAlertAction(title: "Отмена", style: .default, handler: { action in
-            self.segmentControl.layer.borderColor = lightBlue.cgColor
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
         })
         
         alert.addAction(firstAction)
@@ -285,10 +301,11 @@ class MyTranningsViewController: UIViewController {
             nextWeekButton.isHidden = false
             prevWeekButton.isHidden = false
         } else {
-            weekLabel.text = "Добавьте неделю"
+            weekLabel.text = "Сначала добавьте неделю"
             nextWeekButton.isHidden = true
             prevWeekButton.isHidden = true
         }
+        showHideButtons()
         UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
     }
 }
@@ -299,10 +316,10 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
         
         if let day = manager.dataSource?.currentWeek?.days[section] {
-            headerView.dateLabel.text = day.date == "" ? "______" : day.date
+            headerView.dateLabel.text = day.date == "" ? "______(дата)" : day.date
             headerView.dayLabel.text = "День #\(section + 1)"
 //            headerView.nameLabel.text = day.name == "" ? "______" : day.name
-            headerView.nameTextField.text = day.name == "" ? "______" : day.name
+            headerView.nameTextField.text = day.name
             headerView.nameTextField.tag = section
             headerView.nameTextField.delegate = self
         }
@@ -433,7 +450,7 @@ extension MyTranningsViewController: TrainingsViewDelegate {
 extension MyTranningsViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
+//        textField.text = ""
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

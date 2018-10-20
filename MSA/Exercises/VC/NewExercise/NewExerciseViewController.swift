@@ -47,7 +47,6 @@ class NewExerciseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         initialConfigurations()
         configureTableView()
     }
@@ -83,6 +82,9 @@ class NewExerciseViewController: UIViewController {
         exercManager.attachView(view: self)
         picker.delegate = self
         setShadow(outerView: viewWithPicker, shadowOpacity: 0.5)
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
     }
     
     func configureTableView() {
@@ -172,7 +174,6 @@ extension NewExerciseViewController: SelectingImagesManagerDelegate {
         exercManager.dataSource.pictures.append(contentsOf: images)
         tableView.reloadData()
     }
-    
 }
 
 extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource {
@@ -345,7 +346,17 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 6:
-            return UITableViewAutomaticDimension + 160
+            if exercManager.dataSource.pictures.isEmpty {
+                return 65
+            } else {
+                return UITableViewAutomaticDimension + 160
+            }
+        case 7:
+            if exercManager.dataSource.videoPath == "" {
+                return 65
+            } else {
+                return UITableViewAutomaticDimension
+            }
         case 8:
             return 60
         default:

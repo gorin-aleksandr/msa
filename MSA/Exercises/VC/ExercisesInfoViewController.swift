@@ -21,7 +21,6 @@ class ExercisesInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         configureTableView()
         // Do any additional setup after loading the view.
     }
@@ -38,8 +37,11 @@ class ExercisesInfoViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        hideableNavigationBar(false)
         execise = RealmManager.shared.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", execise?.id ?? "")).first
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        self.navigationController?.navigationBar.titleTextAttributes = attrs
         if execise?.typeId == 12 {
             navigationItem.rightBarButtonItem = self.editButton
         } else {
@@ -49,8 +51,15 @@ class ExercisesInfoViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        hideableNavigationBar(true)
         guard let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ImagesTableViewCell else {return}
         cell.loadScrollView(fake: false)
+    }
+    
+    private func hideableNavigationBar(_ hide: Bool) {
+        if #available(iOS 11.0, *) {
+            navigationItem.hidesSearchBarWhenScrolling = hide
+        }
     }
     
     @IBAction func back(_ sender: Any) {
@@ -110,7 +119,12 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
             case 1: return 250
-            case 2: return 50
+            case 2:
+                if execise?.videoUrl == "" {
+                    return 0
+                } else {
+                    return 50
+                }
             default: return UITableViewAutomaticDimension
         }
     }
@@ -144,6 +158,10 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
     }
     func configureVideoCell(indexPath: IndexPath) -> UITableViewCell {
         let videoCell = self.tableView.dequeueReusableCell(withIdentifier: "PlayVideoTableViewCell", for: indexPath) as? PlayVideoTableViewCell
+        if execise?.videoUrl == "" {
+            videoCell?.icon.isHidden = true
+            videoCell?.textLab.isHidden = true
+        }
         return videoCell!
     }
     func configureNameCell(indexPath: IndexPath) -> UITableViewCell {

@@ -10,6 +10,8 @@ import UIKit
 
 class PlayVideoTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var textLab: UILabel!
+    @IBOutlet weak var icon: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

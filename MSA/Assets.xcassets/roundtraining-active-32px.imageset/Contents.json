@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ic-roundtraining-active-32px.png",
+      "filename" : "Memories.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic-roundtraining-active-32px@2x.png",
+      "filename" : "Memories@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic-roundtraining-active-32px@3x.png",
+      "filename" : "Memories@3x.png",
       "scale" : "3x"
     }
   ],

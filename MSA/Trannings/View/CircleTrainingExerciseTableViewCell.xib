@@ -29,28 +29,32 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9hO-lz-lzC">
                         <rect key="frame" x="0.0" y="0.0" width="318" height="284.5"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HfE-Iu-59y">
+                                <rect key="frame" x="0.0" y="0.0" width="318" height="2"/>
+                                <color key="progressTintColor" red="0.015686274509803921" green="0.90980392156862744" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="HfE-Iu-59y" secondAttribute="trailing" id="9BB-qq-XTj"/>
+                            <constraint firstItem="HfE-Iu-59y" firstAttribute="leading" secondItem="9hO-lz-lzC" secondAttribute="leading" id="Yvp-lT-sS7"/>
+                            <constraint firstItem="HfE-Iu-59y" firstAttribute="top" secondItem="9hO-lz-lzC" secondAttribute="top" id="fg3-sV-6ry"/>
+                        </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Жим от груди" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5u-UO-PDx">
                         <rect key="frame" x="15" y="5" width="288" height="26.5"/>
                         <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="22"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" red="0.0" green="0.1843137255" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HfE-Iu-59y">
-                        <rect key="frame" x="15" y="36.5" width="288" height="6"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="6" id="59Z-cl-cXO"/>
-                        </constraints>
-                        <color key="progressTintColor" red="0.015686274509803921" green="0.90980392156862744" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
-                    </progressView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DTD-7h-H3J">
-                        <rect key="frame" x="50" y="44.5" width="218" height="194"/>
+                        <rect key="frame" x="50" y="41.5" width="218" height="197"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Подход #1 из N" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4lL-Ln-RM5">
                         <rect key="frame" x="16" y="252" width="112" height="19"/>
                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" red="0.0" green="0.1843137255" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cZe-dZ-DqE">
@@ -58,16 +62,18 @@
                         <subviews>
                             <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J7x-Ar-gCv">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="26"/>
+                                <color key="backgroundColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="15"/>
-                                <state key="normal" title="0" backgroundImage="small_primary"/>
+                                <state key="normal" title="0"/>
                             </button>
                             <button clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2x-ce-QOO">
                                 <rect key="frame" x="90" y="0.0" width="80" height="26"/>
+                                <color key="backgroundColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="xJH-kf-HgY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="15"/>
-                                <state key="normal" title="0" backgroundImage="small_primary"/>
+                                <state key="normal" title="0"/>
                             </button>
                         </subviews>
                         <constraints>
@@ -75,7 +81,7 @@
                         </constraints>
                     </stackView>
                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZI-OA-Aup">
-                        <rect key="frame" x="274" y="44.5" width="30" height="25"/>
+                        <rect key="frame" x="274" y="41.5" width="30" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="IIM-tM-wvB"/>
                             <constraint firstAttribute="width" constant="30" id="wy5-dD-dlV"/>
@@ -86,18 +92,15 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="9hO-lz-lzC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5bc-dr-tfx"/>
-                    <constraint firstItem="HfE-Iu-59y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="5hS-gy-SXg"/>
                     <constraint firstItem="9hO-lz-lzC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="9r8-tE-neW"/>
-                    <constraint firstItem="HfE-Iu-59y" firstAttribute="top" secondItem="Y5u-UO-PDx" secondAttribute="bottom" constant="5" id="CuF-G8-a6E"/>
                     <constraint firstAttribute="trailing" secondItem="cZe-dZ-DqE" secondAttribute="trailing" constant="15" id="DwL-vs-jnT"/>
                     <constraint firstAttribute="bottom" secondItem="cZe-dZ-DqE" secondAttribute="bottom" constant="20" id="LnG-7p-vda"/>
                     <constraint firstItem="DTD-7h-H3J" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="50" id="NSP-HJ-BHd"/>
                     <constraint firstItem="cZe-dZ-DqE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4lL-Ln-RM5" secondAttribute="trailing" constant="5" id="OVo-1b-hvF"/>
-                    <constraint firstItem="DTD-7h-H3J" firstAttribute="top" secondItem="HfE-Iu-59y" secondAttribute="bottom" constant="2" id="XAv-ZB-JEA"/>
+                    <constraint firstItem="DTD-7h-H3J" firstAttribute="top" secondItem="Y5u-UO-PDx" secondAttribute="bottom" constant="10" id="YvZ-Ep-mik"/>
                     <constraint firstItem="Y5u-UO-PDx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="aGX-r1-ATp"/>
-                    <constraint firstItem="CZI-OA-Aup" firstAttribute="top" secondItem="HfE-Iu-59y" secondAttribute="bottom" constant="2" id="cnv-6k-Aby"/>
-                    <constraint firstAttribute="trailing" secondItem="HfE-Iu-59y" secondAttribute="trailing" constant="15" id="dCd-8U-Vt6"/>
                     <constraint firstItem="cZe-dZ-DqE" firstAttribute="top" secondItem="DTD-7h-H3J" secondAttribute="bottom" constant="10" id="eg1-am-fCF"/>
+                    <constraint firstItem="CZI-OA-Aup" firstAttribute="top" secondItem="Y5u-UO-PDx" secondAttribute="bottom" constant="10" id="gJK-Z1-lcp"/>
                     <constraint firstAttribute="trailing" secondItem="Y5u-UO-PDx" secondAttribute="trailing" constant="15" id="h93-Eb-PAC"/>
                     <constraint firstItem="Y5u-UO-PDx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="iAk-eC-L6f"/>
                     <constraint firstAttribute="trailing" secondItem="DTD-7h-H3J" secondAttribute="trailing" constant="50" id="jPZ-th-tqC"/>
@@ -124,7 +127,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="roundtraining-active-32px" width="32" height="25"/>
-        <image name="small_primary" width="127" height="26"/>
+        <image name="roundtraining-active-32px" width="28" height="22"/>
     </resources>
 </document>

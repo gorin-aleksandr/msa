@@ -8,10 +8,6 @@
 
 import UIKit
 
-public let lightGREEN = UIColor(red: 4/255, green: 232/255, blue: 36/255, alpha: 1)
-public let lightRED = UIColor(red: 247/255, green: 23/255, blue: 53/255, alpha: 1)
-public let lightBLUE = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 0.10)
-
 class IterationsViewController: UIViewController {
 
     @IBOutlet weak var loadingView: UIView!
@@ -39,10 +35,10 @@ class IterationsViewController: UIViewController {
         manager.initView(view: self)
         manager.initFlowView(view: self)
         manager.setState(state: .iterationsOnly)
-        configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        configureUI()
         tableView.reloadData()
     }
     
@@ -57,7 +53,7 @@ class IterationsViewController: UIViewController {
     private func configureUI() {
         loadingView.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: true)
-        let attrs = [NSAttributedStringKey.foregroundColor: UIColor.black,
+        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         self.traningLabel.text = manager.getCurrentExercise()?.name
@@ -98,6 +94,9 @@ class IterationsViewController: UIViewController {
     @IBAction func backAction(_ sender: Any) {
         back()
     }
+    @IBAction func showExerciseInfo(_ sender: Any) {
+        performSegue(withIdentifier: "exerciseInfo", sender: nil)
+    }
     
     @objc
     func back() {
@@ -128,9 +127,15 @@ class IterationsViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "configureIteration" {
+        switch segue.identifier {
+        case "exerciseInfo":
+            guard let vc = segue.destination as? ExercisesInfoViewController else {return}
+            vc.execise = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", manager.getCurrentExercise()?.exerciseId ?? "")) ?? nil
+        case "configureIteration":
             guard let vc = segue.destination as? ConfigureTranningExersViewController else {return}
             vc.manager = self.manager
+        default:
+            return
         }
     }
     
