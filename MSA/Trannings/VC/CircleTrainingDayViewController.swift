@@ -22,6 +22,7 @@ class CircleTrainingDayViewController: UIViewController {
     @IBOutlet weak var pulseImageView: UIImageView!
     
     var manager = TrainingManager()
+    var heartBeatService = HeartBeatManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,12 @@ class CircleTrainingDayViewController: UIViewController {
         manager.initFlowView(view: self)
         configureUI()
         startTraining()
+        heartBeatService.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        heartBeatService.disconnect()
     }
 
     private func configureUI() {
@@ -165,6 +172,13 @@ extension CircleTrainingDayViewController: TrainingFlowDelegate {
             guard let cell = tableView.cellForRow(at: indexPath) as? CircleTrainingExerciseTableViewCell else {return}
             cell.bgView.backgroundColor = .white
         }
+    }
+}
+
+
+extension CircleTrainingDayViewController: HeartBeatDelegate {
+    func heartBitDidReceived(_ value: Int) {
+        pulseLabel.text = String(value)
     }
 }
 

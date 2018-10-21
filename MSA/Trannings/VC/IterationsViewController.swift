@@ -28,6 +28,7 @@ class IterationsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var manager = TrainingManager()
+    let heartBeatService = HeartBeatManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class IterationsViewController: UIViewController {
         manager.initView(view: self)
         manager.initFlowView(view: self)
         manager.setState(state: .iterationsOnly)
+        heartBeatService.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +50,7 @@ class IterationsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         manager.finish()
+        heartBeatService.disconnect()
     }
         
     private func configureUI() {
@@ -269,5 +272,11 @@ extension IterationsViewController: TrainingFlowDelegate {
             let cell = tableView.cellForRow(at: indexPath)
             cell?.backgroundColor = .white
         }
+    }
+}
+
+extension IterationsViewController: HeartBeatDelegate {
+    func heartBitDidReceived(_ value: Int) {
+        pulseLabel.text = String(value)
     }
 }
