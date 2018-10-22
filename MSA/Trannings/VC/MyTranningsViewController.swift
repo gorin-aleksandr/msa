@@ -20,12 +20,11 @@ class MyTranningsViewController: UIViewController {
     @IBOutlet weak var nextWeekButton: UIButton!
     @IBOutlet weak var prevWeekButton: UIButton!
     
-    let manager = TrainingManager()
+    var manager = TrainingManager(type: .my)
     var weekNumber = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         initialDataLoading()
     }
 

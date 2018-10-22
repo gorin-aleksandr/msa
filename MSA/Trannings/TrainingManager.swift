@@ -39,6 +39,11 @@ enum IterationState {
     case rest
 }
 
+enum TrainingType {
+    case my
+    case notMine(userId: String?)
+}
+
 class TrainingManager {
     
     let realm = RealmManager.shared
@@ -46,6 +51,20 @@ class TrainingManager {
     var dataSourceCopy = TrainingsDataSource()
     private var view: TrainingsViewDelegate?
     private var flowView: TrainingFlowDelegate?
+    
+    var trainingType: TrainingType
+    var sportsmanId: String? {
+        switch trainingType {
+        case .my:
+            return AuthModule.currUser.id
+        case .notMine(let id):
+            return id
+        }
+    }
+    
+    init(type: TrainingType) {
+        self.trainingType = type
+    }
     
     func initDataSource(dataSource: TrainingsDataSource) {
         self.dataSource = dataSource
@@ -165,7 +184,7 @@ class TrainingManager {
     }
     
     func editTraining(wiht id: Int, success: @escaping()->()) {
-        if let userId = AuthModule.currUser.id {
+        if let userId = sportsmanId {
 //            self.view?.startLoading()
             let newInfo = makeTrainingForFirebase(id: id, or: true)
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
@@ -207,7 +226,7 @@ class TrainingManager {
     }
     
     func loadTrainings() {
-        if let id = AuthModule.currUser.id {
+        if let id = sportsmanId {
 //            self.view?.startLoading()
             Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
                 self.observeTrainings(snapchot: snapchot)
@@ -246,7 +265,7 @@ class TrainingManager {
     }
     
     func deleteTraining(with id: String) {
-        if let userId = AuthModule.currUser.id {
+        if let userId = sportsmanId {
             self.view?.startLoading()
             Database.database().reference().child("Trainings").child(userId).child(id).removeValue { (error, ref) in
                 self.view?.finishLoading()

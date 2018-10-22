@@ -244,7 +244,7 @@
         <!--Мои тренировки-->
         <scene sceneID="rJa-zR-u3R">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="E78-Q0-tQd" customClass="MyTranningsViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyTranningsViewController" hidesBottomBarWhenPushed="YES" id="E78-Q0-tQd" customClass="MyTranningsViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rf8-CC-f5Y">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1236,6 +1236,6 @@
         <image name="title_timer_1" width="70" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yeK-gK-l00"/>
+        <segue reference="SEK-vf-cWp"/>
     </inferredMetricsTieBreakers>
 </document>

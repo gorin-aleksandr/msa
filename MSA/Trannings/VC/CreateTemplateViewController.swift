@@ -18,7 +18,7 @@ class CreateTemplateViewController: UIViewController {
     }
     @IBOutlet weak var picker: UIPickerView!
     
-    var manager = TrainingManager()
+    var manager = TrainingManager(type: .my)
     var createTapped = false
     var selectedRow = -1
     

@@ -62,7 +62,7 @@ class ConfigureTranningExersViewController: UIViewController {
     var startCheckOn00 = true
     var buttonsW: [NumberButtonView] = []
     var buttonsH: [NumberButtonView] = []
-    var manager = TrainingManager()
+    var manager = TrainingManager(type: .my)
     
     override func viewDidLoad() {
         super.viewDidLoad()

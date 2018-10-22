@@ -21,7 +21,7 @@ class CircleTrainingDayViewController: UIViewController {
     @IBOutlet weak var restOrWorkImageView: UIImageView!
     @IBOutlet weak var pulseImageView: UIImageView!
     
-    var manager = TrainingManager()
+    var manager = TrainingManager(type: .my)
     var heartBeatService = HeartBeatManager()
     
     override func viewDidLoad() {

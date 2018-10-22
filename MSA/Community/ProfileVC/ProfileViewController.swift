@@ -229,6 +229,9 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     @IBAction func foodButton(_ sender: Any) {
     }
     @IBAction func traningsButton(_ sender: Any) {
+        let destinationVC = UIStoryboard(name: "Trannings", bundle: nil).instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
+        destinationVC.manager.trainingType = .notMine(userId: profilePresenter.userId)
+        self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     @IBAction func closePreview(_ sender: Any) {

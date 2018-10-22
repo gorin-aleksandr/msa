@@ -19,7 +19,7 @@ class CalendarViewController: UIViewController {
     
     var calendarView: VACalendarView!
     var days = [TrainingDay]()
-    var manager = TrainingManager()
+    var manager = TrainingManager(type: .my)
     
     @IBAction func backAction(_ sender: Any) {
         back()

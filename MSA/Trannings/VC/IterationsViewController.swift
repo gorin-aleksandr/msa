@@ -27,7 +27,7 @@ class IterationsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var manager = TrainingManager()
+    var manager = TrainingManager(type: .my)
     let heartBeatService = HeartBeatManager()
     
     override func viewDidLoad() {
