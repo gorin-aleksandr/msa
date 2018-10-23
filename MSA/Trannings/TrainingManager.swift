@@ -61,6 +61,21 @@ class TrainingManager {
     func getExercisesOf(day: Int) -> [ExerciseInTraining] {
         return Array(dataSource?.currentWeek?.days[day].exercises ?? List<ExerciseInTraining>())
     }
+    
+    func isEmptyExercise() -> (Bool,[Int]?) {
+        var indexes = [Int]()
+        guard let exercises = dataSource?.currentDay?.exercises else {return (false,nil)}
+        for (index,ex) in exercises.enumerated() {
+            if ex.iterations.count == 0 {
+                indexes.append(index)
+            }
+        }
+        if indexes.isEmpty {
+            return (false,nil)
+        } else {
+            return (true,indexes)
+        }
+    }
 
     func getTrainings() -> [Training]? {
         return dataSource?.trainings

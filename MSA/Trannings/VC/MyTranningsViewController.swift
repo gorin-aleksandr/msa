@@ -233,14 +233,26 @@ class MyTranningsViewController: UIViewController {
         tableView.toggleSection(0)
     }
     
-
+    private func prepareForStrtTraining(round: Bool) {
+        let info = manager.isEmptyExercise()
+        if info.0 {
+            let array = (info.1)!.map{String($0+1)}
+            let joined = array.joined(separator: ", ")
+            AlertDialog.showAlert("Вы не можете начать тренировку!", message: "В упражнениях №\(joined) не добавнены подходы.", viewController: self)
+        } else {
+            if round {
+                manager.setIterationsForRound()
+            }
+            self.performSegue(withIdentifier: "roundTraining", sender: nil )
+        }
+    }
     
     @objc
     private func startTraining(sender: UIButton) {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
         manager.setState(state: .normal)
         if manager.getCurrentday()?.exercises.count != 0 {
-            self.performSegue(withIdentifier: "roundTraining", sender: nil )
+            prepareForStrtTraining(round: false)
         } else {
             AlertDialog.showAlert("Вы не можете начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
         }
@@ -251,8 +263,7 @@ class MyTranningsViewController: UIViewController {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
         manager.setState(state: .round)
         if manager.getCurrentday()?.exercises.count != 0 {
-            manager.setIterationsForRound()
-            self.performSegue(withIdentifier: "roundTraining", sender: nil )
+            prepareForStrtTraining(round: true)
         } else {
             AlertDialog.showAlert("Вы не можете начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
         }
