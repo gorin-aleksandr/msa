@@ -58,6 +58,10 @@ class TrainingManager {
         self.flowView = view
     }
     
+    func getExercisesOf(day: Int) -> [ExerciseInTraining] {
+        return Array(dataSource?.currentWeek?.days[day].exercises ?? List<ExerciseInTraining>())
+    }
+
     func getTrainings() -> [Training]? {
         return dataSource?.trainings
     }

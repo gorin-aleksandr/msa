@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enable = true
         
         configureProgressHud()
-        
+        initialConf()
         // Override point for customization after application launch.
         return true
     }
@@ -135,6 +135,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SVProgressHUD.setForegroundColor(.lightBlue)
     }
 
+    private func initialConf() {
+        window?.backgroundColor = .white
+    }
 
 }
 

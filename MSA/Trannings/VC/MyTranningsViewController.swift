@@ -239,7 +239,23 @@ class MyTranningsViewController: UIViewController {
     private func startTraining(sender: UIButton) {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
         manager.setState(state: .normal)
-        self.performSegue(withIdentifier: "roundTraining", sender: nil )
+        if manager.getCurrentday()?.exercises.count != 0 {
+            self.performSegue(withIdentifier: "roundTraining", sender: nil )
+        } else {
+            AlertDialog.showAlert("Вы не можете начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
+        }
+    }
+    
+    @objc
+    private func startRoundTraining(sender: UIButton) {
+        manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
+        manager.setState(state: .round)
+        if manager.getCurrentday()?.exercises.count != 0 {
+            manager.setIterationsForRound()
+            self.performSegue(withIdentifier: "roundTraining", sender: nil )
+        } else {
+            AlertDialog.showAlert("Вы не можете начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
+        }
     }
     
     @objc
@@ -262,14 +278,6 @@ class MyTranningsViewController: UIViewController {
             }
         }
         
-    }
-    
-    @objc
-    private func startRoundTraining(sender: UIButton) {
-        manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
-        manager.setState(state: .round)
-        manager.setIterationsForRound()
-        self.performSegue(withIdentifier: "roundTraining", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -342,23 +350,22 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         return 60
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == (manager.dataSource?.currentWeek?.days[indexPath.section].exercises.count ?? 0) {
+        if indexPath.row == (manager.getExercisesOf(day: indexPath.section).count) {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddExerciseToDayTableViewCell", for: indexPath) as? AddExerciseToDayTableViewCell else {return UITableViewCell()}
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExerciseTableViewCell", for: indexPath) as? ExerciseTableViewCell else {return UITableViewCell()}
-            if let exercise = manager.dataSource?.currentWeek?.days[indexPath.section].exercises[indexPath.row] {
-                if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", exercise.exerciseId)) {
-                    cell.exerciseNameLable.text = ex.name
-                    cell.exerciseImageView.sd_setImage(with: URL(string: ex.pictures.first?.url ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
-                }
+            let exercise = manager.getExercisesOf(day: indexPath.section)[indexPath.row]
+            if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", exercise.exerciseId)) {
+                cell.exerciseNameLable.text = ex.name
+                cell.exerciseImageView.sd_setImage(with: URL(string: ex.pictures.first?.url ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
             }
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (manager.dataSource?.currentWeek?.days[section].exercises.count ?? 0) + 1
+        return (manager.getExercisesOf(day: section).count) + 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -368,8 +375,8 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let day = manager.dataSource?.currentWeek?.days[indexPath.section] else {return}
         manager.setCurrent(day: day)
-        if indexPath.row != manager.dataSource?.currentWeek?.days[indexPath.section].exercises.count {
-            guard let ex = manager.dataSource?.currentWeek?.days[indexPath.section].exercises[indexPath.row] else {return}
+        if indexPath.row != manager.getExercisesOf(day: indexPath.section).count {
+            let ex = manager.getExercisesOf(day: indexPath.section)[indexPath.row]
             manager.setCurrent(exercise: ex)
             self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
         } else {
@@ -378,7 +385,12 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        switch indexPath.row {
+        case manager.getExercisesOf(day: indexPath.section).count:
+            return false
+        default:
+            return true
+        }
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -449,9 +461,7 @@ extension MyTranningsViewController: TrainingsViewDelegate {
 
 extension MyTranningsViewController: UITextFieldDelegate {
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        textField.text = ""
-    }
+    func textFieldDidBeginEditing(_ textField: UITextField) { }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         try! manager.realm.performWrite {
