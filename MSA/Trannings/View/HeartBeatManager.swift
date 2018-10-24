@@ -144,7 +144,8 @@ extension HeartBeatManager: CBPeripheralDelegate {
     }
     
     func disconnect() {
-        centralManager.cancelPeripheralConnection(heartRatePeripheral)
+        guard let device = heartRatePeripheral else { return }
+        centralManager.cancelPeripheralConnection(device)
     }
 }
 
