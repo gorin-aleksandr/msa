@@ -53,6 +53,7 @@ class TrainingManager {
     private var flowView: TrainingFlowDelegate?
     
     var trainingType: TrainingType
+    
     var sportsmanId: String? {
         switch trainingType {
         case .my:
@@ -204,7 +205,6 @@ class TrainingManager {
     
     func editTraining(wiht id: Int, success: @escaping()->()) {
         if let userId = sportsmanId {
-//            self.view?.startLoading()
             let newInfo = makeTrainingForFirebase(id: id, or: true)
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
                 self.view?.finishLoading()

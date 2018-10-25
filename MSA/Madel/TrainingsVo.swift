@@ -20,8 +20,6 @@ class TrainingTemplate: Object {
     
     @objc dynamic var wasSync: Bool = false
     
-    
-    
     override static func primaryKey() -> String? {
         return "id"
     }
