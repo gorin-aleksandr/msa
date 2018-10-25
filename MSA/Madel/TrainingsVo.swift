@@ -86,7 +86,7 @@ class TrainingDay: Object {
 }
 
 class ExerciseInTraining: Object {
-    @objc dynamic var id: Int = -1
+    @objc dynamic var id: String = ""
     @objc dynamic var name: String = ""
     @objc dynamic var exerciseId: String = ""
     @objc dynamic var byTrainer: Bool = false
@@ -98,15 +98,11 @@ class ExerciseInTraining: Object {
         return "id"
     }
     
-    func incrementID() -> Int {
-        let realm = try! Realm()
-        return (realm.objects(ExerciseInTraining.self).max(ofProperty: "id") as Int? ?? 0) + 1
-    }
 }
 
 class Iteration: Object {
-    @objc dynamic var id: Int = -1
-    @objc dynamic var exerciseInTrainingId: Int = -1
+    @objc dynamic var id: String = ""
+    @objc dynamic var exerciseInTrainingId: String = ""
     @objc dynamic var weight: Int = 0
     @objc dynamic var counts: Int = 0
     @objc dynamic var workTime: Int = 0
@@ -118,8 +114,4 @@ class Iteration: Object {
         return "id"
     }
     
-    func incrementID() -> Int {
-        let realm = try! Realm()
-        return (realm.objects(Iteration.self).max(ofProperty: "id") as Int? ?? 0) + 1
-    }
 }

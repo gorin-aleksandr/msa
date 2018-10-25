@@ -118,7 +118,7 @@ class TrainingManager {
         dataSource?.currentExerciseInDay = exercise
     }
     func getCurrentExercise() -> ExerciseInTraining? {
-        return realm.getElement(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "id = %d", dataSource?.currentExerciseInDay?.id ?? -1))
+        return realm.getElement(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "id = %@", dataSource?.currentExerciseInDay?.id ?? ""))
     }
     func setCurrent(iteration: Iteration) {
         dataSource?.currentIteration = iteration
@@ -138,11 +138,11 @@ class TrainingManager {
     func getWeek(by id: Int) -> TrainingWeek? {
         return realm.getElement(ofType: TrainingWeek.self, filterWith: NSPredicate(format: "id = %d", id))
     }
-    func getExercise(by id: Int) -> ExerciseInTraining? {
-        return realm.getElement(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "id = %d", id))
+    func getExercise(by id: String) -> ExerciseInTraining? {
+        return realm.getElement(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "id = %@", id))
     }
-    func getIteration(by id: Int) -> Iteration? {
-        return realm.getElement(ofType: Iteration.self, filterWith: NSPredicate(format: "id = %d", id))
+    func getIteration(by id: String) -> Iteration? {
+        return realm.getElement(ofType: Iteration.self, filterWith: NSPredicate(format: "id = %@", id))
     }
     func getTemplatesby(trainer id: Int) -> [TrainingTemplate]? {
         return realm.getArray(ofType: TrainingTemplate.self, filterWith: NSPredicate(format: "trianerId = %d", id))
@@ -419,15 +419,15 @@ class TrainingManager {
                             if let exercises = d["exercises"] as? [[String:Any]] {
                                 for e in exercises {
                                     let exercise = ExerciseInTraining()
-                                    exercise.id = e["id"] as! Int
+                                    exercise.id = e["id"] as? String ?? UUID().uuidString
                                     exercise.name = e["name"] as! String
                                     exercise.exerciseId = e["exerciseId"] as! String
                                     let exerciseIterations = List<Iteration>()
                                     if let iterations = e["iterations"] as? [[String:Any]] {
                                         for i in iterations {
                                             let iteration = Iteration()
-                                            iteration.id = i["id"] as! Int
-                                            iteration.exerciseInTrainingId = i["exerciseInTrainingId"] as! Int
+                                            iteration.id = i["id"] as? String ?? UUID().uuidString
+                                            iteration.exerciseInTrainingId = i["exerciseInTrainingId"] as? String ?? UUID().uuidString
                                             iteration.counts = i["counts"] as! Int
                                             iteration.weight = i["weight"] as! Int
                                             iteration.restTime = i["restTime"] as! Int

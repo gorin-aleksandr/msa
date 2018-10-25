@@ -247,7 +247,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
     
     private func addExToTraining(newExercise: Exercise, manager: TrainingManager) {
         let ex = ExerciseInTraining()
-        ex.id = ex.incrementID()
+        ex.id = UUID().uuidString
         ex.name = newExercise.name
         ex.exerciseId = newExercise.id
         try! manager.realm.performWrite {

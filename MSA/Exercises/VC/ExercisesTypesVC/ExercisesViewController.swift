@@ -186,7 +186,7 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
         if let manager = trainingManager {
             let newExercise = presenter.getCurrentExercise()
             let ex = ExerciseInTraining()
-            ex.id = ex.incrementID()
+            ex.id = UUID().uuidString
             ex.name = newExercise.name
             ex.exerciseId = newExercise.id
             try! manager.realm.performWrite {
