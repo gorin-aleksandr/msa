@@ -229,19 +229,32 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         }
         if let manager = trainingManager {
             let newExercise = exercise
-            let ex = ExerciseInTraining()
-            ex.id = ex.incrementID()
-            ex.name = newExercise.name
-            ex.exerciseId = newExercise.id
-            try! manager.realm.performWrite {
-                manager.getCurrentday()?.exercises.append(ex)
-                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
-                self.back()
+            if manager.sportsmanId != AuthModule.currUser.id {
+                let newExMan = NewExerciseManager()
+                newExMan.addExerciseToUser(id: manager.sportsmanId ?? "", ex: newExercise, completion: {
+                    self.addExToTraining(newExercise: newExercise, manager: manager)
+                }) { (error) in
+                    AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
+                }
+            } else {
+                addExToTraining(newExercise: newExercise, manager: manager)
             }
         } else {
             performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func addExToTraining(newExercise: Exercise, manager: TrainingManager) {
+        let ex = ExerciseInTraining()
+        ex.id = ex.incrementID()
+        ex.name = newExercise.name
+        ex.exerciseId = newExercise.id
+        try! manager.realm.performWrite {
+            manager.getCurrentday()?.exercises.append(ex)
+            manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+            self.back()
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

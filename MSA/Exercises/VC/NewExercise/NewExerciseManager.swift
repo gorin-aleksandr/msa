@@ -100,9 +100,8 @@ class NewExerciseManager {
         }
     }
     
-    func sendNewExerciseInfoBlock(id: String) {
+    func sendNewExerciseInfoBlock(id: String, completion: @escaping ()->()) {
         let newInfo = makeExerciseForFirebase(id: id, or: false)
-//        let index = (RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises.count ?? 0) + ((RealmManager.shared.getArray(ofType: Exercise.self)).count)
         guard let index = newInfo["id"] as? String else {return}
         Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
@@ -110,10 +109,30 @@ class NewExerciseManager {
                 RealmManager.shared.saveObject(self.makeModel(), update: true)
                 self.view?.exerciseCreated()
                 self.finish()
+                completion()
             } else {
                 self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
             }
         }
+    }
+    
+    func addExerciseToUser(id: String, ex: Exercise, completion: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
+        fillData(exercise: ex)
+        let newInfo = makeExerciseForFirebase(id: id, or: true)
+        guard let index = newInfo["id"] as? String else {return}
+        Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
+            if error == nil {
+                completion()
+                self.finish()
+            } else {
+                failure(error)
+                self.finish()
+            }
+        }
+    }
+    
+    func fillData(exercise: Exercise) {
+        self.dataSource.newExerciseModel = exercise
     }
     
     func makeExerciseForFirebase(id: String, or edit: Bool) -> [String:Any] {
@@ -158,7 +177,7 @@ class NewExerciseManager {
                     }
                     self.uploadPhoto(images: images, success: { (success) in
                         if success {
-                            self.sendNewExerciseInfoBlock(id: id)
+                            self.sendNewExerciseInfoBlock(id: id, completion: {})
                         } else {
                             self.view?.finishLoading()
                         }

@@ -27,10 +27,6 @@ class Exercise: Object {
         return "id"
     }
     
-    func incrementID() -> Int {
-        let realm = try! Realm()
-        return (realm.objects(Exercise.self).max(ofProperty: "id") as Int? ?? 0) + 1
-    }
 }
 
 class MyExercises: Object {
