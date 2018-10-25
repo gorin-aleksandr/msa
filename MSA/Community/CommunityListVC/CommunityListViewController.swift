@@ -83,6 +83,11 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
             xOffset = xOffset + buttonPadding + button.frame.size.width
             filterScrollView.addSubview(button)
             buttonIndex += 1
+            if button.isSelected  {
+                button.backgroundColor = lightWhiteBlue
+            } else {
+                button.backgroundColor = darkCyanGreen45
+            }
         }
         filterScrollView.contentSize = CGSize(width: xOffset, height: filterScrollView.frame.height)
     }
@@ -137,6 +142,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
             navigationItem.searchController = nil
             navigationItem.searchController = searchController
         }
+        searchController.searchBar.tintColor = .darkCyanGreen45
     }
     
     private func hideableNavigationBar(_ hide: Bool) {
@@ -146,8 +152,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     }
     
     private func setupNavigationBar() {
-        navigationController?.navigationBar.tintColor = .black
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        navigationController?.navigationBar.tintColor = UIColor.darkCyanGreen
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: darkCyanGreen, .font: UIFont(name: "Rubik-Bold", size: 17)!]
     }
     
     private func moveToUserViewController(with user: UserVO) {
