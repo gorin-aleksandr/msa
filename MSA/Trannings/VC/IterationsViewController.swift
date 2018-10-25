@@ -69,22 +69,40 @@ class IterationsViewController: UIViewController {
     }
     
     @objc private func nextIterationstate(_ sender: UIButton) {
-        manager.nextStateOrIteration()
+        if iterationsPresent() {
+            manager.nextStateOrIteration()
+        }
     }
 
     @objc private func stopIteration(_ sender: UIButton) {
-        manager.fullStop()
+        if iterationsPresent() {
+            manager.fullStop()
+        }
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
-        manager.pauseIteration()
+        if iterationsPresent() {
+            manager.pauseIteration()
+        }
     }
     
     @objc private func resumeIteration(_ sender: UIButton) {
-        manager.startOrContineIteration()
+        if iterationsPresent() {
+            manager.startOrContineIteration()
+        } else {
+            AlertDialog.showAlert("Вы не можете начать!", message: "Добавьте хотя бы одну итерацию.", viewController: self)
+        }
     }
     @objc private func startIteration(_ sender: UIButton) {
         manager.startExercise(from: sender.tag)
+    }
+    
+    private func iterationsPresent() -> Bool {
+        if manager.getCurrentExercise()?.iterations.count == 0 {
+            return false
+        } else {
+            return true
+        }
     }
     
     private func configureTableView() {

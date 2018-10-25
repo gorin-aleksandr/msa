@@ -40,10 +40,16 @@ class UserSignInPresenter {
                     return
             } else if error?.localizedDescription == AuthErrors.noSuchUser.rawValue {
                 self.view?.finishLoading()
-                self.view?.notLogged(resp: "Нету такого пользователя")
+                self.view?.notLogged(resp: "Неверный пароль.")
+            } else if error?.localizedDescription == AuthErrors.noRegistratedUser.rawValue {
+                self.view?.finishLoading()
+                self.view?.notLogged(resp: "Пользователь не зарегистрирован.")
+            } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
+                self.view?.finishLoading()
+                self.view?.notLogged(resp: "Неверный формат email.")
             } else {
                 self.view?.finishLoading()
-                self.view?.notLogged(resp: "Ошибка авторизации")
+                self.view?.notLogged(resp: "Повторите позже.")
             }
         }
     }
