@@ -40,8 +40,13 @@ class NewExerciseViewController: UIViewController {
     }
     @IBOutlet weak var picker: UIPickerView!
     
+    var presentedVC: UIViewController?
+    
     var selectedRow = -1
+    var id = ""
     var exercManager = NewExerciseManager.shared
+    var presenter: ExersisesTypesPresenter?
+
     var imageManager: SelectingImagesManager?
 
     override func viewDidLoad() {
@@ -78,6 +83,7 @@ class NewExerciseViewController: UIViewController {
     }
     
     func initialConfigurations() {
+        id = exercManager.dataSource.newExerciseModel.id
         imageManager = ImageManager(presentingViewController: self)
         exercManager.attachView(view: self)
         picker.delegate = self
@@ -96,6 +102,8 @@ class NewExerciseViewController: UIViewController {
         self.tableView.register(UINib(nibName: "CreateExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "CreateExerciseTableViewCell")
         self.tableView.register(UINib(nibName: "AddImagesTableViewCell", bundle: nil), forCellReuseIdentifier: "AddImagesTableViewCell")
         self.tableView.register(UINib(nibName: "LoadVideoTableViewCell", bundle: nil), forCellReuseIdentifier: "LoadVideoTableViewCell")
+        self.tableView.register(UINib(nibName: "DeleteExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "DeleteExerciseTableViewCell")
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
@@ -314,8 +322,17 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
     
+    func configureDeleteCell(indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "DeleteExerciseTableViewCell", for:  indexPath) as! DeleteExerciseTableViewCell
+        return cell
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        if exercManager.dataSource.editMode {
+            return 10
+        } else {
+            return 9
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -338,6 +355,8 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
             return configureVideoCell(indexPath: indexPath)
         case 8:
             return configureFinalCell(indexPath: indexPath)
+        case 9:
+            return configureDeleteCell(indexPath: indexPath)
         default:
             return UITableViewCell()
         }
@@ -357,8 +376,9 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
             } else {
                 return UITableViewAutomaticDimension
             }
-        case 8:
+        case 8, 9:
             return 60
+        
         default:
             return UITableViewAutomaticDimension
         }
@@ -367,13 +387,14 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedRow = indexPath.row
-        if selectedRow == 2 || selectedRow == 3 {
+        switch selectedRow {
+        case 2,3:
             picker.reloadAllComponents()
             UIView.animate(withDuration: 0.3) {
                 self.greyView.isHidden = false
                 self.viewWithPicker.alpha = 1
             }
-        } else if selectedRow == 8 {
+        case 8:
             if exercManager.dataSource.editMode {
                 updateExercise()
             } else {
@@ -381,7 +402,18 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
             }
             exercManager.dataSource.createButtonTapped = true
             tableView.reloadData()
+        case 9:
+            startLoading()
+            exercManager.deleteExercise(deleted: {
+                self.exerciseDeleted()
+            }, failure: {_ in
+                self.finishLoading()
+                AlertDialog.showAlert("Ошибка удаления", message: "Повторите позже", viewController: self)
+            })
+        default:
+            return
         }
+        
     }
     
     func updateExercise() {
@@ -441,6 +473,25 @@ extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 extension NewExerciseViewController: NewExerciseProtocol {
     func exerciseUpdated() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func exerciseDeleted() {
+        if let exerss = presenter?.getCurrentTypeExerceses() {
+            for (index,ex) in exerss.enumerated() {
+                if id == ex.id {
+                    presenter?.deleteAt(i: index)
+                    break
+                }
+            }
+        }
+        if let vc = presentedVC as? ExercisesInfoViewController {
+            let index = (vc.navigationController?.viewControllers.count)! - 1
+            vc.navigationController?.viewControllers.remove(at: index)
+        }
+        delay(sec: 1) {
+            self.finishLoading()
+            self.exerciseUpdated()
+        }
     }
     
     func exerciseCreated() {

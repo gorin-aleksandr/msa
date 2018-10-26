@@ -92,7 +92,7 @@ class ExercisesViewController: UIViewController {
     
     @objc func exerciseAddedN(notfication: NSNotification) {
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
-        presenter.getMyExercises()
+        getFromRealm()
     }
     
     private func configureTable_CollectionView() {

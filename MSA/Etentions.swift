@@ -29,6 +29,12 @@ public func setShadow(outerView: UIView, shadowOpacity: Float) {
     outerView.layer.shadowPath = UIBezierPath(roundedRect: outerView.bounds, cornerRadius: 10).cgPath
 }
 
+public func delay(sec: Double, function: @escaping ()->()) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + sec, execute: {
+        function()
+    })
+}
+
 extension UITableView {
     //    func reloadData(with animation: UITableViewRowAnimation) {
     //        reloadSections(IndexSet(integersIn: 0..<numberOfSections), with: animation)

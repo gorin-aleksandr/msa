@@ -73,7 +73,7 @@ class ExersisesTypesPresenter {
     }
     func getMyExercisesFromRealm() {
         if let _ = AuthModule.currUser.id {
-            exercises.ownExercises = Array(realmManager.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
+            exercises.ownExercises = Array(realmManager.getArray(ofType: MyExercises.self).last?.myExercises ?? List<Exercise>())
             self.view?.myExercisesLoaded()
         }
     }
@@ -109,7 +109,7 @@ class ExersisesTypesPresenter {
     func deleteExercise(with id: String) {
         if let userId = AuthModule.currUser.id {
             view?.startLoading()
-            guard let object = self.realmManager.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %d", id)) else {return}
+            guard let object = self.realmManager.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", id)) else {return}
             self.realmManager.deleteObject(object)
             Database.database().reference().child("ExercisesByTrainers").child(userId).child("\(id)").removeValue { (error, ref) in
                 self.view?.finishLoading()
@@ -315,6 +315,10 @@ class ExersisesTypesPresenter {
     
     func getCurrentTypeExerceses() -> [Exercise] {
         return exercises.currentTypeExercisesArray
+    }
+    
+    func deleteAt(i: Int) {
+        exercises.currentTypeExercisesArray.remove(at: i)
     }
     
     func getFiltersByType(with ids: [Int]) -> [ExerciseTypeFilter]? {

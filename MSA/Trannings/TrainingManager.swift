@@ -97,6 +97,10 @@ class TrainingManager {
         }
     }
 
+    func getWeeksCount() -> Int {
+        return dataSource?.currentTraining?.weeks.count ?? 0
+    }
+    
     func getTrainings() -> [Training]? {
         return dataSource?.trainings
     }

@@ -17,7 +17,8 @@ class ExercisesInfoViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     
     var execise: Exercise? = nil
-    
+    var presenter: ExersisesTypesPresenter?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -82,6 +83,8 @@ class ExercisesInfoViewController: UIViewController {
         }
         manager.dataSource.pictures = pictures
         destinationVC.exercManager = manager
+        destinationVC.presenter = self.presenter
+        destinationVC.presentedVC = self.self
         let navigationController = UINavigationController(rootViewController: destinationVC)
         self.present(navigationController, animated: true, completion: nil)
     }

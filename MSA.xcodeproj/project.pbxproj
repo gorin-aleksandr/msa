@@ -27,6 +27,8 @@
 		2934806F20E90AD60039028E /* LoadVideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934806D20E90AD60039028E /* LoadVideoTableViewCell.swift */; };
 		2934807020E90AD60039028E /* LoadVideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2934806E20E90AD60039028E /* LoadVideoTableViewCell.xib */; };
 		2934807220E92DF90039028E /* NewExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934807120E92DF90039028E /* NewExerciseViewController.swift */; };
+		293B06872183608B00E2EEED /* DeleteExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293B06852183608B00E2EEED /* DeleteExerciseTableViewCell.swift */; };
+		293B06882183608B00E2EEED /* DeleteExerciseTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 293B06862183608B00E2EEED /* DeleteExerciseTableViewCell.xib */; };
 		2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2940A35120D9023E00EBAE84 /* ExercisesInfoViewController.swift */; };
 		2940A35520D9081B00EBAE84 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2940A35320D9081B00EBAE84 /* TextTableViewCell.swift */; };
 		2940A35620D9081B00EBAE84 /* TextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2940A35420D9081B00EBAE84 /* TextTableViewCell.xib */; };
@@ -70,6 +72,8 @@
 		299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299B58F120868DB600CBE646 /* GalleryDataPresenter.swift */; };
 		29A169332048342C006864C2 /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A169322048342C006864C2 /* Profile.storyboard */; };
 		29A16935204836C8006864C2 /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A16934204836C8006864C2 /* BasicViewController.swift */; };
+		29A7FE9F2183DE0900DDBC0F /* addWeekDayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29A7FE9E2183DE0900DDBC0F /* addWeekDayView.xib */; };
+		29A7FEA12183DE2200DDBC0F /* addWeekDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A7FEA02183DE2200DDBC0F /* addWeekDayView.swift */; };
 		29AC912820CDA73E003F8152 /* Trannings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29AC912720CDA73E003F8152 /* Trannings.storyboard */; };
 		29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0971F20D4D38500CA7219 /* ExercisesForTypeViewController.swift */; };
 		29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B0972120D4DFAA00CA7219 /* FilterCollectionViewCell.swift */; };
@@ -166,6 +170,8 @@
 		2934806D20E90AD60039028E /* LoadVideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadVideoTableViewCell.swift; sourceTree = "<group>"; };
 		2934806E20E90AD60039028E /* LoadVideoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadVideoTableViewCell.xib; sourceTree = "<group>"; };
 		2934807120E92DF90039028E /* NewExerciseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewExerciseViewController.swift; sourceTree = "<group>"; };
+		293B06852183608B00E2EEED /* DeleteExerciseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteExerciseTableViewCell.swift; sourceTree = "<group>"; };
+		293B06862183608B00E2EEED /* DeleteExerciseTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeleteExerciseTableViewCell.xib; sourceTree = "<group>"; };
 		2940A35120D9023E00EBAE84 /* ExercisesInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesInfoViewController.swift; sourceTree = "<group>"; };
 		2940A35320D9081B00EBAE84 /* TextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		2940A35420D9081B00EBAE84 /* TextTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextTableViewCell.xib; sourceTree = "<group>"; };
@@ -209,6 +215,8 @@
 		299B58F120868DB600CBE646 /* GalleryDataPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryDataPresenter.swift; sourceTree = "<group>"; };
 		29A169322048342C006864C2 /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		29A16934204836C8006864C2 /* BasicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
+		29A7FE9E2183DE0900DDBC0F /* addWeekDayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = addWeekDayView.xib; sourceTree = "<group>"; };
+		29A7FEA02183DE2200DDBC0F /* addWeekDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addWeekDayView.swift; sourceTree = "<group>"; };
 		29AC912720CDA73E003F8152 /* Trannings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Trannings.storyboard; sourceTree = "<group>"; };
 		29B0971F20D4D38500CA7219 /* ExercisesForTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesForTypeViewController.swift; sourceTree = "<group>"; };
 		29B0972120D4DFAA00CA7219 /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -449,6 +457,8 @@
 				2934806A20E904520039028E /* ImageCollectionViewCell.xib */,
 				29F9F2322147B537006EDC6A /* CreateExerciseTableViewCell.swift */,
 				29F9F2312147B534006EDC6A /* CreateExerciseTableViewCell.xib */,
+				293B06852183608B00E2EEED /* DeleteExerciseTableViewCell.swift */,
+				293B06862183608B00E2EEED /* DeleteExerciseTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -573,6 +583,8 @@
 				29F9F2102147AE80006EDC6A /* TimeView.swift */,
 				29F9F2112147AE80006EDC6A /* CircleTrainingExerciseTableViewCell.xib */,
 				353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */,
+				29A7FE9E2183DE0900DDBC0F /* addWeekDayView.xib */,
+				29A7FEA02183DE2200DDBC0F /* addWeekDayView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -761,6 +773,7 @@
 				299B548F20A0D38B004E60A2 /* Rubik-BlackItalic.ttf in Resources */,
 				2940A35620D9081B00EBAE84 /* TextTableViewCell.xib in Resources */,
 				2934806020E8FCB10039028E /* infoTextTableViewCell.xib in Resources */,
+				29A7FE9F2183DE0900DDBC0F /* addWeekDayView.xib in Resources */,
 				29F9F2332147B537006EDC6A /* CreateExerciseTableViewCell.xib in Resources */,
 				299B548820A0D38B004E60A2 /* Rubik-Bold.ttf in Resources */,
 				2934806C20E904520039028E /* ImageCollectionViewCell.xib in Resources */,
@@ -770,6 +783,7 @@
 				299B548C20A0D38B004E60A2 /* Rubik-Italic.ttf in Resources */,
 				299B548A20A0D38B004E60A2 /* Rubik-Medium.ttf in Resources */,
 				29AC912820CDA73E003F8152 /* Trannings.storyboard in Resources */,
+				293B06882183608B00E2EEED /* DeleteExerciseTableViewCell.xib in Resources */,
 				299B548E20A0D38B004E60A2 /* OFL.txt in Resources */,
 				29160B4D2035AA3B00DA7227 /* Assets.xcassets in Resources */,
 				2940A36420D90E1E00EBAE84 /* TextViewTableViewCell.xib in Resources */,
@@ -919,6 +933,7 @@
 				29F9F2512147B5B8006EDC6A /* VACalendarMonthDelegate.swift in Sources */,
 				2934806720E8FF290039028E /* AddImagesTableViewCell.swift in Sources */,
 				29C4A3F32038B68F00F2A1BB /* UserInfoViewController.swift in Sources */,
+				29A7FEA12183DE2200DDBC0F /* addWeekDayView.swift in Sources */,
 				2934806B20E904520039028E /* ImageCollectionViewCell.swift in Sources */,
 				2940A35B20D908E400EBAE84 /* ImagesTableViewCell.swift in Sources */,
 				2934807220E92DF90039028E /* NewExerciseViewController.swift in Sources */,
@@ -934,6 +949,7 @@
 				2962D48320D2AAF000870953 /* ExercisesCollectionViewCell.swift in Sources */,
 				2940A35F20D90C9B00EBAE84 /* PlayVideoTableViewCell.swift in Sources */,
 				29F9F22D2147AE82006EDC6A /* CalendarViewController.swift in Sources */,
+				293B06872183608B00E2EEED /* DeleteExerciseTableViewCell.swift in Sources */,
 				35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */,
 				29F9F24E2147B5B8006EDC6A /* VADayView.swift in Sources */,
 				295A4EEB203EC72B00124A07 /* EmailPasswordViewController.swift in Sources */,
