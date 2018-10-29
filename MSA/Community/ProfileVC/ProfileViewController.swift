@@ -69,6 +69,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     override func viewWillAppear(_ animated: Bool) {
         configureProfileView()
         setNavigationBarTransparent()
+        self.tabBarController?.tabBar.isHidden = false
         
         //navigationController?.setNavigationBarHidden(false, animated: true)
     }
@@ -164,11 +165,12 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     
     @objc func openAvatar(sender: UIButton!) {
         if let avatar = profilePresenter.avatar {
-            UIView.animate(withDuration: 0.5) {
-                self.imagePreviewView.alpha = 1
-                self.tabBarController?.tabBar.isHidden = true
+            UIView.animate(withDuration: 0.5) { [weak self] in
+                self?.imagePreviewView.alpha = 1
+                self?.tabBarController?.tabBar.isHidden = true
+                self?.navigationController?.navigationBar.isHidden = true
                 if let imgUrl = URL(string: avatar) {
-                    self.previewImage.sd_setImage(with: imgUrl, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                    self?.previewImage.sd_setImage(with: imgUrl, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
                 }
             }
         }
@@ -235,11 +237,12 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     }
     
     @IBAction func closePreview(_ sender: Any) {
-        UIView.animate(withDuration: 0.5) {
-            self.imagePreviewView.alpha = 0
-            self.previewImage.image = nil
-            self.tabBarController?.tabBar.isHidden = false
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            self?.imagePreviewView.alpha = 0
+            self?.previewImage.image = nil
+            self?.tabBarController?.tabBar.isHidden = false
         }
+        navigationController?.navigationBar.isHidden = false
     }
 }
 

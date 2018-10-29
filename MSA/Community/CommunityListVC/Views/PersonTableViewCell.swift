@@ -78,20 +78,20 @@ class PersonTableViewCell: UITableViewCell {
     func setupCell(basedOn state: PersonState, isTrainerEnabled: Bool) {
         switch state {
         case .friend:
-            setAvatarBorder(width: 2, color: UIColor.lightBlue.cgColor)
-            userTypeView.backgroundColor = .lightBlue
+            setAvatarBorder(width: 2, color: UIColor.lightWhiteBlue.cgColor)
+            userTypeView.backgroundColor = .lightWhiteBlue
             addButton.isEnabled = isTrainerEnabled
         case .trainersSportsman:
-            setAvatarBorder(width: 2, color: UIColor.lightBlue.cgColor)
-            userTypeView.backgroundColor = .lightBlue
+            setAvatarBorder(width: 2, color: UIColor.lightWhiteBlue.cgColor)
+            userTypeView.backgroundColor = .lightWhiteBlue
             addButton.isEnabled = false
         case .userTrainer:
-            setAvatarBorder(width: 2, color: UIColor.deepPink.cgColor)
-            userTypeView.backgroundColor = .deepPink
+            setAvatarBorder(width: 2, color: UIColor.lightGREEN.cgColor)
+            userTypeView.backgroundColor = .lightGREEN
             addButton.isEnabled = false
         default:
             setAvatarBorder(width: 0, color: nil)
-            userTypeView.backgroundColor = .msaBlack
+            userTypeView.backgroundColor = .darkCyanGreen
             addButton.isEnabled = true
         }
     }

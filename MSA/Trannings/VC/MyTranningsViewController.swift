@@ -25,10 +25,11 @@ class MyTranningsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialDataLoading()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        initialDataLoading()
         initialViewConfiguration()
         weekNumber = manager.getWeekNumber()
         weekLabel.text = "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
