@@ -274,6 +274,43 @@
                                 <rect key="frame" x="0.0" y="142" width="375" height="525"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xmr-2k-lQ2">
+                                <rect key="frame" x="32" y="309.5" width="311" height="48"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_white" translatesAutoresizingMaskIntoConstraints="NO" id="GiY-H1-yE2">
+                                        <rect key="frame" x="20" y="14" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="9Ux-cZ-YTM"/>
+                                            <constraint firstAttribute="height" constant="20" id="Jt7-KM-uYr"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить неделю/день" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Mh-OR-CHB">
+                                        <rect key="frame" x="55" y="14.5" width="241" height="19"/>
+                                        <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wGz-tw-Wrp">
+                                        <rect key="frame" x="0.0" y="0.0" width="311" height="48"/>
+                                        <connections>
+                                            <action selector="saveTemplate:" destination="E78-Q0-tQd" eventType="touchUpInside" id="3PA-p7-Ssn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.49411764705882355" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="wGz-tw-Wrp" secondAttribute="bottom" id="9cI-9H-3SA"/>
+                                    <constraint firstItem="8Mh-OR-CHB" firstAttribute="leading" secondItem="GiY-H1-yE2" secondAttribute="trailing" constant="15" id="Czx-lG-uOX"/>
+                                    <constraint firstItem="wGz-tw-Wrp" firstAttribute="top" secondItem="Xmr-2k-lQ2" secondAttribute="top" id="QoX-D6-BMh"/>
+                                    <constraint firstAttribute="trailing" secondItem="wGz-tw-Wrp" secondAttribute="trailing" id="Xh9-bu-uHX"/>
+                                    <constraint firstAttribute="height" constant="48" id="ZEn-Uw-0L1"/>
+                                    <constraint firstItem="GiY-H1-yE2" firstAttribute="leading" secondItem="Xmr-2k-lQ2" secondAttribute="leading" constant="20" id="bGf-sT-JF8"/>
+                                    <constraint firstItem="GiY-H1-yE2" firstAttribute="centerY" secondItem="Xmr-2k-lQ2" secondAttribute="centerY" id="bUa-oj-Qre"/>
+                                    <constraint firstAttribute="trailing" secondItem="8Mh-OR-CHB" secondAttribute="trailing" constant="15" id="i9X-Vp-n8s"/>
+                                    <constraint firstItem="wGz-tw-Wrp" firstAttribute="leading" secondItem="Xmr-2k-lQ2" secondAttribute="leading" id="uUl-FB-FS7"/>
+                                    <constraint firstItem="8Mh-OR-CHB" firstAttribute="centerY" secondItem="Xmr-2k-lQ2" secondAttribute="centerY" id="wZk-wo-CDC"/>
+                                </constraints>
+                            </view>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j1E-9p-HB5">
                                 <rect key="frame" x="0.0" y="100" width="375" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -371,9 +408,12 @@
                         <constraints>
                             <constraint firstItem="UuN-kq-V4R" firstAttribute="bottom" secondItem="hZZ-lK-zUG" secondAttribute="bottom" id="1KZ-uo-WR0"/>
                             <constraint firstItem="j1E-9p-HB5" firstAttribute="leading" secondItem="hZZ-lK-zUG" secondAttribute="leading" id="3qi-vW-9kv"/>
+                            <constraint firstItem="Xmr-2k-lQ2" firstAttribute="centerX" secondItem="Rf8-CC-f5Y" secondAttribute="centerX" id="Bja-2W-9FS"/>
                             <constraint firstItem="hZZ-lK-zUG" firstAttribute="bottom" secondItem="M8B-Mh-1hH" secondAttribute="bottom" id="EVX-yv-2Gk"/>
+                            <constraint firstItem="hZZ-lK-zUG" firstAttribute="trailing" secondItem="Xmr-2k-lQ2" secondAttribute="trailing" constant="32" id="FHj-og-ON2"/>
                             <constraint firstItem="8I7-J1-LcI" firstAttribute="top" secondItem="wHj-Hs-h6Q" secondAttribute="bottom" constant="1" id="FPd-C9-uq4"/>
                             <constraint firstItem="M8B-Mh-1hH" firstAttribute="top" secondItem="8I7-J1-LcI" secondAttribute="bottom" constant="-9" id="IFF-9N-WAg"/>
+                            <constraint firstItem="Xmr-2k-lQ2" firstAttribute="leading" secondItem="hZZ-lK-zUG" secondAttribute="leading" constant="32" id="KHa-rb-zh3"/>
                             <constraint firstItem="8I7-J1-LcI" firstAttribute="trailing" secondItem="hZZ-lK-zUG" secondAttribute="trailing" id="KjQ-vt-s31"/>
                             <constraint firstItem="hZZ-lK-zUG" firstAttribute="trailing" secondItem="M8B-Mh-1hH" secondAttribute="trailing" id="Knl-lK-qp3"/>
                             <constraint firstItem="UuN-kq-V4R" firstAttribute="leading" secondItem="hZZ-lK-zUG" secondAttribute="leading" id="NoV-TN-sF7"/>
@@ -382,6 +422,7 @@
                             <constraint firstItem="8I7-J1-LcI" firstAttribute="leading" secondItem="hZZ-lK-zUG" secondAttribute="leading" id="e7A-IL-DxH"/>
                             <constraint firstItem="wHj-Hs-h6Q" firstAttribute="top" secondItem="hZZ-lK-zUG" secondAttribute="top" id="ejh-g1-dbW"/>
                             <constraint firstItem="j1E-9p-HB5" firstAttribute="top" secondItem="wHj-Hs-h6Q" secondAttribute="bottom" id="jcI-xj-SoK"/>
+                            <constraint firstItem="Xmr-2k-lQ2" firstAttribute="centerY" secondItem="Rf8-CC-f5Y" secondAttribute="centerY" id="nK0-7n-mTx"/>
                             <constraint firstItem="M8B-Mh-1hH" firstAttribute="leading" secondItem="hZZ-lK-zUG" secondAttribute="leading" id="qme-Be-UG8"/>
                             <constraint firstItem="j1E-9p-HB5" firstAttribute="trailing" secondItem="hZZ-lK-zUG" secondAttribute="trailing" id="wuz-Ui-SXC"/>
                             <constraint firstItem="wHj-Hs-h6Q" firstAttribute="leading" secondItem="hZZ-lK-zUG" secondAttribute="leading" id="yBs-3p-cbi"/>
@@ -445,6 +486,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="0.0" height="0.0"/>
                     <connections>
+                        <outlet property="addDayView" destination="Xmr-2k-lQ2" id="Xb9-5g-S7u"/>
                         <outlet property="loadingView" destination="UuN-kq-V4R" id="bKl-eF-0aI"/>
                         <outlet property="nextWeekButton" destination="0ZC-Kp-qls" id="A3z-mi-WTh"/>
                         <outlet property="prevWeekButton" destination="F7H-Rg-du1" id="qro-hl-WJk"/>

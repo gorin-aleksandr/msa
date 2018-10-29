@@ -36,11 +36,7 @@ class MyExercises: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
-    
-    func incrementID() -> Int {
-        let realm = try! Realm()
-        return (realm.objects(MyExercises.self).max(ofProperty: "id") as Int? ?? 0) + 1
-    }
+
 }
 
 class Image: Object {

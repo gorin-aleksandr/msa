@@ -313,7 +313,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func logout(_ sender: Any) {
         presenter.deleteUserBlock(context: context) { (loggedOut) in
         self.presenter.clearRealm()
-            if loggedOut {
+        if loggedOut {
                 let storyBoard = UIStoryboard(name: "Main", bundle:nil)
                 let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainNVC") as! UINavigationController
                 self.navigationController?.show(nextViewController, sender: self)

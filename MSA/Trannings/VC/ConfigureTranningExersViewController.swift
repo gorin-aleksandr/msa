@@ -114,7 +114,7 @@ class ConfigureTranningExersViewController: UIViewController {
     }
     
     func saveChanges() {
-        let iteration = manager.realm.getElement(ofType: Iteration.self, filterWith: NSPredicate(format: "id = %d", manager.getCurrentIteration()?.id ?? -1))
+        let iteration = manager.realm.getElement(ofType: Iteration.self, filterWith: NSPredicate(format: "id = %@", manager.getCurrentIteration()?.id ?? ""))
         try! manager.realm.performWrite {
             iteration?.workTime = (workTime.0 * 60) + workTime.1
             iteration?.restTime = (restTime.0 * 60) + restTime.1

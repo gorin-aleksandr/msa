@@ -231,6 +231,15 @@ class EditProfilePresenter {
         print("deinit")
     }
     
+    func clearDB() {
+        let realm = try! Realm()
+        let trainings = realm.objects(Training.self)
+        let exercises = realm.objects(Exercise.self)
+        try! realm.write {
+            realm.delete(trainings)
+            realm.delete(exercises)
+        }
+    }
     
     
 }

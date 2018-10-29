@@ -20,10 +20,10 @@ class ExercisesForTypeViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     
     let searchController = UISearchController(searchResultsController: nil)
-    var presenter: ExersisesTypesPresenter? = nil
-    var trainingManager: TrainingManager? = nil
+    var presenter: ExersisesTypesPresenter?
+    var trainingManager: TrainingManager?
     
-    var exercisesByFIlter: [Exercise]? = nil
+    var exercisesByFIlter: [Exercise]?
     var filteredArray: [Exercise] = []
     var filters: [ExerciseTypeFilter] = []
     var selectedFilter = ""
@@ -55,7 +55,8 @@ class ExercisesForTypeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if presenter?.getCurrentExetcisesType().name == "" {
-            exercisesByFIlter = Array(RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
+//            exercisesByFIlter = Array(RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
+            exercisesByFIlter = presenter?.getCurrentTypeExerceses()
             tableView.reloadData()
         }
         configurateSearchController()
@@ -179,6 +180,7 @@ class ExercisesForTypeViewController: UIViewController {
             guard let exercise = sender as? Exercise else {return}
             guard let destination = segue.destination as? ExercisesInfoViewController else {return}
             destination.execise = exercise
+            destination.presenter = self.presenter
         default:
             print("default")
         }
@@ -247,7 +249,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
     
     private func addExToTraining(newExercise: Exercise, manager: TrainingManager) {
         let ex = ExerciseInTraining()
-        ex.id = ex.incrementID()
+        ex.id = UUID().uuidString
         ex.name = newExercise.name
         ex.exerciseId = newExercise.id
         try! manager.realm.performWrite {
@@ -258,18 +260,19 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        var exercise = Exercise()
-        if isFiltering() {
-            exercise = filteredArray[indexPath.row]
-        } else {
-            guard let ex = exercisesByFIlter?[indexPath.row] else {return false}
-            exercise = ex
-        }
-        if exercise.typeId == 12 {
-            return true
-        } else {
-            return false
-        }
+//        var exercise = Exercise()
+//        if isFiltering() {
+//            exercise = filteredArray[indexPath.row]
+//        } else {
+//            guard let ex = exercisesByFIlter?[indexPath.row] else {return false}
+//            exercise = ex
+//        }
+//        if exercise.typeId == 12 {
+//            return true
+//        } else {
+//            return false
+//        }
+        return false
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

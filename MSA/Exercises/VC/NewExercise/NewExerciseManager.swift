@@ -106,12 +106,31 @@ class NewExerciseManager {
         Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
-                RealmManager.shared.saveObject(self.makeModel(), update: true)
+                let ex = self.makeModel()
+                RealmManager.shared.saveObject(ex, update: true)
+//                let myEx = MyExercises()
+//                myEx.myExercises = ex
+//                myEx.id = UUID().uuidString
                 self.view?.exerciseCreated()
                 self.finish()
                 completion()
             } else {
                 self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
+            }
+        }
+    }
+    
+    func deleteExercise(deleted: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
+        guard let id = AuthModule.currUser.id else { return }
+        let newInfo = makeExerciseForFirebase(id: id, or: true)
+        guard let index = newInfo["id"] as? String else {return}
+        Database.database().reference().child("ExercisesByTrainers").child(id).child(index).removeValue { (error, ref) in
+            self.finish()
+            if error == nil {
+                RealmManager.shared.deleteObject(self.dataSource.newExerciseModel)
+                deleted()
+            } else {
+                failure(error)
             }
         }
     }
@@ -196,7 +215,9 @@ class NewExerciseManager {
             self.view?.finishLoading()
             if error == nil {
                 DispatchQueue.main.async {
-                    RealmManager.shared.saveObject(self.makeModel(), update: true)
+                    let ex = self.makeModel()
+                    RealmManager.shared.saveObject(ex, update: true)
+                    
                     self.view?.exerciseUpdated()
                     self.finish()
                 }

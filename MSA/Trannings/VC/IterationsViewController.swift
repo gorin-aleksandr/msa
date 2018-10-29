@@ -129,8 +129,8 @@ class IterationsViewController: UIViewController {
     func addIteration() {
         try! manager.realm.performWrite {
             let newIteration = Iteration()
-            newIteration.id = newIteration.incrementID()
-            newIteration.exerciseInTrainingId = manager.getCurrentExercise()?.id ?? -1
+            newIteration.id = UUID().uuidString
+            newIteration.exerciseInTrainingId = manager.getCurrentExercise()?.id ?? UUID().uuidString
             manager.getCurrentExercise()?.iterations.append(newIteration)
             manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {})
         }

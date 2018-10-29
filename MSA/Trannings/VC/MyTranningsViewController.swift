@@ -19,6 +19,7 @@ class MyTranningsViewController: UIViewController {
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var nextWeekButton: UIButton!
     @IBOutlet weak var prevWeekButton: UIButton!
+    @IBOutlet weak var addDayView: UIView! {didSet{addDayView.layer.cornerRadius = 12}}
     
     var manager = TrainingManager(type: .my)
     var weekNumber = 0
@@ -70,6 +71,11 @@ class MyTranningsViewController: UIViewController {
         } else {
             nextWeekButton.alpha = 1
         }
+        if manager.getWeeksCount() == 0 {
+            addDayView.isHidden = false
+        } else {
+            addDayView.isHidden = true
+        }
     }
     
     private func configureTableView() {
@@ -80,8 +86,11 @@ class MyTranningsViewController: UIViewController {
         tableView.allowMultipleSectionsOpen = true
         
         tableView.register(UINib(nibName: "TrainingDayHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "TrainingDayHeaderView")
+        tableView.register(UINib(nibName: "addWeekDayView", bundle: nil), forHeaderFooterViewReuseIdentifier: "addWeekDayView")
         tableView.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "ExerciseTableViewCell")
         tableView.register(UINib(nibName: "AddExerciseToDayTableViewCell", bundle: nil), forCellReuseIdentifier: "AddExerciseToDayTableViewCell")
+        tableView.register(UINib(nibName: "CreateExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "CreateExerciseTableViewCell")
+        
     }
     
     @IBAction func back(_ sender: Any) {
@@ -150,6 +159,10 @@ class MyTranningsViewController: UIViewController {
         manager.deleteTraining(with: "\(manager.dataSource?.currentTraining?.id ?? -1)")
     }
     
+    @objc
+    func addWeekDayButtonAction(_ sender: UIButton) {
+        showOptionsAlert(addDayWeek: true)
+    }
     func showOptionsAlert(addDayWeek: Bool) {
         let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertControllerStyle.alert)
         
@@ -332,25 +345,29 @@ class MyTranningsViewController: UIViewController {
 extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
-        
-        if let day = manager.dataSource?.currentWeek?.days[section] {
-            headerView.dateLabel.text = day.date == "" ? "______(дата)" : day.date
-            headerView.dayLabel.text = "День #\(section + 1)"
-//            headerView.nameLabel.text = day.name == "" ? "______" : day.name
-            headerView.nameTextField.text = day.name
-            headerView.nameTextField.tag = section
-            headerView.nameTextField.delegate = self
-        }
-        headerView.sircleTrainingButton.tag = section
-        headerView.startTrainingButton.tag = section
-        headerView.changeDateButton.tag = section
-        headerView.changeDateButton.addTarget(self, action: #selector(changeDate(sender:)), for: .touchUpInside)
-        headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
-        headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
+        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return nil}
+        if section == daysCount {
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "addWeekDayView") as? addWeekDayView else {return nil}
+            headerView.butt.addTarget(self, action: #selector(addWeekDayButtonAction(_:)), for: .touchUpInside)
+            return headerView
+        } else {
+            guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
+            if let day = manager.dataSource?.currentWeek?.days[section] {
+                headerView.dateLabel.text = day.date == "" ? "______(дата)" : day.date
+                headerView.dayLabel.text = "День #\(section + 1)"
+                headerView.nameTextField.text = day.name
+                headerView.nameTextField.tag = section
+                headerView.nameTextField.delegate = self
+            }
+            headerView.sircleTrainingButton.tag = section
+            headerView.startTrainingButton.tag = section
+            headerView.changeDateButton.tag = section
+            headerView.changeDateButton.addTarget(self, action: #selector(changeDate(sender:)), for: .touchUpInside)
+            headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
+            headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
 
-        
-        return headerView
+            return headerView
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -376,11 +393,21 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (manager.getExercisesOf(day: section).count) + 1
+        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return 0}
+        if section == daysCount {
+            return 0
+        } else {
+            return (manager.getExercisesOf(day: section).count) + 1
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return manager.dataSource?.currentWeek?.days.count ?? 0
+        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return 0}
+        if daysCount == 0 {
+            return 0
+        } else {
+            return daysCount + 1
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
