@@ -82,7 +82,7 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
     }
     
     private func configureSegmentedControl() {
-        stateSegmentedControl.tintColor = UIColor.lightBlue
+        stateSegmentedControl.tintColor = UIColor.lightWhiteBlue
         stateSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.medium(13)],
                                                 for: .normal)
         

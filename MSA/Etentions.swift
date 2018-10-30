@@ -16,7 +16,7 @@ public let lightBlue_ = UIColor(red: 72/255, green: 157/255, blue: 255/255, alph
 public let darkCyanGreen = UIColor(red: 25/255, green: 100/255, blue: 126/255, alpha: 1.0)
 public let darkCyanGreen45 = UIColor(red: 25/255, green: 100/255, blue: 126/255, alpha: 0.45)
 public let lightWhiteBlue = UIColor(red: 3/255, green: 175/255, blue: 255/255, alpha: 1.0)
-public let darkGreenColor = UIColor(red: 0/255, green: 47/255, blue: 64/255, alpha: 1.0)
+public let darkGreenColor = UIColor(red: 1/255, green: 76/255, blue: 102/255, alpha: 1.0)
 
 private var maxLengths = [UITextField: Int]()
 
