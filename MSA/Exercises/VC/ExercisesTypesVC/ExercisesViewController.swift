@@ -40,6 +40,7 @@ class ExercisesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configurateSearchController()
+        initialDataPreparing()
         hideableNavigationBar(false)
         guard let _ = trainingManager else { return }
         let button = UIButton()
@@ -52,11 +53,6 @@ class ExercisesViewController: UIViewController {
     @objc
     func back() {
         navigationController?.popViewController(animated: true)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getFromRealm()
     }
     
     private func getFromRealm() {
@@ -92,7 +88,7 @@ class ExercisesViewController: UIViewController {
     
     @objc func exerciseAddedN(notfication: NSNotification) {
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
-        getFromRealm()
+        initialDataPreparing()
     }
     
     private func configureTable_CollectionView() {

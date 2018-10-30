@@ -26,7 +26,7 @@ class MyTranningsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initialDataLoading()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +34,7 @@ class MyTranningsViewController: UIViewController {
         weekNumber = manager.getWeekNumber()
         weekLabel.text = "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
         tableView.reloadData()
+        initialDataLoading()
     }
     
     private func initialDataLoading() {

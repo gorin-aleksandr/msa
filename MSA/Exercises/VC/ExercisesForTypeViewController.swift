@@ -229,6 +229,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             guard let ex = exercisesByFIlter?[indexPath.row] else {return}
             exercise = ex
         }
+        
         if let manager = trainingManager {
             let newExercise = exercise
             if manager.sportsmanId != AuthModule.currUser.id {
@@ -242,6 +243,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
                 addExToTraining(newExercise: newExercise, manager: manager)
             }
         } else {
+            presenter?.setCurrentIndex(index: indexPath.row)
             performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
         }
         tableView.deselectRow(at: indexPath, animated: true)

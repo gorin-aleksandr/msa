@@ -44,6 +44,7 @@ class NewExerciseViewController: UIViewController {
     
     var selectedRow = -1
     var id = ""
+    var index = 0
     var exercManager = NewExerciseManager.shared
     var presenter: ExersisesTypesPresenter?
 
@@ -83,7 +84,10 @@ class NewExerciseViewController: UIViewController {
     }
     
     func initialConfigurations() {
-        id = exercManager.dataSource.newExerciseModel.id
+        if exercManager.dataSource.editMode {
+            id = exercManager.dataSource.newExerciseModel.id
+            index = presenter?.getCurrentIndex() ?? 0
+        }
         imageManager = ImageManager(presentingViewController: self)
         exercManager.attachView(view: self)
         picker.delegate = self
@@ -476,14 +480,8 @@ extension NewExerciseViewController: NewExerciseProtocol {
     }
     
     func exerciseDeleted() {
-        if let exerss = presenter?.getCurrentTypeExerceses() {
-            for (index,ex) in exerss.enumerated() {
-                if id == ex.id {
-                    presenter?.deleteAt(i: index)
-                    break
-                }
-            }
-        }
+        presenter?.deleteAt(i: index)
+        exercManager.dataSource.editMode = false
         if let vc = presentedVC as? ExercisesInfoViewController {
             let index = (vc.navigationController?.viewControllers.count)! - 1
             vc.navigationController?.viewControllers.remove(at: index)

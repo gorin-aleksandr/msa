@@ -10,6 +10,8 @@ import Foundation
 
 class ExersisesDataManager {
     
+    var currentExerciseIndex = 0
+    
     var exersiseTypes: [ExerciseType] = []
     var currentExerciseeType = ExerciseType()
     

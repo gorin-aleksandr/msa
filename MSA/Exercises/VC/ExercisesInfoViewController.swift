@@ -39,6 +39,7 @@ class ExercisesInfoViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         hideableNavigationBar(false)
+        
         execise = RealmManager.shared.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", execise?.id ?? "")).first
         let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
@@ -67,7 +68,7 @@ class ExercisesInfoViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func editExercise(_ sender: Any) {
-        let destinationVC = self.storyboard?.instantiateViewController(withIdentifier: "NewExerciseViewController") as! NewExerciseViewController
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "NewExerciseViewController") as! NewExerciseViewController
         let manager = NewExerciseManager.shared
         manager.dataSource.editMode = true
         manager.dataSource.newExerciseModel = execise ?? Exercise()
@@ -82,10 +83,10 @@ class ExercisesInfoViewController: UIViewController {
             }
         }
         manager.dataSource.pictures = pictures
-        destinationVC.exercManager = manager
-        destinationVC.presenter = self.presenter
-        destinationVC.presentedVC = self.self
-        let navigationController = UINavigationController(rootViewController: destinationVC)
+        vc.exercManager = manager
+        vc.presenter = self.presenter
+        vc.presentedVC = self.self
+        let navigationController = UINavigationController(rootViewController: vc)
         self.present(navigationController, animated: true, completion: nil)
     }
     

@@ -25,7 +25,7 @@ class NewExerciseDataSource {
             videoUrl = newExerciseModel.videoUrl
         }
     }
- 
+        
     var name = ""
     var typeId = -1
     var filterId = -1

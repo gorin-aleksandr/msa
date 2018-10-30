@@ -36,6 +36,14 @@ class ExersisesTypesPresenter {
         self.view = view
     }
     
+    func getCurrentIndex() -> Int {
+        return exercises.currentExerciseIndex
+    }
+    
+    func setCurrentIndex(index: Int) {
+        exercises.currentExerciseIndex = index
+    }
+    
     func getTypes() -> [ExerciseType] {
         return self.exercises.exersiseTypes
     }
@@ -318,6 +326,7 @@ class ExersisesTypesPresenter {
     }
     
     func deleteAt(i: Int) {
+        
         exercises.currentTypeExercisesArray.remove(at: i)
     }
     
