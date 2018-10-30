@@ -71,6 +71,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         setNavigationBarTransparent()
         self.tabBarController?.tabBar.isHidden = false
         
+        
         //navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -78,6 +79,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.backgroundColor = .clear
         self.navigationController?.view.backgroundColor = .clear
     }
     

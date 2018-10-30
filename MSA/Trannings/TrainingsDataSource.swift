@@ -25,6 +25,17 @@ class TrainingsDataSource {
         self.trainings = trainings
     }
     
+    func clearDB() {
+        trainings = []
+        templates = []
+        currentTraining = nil
+        currentWeek = nil
+        currentDay = nil
+        currentExerciseInDay = nil
+        currentIteration = nil
+        newTemplate = nil
+    }
+    
     func setCurrent(training: Training) {
         self.currentTraining = training
     }

@@ -250,11 +250,22 @@ class TrainingManager {
     
     func loadTrainings() {
         if let id = sportsmanId {
-//            self.view?.startLoading()
+            if id != AuthModule.currUser.id {
+                self.view?.startLoading()
+            }
             Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
                 self.observeTrainings(snapchot: snapchot)
             }
         }
+    }
+    
+    func clearRealm() {
+        let realm = try! Realm()
+        let trainings = realm.objects(Training.self)
+        try! realm.write {
+            realm.delete(trainings)
+        }
+        dataSource?.clearDB()
     }
     
     func loadTrainingsFromRealm() {
@@ -394,7 +405,9 @@ class TrainingManager {
     }
     
     func observeTrainings(snapchot: DataSnapshot) {
-        self.view?.finishLoading()
+        if sportsmanId != AuthModule.currUser.id {
+            self.view?.finishLoading()
+        }
         var items = [Training]()
         for snap in snapchot.children {
             let s = snap as! DataSnapshot

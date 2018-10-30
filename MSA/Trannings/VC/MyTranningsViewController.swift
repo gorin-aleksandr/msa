@@ -35,14 +35,17 @@ class MyTranningsViewController: UIViewController {
         weekNumber = manager.getWeekNumber()
         weekLabel.text = "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
         tableView.reloadData()
-        initialDataLoading()
     }
     
     private func initialDataLoading() {
         manager.initDataSource(dataSource: TrainingsDataSource.shared)
         manager.initView(view: self)
-        manager.loadTrainingsFromRealm()
-        manager.syncUnsyncedTrainings()
+        if manager.sportsmanId == AuthModule.currUser.id {
+            manager.loadTrainingsFromRealm()
+            manager.syncUnsyncedTrainings()
+        } else {
+            manager.loadTrainings()
+        }
     }
     
      private func initialViewConfiguration() {
@@ -95,6 +98,9 @@ class MyTranningsViewController: UIViewController {
     }
     
     @IBAction func back(_ sender: Any) {
+        if manager.sportsmanId != AuthModule.currUser.id {
+            manager.clearRealm()
+        }
         navigationController?.popViewController(animated: true)
     }
     @IBAction func optionsButton(_ sender: Any) {
