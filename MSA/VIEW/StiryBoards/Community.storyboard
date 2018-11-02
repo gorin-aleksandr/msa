@@ -223,7 +223,7 @@
                                     <constraint firstAttribute="bottom" secondItem="3Ax-aH-KiY" secondAttribute="bottom" id="WCx-kE-NQa"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJV-3c-Ni4" customClass="ErrorView" customModule="MSA" customModuleProvider="target">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJV-3c-Ni4" customClass="ErrorView" customModule="MSA" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
