@@ -132,6 +132,8 @@
 		29FF688820DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */; };
 		352355F9212E06080001255E /* UserCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355F8212E06080001255E /* UserCommunityViewController.swift */; };
 		352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355FA212E06220001255E /* UserCommunityPresenter.swift */; };
+		35314F47218909C100A6E323 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35314F46218909C100A6E323 /* ErrorView.xib */; };
+		35314F49218914A100A6E323 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35314F48218914A100A6E323 /* ErrorView.swift */; };
 		353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */; };
 		35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
@@ -276,6 +278,8 @@
 		29FF688720DE9D5900C4FCC0 /* ExersisesTypesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExersisesTypesDataManager.swift; sourceTree = "<group>"; };
 		352355F8212E06080001255E /* UserCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityViewController.swift; sourceTree = "<group>"; };
 		352355FA212E06220001255E /* UserCommunityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityPresenter.swift; sourceTree = "<group>"; };
+		35314F46218909C100A6E323 /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
+		35314F48218914A100A6E323 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -556,6 +560,7 @@
 		29C2D5F0207422F000E2B958 /* VIEW */ = {
 			isa = PBXGroup;
 			children = (
+				35314F452189099D00A6E323 /* Common */,
 				29F9F2352147B5B8006EDC6A /* VACalendar */,
 				29233049203AFD2700EFA2C5 /* BasicVC */,
 				29D2CD7020A175F40073C838 /* StartViewController.swift */,
@@ -651,6 +656,15 @@
 			path = ComunityDetails;
 			sourceTree = "<group>";
 		};
+		35314F452189099D00A6E323 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				35314F46218909C100A6E323 /* ErrorView.xib */,
+				35314F48218914A100A6E323 /* ErrorView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		35CE070920ECC644006892B0 /* Community */ = {
 			isa = PBXGroup;
 			children = (
@@ -733,7 +747,7 @@
 				TargetAttributes = {
 					29160B412035AA3B00DA7227 = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -799,6 +813,7 @@
 				2962D47A20D2A17E00870953 /* Exercises.storyboard in Resources */,
 				29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */,
 				29F9F2262147AE82006EDC6A /* ExerciseTableViewCell.xib in Resources */,
+				35314F47218909C100A6E323 /* ErrorView.xib in Resources */,
 				2940A36020D90C9B00EBAE84 /* PlayVideoTableViewCell.xib in Resources */,
 				29F9F2522147B5B8006EDC6A /* Info.plist in Resources */,
 			);
@@ -963,6 +978,7 @@
 				35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */,
 				29F9F24D2147B5B8006EDC6A /* VAFormatters.swift in Sources */,
 				29F9F2472147B5B8006EDC6A /* VADotView.swift in Sources */,
+				35314F49218914A100A6E323 /* ErrorView.swift in Sources */,
 				29C2D5F22074231900E2B958 /* ProfileImageView.swift in Sources */,
 				29F9F24C2147B5B8006EDC6A /* VAWeek.swift in Sources */,
 				295781B72039EFCB00EF8878 /* MainViewController.swift in Sources */,
@@ -1116,17 +1132,17 @@
 			baseConfigurationReference = BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 3398483R66;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = easyapps.solutions.MSA1777;
+				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9474b6a6-9fc6-427f-8896-75d9712515cb";
-				PROVISIONING_PROFILE_SPECIFIER = "Sport Dev";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1137,17 +1153,17 @@
 			baseConfigurationReference = 17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 3398483R66;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = easyapps.solutions.MSA1777;
+				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9e20bd21-f836-4c1b-b8da-db696da2885b";
-				PROVISIONING_PROFILE_SPECIFIER = Sport222;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
