@@ -423,12 +423,14 @@ class TrainingManager {
             if let weeks = s.childSnapshot(forPath: "weeks").value as? NSArray {
                 for w in (weeks as! [[String:Any]]) {
                     let week = TrainingWeek()
+                    week.wasSync = true
                     week.id = w["id"] as! Int
                     week.name = w["name"] as? String ?? ""
                     let daysInWeek = List<TrainingDay>()
                     if let days = w["days"] as? [[String:Any]] {
                         for d in days {
                             let day = TrainingDay()
+                            day.wasSync = true
                             day.id = d["id"] as! Int
                             day.name = d["name"] as! String
                             day.date = d["date"] as! String
@@ -436,6 +438,7 @@ class TrainingManager {
                             if let exercises = d["exercises"] as? [[String:Any]] {
                                 for e in exercises {
                                     let exercise = ExerciseInTraining()
+                                    exercise.wasSync = true
                                     exercise.id = e["id"] as? String ?? UUID().uuidString
                                     exercise.name = e["name"] as! String
                                     exercise.exerciseId = e["exerciseId"] as! String
@@ -443,6 +446,7 @@ class TrainingManager {
                                     if let iterations = e["iterations"] as? [[String:Any]] {
                                         for i in iterations {
                                             let iteration = Iteration()
+                                            iteration.wasSync = true
                                             iteration.id = i["id"] as? String ?? UUID().uuidString
                                             iteration.exerciseInTrainingId = i["exerciseInTrainingId"] as? String ?? UUID().uuidString
                                             iteration.counts = i["counts"] as! Int
