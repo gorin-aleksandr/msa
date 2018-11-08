@@ -73,6 +73,7 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
             navigationItem.searchController = nil
             navigationItem.searchController = searchController
         }
+        searchController.searchBar.tintColor = .darkCyanGreen
     }
     
     private func hideableNavigationBar(_ hide: Bool) {
