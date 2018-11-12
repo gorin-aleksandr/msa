@@ -18,7 +18,7 @@ import SVProgressHUD
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let realmVersion: UInt64 = 0
+    let realmVersion: UInt64 = 1
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -45,16 +45,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate func performMigration(migration: Migration, oldSchemaVersion: UInt64) {
         if (oldSchemaVersion < self.realmVersion) {
             //MARK: Migration of realm
-//            migrationToNewVersion(migration: migration)
+            migrationToNewVersion(migration: migration)
         }
     }
     
     private func migrationToNewVersion(migration: Migration) {
-        migration.enumerateObjects(ofType: Iteration.className()) { (old, new) in
+        migration.enumerateObjects(ofType: Training.className()) { (old, new) in
             guard let _ = old, let newObgect = new else {
                 return
             }
-            newObgect["startTimerOnZero"] = false
+            newObgect["wasDeleted"] = false
+        }
+        migration.enumerateObjects(ofType: TrainingWeek.className()) { (old, new) in
+            guard let _ = old, let newObgect = new else {
+                return
+            }
+            newObgect["wasDeleted"] = false
+        }
+        migration.enumerateObjects(ofType: TrainingDay.className()) { (old, new) in
+            guard let _ = old, let newObgect = new else {
+                return
+            }
+            newObgect["wasDeleted"] = false
         }
     }
     
