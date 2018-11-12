@@ -319,6 +319,13 @@ class ExersisesTypesPresenter {
             }
             exercises.currentTypeExercisesArray.append(contentsOf: exerc)
         }
+        var filters = [ExerciseTypeFilter]()
+        for exercise in exercises.currentTypeExercisesArray {
+            guard let id_ = exercise.filterIDs.first?.id else {continue}
+            guard let filter = self.realmManager.getElement(ofType: ExerciseTypeFilter.self, filterWith: NSPredicate(format: "id = %d", id_)) else {continue}
+            filters.append(filter)
+        }
+        exercises.currentFilters = Array(Set(filters))
     }
     
     func getCurrentTypeExerceses() -> [Exercise] {
