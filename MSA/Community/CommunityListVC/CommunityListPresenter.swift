@@ -82,7 +82,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     
     
     private var typeFilterState: CommunityFilterState = .all
-    private var filterDataSource = ["ВСЕ", "СПОРТСМЕНЫ", "ТРЕНЕРЫ"]
+    private var filterDataSource = ["Все", "Спортсмены", "Тренеры"]
     private var cities = [String]()
     private var selectedCity: String?
     private var searchText: String?

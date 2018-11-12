@@ -23,6 +23,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     @IBOutlet weak var filterScrollView: UIScrollView!
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var myCommunityButton: UIBarButtonItem!
+    @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     
     let cityPicker = UIPickerView()
     
@@ -48,6 +49,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
         configureCityPicker()
         hideableNavigationBar(false)
         updateTableView()
+        configureSegmentedControl()
         //presenter.applyFilters(with: cityTextField.text)
     }
     
@@ -66,30 +68,31 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     }
     
     func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
-        for subView in filterScrollView.subviews {
-            if let subView = subView as? UIButton {
-                subView.removeFromSuperview()
-            }
-        }
-        var xOffset: CGFloat = 8
-        let buttonPadding: CGFloat = 10
-        var buttonIndex = 0
+//        for subView in filterScrollView.subviews {
+//            if let subView = subView as? UIButton {
+//                subView.removeFromSuperview()
+//            }
+//        }
+//        var xOffset: CGFloat = 8
+//        let buttonPadding: CGFloat = 10
+        var segmentIndex = 0
         for filterName in dataSource {
-            let button = UIButton()
-            button.tag = buttonIndex
-            button.isSelected = buttonIndex == selectedFilterIndex
-            button.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
-            button.configureAsFilterButton(title: filterName, xOffset: xOffset, padding: buttonPadding)
-            xOffset = xOffset + buttonPadding + button.frame.size.width
-            filterScrollView.addSubview(button)
-            buttonIndex += 1
-            if button.isSelected  {
-                button.backgroundColor = lightWhiteBlue
-            } else {
-                button.backgroundColor = darkCyanGreen45
-            }
+            filterSegmentedControl.setTitle(filterName, forSegmentAt: segmentIndex)
+//            let button = UIButton()
+//            button.tag = buttonIndex
+//            button.isSelected = buttonIndex == selectedFilterIndex
+//            button.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
+//            button.configureAsFilterButton(title: filterName, xOffset: xOffset, padding: buttonPadding)
+//            xOffset = xOffset + buttonPadding + button.frame.size.width
+//            filterScrollView.addSubview(button)
+            segmentIndex += 1
+//            if button.isSelected  {
+//                button.backgroundColor = lightWhiteBlue
+//            } else {
+//                button.backgroundColor = darkCyanGreen45
+//            }
         }
-        filterScrollView.contentSize = CGSize(width: xOffset, height: filterScrollView.frame.height)
+        //filterScrollView.contentSize = CGSize(width: xOffset, height: filterScrollView.frame.height)
     }
     
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
@@ -142,7 +145,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
             navigationItem.searchController = nil
             navigationItem.searchController = searchController
         }
-        searchController.searchBar.tintColor = .darkCyanGreen45
+        searchController.searchBar.tintColor = .darkCyanGreen
     }
     
     private func hideableNavigationBar(_ hide: Bool) {
@@ -154,6 +157,12 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
     private func setupNavigationBar() {
         navigationController?.navigationBar.tintColor = UIColor.darkCyanGreen
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: darkCyanGreen, .font: UIFont(name: "Rubik-Bold", size: 17)!]
+    }
+    
+    private func configureSegmentedControl() {
+        filterSegmentedControl.tintColor = UIColor.lightWhiteBlue
+        filterSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.medium(13)],
+                                                     for: .normal)
     }
     
     private func moveToUserViewController(with user: UserVO) {
@@ -168,6 +177,12 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
         destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
+    
+    @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
+        presenter.setFilterForState(index: sender.selectedSegmentIndex)
+    }
+    
+    
 }
 
 
