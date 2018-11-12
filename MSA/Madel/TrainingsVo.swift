@@ -38,6 +38,7 @@ class Training: Object {
     var weeks = List<TrainingWeek>()
     
     @objc dynamic var wasSync: Bool = false
+    @objc dynamic var wasDeleted: Bool = false
 
     override static func primaryKey() -> String? {
         return "id"
@@ -55,6 +56,7 @@ class TrainingWeek: Object {
     var days = List<TrainingDay>()
 
     @objc dynamic var wasSync: Bool = false
+    @objc dynamic var wasDeleted: Bool = false
 
     override static func primaryKey() -> String? {
         return "id"
@@ -74,6 +76,7 @@ class TrainingDay: Object {
     var exercises = List<ExerciseInTraining>()
     
     @objc dynamic var wasSync: Bool = false
+    @objc dynamic var wasDeleted: Bool = false
 
     override static func primaryKey() -> String? {
         return "id"

@@ -40,6 +40,10 @@ class MyTranningsViewController: UIViewController {
     private func initialDataLoading() {
         manager.initDataSource(dataSource: TrainingsDataSource.shared)
         manager.initView(view: self)
+        setData()
+    }
+    
+    private func setData() {
         if manager.sportsmanId == AuthModule.currUser.id {
             manager.loadTrainingsFromRealm()
             manager.syncUnsyncedTrainings()
@@ -195,12 +199,20 @@ class MyTranningsViewController: UIViewController {
                 self.deleteTraining()
             }
         })
-        let cancel = UIAlertAction(title: "Отмена", style: .default, handler: { action in
+        let thirdAction = UIAlertAction(title: "Удалить неделю", style: .default, handler: { action in
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
+            self.deleteWeek()
+        })
+        
+        let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
         })
         
         alert.addAction(firstAction)
         alert.addAction(secondAction)
+        if !addDayWeek {
+            alert.addAction(thirdAction)
+        }
         alert.addAction(cancel)
         segmentControl.layer.borderColor = UIColor.lightGray.cgColor
         self.present(alert, animated: true, completion: nil)
@@ -226,6 +238,14 @@ class MyTranningsViewController: UIViewController {
         label.attributedText = attributedText
     }
     
+    func deleteWeek() {
+        if weekNumber == manager.getWeeksCount()-1 {
+            weekNumber -= 1
+        }
+        manager.deleteWeek(at: weekNumber)
+        setData()
+    }
+    
     func addDay() {
         guard let week = manager.dataSource?.currentWeek else {
             AlertDialog.showAlert("Нельзя добавить день!", message: "Сначала добавьте неделю", viewController: self)
@@ -237,6 +257,7 @@ class MyTranningsViewController: UIViewController {
         tableView.toggleSection(section)
         tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .bottom, animated: true)
     }
+    
     func addWeek() {
         if let training = manager.dataSource?.currentTraining {
             manager.createWeak(in: training)
@@ -249,7 +270,6 @@ class MyTranningsViewController: UIViewController {
         }
         weekNumber = (manager.dataSource?.currentTraining?.weeks.count ?? 0) - 1
         changeWeek()
-        tableView.reloadData()
         tableView.toggleSection(0)
     }
     
@@ -334,9 +354,9 @@ class MyTranningsViewController: UIViewController {
     }
     
     func changeWeek() {
-        manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
-        weekLabel.text =  "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
         if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
+            manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
+            weekLabel.text =  "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
             nextWeekButton.isHidden = false
             prevWeekButton.isHidden = false
         } else {
