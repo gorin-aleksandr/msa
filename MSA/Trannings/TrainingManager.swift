@@ -96,6 +96,10 @@ class TrainingManager {
             return (true,indexes)
         }
     }
+    
+    func getDaysCount() -> Int {
+        return dataSource?.currentWeek?.days.count ?? 0
+    }
 
     func getWeeksCount() -> Int {
         return dataSource?.currentTraining?.weeks.count ?? 0
@@ -232,6 +236,16 @@ class TrainingManager {
             week.days.append(newDay)
             self.editTraining(wiht: self.dataSource?.currentTraining?.id ?? -1, success: {})
         }
+    }
+    
+    func deleteDay(at: Int) {
+        guard let week = dataSource?.currentWeek else {return}
+        guard let trainingId = dataSource?.currentTraining?.id else {return}
+        try! realm.performWrite {
+            dataSource?.currentTraining?.wasSync = false
+        }
+        realm.deleteObject(week.days[at])
+        self.editTraining(wiht: trainingId, success: {})
     }
     
     func deleteWeek(at: Int) {

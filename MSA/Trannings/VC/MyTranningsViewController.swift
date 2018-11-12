@@ -79,7 +79,7 @@ class MyTranningsViewController: UIViewController {
         } else {
             nextWeekButton.alpha = 1
         }
-        if manager.getWeeksCount() == 0 {
+        if manager.getWeeksCount() == 0 || manager.getDaysCount() == 0 {
             addDayView.isHidden = false
         } else {
             addDayView.isHidden = true
@@ -367,6 +367,21 @@ class MyTranningsViewController: UIViewController {
         showHideButtons()
         UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
     }
+    
+    @objc func showDeleteDayAlert(sender: UIButton) {
+        let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить день?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
+            self.manager.deleteDay(at: sender.tag)
+            self.showHideButtons()
+            self.setData()
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in
+            //
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(yesAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
 extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -389,10 +404,13 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             headerView.sircleTrainingButton.tag = section
             headerView.startTrainingButton.tag = section
             headerView.changeDateButton.tag = section
+            headerView.deleteButton.tag = section
+            headerView.deleteButton.addTarget(self, action: #selector(showDeleteDayAlert(sender:)), for: .touchUpInside)
             headerView.changeDateButton.addTarget(self, action: #selector(changeDate(sender:)), for: .touchUpInside)
             headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
             headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
 
+            
             return headerView
         }
     }

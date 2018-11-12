@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,66 +50,77 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgg-cA-FYa">
                                     <rect key="frame" x="69" y="5" width="70.5" height="30"/>
                                 </button>
+                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-jG-RM1">
+                                    <rect key="frame" x="10" y="56" width="0.0" height="0.0"/>
+                                    <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
+                                    <color key="textColor" red="0.01176470588" green="0.050980392159999999" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="(укажите название)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0H7-nG-SYb">
+                                    <rect key="frame" x="10" y="36" width="234" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="2Fu-Wv-Idp"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="R3o-Zk-Ruc"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zPq-B2-0qR">
+                                    <rect key="frame" x="258" y="27" width="126" height="32"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4V-ZF-cv6">
+                                            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                            <state key="normal" image="playGreen"/>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUb-TR-vRM">
+                                            <rect key="frame" x="47" y="0.0" width="32" height="32"/>
+                                            <color key="tintColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-2" maxY="0.0"/>
+                                            <state key="normal" image="roundtraining-active-32px"/>
+                                        </button>
+                                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdd-P2-JFp">
+                                            <rect key="frame" x="94" y="0.0" width="32" height="32"/>
+                                            <inset key="imageEdgeInsets" minX="-6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <state key="normal" image="cevron_down_disabled_24px"/>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZXo-UA-WV5">
+                                    <rect key="frame" x="355" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="HiX-sj-dmu"/>
+                                        <constraint firstAttribute="width" constant="35" id="gFV-FC-e0v"/>
+                                    </constraints>
+                                    <state key="normal" title="Button" image="delete_red"/>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="Jgg-cA-FYa" firstAttribute="top" secondItem="oEx-Ro-hix" secondAttribute="top" id="8Nj-VH-KC5"/>
+                                <constraint firstItem="cOV-jG-RM1" firstAttribute="leading" secondItem="rcR-Pg-wwi" secondAttribute="leading" constant="10" id="AR7-Es-iDP"/>
+                                <constraint firstAttribute="bottom" secondItem="zPq-B2-0qR" secondAttribute="bottom" constant="7" id="CBB-d4-szh"/>
+                                <constraint firstAttribute="trailing" secondItem="ZXo-UA-WV5" secondAttribute="trailing" constant="4" id="GSD-EV-wUO"/>
                                 <constraint firstItem="9Gd-ze-AAv" firstAttribute="leading" secondItem="rcR-Pg-wwi" secondAttribute="leading" constant="10" id="Oib-RK-tly"/>
+                                <constraint firstItem="ZXo-UA-WV5" firstAttribute="top" secondItem="rcR-Pg-wwi" secondAttribute="top" id="TTr-33-WHw"/>
+                                <constraint firstAttribute="trailing" secondItem="zPq-B2-0qR" secondAttribute="trailing" constant="10" id="Utb-uc-tVA"/>
+                                <constraint firstAttribute="trailing" secondItem="0H7-nG-SYb" secondAttribute="trailing" constant="150" id="VUA-Tp-rfc"/>
                                 <constraint firstItem="Jgg-cA-FYa" firstAttribute="bottom" secondItem="oEx-Ro-hix" secondAttribute="bottom" id="Xcq-pO-RpO"/>
                                 <constraint firstItem="Jgg-cA-FYa" firstAttribute="trailing" secondItem="oEx-Ro-hix" secondAttribute="trailing" id="b63-mh-c4T"/>
+                                <constraint firstItem="0H7-nG-SYb" firstAttribute="leading" secondItem="rcR-Pg-wwi" secondAttribute="leading" constant="10" id="hBj-3Q-mpn"/>
                                 <constraint firstItem="Jgg-cA-FYa" firstAttribute="leading" secondItem="oEx-Ro-hix" secondAttribute="leading" id="hwv-Vj-1vi"/>
                                 <constraint firstItem="9Gd-ze-AAv" firstAttribute="top" secondItem="rcR-Pg-wwi" secondAttribute="top" constant="5" id="kVy-HH-imC"/>
+                                <constraint firstAttribute="bottom" secondItem="0H7-nG-SYb" secondAttribute="bottom" constant="10" id="onW-P9-1d4"/>
+                                <constraint firstAttribute="bottom" secondItem="cOV-jG-RM1" secondAttribute="bottom" constant="10" id="wvL-TB-pNn"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-jG-RM1">
-                            <rect key="frame" x="10" y="65" width="0.0" height="0.0"/>
-                            <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
-                            <color key="textColor" red="0.01176470588" green="0.050980392159999999" blue="0.08235294118" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="(укажите название)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0H7-nG-SYb">
-                            <rect key="frame" x="10" y="45" width="234" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="2Fu-Wv-Idp"/>
-                            </constraints>
-                            <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zPq-B2-0qR">
-                            <rect key="frame" x="258" y="36" width="126" height="32"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4V-ZF-cv6">
-                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
-                                    <state key="normal" image="playGreen"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUb-TR-vRM">
-                                    <rect key="frame" x="47" y="0.0" width="32" height="32"/>
-                                    <color key="tintColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-2" maxY="0.0"/>
-                                    <state key="normal" image="roundtraining-active-32px"/>
-                                </button>
-                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdd-P2-JFp">
-                                    <rect key="frame" x="94" y="0.0" width="32" height="32"/>
-                                    <inset key="imageEdgeInsets" minX="-6" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" image="cevron_down_disabled_24px"/>
-                                </button>
-                            </subviews>
-                        </stackView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="0H7-nG-SYb" secondAttribute="bottom" constant="10" id="DHM-au-9y8"/>
                         <constraint firstAttribute="bottom" secondItem="rcR-Pg-wwi" secondAttribute="bottom" id="HBb-Xz-X2C"/>
-                        <constraint firstAttribute="bottom" secondItem="cOV-jG-RM1" secondAttribute="bottom" constant="10" id="JVe-Ji-j1U"/>
-                        <constraint firstItem="cOV-jG-RM1" firstAttribute="leading" secondItem="TH7-jf-I4o" secondAttribute="leading" constant="10" id="MFb-3w-Ffe"/>
-                        <constraint firstAttribute="trailing" secondItem="zPq-B2-0qR" secondAttribute="trailing" constant="10" id="MNu-5o-uE8"/>
-                        <constraint firstAttribute="bottom" secondItem="zPq-B2-0qR" secondAttribute="bottom" constant="7" id="NGq-fi-SXH"/>
                         <constraint firstItem="rcR-Pg-wwi" firstAttribute="leading" secondItem="TH7-jf-I4o" secondAttribute="leading" id="Znn-ux-evV"/>
                         <constraint firstItem="rcR-Pg-wwi" firstAttribute="top" secondItem="TH7-jf-I4o" secondAttribute="top" constant="9" id="ehk-PN-xvl"/>
-                        <constraint firstItem="0H7-nG-SYb" firstAttribute="leading" secondItem="TH7-jf-I4o" secondAttribute="leading" constant="10" id="nch-CS-7Zv"/>
                         <constraint firstAttribute="trailing" secondItem="rcR-Pg-wwi" secondAttribute="trailing" id="oXF-9Z-Pg1"/>
-                        <constraint firstAttribute="trailing" secondItem="0H7-nG-SYb" secondAttribute="trailing" constant="150" id="wLp-gS-Zz7"/>
                     </constraints>
                 </view>
             </subviews>
@@ -126,17 +137,22 @@
                 <outlet property="changeDateButton" destination="Jgg-cA-FYa" id="m0s-bq-raT"/>
                 <outlet property="dateLabel" destination="oEx-Ro-hix" id="gf1-jj-HtO"/>
                 <outlet property="dayLabel" destination="8Tp-fa-rx0" id="wdD-Bs-bN4"/>
+                <outlet property="deleteButton" destination="ZXo-UA-WV5" id="6I8-YQ-YXd"/>
+                <outlet property="mainView" destination="rcR-Pg-wwi" id="Ed9-l0-3tj"/>
+                <outlet property="mainViewLeading" destination="Znn-ux-evV" id="cEw-ne-hcL"/>
+                <outlet property="mainViewTraling" destination="oXF-9Z-Pg1" id="MFS-Gc-6Pi"/>
                 <outlet property="nameLabel" destination="cOV-jG-RM1" id="5O1-Be-LO2"/>
                 <outlet property="nameTextField" destination="0H7-nG-SYb" id="7Zu-KU-T18"/>
                 <outlet property="openHideExercisesButton" destination="hdd-P2-JFp" id="0b7-Sb-nUe"/>
                 <outlet property="sircleTrainingButton" destination="iUb-TR-vRM" id="7hy-dK-vDo"/>
                 <outlet property="startTrainingButton" destination="E4V-ZF-cv6" id="LTB-qj-KeZ"/>
             </connections>
-            <point key="canvasLocation" x="90" y="-286"/>
+            <point key="canvasLocation" x="89.599999999999994" y="-286.50674662668666"/>
         </view>
     </objects>
     <resources>
         <image name="cevron_down_disabled_24px" width="14" height="9"/>
+        <image name="delete_red" width="14" height="14"/>
         <image name="playGreen" width="32" height="32"/>
         <image name="roundtraining-active-32px" width="28" height="22"/>
     </resources>

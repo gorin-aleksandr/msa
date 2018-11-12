@@ -15,12 +15,18 @@ protocol Toggable {
 
 class TrainingDayHeaderView: FZAccordionTableViewHeaderView {
     
+    
+    @IBOutlet weak var mainViewLeading: NSLayoutConstraint!
+    @IBOutlet weak var mainViewTraling: NSLayoutConstraint!
+
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var changeDateButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var startTrainingButton: UIButton!
     @IBOutlet weak var sircleTrainingButton: UIButton!
     @IBOutlet weak var openHideExercisesButton: UIButton!
@@ -30,7 +36,6 @@ class TrainingDayHeaderView: FZAccordionTableViewHeaderView {
             setState(headerState)
         }
     }
-    
     
     enum HeaderState: Toggable {
         case unselected, selected
