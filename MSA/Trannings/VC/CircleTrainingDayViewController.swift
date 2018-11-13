@@ -20,6 +20,7 @@ class CircleTrainingDayViewController: UIViewController {
     @IBOutlet weak var restLabel: UILabel!
     @IBOutlet weak var restOrWorkImageView: UIImageView!
     @IBOutlet weak var pulseImageView: UIImageView!
+    @IBOutlet weak var heartBeatButton: UIButton!
     
     var manager = TrainingManager(type: .my)
     var heartBeatService = HeartBeatManager()
@@ -47,6 +48,8 @@ class CircleTrainingDayViewController: UIViewController {
         self.playButton.addTarget(self, action: #selector(resumeIteration(_:)), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stopIteration(_:)), for: .touchUpInside)
         self.playNextButton.addTarget(self, action: #selector(nextIterationstate(_:)), for: .touchUpInside)
+        heartBeatButton.layer.cornerRadius = 6
+        heartBeatButton.backgroundColor = UIColor.white.withAlphaComponent(0.2)
     }
     
     private func configureTableView() {
@@ -62,6 +65,10 @@ class CircleTrainingDayViewController: UIViewController {
         manager.fullStop()
     }
     @IBAction func saveButtonAction(_ sender: Any) {
+    }
+    @IBAction func heartBeatButtonTapped(_ sender: Any) {
+        let destintionVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "HeartBeatDeviceViewController") as! HeartBeatDeviceViewController
+        navigationController?.pushViewController(destintionVC, animated: true)
     }
     
     @objc private func nextIterationstate(_ sender: UIButton) {
