@@ -18,7 +18,7 @@ import SVProgressHUD
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let realmVersion: UInt64 = 1
+    let realmVersion: UInt64 = 0
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
