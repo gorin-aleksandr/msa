@@ -232,13 +232,33 @@ class TrainingManager {
             }
         }
     }
+    
+    func setDayRoundExercises(with ids: [String]) {
+        guard let day = dataSource?.currentDay else {return}
+        guard let trainingId = dataSource?.currentTraining?.id else {return}
+
+        try! realm.performWrite {
+            let list = List<IdString>()
+            for id in ids {
+                let newid = IdString()
+                newid.id = id
+                list.append(newid)
+            }
+            day.roundExercisesIds.removeAll()
+            day.roundExercisesIds.append(objectsIn: list)
+            day.wasSync = false
+        }
+        self.editTraining(wiht: trainingId, success: {})
+
+    }
+    
     func addDay(week: TrainingWeek) {
         try! realm.performWrite {
             let newDay = TrainingDay()
             newDay.id = newDay.incrementID()
             week.days.append(newDay)
-            self.editTraining(wiht: self.dataSource?.currentTraining?.id ?? -1, success: {})
         }
+        self.editTraining(wiht: self.dataSource?.currentTraining?.id ?? -1, success: {})
     }
     
     func deleteDay(at: Int) {
@@ -400,11 +420,13 @@ class TrainingManager {
                                "iterations": newiterations
                             ])
                     }
+                    
                     newdays.append([
                            "id": day.id,
                            "name": day.name.capitalizingFirstLetter(),
                            "date": day.date,
-                           "exercises": newexercises
+                           "exercises": newexercises,
+                           "idsForRound": day.roundExercisesIds.map{$0.id}.joined(separator: ", ")
                         ])
                 }
                 newWeeks.append([
@@ -473,6 +495,16 @@ class TrainingManager {
                             day.id = d["id"] as! Int
                             day.name = d["name"] as! String
                             day.date = d["date"] as! String
+                            if let exercIds = d["idsForRound"] as? String {
+                                let array = List<IdString>()
+                                let ids = exercIds.components(separatedBy: ", ")
+                                for id_ in ids {
+                                    let id = IdString()
+                                    id.id = id_
+                                    array.append(id)
+                                }
+                                day.roundExercisesIds.append(objectsIn: array)
+                            }
                             let exercisesInDay = List<ExerciseInTraining>()
                             if let exercises = d["exercises"] as? [[String:Any]] {
                                 for e in exercises {
@@ -785,20 +817,6 @@ class TrainingManager {
     
     func setIterationsForRound(completion: @escaping ()->()) {
         exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
-//        var array = [Iteration]()
-//        var len = 0
-//        for e in exercises! {
-//            if len < e.iterations.count {
-//                len = e.iterations.count
-//            }
-//        }
-//        for index in 1...len {
-//            for e in exercises! {
-//                if e.iterations.count >= index {
-//                    array.append(e.iterations[index-1])
-//                }
-//            }
-//        }
         iterationsForRound = prepareIterationsForRound(from: exercises!)
         completion()
     }

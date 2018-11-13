@@ -273,27 +273,40 @@ class MyTranningsViewController: UIViewController {
         tableView.toggleSection(0)
     }
     
-    private func prepareForStrtTraining(round: Bool) {
+    private func prepareForStrtTraining(completion: @escaping ()->()) {
         let info = manager.isEmptyExercise()
         if info.0 {
             let array = (info.1)!.map{String($0+1)}
             let joined = array.joined(separator: ", ")
             AlertDialog.showAlert("Вы не можете начать тренировку!", message: "В упражнениях №\(joined) не добавнены подходы.", viewController: self)
         } else {
-            if round {
-                self.performSegue(withIdentifier: "chooseExercisesForRoundTraining", sender: nil)
-            } else {
-                self.performSegue(withIdentifier: "roundTraining", sender: nil )
-            }
+            completion()
         }
     }
     
     @objc
     private func startTraining(sender: UIButton) {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
-        manager.setState(state: .normal)
+        guard let day = manager.getCurrentday() else {
+            return
+        }
+        var round = true
+        if (day.roundExercisesIds.isEmpty) || (day.roundExercisesIds.first?.id == "") {
+            round = false
+        } else {
+            round = true
+        }
+        switch round {
+            case true:
+                manager.setState(state: .round)
+                manager.setSpecialIterationsForRound(indexes: self.selectedElements().1, completion: {})
+            case false: manager.setState(state: .normal)
+        }
+
         if manager.getCurrentday()?.exercises.count != 0 {
-            prepareForStrtTraining(round: false)
+            prepareForStrtTraining {
+                self.performSegue(withIdentifier: "roundTraining", sender: nil)
+            }
         } else {
             AlertDialog.showAlert("Вы не можете начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
         }
@@ -304,9 +317,11 @@ class MyTranningsViewController: UIViewController {
         manager.setCurrent(day: manager.dataSource?.currentWeek?.days[sender.tag])
         manager.setState(state: .round)
         if manager.getCurrentday()?.exercises.count != 0 {
-            prepareForStrtTraining(round: true)
+            prepareForStrtTraining {
+                self.performSegue(withIdentifier: "chooseExercisesForRoundTraining", sender: nil)
+            }
         } else {
-            AlertDialog.showAlert("Вы не можете начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
+            AlertDialog.showAlert("Вы не можете настроить тренировку!", message: "Сначала добавьте упражнения", viewController: self)
         }
     }
     
@@ -407,6 +422,11 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
                 headerView.nameTextField.text = day.name
                 headerView.nameTextField.tag = section
                 headerView.nameTextField.delegate = self
+                if day.roundExercisesIds.isEmpty || day.roundExercisesIds.first?.id == "" {
+                    headerView.sircleTrainingButton.setImage(UIImage(named: "roundtraining-default"), for: .normal)
+                } else {
+                    headerView.sircleTrainingButton.setImage(UIImage(named: "roundtraining-active-32px"), for: .normal)
+                }
             }
             headerView.sircleTrainingButton.tag = section
             headerView.startTrainingButton.tag = section
@@ -550,8 +570,24 @@ extension MyTranningsViewController: TrainingsViewDelegate {
 }
 
 extension MyTranningsViewController: MultipleChoicesViewControllerDelegate, MultipleChoicesViewControllerDataSource {
+  
+    func selectedElements() -> ([ExerciseInTraining], [Int]) {
+        guard let exercises = manager.getCurrentday()?.exercises else {return ([],[])}
+        guard let IDS = manager.getCurrentday()?.roundExercisesIds else {return ([],[])}
+        let ids = IDS.map{$0.id}
+        var array = [ExerciseInTraining]()
+        var idArr = [Int]()
+        for (i,ex) in exercises.enumerated() {
+            if ids.contains(ex.exerciseId) {
+                array.append(ex)
+                idArr.append(i)
+            }
+        }
+        return (array,idArr)
+    }
+    
     func selectionWasDone(with result: [String]) {
-        print(result)
+        manager.setDayRoundExercises(with: result)
     }
     
     func elementsForMultipleChoiceController() -> [ExerciseInTraining]? {

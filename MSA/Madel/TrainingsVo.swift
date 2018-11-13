@@ -73,8 +73,10 @@ class TrainingDay: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var date: String = ""
     @objc dynamic var roundTraining: Bool = false
+
     var exercises = List<ExerciseInTraining>()
-    
+    var roundExercisesIds = List<IdString>()
+
     @objc dynamic var wasSync: Bool = false
     @objc dynamic var wasDeleted: Bool = false
 
@@ -93,6 +95,7 @@ class ExerciseInTraining: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var exerciseId: String = ""
     @objc dynamic var byTrainer: Bool = false
+    
     var iterations = List<Iteration>()
     
     @objc dynamic var wasSync: Bool = false
@@ -117,4 +120,8 @@ class Iteration: Object {
         return "id"
     }
     
+}
+
+class IdString: Object {
+    @objc dynamic var id: String = ""
 }

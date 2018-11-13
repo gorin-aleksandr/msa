@@ -13,6 +13,7 @@ protocol MultipleChoicesViewControllerDataSource: AnyObject {
     func elementsForMultipleChoiceController() -> [ExerciseInTraining]?
     func allowsMultipleSelection() -> Bool
     func elementsCanBeAdded() -> Bool
+    func selectedElements() -> ([ExerciseInTraining], [Int])
 }
 
 //MARK: - Multiple Choices View Controller Delegate protocol
@@ -83,10 +84,17 @@ class MultipleChoicesViewController: UIViewController {
     
     private func initialConfigureViewController() {
         configureControllerTitle()
+        getPreviousSelectedElements()
         getElementsForChoosing()
         configureTableView()
         configureNavController()
         changeImage()
+    }
+    
+    private func getPreviousSelectedElements() {
+        guard let elements = dataSource?.selectedElements()  else {return}
+        self.selectedDataArray.append(contentsOf: elements.0)
+        self.selectedIndexes.append(contentsOf: elements.1)
     }
     
     private func configureControllerTitle() {
@@ -123,22 +131,56 @@ class MultipleChoicesViewController: UIViewController {
     }
     
     @IBAction func okAction(_ sender: Any) {
-        if !allSelected && selectedIndexes.count == 0 {
-            AlertDialog.showAlert("Не выбраны упражнения!", message: "Выберите упражнения для круговой трерировки.", viewController: self)
-        }
-        saveAction()
-    }
-    
-    @objc private func saveAction() {
-        if allSelected {
-            manager.setIterationsForRound {
-                self.performSegue(withIdentifier: "startRoundTraining", sender: nil)
+        if selectedIndexes.count != 1 {
+            if isExercisesPaired() {
+                saveAction()
+            } else {
+                AlertDialog.showAlert("Неверный порядок упражнений!", message: "Упражнения для круговой тренировки должны состоять из груп по минимум 2 упражнения.", viewController: self)
             }
         } else {
-            manager.setSpecialIterationsForRound(indexes: selectedIndexes) {
-                self.performSegue(withIdentifier: "startRoundTraining", sender: nil)
-            }
+            AlertDialog.showAlert("Неверное число упражнений!", message: "Должно быть выбрано или 0 или больше 2-х упражнений.", viewController: self)
         }
+    }
+    
+    private func isExercisesPaired() -> Bool{
+        if selectedIndexes.count == 0 {
+            return true
+        } else {
+            for (index, number) in selectedIndexes.enumerated() {
+                switch index {
+                case 0:
+                    if number+1 == selectedIndexes[index+1] {
+                        continue
+                    } else {
+                        return false
+                    }
+                case selectedIndexes.count - 1:
+                    if number-1 == selectedIndexes[index-1] {
+                        continue
+                    } else {
+                        return false
+                    }
+                default:
+                    if number+1 == selectedIndexes[index+1] {
+                        continue
+                    } else if number-1 == selectedIndexes[index-1] {
+                        continue
+                    } else {
+                        return false
+                    }
+                }
+            }
+            return true
+        }
+    }
+
+    @objc private func saveAction() {
+        if allSelected {
+            delegate?.selectionWasDone(with: elementsForChoosing.map{$0.exerciseId})
+        } else {
+            delegate?.selectionWasDone(with: selectedDataArray.map{$0.exerciseId})
+        }
+        delegate?.popMultipleChoiseViewController()
     }
     
     @IBAction func chooseAllExerc(_ sender: Any) {

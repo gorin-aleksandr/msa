@@ -50,24 +50,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func migrationToNewVersion(migration: Migration) {
-        migration.enumerateObjects(ofType: Training.className()) { (old, new) in
-            guard let _ = old, let newObgect = new else {
-                return
-            }
-            newObgect["wasDeleted"] = false
-        }
-        migration.enumerateObjects(ofType: TrainingWeek.className()) { (old, new) in
-            guard let _ = old, let newObgect = new else {
-                return
-            }
-            newObgect["wasDeleted"] = false
-        }
-        migration.enumerateObjects(ofType: TrainingDay.className()) { (old, new) in
-            guard let _ = old, let newObgect = new else {
-                return
-            }
-            newObgect["wasDeleted"] = false
-        }
+//        migration.enumerateObjects(ofType: Training.className()) { (old, new) in
+//            guard let _ = old, let newObgect = new else {
+//                return
+//            }
+//            newObgect["wasDeleted"] = false
+//        }
+//        migration.enumerateObjects(ofType: TrainingWeek.className()) { (old, new) in
+//            guard let _ = old, let newObgect = new else {
+//                return
+//            }
+//            newObgect["wasDeleted"] = false
+//        }
+//        migration.enumerateObjects(ofType: TrainingDay.className()) { (old, new) in
+//            guard let _ = old, let newObgect = new else {
+//                return
+//            }
+//            newObgect["wasDeleted"] = false
+//        }
     }
     
     
