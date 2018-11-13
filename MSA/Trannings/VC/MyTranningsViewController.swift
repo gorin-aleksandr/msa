@@ -40,6 +40,10 @@ class MyTranningsViewController: UIViewController {
     private func initialDataLoading() {
         manager.initDataSource(dataSource: TrainingsDataSource.shared)
         manager.initView(view: self)
+        setData()
+    }
+    
+    private func setData() {
         if manager.sportsmanId == AuthModule.currUser.id {
             manager.loadTrainingsFromRealm()
             manager.syncUnsyncedTrainings()
@@ -75,7 +79,7 @@ class MyTranningsViewController: UIViewController {
         } else {
             nextWeekButton.alpha = 1
         }
-        if manager.getWeeksCount() == 0 {
+        if manager.getWeeksCount() == 0 || manager.getDaysCount() == 0 {
             addDayView.isHidden = false
         } else {
             addDayView.isHidden = true
@@ -195,12 +199,20 @@ class MyTranningsViewController: UIViewController {
                 self.deleteTraining()
             }
         })
-        let cancel = UIAlertAction(title: "Отмена", style: .default, handler: { action in
+        let thirdAction = UIAlertAction(title: "Удалить неделю", style: .default, handler: { action in
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
+            self.deleteWeek()
+        })
+        
+        let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
         })
         
         alert.addAction(firstAction)
         alert.addAction(secondAction)
+        if !addDayWeek {
+            alert.addAction(thirdAction)
+        }
         alert.addAction(cancel)
         segmentControl.layer.borderColor = UIColor.lightGray.cgColor
         self.present(alert, animated: true, completion: nil)
@@ -226,6 +238,14 @@ class MyTranningsViewController: UIViewController {
         label.attributedText = attributedText
     }
     
+    func deleteWeek() {
+        if weekNumber == manager.getWeeksCount()-1 {
+            weekNumber -= 1
+        }
+        manager.deleteWeek(at: weekNumber)
+        setData()
+    }
+    
     func addDay() {
         guard let week = manager.dataSource?.currentWeek else {
             AlertDialog.showAlert("Нельзя добавить день!", message: "Сначала добавьте неделю", viewController: self)
@@ -237,6 +257,7 @@ class MyTranningsViewController: UIViewController {
         tableView.toggleSection(section)
         tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .bottom, animated: true)
     }
+    
     func addWeek() {
         if let training = manager.dataSource?.currentTraining {
             manager.createWeak(in: training)
@@ -249,7 +270,6 @@ class MyTranningsViewController: UIViewController {
         }
         weekNumber = (manager.dataSource?.currentTraining?.weeks.count ?? 0) - 1
         changeWeek()
-        tableView.reloadData()
         tableView.toggleSection(0)
     }
     
@@ -261,9 +281,10 @@ class MyTranningsViewController: UIViewController {
             AlertDialog.showAlert("Вы не можете начать тренировку!", message: "В упражнениях №\(joined) не добавнены подходы.", viewController: self)
         } else {
             if round {
-                manager.setIterationsForRound()
+                self.performSegue(withIdentifier: "chooseExercisesForRoundTraining", sender: nil)
+            } else {
+                self.performSegue(withIdentifier: "roundTraining", sender: nil )
             }
-            self.performSegue(withIdentifier: "roundTraining", sender: nil )
         }
     }
     
@@ -325,6 +346,12 @@ class MyTranningsViewController: UIViewController {
         case "roundTraining":
             guard let vc = segue.destination as? CircleTrainingDayViewController else {return}
             vc.manager = self.manager
+        case "chooseExercisesForRoundTraining":
+            guard let vc = segue.destination as? MultipleChoicesViewController else {return}
+            vc.delegate = self
+            vc.dataSource = self
+            vc.manager = self.manager
+
         case "addExercise":
             guard let vc = segue.destination as? ExercisesViewController else {return}
             vc.trainingManager = self.manager
@@ -334,9 +361,9 @@ class MyTranningsViewController: UIViewController {
     }
     
     func changeWeek() {
-        manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
-        weekLabel.text =  "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
         if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
+            manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
+            weekLabel.text =  "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
             nextWeekButton.isHidden = false
             prevWeekButton.isHidden = false
         } else {
@@ -346,6 +373,21 @@ class MyTranningsViewController: UIViewController {
         }
         showHideButtons()
         UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+    }
+    
+    @objc func showDeleteDayAlert(sender: UIButton) {
+        let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить день?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
+            self.manager.deleteDay(at: sender.tag)
+            self.showHideButtons()
+            self.setData()
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in
+            //
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(yesAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -369,10 +411,13 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             headerView.sircleTrainingButton.tag = section
             headerView.startTrainingButton.tag = section
             headerView.changeDateButton.tag = section
+            headerView.deleteButton.tag = section
+            headerView.deleteButton.addTarget(self, action: #selector(showDeleteDayAlert(sender:)), for: .touchUpInside)
             headerView.changeDateButton.addTarget(self, action: #selector(changeDate(sender:)), for: .touchUpInside)
             headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
             headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
 
+            
             return headerView
         }
     }
@@ -502,6 +547,27 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     func errorOccurred(err: String) {
         print("Error")
     }
+}
+
+extension MyTranningsViewController: MultipleChoicesViewControllerDelegate, MultipleChoicesViewControllerDataSource {
+    func selectionWasDone(with result: [String]) {
+        print(result)
+    }
+    
+    func elementsForMultipleChoiceController() -> [ExerciseInTraining]? {
+        guard let exercies = manager.getCurrentday()?.exercises else {return nil}
+        return Array(exercies)
+    }
+    
+    func allowsMultipleSelection() -> Bool {
+        return true
+    }
+    
+    func elementsCanBeAdded() -> Bool {
+        return false
+    }
+    
+    
 }
 
 extension MyTranningsViewController: UITextFieldDelegate {
