@@ -136,6 +136,9 @@
 		35314F49218914A100A6E323 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35314F48218914A100A6E323 /* ErrorView.swift */; };
 		353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */; };
 		35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */; };
+		35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */; };
+		35B70340219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033F219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift */; };
+		35B70342219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B70341219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
 		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
 		35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */; };
@@ -282,6 +285,9 @@
 		35314F48218914A100A6E323 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedUserCollectionViewCell.swift; sourceTree = "<group>"; };
+		35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceViewController.swift; sourceTree = "<group>"; };
+		35B7033F219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceViewModel.swift; sourceTree = "<group>"; };
+		35B70341219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceTableViewCell.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
 		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
 		35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListPresenter.swift; sourceTree = "<group>"; };
@@ -423,7 +429,7 @@
 		2962D47E20D2AABA00870953 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				29FF688420DE9C0000C4FCC0 /* ExercisesTypesVC */,
+				35B7033C219A3CEC00E83393 /* HeartBeatDevice */,
 				29B0971F20D4D38500CA7219 /* ExercisesForTypeViewController.swift */,
 				2940A35120D9023E00EBAE84 /* ExercisesInfoViewController.swift */,
 				299AA10420E94C1000BCCA12 /* NewExercise */,
@@ -551,6 +557,7 @@
 			children = (
 				29F9F2012147AE7D006EDC6A /* TrainingManager.swift */,
 				29F9F2022147AE7E006EDC6A /* TrainingsDataSource.swift */,
+				29FF688420DE9C0000C4FCC0 /* ExercisesTypesVC */,
 				29F9F2122147AE82006EDC6A /* VC */,
 				29F9F2032147AE80006EDC6A /* View */,
 			);
@@ -663,6 +670,16 @@
 				35314F48218914A100A6E323 /* ErrorView.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		35B7033C219A3CEC00E83393 /* HeartBeatDevice */ = {
+			isa = PBXGroup;
+			children = (
+				35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */,
+				35B70341219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift */,
+				35B7033F219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift */,
+			);
+			path = HeartBeatDevice;
 			sourceTree = "<group>";
 		};
 		35CE070920ECC644006892B0 /* Community */ = {
@@ -915,6 +932,7 @@
 				2934805320E8EECC0039028E /* TextViewViewCounterTableViewCell.swift in Sources */,
 				35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */,
 				2934805920E8F7B80039028E /* ChoosingItemTableViewCell.swift in Sources */,
+				35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */,
 				29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */,
 				35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */,
 				2962D47D20D2A3B300870953 /* ExercisesViewController.swift in Sources */,
@@ -937,6 +955,7 @@
 				29F9F22B2147AE82006EDC6A /* ConfigureTranningExersViewController.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
 				2962D48520D2B6A900870953 /* ExercisesVO.swift in Sources */,
+				35B70340219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift in Sources */,
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
 				29F9F22A2147AE82006EDC6A /* IterationsViewController.swift in Sources */,
 				2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */,
@@ -983,6 +1002,7 @@
 				29F9F24C2147B5B8006EDC6A /* VAWeek.swift in Sources */,
 				295781B72039EFCB00EF8878 /* MainViewController.swift in Sources */,
 				29F9F2302147B3EA006EDC6A /* TrainingsVo.swift in Sources */,
+				35B70342219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift in Sources */,
 				29F9F2272147AE82006EDC6A /* TimeView.swift in Sources */,
 				29FF688620DE9C2100C4FCC0 /* ExersisesTypesPresenter.swift in Sources */,
 				299B58EE208688E600CBE646 /* GalleryItemVO.swift in Sources */,
