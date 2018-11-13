@@ -281,9 +281,10 @@ class MyTranningsViewController: UIViewController {
             AlertDialog.showAlert("Вы не можете начать тренировку!", message: "В упражнениях №\(joined) не добавнены подходы.", viewController: self)
         } else {
             if round {
-                manager.setIterationsForRound()
+                self.performSegue(withIdentifier: "chooseExercisesForRoundTraining", sender: nil)
+            } else {
+                self.performSegue(withIdentifier: "roundTraining", sender: nil )
             }
-            self.performSegue(withIdentifier: "roundTraining", sender: nil )
         }
     }
     
@@ -345,6 +346,12 @@ class MyTranningsViewController: UIViewController {
         case "roundTraining":
             guard let vc = segue.destination as? CircleTrainingDayViewController else {return}
             vc.manager = self.manager
+        case "chooseExercisesForRoundTraining":
+            guard let vc = segue.destination as? MultipleChoicesViewController else {return}
+            vc.delegate = self
+            vc.dataSource = self
+            vc.manager = self.manager
+
         case "addExercise":
             guard let vc = segue.destination as? ExercisesViewController else {return}
             vc.trainingManager = self.manager
@@ -540,6 +547,27 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     func errorOccurred(err: String) {
         print("Error")
     }
+}
+
+extension MyTranningsViewController: MultipleChoicesViewControllerDelegate, MultipleChoicesViewControllerDataSource {
+    func selectionWasDone(with result: [String]) {
+        print(result)
+    }
+    
+    func elementsForMultipleChoiceController() -> [ExerciseInTraining]? {
+        guard let exercies = manager.getCurrentday()?.exercises else {return nil}
+        return Array(exercies)
+    }
+    
+    func allowsMultipleSelection() -> Bool {
+        return true
+    }
+    
+    func elementsCanBeAdded() -> Bool {
+        return false
+    }
+    
+    
 }
 
 extension MyTranningsViewController: UITextFieldDelegate {

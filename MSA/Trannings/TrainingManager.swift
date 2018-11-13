@@ -149,6 +149,9 @@ class TrainingManager {
     func getExercise(by id: String) -> ExerciseInTraining? {
         return realm.getElement(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "id = %@", id))
     }
+    func getExercise(with id: String) -> Exercise? {
+        return realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", id))
+    }
     func getIteration(by id: String) -> Iteration? {
         return realm.getElement(ofType: Iteration.self, filterWith: NSPredicate(format: "id = %@", id))
     }
@@ -738,23 +741,84 @@ class TrainingManager {
         }
     }
     
-    func setIterationsForRound() {
+    func setSpecialIterationsForRound(indexes: [Int], completion: @escaping ()->()) {
         exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
+        var tempIndexes = [Int]()
+        
+        if let exercises = exercises {
+            for (index, _) in exercises.enumerated() {
+                if indexes.contains(index) {
+                    tempIndexes.append(index)
+                    continue
+                } else {
+                    if !tempIndexes.isEmpty {
+                        getIterationsAsRound(atEx: tempIndexes)
+                        tempIndexes.removeAll()
+                    }
+                    getIterationsAsNormal(at: index)
+                }
+            }
+        }
+        completion()
+    }
+
+    func getIterationsAsRound(atEx indexes: [Int]) {
+        var iterations = [Iteration]()
+        var neededExercises = [ExerciseInTraining]()
+        if let exercises = exercises {
+            for (index, ex) in exercises.enumerated() {
+                if indexes.contains(index) {
+                    neededExercises.append(ex)
+                }
+            }
+            iterations = prepareIterationsForRound(from: neededExercises)
+        }
+        iterationsForRound.append(contentsOf: iterations)
+    }
+    func getIterationsAsNormal(at index: Int) {
+        var iterations = [Iteration]()
+        if let exercises = exercises {
+            iterations = Array(exercises[index].iterations)
+        }
+        iterationsForRound.append(contentsOf: iterations)
+    }
+    
+    func setIterationsForRound(completion: @escaping ()->()) {
+        exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
+//        var array = [Iteration]()
+//        var len = 0
+//        for e in exercises! {
+//            if len < e.iterations.count {
+//                len = e.iterations.count
+//            }
+//        }
+//        for index in 1...len {
+//            for e in exercises! {
+//                if e.iterations.count >= index {
+//                    array.append(e.iterations[index-1])
+//                }
+//            }
+//        }
+        iterationsForRound = prepareIterationsForRound(from: exercises!)
+        completion()
+    }
+    
+    func prepareIterationsForRound(from ex: [ExerciseInTraining]) -> [Iteration] {
         var array = [Iteration]()
         var len = 0
-        for e in exercises! {
+        for e in ex {
             if len < e.iterations.count {
                 len = e.iterations.count
             }
         }
         for index in 1...len {
-            for e in exercises! {
+            for e in ex {
                 if e.iterations.count >= index {
                     array.append(e.iterations[index-1])
                 }
             }
         }
-       iterationsForRound = array
+        return array
     }
     
     private func getNext() -> (Int,Int)? {

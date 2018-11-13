@@ -59,6 +59,36 @@ extension String {
     
 }
 
+extension Array where Element: Equatable {
+    mutating func remove(_ item:Element ) {
+        for (index, element) in self.enumerated() {
+            if element == item {
+                self.remove(at: index)
+            }
+        }
+    }
+    
+    func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
+        var set = Set<T>() //the unique list kept in a Set for fast retrieval
+        var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
+        for value in self {
+            if !set.contains(map(value)) {
+                set.insert(map(value))
+                arrayOrdered.append(value)
+            }
+        }
+        
+        return arrayOrdered
+    }
+    
+    public func array( removing item:Element ) -> [Element] {
+        var result = self
+        result.remove( item )
+        return result
+    }
+}
+
+
 extension UINavigationItem {
     func setTitle(title:String, subtitle:String) {
         let titleLabel = UILabel(frame: CGRect(x: 0, y: -2, width: 0, height: 0))
