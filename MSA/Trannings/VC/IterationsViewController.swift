@@ -135,14 +135,16 @@ class IterationsViewController: UIViewController {
     
     @objc
     func addIteration() {
-        try! manager.realm.performWrite {
-            let newIteration = Iteration()
-            newIteration.id = UUID().uuidString
-            newIteration.exerciseInTrainingId = manager.getCurrentExercise()?.id ?? UUID().uuidString
-            manager.getCurrentExercise()?.iterations.append(newIteration)
-            manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {})
+        manager.addIteration {
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
         }
-        UIView.transition(with: tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+    }
+    
+    @objc
+    func copyIteration(at index: Int) {
+        manager.copyIteration(index: index) {
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+        }
     }
     
     fileprivate func whitespaceString(font: UIFont = UIFont(name: "Rubik-Medium", size: 17)!, width: CGFloat) -> String {
@@ -207,7 +209,7 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func getCopyAction() -> UITableViewRowAction {
         let copy = UITableViewRowAction(style: .normal, title: "Копировать") { (action, indexPath) in
-            // TODO !!!!!!!!!
+            self.copyIteration(at: indexPath.row)
         }
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 110, height: 55))
         view.backgroundColor = UIColor.white

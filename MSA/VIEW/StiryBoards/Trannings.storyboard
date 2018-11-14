@@ -1000,7 +1000,6 @@
                         <viewLayoutGuide key="safeArea" id="F2z-yr-OXi"/>
                     </view>
                     <navigationItem key="navigationItem" title="Нагрузка" id="Z7b-jK-tAd">
-                        <barButtonItem key="backBarButtonItem" title=" " id="gd5-yw-vYQ"/>
                         <barButtonItem key="leftBarButtonItem" image="back" id="MJf-jF-ePw">
                             <color key="tintColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1112,7 +1111,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pulse-ava" translatesAutoresizingMaskIntoConstraints="NO" id="JRW-X2-bXU">
-                                                    <rect key="frame" x="16" y="1" width="48" height="48"/>
+                                                    <rect key="frame" x="16" y="1.5" width="48" height="48"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="48" id="MfK-U4-moI"/>
                                                         <constraint firstAttribute="width" constant="48" id="Q8X-z5-WuE"/>
@@ -1496,7 +1495,7 @@
                         <viewLayoutGuide key="safeArea" id="eYw-Za-1LC"/>
                     </view>
                     <navigationItem key="navigationItem" id="mYJ-qm-dDG">
-                        <barButtonItem key="leftBarButtonItem" title="item" id="2xh-HO-olH">
+                        <barButtonItem key="leftBarButtonItem" title="item" image="back" id="2xh-HO-olH">
                             <color key="tintColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="ok_blue" id="L1h-Ia-Y82">

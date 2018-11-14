@@ -57,6 +57,19 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        downloadData()
+        myPicker.delegate = self
+    }
+    
+    private func downloadData() {
+        downloadExercises()
+        configureButtonsView()
+        presenter.attachView(view: self)
+        presenter.getGallery(context: context)
+        presenter.getGallery(for: AuthModule.currUser.id)
+    }
+    
+    private func downloadExercises() {
         p.getExercisesFromRealm()
         p.getTypesFromRealm()
         p.getFiltersFromRealm()
@@ -66,19 +79,10 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         p.getAllTypes()
         p.getAllFilters()
         p.getMyExercises()
-        
-        configureButtonsView()
-        presenter.attachView(view: self)
-        //        presenter.getGallery(context: context)
-        //        if GalleryDataManager.GalleryItems.count == 0 {
-        presenter.getGallery(for: AuthModule.currUser.id)
-        //        }
-        myPicker.delegate = self
-        
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        downloadExercises()
         configureProfile()
         navigationController?.setNavigationBarHidden(true, animated: true)
     }

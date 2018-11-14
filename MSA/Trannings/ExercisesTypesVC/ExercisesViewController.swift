@@ -40,7 +40,6 @@ class ExercisesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configurateSearchController()
-        initialDataPreparing()
         hideableNavigationBar(false)
         guard let _ = trainingManager else { return }
         let button = UIButton()

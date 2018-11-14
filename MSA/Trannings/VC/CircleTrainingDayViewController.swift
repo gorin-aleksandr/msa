@@ -76,6 +76,7 @@ class CircleTrainingDayViewController: UIViewController {
     }
     
     @objc private func stopIteration(_ sender: UIButton) {
+        tableView.isUserInteractionEnabled = true
         manager.fullStop()
     }
     
@@ -87,6 +88,7 @@ class CircleTrainingDayViewController: UIViewController {
         manager.startOrContineIteration()
     }
     private func startTraining() {
+        tableView.isUserInteractionEnabled = false
         manager.startTraining()
     }
 }

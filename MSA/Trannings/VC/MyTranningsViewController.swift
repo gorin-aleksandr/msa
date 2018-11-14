@@ -255,7 +255,7 @@ class MyTranningsViewController: UIViewController {
         tableView.reloadData()
         let section = (manager.dataSource?.currentWeek?.days.count ?? 1) - 1
         tableView.toggleSection(section)
-        tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .bottom, animated: true)
+//        tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .bottom, animated: true)
     }
     
     func addWeek() {

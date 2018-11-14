@@ -233,6 +233,32 @@ class TrainingManager {
         }
     }
     
+    func addIteration(completion: @escaping ()->()) {
+        try! realm.performWrite {
+            let newIteration = Iteration()
+            newIteration.id = UUID().uuidString
+            newIteration.exerciseInTrainingId = getCurrentExercise()?.id ?? UUID().uuidString
+            getCurrentExercise()?.iterations.append(newIteration)
+            getCurrentTraining()?.wasSync = false
+            editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+        }
+        completion()
+    }
+    
+    func copyIteration(index: Int, completion: @escaping ()->()) {
+        if let iteration = getCurrentExercise()?.iterations[index] {
+            let iterationCopy = Iteration(value: iteration)
+            iterationCopy.id = UUID().uuidString
+            realm.saveObject(iterationCopy)
+            try! realm.performWrite {
+                getCurrentTraining()?.wasSync = false
+                getCurrentExercise()?.iterations.append(iterationCopy)
+                editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+            }
+        completion()
+        }
+    }
+    
     func setDayRoundExercises(with ids: [String]) {
         guard let day = dataSource?.currentDay else {return}
         guard let trainingId = dataSource?.currentTraining?.id else {return}
