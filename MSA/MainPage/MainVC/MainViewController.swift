@@ -65,7 +65,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         downloadExercises()
         configureButtonsView()
         presenter.attachView(view: self)
-        presenter.getGallery(context: context)
+//        presenter.getGallery(context: context)
         presenter.getGallery(for: AuthModule.currUser.id)
     }
     

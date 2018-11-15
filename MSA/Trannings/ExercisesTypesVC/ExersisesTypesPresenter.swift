@@ -245,6 +245,12 @@ class ExersisesTypesPresenter {
         }
     }
     
+    func listenForUpdates() {
+        if let id = AuthModule.currUser.id {
+
+        }
+    }
+    
     func observeExercises(snapchot: DataSnapshot, all: Bool) {
         self.view?.finishLoading()
         var items = [Exercise]()
