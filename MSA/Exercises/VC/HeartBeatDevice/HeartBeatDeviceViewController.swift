@@ -40,5 +40,10 @@ extension HeartBeatDeviceViewController: UITableViewDelegate, UITableViewDataSou
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let destinationVC = UIStoryboard.init(name: "Trannings", bundle: Bundle.main).instantiateViewController(withIdentifier: "HeartBeatDetailsViewController") as! HeartBeatDetailsViewController
+        navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    
     
 }
