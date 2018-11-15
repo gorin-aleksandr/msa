@@ -135,9 +135,11 @@
 		35314F47218909C100A6E323 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35314F46218909C100A6E323 /* ErrorView.xib */; };
 		35314F49218914A100A6E323 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35314F48218914A100A6E323 /* ErrorView.swift */; };
 		353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */; };
+		354CE708219CBE50005F5DDA /* HeartBeatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CE707219CBE50005F5DDA /* HeartBeatDetailsViewController.swift */; };
+		354CE70A219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CE709219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift */; };
 		35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */; };
 		35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */; };
-		35B70340219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033F219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift */; };
+		35B70340219A3D3A00E83393 /* HeartBeatDevicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033F219A3D3A00E83393 /* HeartBeatDevicePresenter.swift */; };
 		35B70342219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B70341219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift */; };
 		35B70349219AEF3B00E83393 /* ExersisesTypesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B70346219AEF3B00E83393 /* ExersisesTypesPresenter.swift */; };
 		35B7034A219AEF3B00E83393 /* ExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B70347219AEF3B00E83393 /* ExercisesViewController.swift */; };
@@ -287,9 +289,11 @@
 		35314F46218909C100A6E323 /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		35314F48218914A100A6E323 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
+		354CE707219CBE50005F5DDA /* HeartBeatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDetailsViewController.swift; sourceTree = "<group>"; };
+		354CE709219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDetailsPresenter.swift; sourceTree = "<group>"; };
 		35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceViewController.swift; sourceTree = "<group>"; };
-		35B7033F219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceViewModel.swift; sourceTree = "<group>"; };
+		35B7033F219A3D3A00E83393 /* HeartBeatDevicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDevicePresenter.swift; sourceTree = "<group>"; };
 		35B70341219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceTableViewCell.swift; sourceTree = "<group>"; };
 		35B70346219AEF3B00E83393 /* ExersisesTypesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExersisesTypesPresenter.swift; sourceTree = "<group>"; };
 		35B70347219AEF3B00E83393 /* ExercisesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExercisesViewController.swift; sourceTree = "<group>"; };
@@ -676,7 +680,9 @@
 			children = (
 				35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */,
 				35B70341219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift */,
-				35B7033F219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift */,
+				35B7033F219A3D3A00E83393 /* HeartBeatDevicePresenter.swift */,
+				354CE707219CBE50005F5DDA /* HeartBeatDetailsViewController.swift */,
+				354CE709219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift */,
 			);
 			path = HeartBeatDevice;
 			sourceTree = "<group>";
@@ -968,7 +974,7 @@
 				29F9F22B2147AE82006EDC6A /* ConfigureTranningExersViewController.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
 				2962D48520D2B6A900870953 /* ExercisesVO.swift in Sources */,
-				35B70340219A3D3A00E83393 /* HeartBeatDeviceViewModel.swift in Sources */,
+				35B70340219A3D3A00E83393 /* HeartBeatDevicePresenter.swift in Sources */,
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
 				29F9F22A2147AE82006EDC6A /* IterationsViewController.swift in Sources */,
 				2940A35220D9023E00EBAE84 /* ExercisesInfoViewController.swift in Sources */,
@@ -991,6 +997,7 @@
 				298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */,
 				29F9F22C2147AE82006EDC6A /* CircleTrainingDayViewController.swift in Sources */,
 				29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */,
+				354CE708219CBE50005F5DDA /* HeartBeatDetailsViewController.swift in Sources */,
 				2993086220EA5264009C035E /* AddImagesManages.swift in Sources */,
 				295A4EED203EC73E00124A07 /* NameSurnameViewController.swift in Sources */,
 				2962D48320D2AAF000870953 /* ExercisesCollectionViewCell.swift in Sources */,
@@ -1024,6 +1031,7 @@
 				29F9F2452147B5B8006EDC6A /* VAMonthHeaderView.swift in Sources */,
 				29A16935204836C8006864C2 /* BasicViewController.swift in Sources */,
 				29F9F2542147B665006EDC6A /* DatePicker.swift in Sources */,
+				354CE70A219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift in Sources */,
 				29F9F2492147B5B8006EDC6A /* VAWeekView.swift in Sources */,
 				29F9F2482147B5B8006EDC6A /* VACalendar.swift in Sources */,
 				35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */,
