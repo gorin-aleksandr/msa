@@ -84,6 +84,7 @@
 		29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2D5FC2074FA2E00E2B958 /* EditProfileViewController.swift */; };
 		29C4A3F12038A62200F2A1BB /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C4A3F02038A62200F2A1BB /* SignInViewController.swift */; };
 		29C4A3F32038B68F00F2A1BB /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C4A3F22038B68F00F2A1BB /* UserInfoViewController.swift */; };
+		29C7154221A02EC0004CE089 /* InternetRechability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C7154121A02EC0004CE089 /* InternetRechability.swift */; };
 		29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD6E20A170870073C838 /* StartCoordinator.swift */; };
 		29D2CD7120A175F40073C838 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD7020A175F40073C838 /* StartViewController.swift */; };
 		29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */; };
@@ -235,6 +236,7 @@
 		29C2D5FC2074FA2E00E2B958 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		29C4A3F02038A62200F2A1BB /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		29C4A3F22038B68F00F2A1BB /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		29C7154121A02EC0004CE089 /* InternetRechability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetRechability.swift; sourceTree = "<group>"; };
 		29D2CD6E20A170870073C838 /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		29D2CD7020A175F40073C838 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				35CE070920ECC644006892B0 /* Community */,
 				298DF65E203C36B300FB0180 /* AlertView.swift */,
 				29C2D5FA2074F36300E2B958 /* Etentions.swift */,
+				29C7154121A02EC0004CE089 /* InternetRechability.swift */,
 				29F9F2532147B665006EDC6A /* DatePicker.swift */,
 				299B547B20A0D38A004E60A2 /* Rubik */,
 				29160B4C2035AA3B00DA7227 /* Assets.xcassets */,
@@ -1024,6 +1027,7 @@
 				29F9F2452147B5B8006EDC6A /* VAMonthHeaderView.swift in Sources */,
 				29A16935204836C8006864C2 /* BasicViewController.swift in Sources */,
 				29F9F2542147B665006EDC6A /* DatePicker.swift in Sources */,
+				29C7154221A02EC0004CE089 /* InternetRechability.swift in Sources */,
 				29F9F2492147B5B8006EDC6A /* VAWeekView.swift in Sources */,
 				29F9F2482147B5B8006EDC6A /* VACalendar.swift in Sources */,
 				35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */,

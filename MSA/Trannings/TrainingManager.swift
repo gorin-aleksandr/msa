@@ -78,21 +78,25 @@ class TrainingManager {
         self.flowView = view
     }
     
-    func synchronizeTrainingsData(success: (() -> Void)?, failture: (([NSError]) -> Void)? = nil) {
+    func synchronizeTrainingsData(success: (() -> Void)?, failture: (() -> Void)? = nil) {
         let dispatchGroup = DispatchGroup()
         
-        dispatchGroup.enter()
-        loadTrainings(success: {
-            dispatchGroup.leave()
-        })
-        
-        dispatchGroup.enter()
-        getMyExercises(success: {
-            dispatchGroup.leave()
-        })
-        
-        dispatchGroup.notify(queue: .main) {
-            success?()
+        if InternetReachability.isConnectedToNetwork() {
+            failture?()
+        } else {
+            dispatchGroup.enter()
+            loadTrainings(success: {
+                dispatchGroup.leave()
+            })
+            
+            dispatchGroup.enter()
+            getMyExercises(success: {
+                dispatchGroup.leave()
+            })
+            
+            dispatchGroup.notify(queue: .main) {
+                success?()
+            }
         }
     }
     

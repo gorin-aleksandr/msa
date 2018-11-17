@@ -113,10 +113,10 @@ class MyTranningsViewController: UIViewController {
         manager.synchronizeTrainingsData(success: {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
-        }) { (error) in
-            AlertDialog.showAlert("Ошибка синхронизации тренировок!", message: "Попробуйте позже!", viewController: self)
+        }, failture: {
+            AlertDialog.showAlert("Ошибка синхронизации тренировок!", message: "Проверьте интернет соединение!", viewController: self)
             self.refreshControl.endRefreshing()
-        }
+        })
     }
     
     @IBAction func back(_ sender: Any) {
