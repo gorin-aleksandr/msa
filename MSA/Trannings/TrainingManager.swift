@@ -81,7 +81,7 @@ class TrainingManager {
     func synchronizeTrainingsData(success: (() -> Void)?, failture: (() -> Void)? = nil) {
         let dispatchGroup = DispatchGroup()
         
-        if InternetReachability.isConnectedToNetwork() {
+        if !InternetReachability.isConnectedToNetwork() {
             failture?()
         } else {
             dispatchGroup.enter()

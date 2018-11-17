@@ -114,8 +114,9 @@ class MyTranningsViewController: UIViewController {
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }, failture: {
-            AlertDialog.showAlert("Ошибка синхронизации тренировок!", message: "Проверьте интернет соединение!", viewController: self)
-            self.refreshControl.endRefreshing()
+            AlertDialog.showAlert("Ошибка синхронизации тренировок!", message: "Проверьте интернет соединение!", viewController: self, dismissed: {
+                self.refreshControl.endRefreshing()
+            })
         })
     }
     
