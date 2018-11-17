@@ -13,7 +13,6 @@ import SDWebImage
 class MyTranningsViewController: UIViewController {
 
     @IBOutlet weak var loadingView: UIView!
-    
     @IBOutlet weak var tableView: FZAccordionTableView!
     @IBOutlet weak var weekLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
@@ -21,6 +20,8 @@ class MyTranningsViewController: UIViewController {
     @IBOutlet weak var prevWeekButton: UIButton!
     @IBOutlet weak var addDayView: UIView! {didSet{addDayView.layer.cornerRadius = 12}}
     
+    private let refreshControl = UIRefreshControl()
+
     var manager = TrainingManager(type: .my)
     var weekNumber = 0
 
@@ -64,6 +65,7 @@ class MyTranningsViewController: UIViewController {
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 14)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 13)!],for: .normal)
+        refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация тренировки ...", attributes: attrs)
         configureTableView()
         showHideButtons()
     }
@@ -98,7 +100,23 @@ class MyTranningsViewController: UIViewController {
         tableView.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "ExerciseTableViewCell")
         tableView.register(UINib(nibName: "AddExerciseToDayTableViewCell", bundle: nil), forCellReuseIdentifier: "AddExerciseToDayTableViewCell")
         tableView.register(UINib(nibName: "CreateExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "CreateExerciseTableViewCell")
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
+    }
+    
+    @objc private func refreshData(_ sender: Any) {
+        manager.synchronizeTrainingsData(success: {
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+        }) { (error) in
+            AlertDialog.showAlert("Ошибка синхронизации тренировок!", message: "Попробуйте позже!", viewController: self)
+            self.refreshControl.endRefreshing()
+        }
     }
     
     @IBAction func back(_ sender: Any) {

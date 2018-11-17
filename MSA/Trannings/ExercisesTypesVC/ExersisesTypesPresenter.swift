@@ -236,61 +236,27 @@ class ExersisesTypesPresenter {
         }
     }
     
-    func getMyExercises() {
+    func getMyExercises(success: (() -> Void)? = nil, failture: (([NSError]) -> Void)? = nil) {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
             Database.database().reference().child("ExercisesByTrainers").child(id).observeSingleEvent(of: .value) { (data) in
                 self.observeExercises(snapchot: data, all: false)
+                success?()
             }
         }
     }
     
-    func listenForUpdates() {
-        if let id = AuthModule.currUser.id {
-
-        }
-    }
+//    func listenForUpdates() {
+//        if let id = AuthModule.currUser.id {
+//
+//        }
+//    }
+    
     
     func observeExercises(snapchot: DataSnapshot, all: Bool) {
         self.view?.finishLoading()
         var items = [Exercise]()
-        for snap in snapchot.children {
-            let s = snap as! DataSnapshot
-            if let id = s.childSnapshot(forPath: "id").value as? NSNull {
-                return
-            }
-            guard let i = s.childSnapshot(forPath: "id").value as? String else {continue}
-            let picturesUrls = List<Image>()
-            let filterIds = List<Id>()
-            if let pictures = s.childSnapshot(forPath: "pictures").value as? NSArray {
-                for p in (pictures as! [[String:String]]) {
-                    let image = Image()
-                    image.url = p["url"]!
-                    picturesUrls.append(image)
-                }
-            }
-            if let filters = s.childSnapshot(forPath: "filterIDs").value as? NSArray {
-                for f in (filters as! [[String:Int]]) {
-                    let filt = Id()
-                    filt.id = f["id"]!
-                    filterIds.append(filt)
-                }
-            }
-            let exercise = Exercise()
-            
-            exercise.id = s.childSnapshot(forPath: "id").value as! String
-            exercise.realTypeId = s.childSnapshot(forPath: "realTypeId").value as? Int ?? -1
-            exercise.name = s.childSnapshot(forPath: "name").value as? String ?? ""
-            exercise.pictures = picturesUrls
-            exercise.typeId = s.childSnapshot(forPath: "typeId").value as! Int
-            exercise.trainerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
-            exercise.videoUrl = s.childSnapshot(forPath: "videoUrl").value as? String ?? ""
-            exercise.exerciseDescriprion = s.childSnapshot(forPath: "description").value as? String ?? "No description"
-            exercise.howToDo = s.childSnapshot(forPath: "howToDo").value as? String ?? "No info about doing"
-            exercise.link = s.childSnapshot(forPath: "link").value as? String ?? "No attached link"
-            exercise.filterIDs = filterIds
-            items.append(exercise)
-        }
+        items = parseExercises(snapchot: snapchot)
         if all {
             DispatchQueue.main.async {
                 self.realmManager.saveObjectsArray(items)
@@ -302,7 +268,6 @@ class ExersisesTypesPresenter {
             myExerc.id = AuthModule.currUser.id ?? ""
             for item in items {
                 myExerc.myExercises.append(item)
-//                self.exercises.allExersises.append(item)
             }
             DispatchQueue.main.async {
                 self.realmManager.saveObject(myExerc)
@@ -347,4 +312,46 @@ class ExersisesTypesPresenter {
         return exercises.allFilters.filter { ids.contains($0.id) }
     }
     
+}
+
+func parseExercises(snapchot: DataSnapshot) -> [Exercise] {
+    var items = [Exercise]()
+    for snap in snapchot.children {
+        let s = snap as! DataSnapshot
+        if let _ = s.childSnapshot(forPath: "id").value as? NSNull {
+            return []
+        }
+        guard let _ = s.childSnapshot(forPath: "id").value as? String else {continue}
+        let picturesUrls = List<Image>()
+        let filterIds = List<Id>()
+        if let pictures = s.childSnapshot(forPath: "pictures").value as? NSArray {
+            for p in (pictures as! [[String:String]]) {
+                let image = Image()
+                image.url = p["url"]!
+                picturesUrls.append(image)
+            }
+        }
+        if let filters = s.childSnapshot(forPath: "filterIDs").value as? NSArray {
+            for f in (filters as! [[String:Int]]) {
+                let filt = Id()
+                filt.id = f["id"]!
+                filterIds.append(filt)
+            }
+        }
+        let exercise = Exercise()
+        
+        exercise.id = s.childSnapshot(forPath: "id").value as! String
+        exercise.realTypeId = s.childSnapshot(forPath: "realTypeId").value as? Int ?? -1
+        exercise.name = s.childSnapshot(forPath: "name").value as? String ?? ""
+        exercise.pictures = picturesUrls
+        exercise.typeId = s.childSnapshot(forPath: "typeId").value as! Int
+        exercise.trainerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
+        exercise.videoUrl = s.childSnapshot(forPath: "videoUrl").value as? String ?? ""
+        exercise.exerciseDescriprion = s.childSnapshot(forPath: "description").value as? String ?? "No description"
+        exercise.howToDo = s.childSnapshot(forPath: "howToDo").value as? String ?? "No info about doing"
+        exercise.link = s.childSnapshot(forPath: "link").value as? String ?? "No attached link"
+        exercise.filterIDs = filterIds
+        items.append(exercise)
+    }
+    return items
 }

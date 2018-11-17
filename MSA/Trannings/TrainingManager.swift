@@ -78,6 +78,24 @@ class TrainingManager {
         self.flowView = view
     }
     
+    func synchronizeTrainingsData(success: (() -> Void)?, failture: (([NSError]) -> Void)? = nil) {
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        loadTrainings(success: {
+            dispatchGroup.leave()
+        })
+        
+        dispatchGroup.enter()
+        getMyExercises(success: {
+            dispatchGroup.leave()
+        })
+        
+        dispatchGroup.notify(queue: .main) {
+            success?()
+        }
+    }
+    
     func getExercisesOf(day: Int) -> [ExerciseInTraining] {
         return Array(dataSource?.currentWeek?.days[day].exercises ?? List<ExerciseInTraining>())
     }
@@ -333,13 +351,33 @@ class TrainingManager {
         }
     }
     
-    func loadTrainings() {
+    func loadTrainings(success: (() -> Void)? = nil, failture: (([NSError]) -> Void)? = nil) {
         if let id = sportsmanId {
-            if id != AuthModule.currUser.id {
-                self.view?.startLoading()
-            }
+//            if id != AuthModule.currUser.id {
+//                self.view?.startLoading()
+//            }
             Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
-                self.observeTrainings(snapchot: snapchot)
+                self.observeTrainings(snapchot: snapchot, success: {
+                    success?()
+                })
+            }
+        }
+    }
+    
+    func getMyExercises(success: (() -> Void)?, failture: (([NSError]) -> Void)? = nil) {
+        if let id = sportsmanId {
+//            self.view?.startLoading()
+            Database.database().reference().child("ExercisesByTrainers").child(id).observeSingleEvent(of: .value) { (data) in
+                let items = parseExercises(snapchot: data)
+                let myExerc = MyExercises()
+                myExerc.id = AuthModule.currUser.id ?? ""
+                for item in items {
+                    myExerc.myExercises.append(item)
+                }
+                DispatchQueue.main.async {
+                    self.realm.saveObject(myExerc)
+                    success?()
+                }
             }
         }
     }
@@ -491,7 +529,7 @@ class TrainingManager {
         self.view?.templatesLoaded()
     }
     
-    func observeTrainings(snapchot: DataSnapshot) {
+    func observeTrainings(snapchot: DataSnapshot, success: (() -> Void)? = nil) {
         if sportsmanId != AuthModule.currUser.id {
             self.view?.finishLoading()
         }
@@ -577,6 +615,7 @@ class TrainingManager {
         setSynced()
         self.saveTrainingsToRealm(trainings: items)
         self.view?.trainingsLoaded()
+        success?()
     }
     
     func syncUnsyncedTrainings() {
