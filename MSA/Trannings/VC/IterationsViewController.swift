@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IterationsViewController: UIViewController {
+class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var traningLabel: UILabel!
@@ -53,7 +53,7 @@ class IterationsViewController: UIViewController {
         manager.finish()
         heartBeatService.disconnect()
     }
-        
+    
     private func configureUI() {
         loadingView.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: true)

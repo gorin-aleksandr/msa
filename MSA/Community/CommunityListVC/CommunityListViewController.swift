@@ -16,7 +16,7 @@ protocol CommunityListViewProtocol: class {
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool)
 }
 
-class CommunityListViewController: UIViewController, CommunityListViewProtocol {
+class CommunityListViewController: UIViewController, CommunityListViewProtocol, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var communityTableView: UITableView!
     @IBOutlet weak var filterView: UIView!
@@ -35,12 +35,18 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         presenter = CommunityListPresenter(view: self)
         communityTableView.delegate = self
         communityTableView.dataSource = self
         presenter.start()
     }
     
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -23,7 +23,7 @@ protocol SignInViewProtocol: class {
     func registrated()
 }
 
-class SignInViewController: BasicViewController {
+class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -40,8 +40,13 @@ class SignInViewController: BasicViewController {
         super.viewDidLoad()
 //        UserDataManager().getLevels()
         presenter.attachView(view: self)
+    self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
-
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
