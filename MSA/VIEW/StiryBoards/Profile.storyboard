@@ -194,13 +194,13 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhw-OI-dYY">
-                                                        <rect key="frame" x="144" y="180" width="87" height="15"/>
+                                                        <rect key="frame" x="125.5" y="180" width="124" height="15"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="levelBG" translatesAutoresizingMaskIntoConstraints="NO" id="avs-JS-a6m">
-                                                                <rect key="frame" x="0.0" y="0.0" width="87" height="15"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="124" height="15"/>
                                                             </imageView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Новичок" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uOC-kA-gzE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="87" height="15"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Профессионал" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uOC-kA-gzE">
+                                                                <rect key="frame" x="10" y="0.0" width="104" height="15"/>
                                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
@@ -208,13 +208,14 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
+                                                            <constraint firstItem="uOC-kA-gzE" firstAttribute="centerX" secondItem="hhw-OI-dYY" secondAttribute="centerX" id="26E-ea-o6T"/>
                                                             <constraint firstItem="avs-JS-a6m" firstAttribute="top" secondItem="hhw-OI-dYY" secondAttribute="top" id="5KQ-LV-bD4"/>
                                                             <constraint firstAttribute="bottom" secondItem="avs-JS-a6m" secondAttribute="bottom" id="Akl-nv-dSc"/>
-                                                            <constraint firstAttribute="trailing" secondItem="uOC-kA-gzE" secondAttribute="trailing" id="EH9-LK-deD"/>
+                                                            <constraint firstAttribute="trailing" secondItem="uOC-kA-gzE" secondAttribute="trailing" constant="10" id="EH9-LK-deD"/>
                                                             <constraint firstAttribute="bottom" secondItem="uOC-kA-gzE" secondAttribute="bottom" id="TQo-2N-U1M"/>
                                                             <constraint firstItem="uOC-kA-gzE" firstAttribute="top" secondItem="hhw-OI-dYY" secondAttribute="top" id="YTO-hf-dgb"/>
                                                             <constraint firstItem="avs-JS-a6m" firstAttribute="leading" secondItem="hhw-OI-dYY" secondAttribute="leading" id="fVK-h2-TuC"/>
-                                                            <constraint firstItem="uOC-kA-gzE" firstAttribute="leading" secondItem="hhw-OI-dYY" secondAttribute="leading" id="ktZ-Pi-gQB"/>
+                                                            <constraint firstItem="uOC-kA-gzE" firstAttribute="leading" secondItem="hhw-OI-dYY" secondAttribute="leading" constant="10" id="ktZ-Pi-gQB"/>
                                                             <constraint firstAttribute="trailing" secondItem="avs-JS-a6m" secondAttribute="trailing" id="pvl-5J-Ild"/>
                                                             <constraint firstAttribute="height" constant="15" id="xmB-Oq-M2R"/>
                                                         </constraints>

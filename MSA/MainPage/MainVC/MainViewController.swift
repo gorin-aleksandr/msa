@@ -117,7 +117,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
             userName.text = name + " " + surname
         }
         if let level = AuthModule.currUser.level {
-            userLevel.text = "  " + level + "  "
+            userLevel.text = level
         }
         if let city = AuthModule.currUser.city {
             userCity.text = "г. "+city

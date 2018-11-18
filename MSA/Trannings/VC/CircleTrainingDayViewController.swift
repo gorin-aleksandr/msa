@@ -71,6 +71,17 @@ class CircleTrainingDayViewController: UIViewController {
         navigationController?.pushViewController(destintionVC, animated: true)
     }
     
+    private func disable(myButtons: [UIButton]) {
+        let buttons = [playButton,stopButton,playNextButton,pauseButton]
+        for button in buttons {
+            if myButtons.contains(button!) {
+                button?.isUserInteractionEnabled = false
+            } else {
+                button?.isUserInteractionEnabled = true
+            }
+        }
+    }
+    
     @objc private func nextIterationstate(_ sender: UIButton) {
         manager.nextStateOrIteration()
     }
@@ -78,18 +89,22 @@ class CircleTrainingDayViewController: UIViewController {
     @objc private func stopIteration(_ sender: UIButton) {
         tableView.isUserInteractionEnabled = true
         manager.fullStop()
+        disable(myButtons: [stopButton, pauseButton, playNextButton])
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
         manager.pauseIteration()
+        disable(myButtons: [pauseButton, playNextButton])
     }
     
     @objc private func resumeIteration(_ sender: UIButton) {
         manager.startOrContineIteration()
+        disable(myButtons: [playButton])
     }
     private func startTraining() {
         tableView.isUserInteractionEnabled = false
         manager.startTraining()
+        disable(myButtons: [playButton])
     }
 }
 

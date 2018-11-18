@@ -271,6 +271,7 @@ class TrainingManager {
         if let iteration = getCurrentExercise()?.iterations[index] {
             let iterationCopy = Iteration(value: iteration)
             iterationCopy.id = UUID().uuidString
+            
             realm.saveObject(iterationCopy)
             try! realm.performWrite {
                 getCurrentTraining()?.wasSync = false
@@ -850,7 +851,11 @@ class TrainingManager {
             for (index, _) in exercises.enumerated() {
                 if indexes.contains(index) {
                     tempIndexes.append(index)
-                    continue
+                    if index == exercises.count-1 {
+                        getIterationsAsRound(atEx: tempIndexes)
+                    } else {
+                        continue
+                    }
                 } else {
                     if !tempIndexes.isEmpty {
                         getIterationsAsRound(atEx: tempIndexes)
@@ -1120,8 +1125,18 @@ class TrainingManager {
         var secStr = ""
         min = Int(time/60)
         sec = time - min*60
+        if min < 0 {
+            min = 0
+        }
+        if sec < 0 {
+            sec = 0
+        }
+        print("Min: \(min)")
+        print("Sec: \(sec)")
         minStr = min<10 ? "0\(min)" : "\(min)"
         secStr = sec<10 ? "0\(sec)" : "\(sec)"
+        print("MinStr: \(minStr)")
+        print("SetStr: \(secStr)")
         var timeString = "-"+minStr+":"+secStr
         if iterationState == .rest || secondomerStarted {
             timeString.removeFirst()

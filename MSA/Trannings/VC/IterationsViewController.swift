@@ -72,6 +72,17 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
+    private func disable(myButtons: [UIButton]) {
+        let buttons = [playButton,stopButton,playNextButton,pauseButton]
+        for button in buttons {
+            if myButtons.contains(button!) {
+                button?.isUserInteractionEnabled = false
+            } else {
+                button?.isUserInteractionEnabled = true
+            }
+        }
+    }
+    
     @objc private func nextIterationstate(_ sender: UIButton) {
         if iterationsPresent() {
             manager.nextStateOrIteration()
@@ -81,24 +92,28 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func stopIteration(_ sender: UIButton) {
         if iterationsPresent() {
             manager.fullStop()
+            disable(myButtons: [stopButton, pauseButton, playNextButton])
         }
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
         if iterationsPresent() {
             manager.pauseIteration()
+            disable(myButtons: [pauseButton, playNextButton])
         }
     }
     
     @objc private func resumeIteration(_ sender: UIButton) {
         if iterationsPresent() {
             manager.startOrContineIteration()
+            disable(myButtons: [playButton])
         } else {
             AlertDialog.showAlert("Вы не можете начать!", message: "Добавьте хотя бы одну итерацию.", viewController: self)
         }
     }
     @objc private func startIteration(_ sender: UIButton) {
         manager.startExercise(from: sender.tag)
+        disable(myButtons: [playButton])
     }
     
     private func iterationsPresent() -> Bool {
