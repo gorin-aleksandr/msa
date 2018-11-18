@@ -17,12 +17,61 @@ class EditProfilePresenter {
     private let profile: UserDataManager
     private weak var view: EditProfileProtocol?
 
+
     init(profile: UserDataManager) {
         self.profile = profile
     }
     
     func attachView(view: EditProfileProtocol){
         self.view = view
+    }
+    
+    func deleteTrainer(_ trainerId: String, deleted: ()->(), error: ()->()) {
+        let myId = AuthModule.currUser.id ?? ""
+        let dispatch = DispatchGroup()
+        var failureList = [Error]()
+        
+        if !InternetReachability.isConnectedToNetwork() {
+            error()
+        } else {
+            dispatch.enter()
+            profile.removeTrainer(with: trainerId, from: myId) { (success, error) in
+                if let error = error  {
+                    failureList.append(error)
+                    dispatch.leave()
+                } else {
+                    dispatch.leave()
+                }
+            }
+            dispatch.enter()
+            profile.removeFromSportsmen(idToRemove: myId, userId: trainerId, callback: { (_, error) in
+                if let error = error {
+                    failureList.append(error)
+                    dispatch.leave()
+                } else {
+                    dispatch.leave()
+                }
+            })
+            if failureList.isEmpty {
+                AuthModule.currUser.trainerId = nil
+                deleted()
+            } else {
+                error()
+            }
+        }
+    }
+    
+    func getTrainerInfo(trainer id: String, success: @escaping (_ trainer: UserVO)->()) {
+        Database.database().reference().child("Users").child(id).observeSingleEvent(of: .value) { (s) in
+            guard let id = s.childSnapshot(forPath: "id").value as? String else {return}
+            var trainer = UserVO()
+            trainer.id = id
+            trainer.avatar = s.childSnapshot(forPath: "userPhoto").value as? String
+            trainer.firstName = s.childSnapshot(forPath: "name").value as? String
+            trainer.lastName = s.childSnapshot(forPath: "surname").value as? String
+
+            success(trainer)
+        }
     }
     
     func updateUserAvatar(_ image: UIImage) {

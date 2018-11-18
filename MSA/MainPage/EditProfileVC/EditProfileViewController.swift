@@ -30,6 +30,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var profilePhoto: UIView!
     @IBOutlet weak var changeImageButton: UIButton! {didSet{changeImageButton.imageView?.contentMode = .scaleAspectFit}}
     
+    @IBOutlet weak var loadingTrainerView: UIView!
+    @IBOutlet weak var trainerImageIndicator: UIActivityIndicatorView!
     @IBOutlet weak var trainerStackView: UIStackView!
     @IBOutlet weak var trainername: UILabel!
     @IBOutlet weak var trainerImage: UIImageView! {didSet{trainerImage.layer.cornerRadius = 25}}
@@ -84,7 +86,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         configureNavigationItem()
         presenter.attachView(view: self)
-        configereProfile()
         // Do any additional setup after loading the view.
     }
     
@@ -100,6 +101,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func configereProfile() {
         let user = AuthModule.currUser
         setProfileImage(image: #imageLiteral(resourceName: "avatarPlaceholder"), url: nil)
+        setTrainerInfo(of: user)
         if let url = user.avatar {
             setProfileImage(image: nil, url: url)
         }
@@ -113,11 +115,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if let city = user.city {
             cityTF.text = city
         }
-//        if let trainer = AuthModule.currUser.trainer {
-//            findTrainerView.alpha = 0
-//        } else {
-//            findTrainerView.alpha = 1
-//        }
         if user.type == "СПОРТСМЕН" {
             sportsmanTypeImage.image = #imageLiteral(resourceName: "selected")
             trainerTypeImage.image = #imageLiteral(resourceName: "notSelected")
@@ -161,6 +158,26 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     
+    private func setTrainerInfo(of user: UserVO) {
+        if user.userType == .trainer {
+            trainerStackView.isHidden = true
+            return
+        }
+        guard let trainerId = user.trainerId, trainerId != "" else {
+            findTrainerView.isHidden = false
+            return
+        }
+        
+        loadingTrainerView.isHidden = false
+        findTrainerView.isHidden = true
+        presenter.getTrainerInfo(trainer: trainerId) { (user) in
+            self.loadingTrainerView.isHidden = true
+            self.trainername.text = (user.firstName ?? "") + " " + (user.lastName ?? "")
+            guard let avatar = user.avatar else {return}
+            self.trainerImage.sd_setImage(with: URL(string: avatar), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+        }
+    }
+    
     func openGallary() {
         myPicker.allowsEditing = true
         myPicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
@@ -185,6 +202,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        configereProfile()
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -254,6 +272,21 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     @IBAction func deleteTrainer(_ sender: Any) {
+        guard let trainerId = AuthModule.currUser.trainerId, trainerId != "" else {
+            return
+        }
+        startLoading()
+        presenter.deleteTrainer(trainerId, deleted: {
+            self.finishLoading()
+            findTrainerView.isHidden = false
+            AlertDialog.showAlert("Удаление прошло успешно!", message: "У вас теперь нету тренера.", viewController: self)
+        }) {
+            self.finishLoading()
+            AlertDialog.showAlert("Ошибка удаления!", message: "Повторите еще раз.", viewController: self)
+        }
+    }
+    @IBAction func findTrainer(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 2
     }
     @IBAction func setSportsmanType(_ sender: Any) {
         presenter.setType(type: .sport)
@@ -326,11 +359,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     @IBAction func hideTrainerView(_ sender: Any) {
-//        if findTrainerView.alpha == 1 {
-//            findTrainerView.alpha = 0
-//        } else {
-//            findTrainerView.alpha = 1
-//        }
+
     }
     
 }
@@ -416,10 +445,12 @@ extension EditProfileViewController: EditProfileProtocol {
     }
     
     func startLoading() {
+        self.view.isUserInteractionEnabled = false
         activityIndicator.startAnimating()
     }
     
     func finishLoading() {
+        self.view.isUserInteractionEnabled = true
         activityIndicator.stopAnimating()
     }
     

@@ -36,6 +36,7 @@ class StratCoordinator {
             loggedUser.heightType = user.first?.heightType
             loggedUser.avatar = user.first?.avatar
             loggedUser.purpose = user.first?.purpose
+            loggedUser.trainerId = user.first?.trainerId
             
             if let age = user.first?.age {
                 loggedUser.age = Int(age)
