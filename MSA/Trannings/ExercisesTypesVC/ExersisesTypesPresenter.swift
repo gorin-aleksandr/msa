@@ -289,6 +289,8 @@ class ExersisesTypesPresenter {
                 }
             }
             exercises.currentTypeExercisesArray.append(contentsOf: exerc)
+            exercises.currentTypeExercisesArray.sort {$0.name < $1.name}
+            
         }
         var filters = [ExerciseTypeFilter]()
         for exercise in exercises.currentTypeExercisesArray {

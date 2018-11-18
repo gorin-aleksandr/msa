@@ -194,13 +194,13 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhw-OI-dYY">
-                                                        <rect key="frame" x="137.5" y="180" width="100" height="15"/>
+                                                        <rect key="frame" x="144" y="180" width="87" height="15"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="levelBG" translatesAutoresizingMaskIntoConstraints="NO" id="avs-JS-a6m">
-                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="15"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="87" height="15"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Новичок" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uOC-kA-gzE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="15"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="87" height="15"/>
                                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
@@ -217,7 +217,6 @@
                                                             <constraint firstItem="uOC-kA-gzE" firstAttribute="leading" secondItem="hhw-OI-dYY" secondAttribute="leading" id="ktZ-Pi-gQB"/>
                                                             <constraint firstAttribute="trailing" secondItem="avs-JS-a6m" secondAttribute="trailing" id="pvl-5J-Ild"/>
                                                             <constraint firstAttribute="height" constant="15" id="xmB-Oq-M2R"/>
-                                                            <constraint firstAttribute="width" constant="100" id="znZ-Ua-jBF"/>
                                                         </constraints>
                                                     </view>
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGK-0M-sNH">

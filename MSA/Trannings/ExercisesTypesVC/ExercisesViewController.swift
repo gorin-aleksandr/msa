@@ -144,9 +144,6 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         switch segue.identifier {
         case SegueIDs.exercisesSegueId.rawValue:
             if let destination = segue.destination as? ExercisesForTypeViewController {
-//                let ids = presenter.getCurrentExetcisesType().filterIDs
-//                guard let IDS = presenter.getFiltersByType(with: ids.map ({return $0.id}) ) else {return}
-//                presenter.setCurrentFilters(filt: IDS)
                 destination.presenter = self.presenter
                 destination.trainingManager = self.trainingManager
             }
