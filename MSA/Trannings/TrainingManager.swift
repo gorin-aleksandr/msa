@@ -729,50 +729,12 @@ class TrainingManager {
     private var currentExercise: ExerciseInTraining?
     private var iterations: [Iteration]?
     private var currentIteration: Iteration?
-    private var iterationsForRound = [Iteration]()
+    private var iterationsForTraining = [Iteration]()
     private var currentExerciseNumber = 0
     private var currentIterationNumber = 0
     private var currentRestTime = 0
     private var currentWorkTime = 0
     private var secondomerTime = 0
-
-    func resetFromBackground(with time: Int) {
-        guard let iteration = currentIteration else {
-            return
-        }
-        
-        switch iterationState {
-        case .rest:
-            if iteration.restTime == 0 {
-                if iteration.startTimerOnZero {
-                    currentRestTime += time
-                }
-            } else {
-                if (currentRestTime - time) < 0 {
-                    currentRestTime = 0
-                } else {
-                    currentRestTime -= time
-                }
-            }
-            self.eventWithTimer(time: self.currentRestTime)
-
-        case .work:
-            if iteration.workTime == 0 {
-                if iteration.startTimerOnZero {
-                    currentWorkTime += time
-                }
-            } else {
-                if (currentWorkTime - time) < 0 {
-                    currentWorkTime = 0
-                } else {
-                    currentWorkTime -= time
-                }
-            }
-            self.eventWithTimer(time: self.currentWorkTime)
-
-        }
-        
-    }
     
     private func createIterationsCopy(i: Int) {
         iterations = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
@@ -880,10 +842,69 @@ class TrainingManager {
         }
     }
     
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+// Preparing iterations
+    
+    func resetFromBackground(with time: Int) {
+        guard let iteration = currentIteration else {
+            return
+        }
+        switch iterationState {
+        case .rest:
+            if iteration.restTime == 0 {
+                if iteration.startTimerOnZero {
+                    currentRestTime += time
+                }
+            } else {
+                if (currentRestTime - time) < 0 {
+                    currentRestTime = 0
+                } else {
+                    currentRestTime -= time
+                }
+            }
+            self.eventWithTimer(time: self.currentRestTime)
+        case .work:
+            if iteration.workTime == 0 {
+                if iteration.startTimerOnZero {
+                    currentWorkTime += time
+                }
+            } else {
+                if (currentWorkTime - time) < 0 {
+                    currentWorkTime = 0
+                } else {
+                    currentWorkTime -= time
+                }
+            }
+            self.eventWithTimer(time: self.currentWorkTime)
+        }
+    }
+    
+    func setIterationsForNormal(completion: (() -> Void)? = nil) {
+        exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
+        iterationsForTraining.removeAll()
+        if let exercises = exercises {
+            for (index,_) in exercises.enumerated() {
+                iterationsForTraining.append(contentsOf: Array(exercises[index].iterations))
+            }
+        }
+        completion?()
+    }
+    
+    func getIterationsAsNormal(at index: Int) {
+        var iterations = [Iteration]()
+        if let exercises = exercises {
+            iterations = Array(exercises[index].iterations)
+        }
+        iterationsForTraining.append(contentsOf: iterations)
+    }
+    
     func setSpecialIterationsForRound(indexes: [Int], completion: @escaping ()->()) {
         exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
-        var tempIndexes = [Int]()
+        iterationsForTraining.removeAll()
         
+        var tempIndexes = [Int]()
+
         if let exercises = exercises {
             for (index, _) in exercises.enumerated() {
                 if indexes.contains(index) {
@@ -916,19 +937,12 @@ class TrainingManager {
             }
             iterations = prepareIterationsForRound(from: neededExercises)
         }
-        iterationsForRound.append(contentsOf: iterations)
-    }
-    func getIterationsAsNormal(at index: Int) {
-        var iterations = [Iteration]()
-        if let exercises = exercises {
-            iterations = Array(exercises[index].iterations)
-        }
-        iterationsForRound.append(contentsOf: iterations)
+        iterationsForTraining.append(contentsOf: iterations)
     }
     
     func setIterationsForRound(completion: @escaping ()->()) {
         exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
-        iterationsForRound = prepareIterationsForRound(from: exercises!)
+        iterationsForTraining = prepareIterationsForRound(from: exercises!)
         completion()
     }
     
@@ -949,22 +963,27 @@ class TrainingManager {
         }
         return array
     }
+
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+
+    
     
     private func getNext() -> (Int,Int)? {
         var numInMainArray = 0
         var exersN = 0
         var iterN = 0
         
-        for iteration in iterationsForRound {
+        for iteration in iterationsForTraining {
             let curIter = exercises?[currentExerciseNumber].iterations[currentIterationNumber]
             if iteration.id == curIter!.id {
-                if numInMainArray == (iterationsForRound.count - 1) {
+                if numInMainArray == (iterationsForTraining.count - 1) {
                     return nil
                 } else {
                     for ex in exercises ?? [] {
                         iterN = 0
                         for i in ex.iterations {
-                            if i.id == iterationsForRound[numInMainArray+1].id {
+                            if i.id == iterationsForTraining[numInMainArray+1].id {
                                 return (exersN, iterN)
                             }
                             iterN += 1
@@ -1183,7 +1202,7 @@ class TrainingManager {
     }
     
     private func audioEffect(on time: Int) {
-        if time < 4 && time > 0 && !secondomerStarted {
+        if time < 4 && !secondomerStarted {
             AudioServicesPlayAlertSound(SystemSoundID(1313))
         }
     }

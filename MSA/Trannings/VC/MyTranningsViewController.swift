@@ -318,7 +318,9 @@ class MyTranningsViewController: UIViewController {
             case true:
                 manager.setState(state: .round)
                 manager.setSpecialIterationsForRound(indexes: self.selectedElements().1, completion: {})
-            case false: manager.setState(state: .normal)
+            case false:
+                manager.setState(state: .normal)
+                manager.setIterationsForNormal()
         }
 
         if manager.getCurrentday()?.exercises.count != 0 {
