@@ -34,6 +34,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.becameActive(_:)), name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: nil)
+
+        
         manager.initView(view: self)
         manager.initFlowView(view: self)
         manager.setState(state: .iterationsOnly)
@@ -80,6 +83,13 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
             } else {
                 button?.isUserInteractionEnabled = true
             }
+        }
+    }
+    
+    @objc private func becameActive(_ notification: NSNotification) {
+        guard let time = notification.object as? Int else {return}
+        if time > 5 && time < 10000 {
+            manager.resetFromBackground(with: time - 5)
         }
     }
     

@@ -28,6 +28,9 @@ class CircleTrainingDayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.becameActive(_:)), name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: nil)
+
+        
         manager.initView(view: self)
         manager.initFlowView(view: self)
         configureUI()
@@ -40,7 +43,16 @@ class CircleTrainingDayViewController: UIViewController {
         heartBeatService.disconnect()
     }
 
+    @objc
+    private func becameActive(_ notification: NSNotification) {
+        guard let time = notification.object as? Int else {return}
+        if time > 5 && time < 10000 {
+            manager.resetFromBackground(with: time - 5)
+        }
+    }
+    
     private func configureUI() {
+        
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День #\(manager.numberOfDay()) . Упражнений: \(manager.exercisesCount())")
         configureTableView()

@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 import Firebase
-
+import AVFoundation
 
 @objc protocol TrainingsViewDelegate {
     func startLoading()
@@ -736,6 +736,43 @@ class TrainingManager {
     private var currentWorkTime = 0
     private var secondomerTime = 0
 
+    func resetFromBackground(with time: Int) {
+        guard let iteration = currentIteration else {
+            return
+        }
+        
+        switch iterationState {
+        case .rest:
+            if iteration.restTime == 0 {
+                if iteration.startTimerOnZero {
+                    currentRestTime += time
+                }
+            } else {
+                if (currentRestTime - time) < 0 {
+                    currentRestTime = 0
+                } else {
+                    currentRestTime -= time
+                }
+            }
+            self.eventWithTimer(time: self.currentRestTime)
+
+        case .work:
+            if iteration.workTime == 0 {
+                if iteration.startTimerOnZero {
+                    currentWorkTime += time
+                }
+            } else {
+                if (currentWorkTime - time) < 0 {
+                    currentWorkTime = 0
+                } else {
+                    currentWorkTime -= time
+                }
+            }
+            self.eventWithTimer(time: self.currentWorkTime)
+
+        }
+        
+    }
     
     private func createIterationsCopy(i: Int) {
         iterations = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
@@ -1141,7 +1178,14 @@ class TrainingManager {
         if iterationState == .rest || secondomerStarted {
             timeString.removeFirst()
         }
+        self.audioEffect(on: time)
         self.flowView?.changeTime(time: timeString, iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
+    }
+    
+    private func audioEffect(on time: Int) {
+        if time < 4 && time > 0 && !secondomerStarted {
+            AudioServicesPlayAlertSound(SystemSoundID(1313))
+        }
     }
     
     func saveIterationsInfo() {
