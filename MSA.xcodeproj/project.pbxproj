@@ -13,6 +13,7 @@
 		29160B4D2035AA3B00DA7227 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29160B4C2035AA3B00DA7227 /* Assets.xcassets */; };
 		29160B502035AA3B00DA7227 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29160B4E2035AA3B00DA7227 /* LaunchScreen.storyboard */; };
 		291950B820474D5E004891FF /* MSA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 291950B620474D5E004891FF /* MSA.xcdatamodeld */; };
+		2920A49821A2FECF009E01C5 /* NotificationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2920A49721A2FECF009E01C5 /* NotificationTimer.swift */; };
 		2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2923AD8C20E6358300AE17C5 /* RealmManager.swift */; };
 		2934805320E8EECC0039028E /* TextViewViewCounterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2934805120E8EECC0039028E /* TextViewViewCounterTableViewCell.swift */; };
 		2934805420E8EECC0039028E /* TextViewViewCounterTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2934805220E8EECC0039028E /* TextViewViewCounterTableViewCell.xib */; };
@@ -165,6 +166,8 @@
 		29160B4F2035AA3B00DA7227 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29160B512035AA3B00DA7227 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		291950B720474D5E004891FF /* MSA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MSA.xcdatamodel; sourceTree = "<group>"; };
+		2920A49721A2FECF009E01C5 /* NotificationTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationTimer.swift; sourceTree = "<group>"; };
+		2920A49A21A31BF2009E01C5 /* sms-received5.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sms-received5.caf"; sourceTree = "<group>"; };
 		2923AD8C20E6358300AE17C5 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		2934805120E8EECC0039028E /* TextViewViewCounterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewViewCounterTableViewCell.swift; sourceTree = "<group>"; };
 		2934805220E8EECC0039028E /* TextViewViewCounterTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewViewCounterTableViewCell.xib; sourceTree = "<group>"; };
@@ -366,6 +369,7 @@
 				29C2D5FA2074F36300E2B958 /* Etentions.swift */,
 				29C7154121A02EC0004CE089 /* InternetRechability.swift */,
 				29F9F2532147B665006EDC6A /* DatePicker.swift */,
+				2920A49721A2FECF009E01C5 /* NotificationTimer.swift */,
 				299B547B20A0D38A004E60A2 /* Rubik */,
 				29160B4C2035AA3B00DA7227 /* Assets.xcassets */,
 				29160B512035AA3B00DA7227 /* Info.plist */,
@@ -565,6 +569,7 @@
 		29AC912B20CDA80F003F8152 /* Trannings */ = {
 			isa = PBXGroup;
 			children = (
+				2920A49A21A31BF2009E01C5 /* sms-received5.caf */,
 				29F9F2012147AE7D006EDC6A /* TrainingManager.swift */,
 				29F9F2022147AE7E006EDC6A /* TrainingsDataSource.swift */,
 				29F9F2122147AE82006EDC6A /* VC */,
@@ -778,6 +783,11 @@
 					29160B412035AA3B00DA7227 = {
 						CreatedOnToolsVersion = 9.0;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -935,6 +945,7 @@
 				29F5678C219AB809003B704B /* ReusableMultipleSelectionTableViewCell.swift in Sources */,
 				353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */,
 				35B7034B219AEF3B00E83393 /* ExersisesTypesDataManager.swift in Sources */,
+				2920A49821A2FECF009E01C5 /* NotificationTimer.swift in Sources */,
 				2934806F20E90AD60039028E /* LoadVideoTableViewCell.swift in Sources */,
 				299B58EC208678F600CBE646 /* GalleryCollectionViewCell.swift in Sources */,
 				29F9F21E2147AE82006EDC6A /* ExerciseTableViewCell.swift in Sources */,

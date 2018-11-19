@@ -13,6 +13,7 @@ import FBSDKCoreKit
 import CoreData
 import RealmSwift
 import SVProgressHUD
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
         start.start()
+        
+//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {didAllow, error in
+//
+//        })
 
         return true
     }
@@ -70,18 +75,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         timeInBackground = Int(Date().timeIntervalSince1970)
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//        registerNotification()
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-       NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
 
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
+//        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+    
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -118,6 +123,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initialConf() {
         window?.backgroundColor = .white
     }
-
+//
+//    private func registerNotification() {
+//        let content = UNMutableNotificationContent()
+//
+//        content.title = "Подход в тренировке подходит к концу!"
+//        content.subtitle = "Продолжите тренировку!"
+//        content.body = "Следующий подход начнеться когда вы зайдете в приложение"
+//        content.badge = 0
+//
+//        if NotificationTimer.timeToShow > 0 {
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: NotificationTimer.timeToShow, repeats: false)
+//            let request = UNNotificationRequest(identifier: "SimplifiedIOSNotification", content: content, trigger: trigger)
+//            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+//        }
+//    }
 }
 

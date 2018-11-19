@@ -1187,17 +1187,18 @@ class TrainingManager {
         if sec < 0 {
             sec = 0
         }
-        print("Min: \(min)")
-        print("Sec: \(sec)")
+
         minStr = min<10 ? "0\(min)" : "\(min)"
         secStr = sec<10 ? "0\(sec)" : "\(sec)"
-        print("MinStr: \(minStr)")
-        print("SetStr: \(secStr)")
+
         var timeString = "-"+minStr+":"+secStr
         if iterationState == .rest || secondomerStarted {
             timeString.removeFirst()
         }
         self.audioEffect(on: time)
+//        if !secondomerStarted {
+//            NotificationTimer.timeToShow = Double(time)
+//        }
         self.flowView?.changeTime(time: timeString, iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
     }
     
