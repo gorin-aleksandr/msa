@@ -281,9 +281,10 @@ class NewExerciseManager {
         var pictureUrls = [String]()
         var errors = [Error]()
         
-        for image in images {
+        let _ = DispatchQueue.global(qos: .userInteractive)
+        DispatchQueue.concurrentPerform(iterations: images.count) { index in
             dispatchGroup.enter()
-            GalleryDataManager().uploadPhoto(chosenImage: image) { (data, error) in
+            GalleryDataManager().uploadPhoto(chosenImage: images[index]) { (data, error) in
                 if error == nil {
                     do {
                         let jsonResp = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! [String:Any]

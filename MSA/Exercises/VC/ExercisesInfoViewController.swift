@@ -72,22 +72,35 @@ class ExercisesInfoViewController: UIViewController {
         let manager = NewExerciseManager.shared
         manager.dataSource.editMode = true
         manager.dataSource.newExerciseModel = execise ?? Exercise()
+
         var pictures = [Data]()
+        let downloadGroup = DispatchGroup()
+
         if let images = execise?.pictures {
+            var urls = [String]()
             for image in images {
-                if let url = URL(string: image.url) {
+                urls.append(image.url)
+            }
+            let _ = DispatchQueue.global(qos: .userInitiated)
+            DispatchQueue.concurrentPerform(iterations: urls.count) { index in
+                downloadGroup.enter()
+                if let url = URL(string: urls[index]) {
                     if let data = try? Data(contentsOf: url) {
                         pictures.append(data)
+                        downloadGroup.leave()
                     }
                 }
             }
+            downloadGroup.notify(queue: DispatchQueue.main) {
+                manager.dataSource.pictures = pictures
+                vc.exercManager = manager
+                vc.presenter = self.presenter
+                vc.presentedVC = self.self
+                let navigationController = UINavigationController(rootViewController: vc)
+                self.present(navigationController, animated: true, completion: nil)
+            }
         }
-        manager.dataSource.pictures = pictures
-        vc.exercManager = manager
-        vc.presenter = self.presenter
-        vc.presentedVC = self.self
-        let navigationController = UINavigationController(rootViewController: vc)
-        self.present(navigationController, animated: true, completion: nil)
+
     }
     
     func playVideo(url: String) {
