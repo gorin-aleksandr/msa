@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 class CircleTrainingDayViewController: UIViewController {
 
@@ -25,6 +26,10 @@ class CircleTrainingDayViewController: UIViewController {
     var manager = TrainingManager(type: .my)
     var heartBeatService = HeartBeatManager()
     
+    var lastConnectedDeviceId: String? {
+        return UserDefaults.standard.value(forKey: "lastTimeConnectedDevice") as? String
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,12 +37,12 @@ class CircleTrainingDayViewController: UIViewController {
         manager.initFlowView(view: self)
         configureUI()
         startTraining()
+        heartBeatService.heartBeatDelegate = self
         heartBeatService.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        heartBeatService.disconnect()
     }
 
     private func configureUI() {
@@ -67,8 +72,10 @@ class CircleTrainingDayViewController: UIViewController {
     @IBAction func saveButtonAction(_ sender: Any) {
     }
     @IBAction func heartBeatButtonTapped(_ sender: Any) {
-        let destintionVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "HeartBeatDeviceViewController") as! HeartBeatDeviceViewController
-        navigationController?.pushViewController(destintionVC, animated: true)
+        let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "HeartBeatDeviceViewController") as! HeartBeatDeviceViewController
+        let presenter = HeartBeatDevicePresenter(view: destinationVC, heartBeatService: heartBeatService)
+        destinationVC.presenter = presenter
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     @objc private func nextIterationstate(_ sender: UIButton) {
@@ -90,6 +97,10 @@ class CircleTrainingDayViewController: UIViewController {
     private func startTraining() {
         tableView.isUserInteractionEnabled = false
         manager.startTraining()
+    }
+    
+    deinit {
+         heartBeatService.disconnect()
     }
 }
 
@@ -189,5 +200,32 @@ extension CircleTrainingDayViewController: HeartBeatDelegate {
     func heartBitDidReceived(_ value: Int) {
         pulseLabel.text = String(value)
     }
+    
+    func connectLastDeviceIfAvailable() {
+        heartBeatService.scanForDevices()
+    }
+}
+
+extension CircleTrainingDayViewController: HeartBeatManagerDelegate {
+    func handleBluetooth(status: CBManagerState) {
+        if  let _ = lastConnectedDeviceId, status == .poweredOn {
+            heartBeatService.scanForDevices()
+        }
+    }
+    
+    func deviceDetected(device: CBPeripheral) {
+        if let id = lastConnectedDeviceId, id == device.identifier.uuidString  {
+            heartBeatService.connectDevice(with: id)
+        }
+    }
+    
+    func deviceDidFailedToConnect(peripheral: CBPeripheral, error: Error?) {}
+    
+    func deviceDidConnected(peripheral: CBPeripheral) {}
+    
+    func couldNotDiscoverServicesOrCharacteristics() {}
+    
+    func deviceDidDisconnected() {}
+    
 }
 

@@ -13,25 +13,55 @@ protocol HeartBeatDelegate: class {
     func heartBitDidReceived(_ value: Int)
 }
 
+protocol HeartBeatManagerDelegate: class {
+    func handleBluetooth(status: CBManagerState)
+    func deviceDetected(device: CBPeripheral)
+    func deviceDidFailedToConnect(peripheral: CBPeripheral, error: Error?)
+    func deviceDidConnected(peripheral: CBPeripheral)
+    func couldNotDiscoverServicesOrCharacteristics()
+    func deviceDidDisconnected()
+}
+
 class HeartBeatManager: NSObject {
 
+    var availableDevices: [CBPeripheral] = []
+    var heartRatePeripheral: CBPeripheral!
     
     var centralManager: CBCentralManager!
     let heartRateServiceCBUUID = CBUUID(string: "0x180D")
-    var heartRatePeripheral: CBPeripheral!
+    
     let heartRateMeasurementCharacteristicCBUUID = CBUUID(string: "2A37")
     let bodySensorLocationCharacteristicCBUUID = CBUUID(string: "2A38")
-    weak var delegate: HeartBeatDelegate?
+    var isDisconnectedWhileTryingToConnect = false
+    weak var heartBeatDelegate: HeartBeatDelegate?
+    weak var delegate: HeartBeatManagerDelegate?
     
     override init() {
         super.init()
-         centralManager = CBCentralManager(delegate: self, queue: nil)
+        print("manager inited")
+        centralManager = CBCentralManager(delegate: self, queue: nil)
+    }
+    
+    func scanForDevices() {
+        if centralManager.state == .poweredOn {
+            centralManager.scanForPeripherals(withServices: [], options: nil)
+        }
+        
+    }
+    
+    func stopScaning() {
+        centralManager.stopScan()
+    }
+    
+    deinit {
+        print("BTMAnager deinited")
     }
 }
 
 extension HeartBeatManager: CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        delegate?.handleBluetooth(status: central.state)
         switch central.state {
         case .unknown:
             print("central.state is .unknown")
@@ -45,44 +75,74 @@ extension HeartBeatManager: CBCentralManagerDelegate {
             print("central.state is .poweredOff")
         case .poweredOn:
             print("central.state is .poweredOn")
-            centralManager.scanForPeripherals(withServices: [heartRateServiceCBUUID])
+//            centralManager.scanForPeripherals(withServices: [heartRateServiceCBUUID])
         }
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,
                         advertisementData: [String: Any], rssi RSSI: NSNumber) {
-        print(peripheral)
-        heartRatePeripheral = peripheral
-        heartRatePeripheral.delegate = self
-        centralManager.stopScan()
-        centralManager.connect(heartRatePeripheral, options: nil)
+        //heartRatePeripheral = peripheral
+        availableDevices.append(peripheral)
+        delegate?.deviceDetected(device: peripheral)
+        let data = (advertisementData as! NSDictionary).value(forKey: "kCBAdvDataLocalName") as? String
+        //heartRatePeripheral.delegate = self
+        //centralManager.stopScan()
+        //centralManager.connect(heartRatePeripheral, options: nil)
         
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        print("Connnected")
+        heartRatePeripheral = peripheral
         heartRatePeripheral.discoverServices([heartRateServiceCBUUID])
     }
-}
-
-extension HeartBeatManager: CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        guard let services = peripheral.services else { return }
-        
-        for service in services {
-            print(service)
-            print(service.characteristics ?? "characteristics are nil")
-            peripheral.discoverCharacteristics(nil, for: service)
+    
+    func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+        isDisconnectedWhileTryingToConnect = true
+        delegate?.deviceDidFailedToConnect(peripheral: peripheral, error: error)
+    }
+    
+    func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
+        print("restoring")
+    }
+    
+    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+        print(error)
+        print(heartRatePeripheral)
+        if !isDisconnectedWhileTryingToConnect {
+            delegate?.deviceDidDisconnected()
         }
         
     }
     
+    
+}
+
+extension HeartBeatManager: CBPeripheralDelegate {
+    
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        guard let services = peripheral.services, !services.isEmpty else {
+            isDisconnectedWhileTryingToConnect = true
+            disconnect()
+            delegate?.couldNotDiscoverServicesOrCharacteristics()
+            return
+        }
+        
+        for service in services {
+            peripheral.discoverCharacteristics(nil, for: service)
+        }
+    }
+    
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService,
                     error: Error?) {
-        guard let characteristics = service.characteristics else { return }
-        
+        guard let characteristics = service.characteristics else {
+            isDisconnectedWhileTryingToConnect = true
+            disconnect()
+            delegate?.couldNotDiscoverServicesOrCharacteristics()
+            return }
+        delegate?.deviceDidConnected(peripheral: peripheral)
+        saveConnectedDeviceId(id: peripheral.identifier.uuidString)
+        isDisconnectedWhileTryingToConnect = false
         for characteristic in characteristics {
-            print(characteristic)
             if characteristic.properties.contains(.read) {
                 print("\(characteristic.uuid): properties contains .read")
                 peripheral.readValue(for: characteristic)
@@ -97,9 +157,9 @@ extension HeartBeatManager: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic,
                     error: Error?) {
         switch characteristic.uuid {
-        case bodySensorLocationCharacteristicCBUUID:
-            let bodySensorLocation = bodyLocation(from: characteristic)
-            print(bodySensorLocation)
+//        case bodySensorLocationCharacteristicCBUUID:
+//            let bodySensorLocation = bodyLocation(from: characteristic)
+//            print(bodySensorLocation)
         case heartRateMeasurementCharacteristicCBUUID:
             let bpm = heartRate(from: characteristic)
             onHeartRateReceived(bpm)
@@ -108,22 +168,22 @@ extension HeartBeatManager: CBPeripheralDelegate {
         }
     }
     
-    private func bodyLocation(from characteristic: CBCharacteristic) -> String {
-        guard let characteristicData = characteristic.value,
-            let byte = characteristicData.first else { return "Error" }
-        
-        switch byte {
-        case 0: return "Other"
-        case 1: return "Chest"
-        case 2: return "Wrist"
-        case 3: return "Finger"
-        case 4: return "Hand"
-        case 5: return "Ear Lobe"
-        case 6: return "Foot"
-        default:
-            return "Reserved for future use"
-        }
-    }
+//    private func bodyLocation(from characteristic: CBCharacteristic) -> String {
+//        guard let characteristicData = characteristic.value,
+//            let byte = characteristicData.first else { return "Error" }
+//
+//        switch byte {
+//        case 0: return "Other"
+//        case 1: return "Chest"
+//        case 2: return "Wrist"
+//        case 3: return "Finger"
+//        case 4: return "Hand"
+//        case 5: return "Ear Lobe"
+//        case 6: return "Foot"
+//        default:
+//            return "Reserved for future use"
+//        }
+//    }
     
     private func heartRate(from characteristic: CBCharacteristic) -> Int {
         guard let characteristicData = characteristic.value else { return -1 }
@@ -140,12 +200,34 @@ extension HeartBeatManager: CBPeripheralDelegate {
     }
     
    func onHeartRateReceived(_ value: Int){
-        delegate?.heartBitDidReceived(value)
+        print(value)
+        heartBeatDelegate?.heartBitDidReceived(value)
+    }
+    
+    func connectDevice(with id: String) {
+        centralManager.stopScan()
+        if let deviceToConnect = availableDevices.first(where: {$0.identifier.uuidString == id}) {
+            deviceToConnect.delegate = self
+            centralManager.connect(deviceToConnect, options: nil)
+        } else {
+            delegate?.couldNotDiscoverServicesOrCharacteristics()
+        }
+        
+    }
+    
+    func getConnectedDevices() -> [CBPeripheral] {
+        return centralManager.retrieveConnectedPeripherals(withServices: [heartRateServiceCBUUID])
+        
     }
     
     func disconnect() {
         guard let device = heartRatePeripheral else { return }
         centralManager.cancelPeripheralConnection(device)
+        heartRatePeripheral = nil
+    }
+    
+    private func saveConnectedDeviceId(id: String) {
+        UserDefaults.standard.setValue(id, forKey: "lastTimeConnectedDevice")
     }
 }
 

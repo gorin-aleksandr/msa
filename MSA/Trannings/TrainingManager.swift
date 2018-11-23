@@ -11,7 +11,7 @@ import RealmSwift
 import Firebase
 
 
-@objc protocol TrainingsViewDelegate {
+@objc protocol TrainingsViewDelegate: class {
     func startLoading()
     func finishLoading()
     func trainingsLoaded()
@@ -23,7 +23,7 @@ import Firebase
     func synced()
 }
 
-protocol TrainingFlowDelegate {
+protocol TrainingFlowDelegate: class {
     func changeTime(time: String, iterationState: IterationState, i: (Int,Int))
     func higlightIteration(on: Int)
     func rewriteIterations()
@@ -49,8 +49,8 @@ class TrainingManager {
     let realm = RealmManager.shared
     var dataSource: TrainingsDataSource?
     var dataSourceCopy = TrainingsDataSource()
-    private var view: TrainingsViewDelegate?
-    private var flowView: TrainingFlowDelegate?
+    private weak var view: TrainingsViewDelegate?
+    private weak var flowView: TrainingFlowDelegate?
     
     var trainingType: TrainingType
     

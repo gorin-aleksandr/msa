@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 class IterationsViewController: UIViewController {
 
@@ -31,12 +32,17 @@ class IterationsViewController: UIViewController {
     var manager = TrainingManager(type: .my)
     let heartBeatService = HeartBeatManager()
     
+    var lastConnectedDeviceId: String? {
+        return UserDefaults.standard.value(forKey: "lastTimeConnectedDevice") as? String
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         manager.initView(view: self)
         manager.initFlowView(view: self)
         manager.setState(state: .iterationsOnly)
+        heartBeatService.heartBeatDelegate = self
         heartBeatService.delegate = self
     }
     
@@ -51,7 +57,6 @@ class IterationsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         manager.finish()
-        heartBeatService.disconnect()
     }
         
     private func configureUI() {
@@ -123,8 +128,10 @@ class IterationsViewController: UIViewController {
         performSegue(withIdentifier: "exerciseInfo", sender: nil)
     }
     @IBAction func moveToDevicesViewController(_ sender: Any) {
-        let destintionVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "HeartBeatDeviceViewController") as! HeartBeatDeviceViewController
-        navigationController?.pushViewController(destintionVC, animated: true)
+        let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "HeartBeatDeviceViewController") as! HeartBeatDeviceViewController
+        let presenter = HeartBeatDevicePresenter(view: destinationVC, heartBeatService: heartBeatService)
+        destinationVC.presenter = presenter
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     @objc
@@ -168,6 +175,10 @@ class IterationsViewController: UIViewController {
         default:
             return
         }
+    }
+    
+    deinit {
+        heartBeatService.disconnect()
     }
     
 }
@@ -307,4 +318,32 @@ extension IterationsViewController: HeartBeatDelegate {
     func heartBitDidReceived(_ value: Int) {
         pulseLabel.text = String(value)
     }
+    
+    func connectLastDeviceIfAvailable() {
+        heartBeatService.scanForDevices()
+    }
+}
+
+extension IterationsViewController: HeartBeatManagerDelegate {
+    func handleBluetooth(status: CBManagerState) {
+        if  let _ = lastConnectedDeviceId, status == .poweredOn {
+                  heartBeatService.scanForDevices()
+        }
+    }
+    
+    func deviceDetected(device: CBPeripheral) {
+        if let id = lastConnectedDeviceId, id == device.identifier.uuidString  {
+            heartBeatService.connectDevice(with: id)
+        }
+    }
+    
+    func deviceDidFailedToConnect(peripheral: CBPeripheral, error: Error?) {}
+    
+    func deviceDidConnected(peripheral: CBPeripheral) {}
+    
+    func couldNotDiscoverServicesOrCharacteristics() {}
+    
+    func deviceDidDisconnected() {}
+    
+    
 }

@@ -134,6 +134,7 @@
 		352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355FA212E06220001255E /* UserCommunityPresenter.swift */; };
 		35314F47218909C100A6E323 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35314F46218909C100A6E323 /* ErrorView.xib */; };
 		35314F49218914A100A6E323 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35314F48218914A100A6E323 /* ErrorView.swift */; };
+		353416B221A1A5AF00F6CC26 /* DeviceVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353416B121A1A5AF00F6CC26 /* DeviceVO.swift */; };
 		353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */; };
 		354CE708219CBE50005F5DDA /* HeartBeatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CE707219CBE50005F5DDA /* HeartBeatDetailsViewController.swift */; };
 		354CE70A219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CE709219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift */; };
@@ -288,6 +289,7 @@
 		352355FA212E06220001255E /* UserCommunityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityPresenter.swift; sourceTree = "<group>"; };
 		35314F46218909C100A6E323 /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		35314F48218914A100A6E323 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		353416B121A1A5AF00F6CC26 /* DeviceVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceVO.swift; sourceTree = "<group>"; };
 		353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		354CE707219CBE50005F5DDA /* HeartBeatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDetailsViewController.swift; sourceTree = "<group>"; };
 		354CE709219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDetailsPresenter.swift; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 				29F9F22F2147B3EA006EDC6A /* TrainingsVo.swift */,
 				2962D48420D2B6A900870953 /* ExercisesVO.swift */,
 				298DF658203C1FAC00FB0180 /* UserVO.swift */,
+				353416B121A1A5AF00F6CC26 /* DeviceVO.swift */,
 				299B58ED208688E600CBE646 /* GalleryItemVO.swift */,
 				291950B620474D5E004891FF /* MSA.xcdatamodeld */,
 			);
@@ -1035,6 +1038,7 @@
 				29F9F2492147B5B8006EDC6A /* VAWeekView.swift in Sources */,
 				29F9F2482147B5B8006EDC6A /* VACalendar.swift in Sources */,
 				35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */,
+				353416B221A1A5AF00F6CC26 /* DeviceVO.swift in Sources */,
 				29F9F21D2147AE82006EDC6A /* ApproachTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1176,7 +1180,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
+				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1197,7 +1201,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7ZBZB7WTZS;
+				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
