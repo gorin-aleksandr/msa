@@ -1048,7 +1048,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="51" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-MK-dYI">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="62" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-MK-dYI">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="72" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1056,8 +1056,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Найденые устройства:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTq-oc-kUF">
-                                            <rect key="frame" x="20" y="17.5" width="176" height="19"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Найденые устройства:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTq-oc-kUF">
+                                            <rect key="frame" x="20" y="17.5" width="335" height="19"/>
                                             <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
                                             <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1066,11 +1066,12 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="mTq-oc-kUF" firstAttribute="centerY" secondItem="V6W-6t-bFw" secondAttribute="centerY" id="GtY-SF-1hf"/>
+                                        <constraint firstAttribute="trailing" secondItem="mTq-oc-kUF" secondAttribute="trailing" constant="20" id="hdg-Ng-bx8"/>
                                         <constraint firstItem="mTq-oc-kUF" firstAttribute="leading" secondItem="V6W-6t-bFw" secondAttribute="leading" constant="20" id="zV0-5G-OTn"/>
                                     </constraints>
                                 </view>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="6Ij-93-yuV">
-                                    <rect key="frame" x="0.0" y="133" width="375" height="122"/>
+                                    <rect key="frame" x="0.0" y="144" width="375" height="122"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erg-VA-brK">
@@ -1082,17 +1083,9 @@
                                             <state key="normal" title="Искать устройства">
                                                 <color key="titleColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </state>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="laler.cornerRadius">
-                                                    <integer key="value" value="12"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                                    <color key="value" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                </userDefinedRuntimeAttribute>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                                    <integer key="value" value="1"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="searchForDevicesButtonDidTapped:" destination="HGz-uZ-BoZ" eventType="touchUpInside" id="cpB-Sl-2ro"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1104,34 +1097,34 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeartBeatDeviceTableViewCell" id="hKo-kg-u77" customClass="HeartBeatDeviceTableViewCell" customModule="MSA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="82" width="375" height="51"/>
+                                        <rect key="frame" x="0.0" y="82" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hKo-kg-u77" id="NuS-DQ-IaD">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="61.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pulse-ava" translatesAutoresizingMaskIntoConstraints="NO" id="JRW-X2-bXU">
-                                                    <rect key="frame" x="16" y="1.5" width="48" height="48"/>
+                                                    <rect key="frame" x="12" y="15" width="42" height="32"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="48" id="MfK-U4-moI"/>
-                                                        <constraint firstAttribute="width" constant="48" id="Q8X-z5-WuE"/>
+                                                        <constraint firstAttribute="height" constant="32" id="MfK-U4-moI"/>
+                                                        <constraint firstAttribute="width" constant="42" id="Q8X-z5-WuE"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heartbeat-500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGg-Mi-sE1">
-                                                    <rect key="frame" x="76" y="2" width="120" height="21"/>
+                                                    <rect key="frame" x="66" y="8" width="120" height="21"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info-image" translatesAutoresizingMaskIntoConstraints="NO" id="5rc-kG-h9o">
-                                                    <rect key="frame" x="337" y="10" width="26" height="26"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info-image" translatesAutoresizingMaskIntoConstraints="NO" id="5rc-kG-h9o">
+                                                    <rect key="frame" x="337" y="18" width="26" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="26" id="8Q0-MB-gev"/>
                                                         <constraint firstAttribute="height" constant="26" id="S4K-Mb-jVy"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S/N: 648361-367676" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wv1-WQ-oAw">
-                                                    <rect key="frame" x="76" y="27" width="123" height="16"/>
+                                                    <rect key="frame" x="66" y="33" width="123" height="16"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1139,15 +1132,22 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Wv1-WQ-oAw" firstAttribute="leading" secondItem="HGg-Mi-sE1" secondAttribute="leading" id="8MQ-pZ-r8a"/>
-                                                <constraint firstItem="HGg-Mi-sE1" firstAttribute="top" secondItem="NuS-DQ-IaD" secondAttribute="top" constant="2" id="ImH-9e-DID"/>
+                                                <constraint firstItem="HGg-Mi-sE1" firstAttribute="top" secondItem="NuS-DQ-IaD" secondAttribute="top" constant="8" id="ImH-9e-DID"/>
                                                 <constraint firstItem="Wv1-WQ-oAw" firstAttribute="top" secondItem="HGg-Mi-sE1" secondAttribute="bottom" constant="4" id="MHK-aK-4o4"/>
-                                                <constraint firstItem="5rc-kG-h9o" firstAttribute="top" secondItem="NuS-DQ-IaD" secondAttribute="top" constant="10" id="MYp-Tb-OQd"/>
-                                                <constraint firstItem="JRW-X2-bXU" firstAttribute="leading" secondItem="NuS-DQ-IaD" secondAttribute="leading" constant="16" id="e0Z-eq-Bko"/>
+                                                <constraint firstItem="5rc-kG-h9o" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HGg-Mi-sE1" secondAttribute="trailing" constant="6" id="SUC-KG-V6T"/>
+                                                <constraint firstItem="JRW-X2-bXU" firstAttribute="leading" secondItem="NuS-DQ-IaD" secondAttribute="leading" constant="12" id="e0Z-eq-Bko"/>
+                                                <constraint firstItem="5rc-kG-h9o" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wv1-WQ-oAw" secondAttribute="trailing" constant="6" id="ffF-Qs-26B"/>
+                                                <constraint firstItem="5rc-kG-h9o" firstAttribute="centerY" secondItem="NuS-DQ-IaD" secondAttribute="centerY" id="m2k-ge-cIK"/>
                                                 <constraint firstAttribute="trailing" secondItem="5rc-kG-h9o" secondAttribute="trailing" constant="12" id="nrb-02-mCp"/>
                                                 <constraint firstItem="JRW-X2-bXU" firstAttribute="centerY" secondItem="NuS-DQ-IaD" secondAttribute="centerY" id="rGK-4x-iIf"/>
                                                 <constraint firstItem="HGg-Mi-sE1" firstAttribute="leading" secondItem="JRW-X2-bXU" secondAttribute="trailing" constant="12" id="sx4-AL-4C1"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="deviceStateImageView" destination="5rc-kG-h9o" id="Xww-1c-D2x"/>
+                                            <outlet property="idLabel" destination="Wv1-WQ-oAw" id="bNq-Wx-KPp"/>
+                                            <outlet property="nameLabel" destination="HGg-Mi-sE1" id="NP2-ee-HJe"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -1162,6 +1162,7 @@
                         <viewLayoutGuide key="safeArea" id="6r3-5W-Yqw"/>
                     </view>
                     <connections>
+                        <outlet property="infoLabel" destination="mTq-oc-kUF" id="IqW-Zm-JMl"/>
                         <outlet property="searchButton" destination="erg-VA-brK" id="dze-Ye-FxA"/>
                         <outlet property="tableView" destination="vvO-MK-dYI" id="r8G-Vz-Jc8"/>
                         <segue destination="WSd-oT-yAb" kind="show" id="za4-Jt-1Kb"/>
@@ -1179,7 +1180,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вы можете изменить назване Вашего устройства" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZc-Mn-dhE">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вы можете изменить название Вашего устройства" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZc-Mn-dhE">
                                 <rect key="frame" x="37.5" y="80" width="300" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="DyP-If-aiN"/>
@@ -1189,21 +1190,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DHp-xq-49D" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                <rect key="frame" x="32" y="134" width="311" height="50"/>
+                                <rect key="frame" x="32" y="152" width="311" height="38"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Iha-EL-U87"/>
+                                    <constraint firstAttribute="height" constant="38" id="Iha-EL-U87"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                        <integer key="value" value="32"/>
-                                    </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="textColor">
                                         <color key="value" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Введите цель"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Введите название"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                         <color key="value" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
@@ -1236,25 +1234,17 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2MS-Aw-LQP">
-                                <rect key="frame" x="32" y="224" width="311" height="48"/>
+                                <rect key="frame" x="32" y="230" width="311" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="HeQ-cp-g78"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="16"/>
-                                <state key="normal" title="Искать устройства">
+                                <state key="normal" title="Подключить">
                                     <color key="titleColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="laler.cornerRadius">
-                                        <integer key="value" value="12"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                        <color key="value" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
-                                        <integer key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionButtonTapped:" destination="WSd-oT-yAb" eventType="touchUpInside" id="sBD-2m-Hhb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1262,7 +1252,7 @@
                             <constraint firstItem="PqI-z4-upL" firstAttribute="trailing" secondItem="DHp-xq-49D" secondAttribute="trailing" constant="32" id="D4Y-ND-1tU"/>
                             <constraint firstItem="PqI-z4-upL" firstAttribute="trailing" secondItem="2MS-Aw-LQP" secondAttribute="trailing" constant="32" id="FLL-2r-b6o"/>
                             <constraint firstItem="2MS-Aw-LQP" firstAttribute="top" secondItem="DHp-xq-49D" secondAttribute="bottom" constant="40" id="KUN-3o-jt6"/>
-                            <constraint firstItem="DHp-xq-49D" firstAttribute="top" secondItem="BZc-Mn-dhE" secondAttribute="bottom" constant="16" id="QEf-Hu-ioT"/>
+                            <constraint firstItem="DHp-xq-49D" firstAttribute="top" secondItem="BZc-Mn-dhE" secondAttribute="bottom" constant="34" id="QEf-Hu-ioT"/>
                             <constraint firstItem="BZc-Mn-dhE" firstAttribute="centerX" secondItem="Epw-S8-7Vk" secondAttribute="centerX" id="VMA-oB-lzI"/>
                             <constraint firstItem="BZc-Mn-dhE" firstAttribute="top" secondItem="PqI-z4-upL" secondAttribute="top" constant="16" id="Ze3-DZ-W3R"/>
                             <constraint firstItem="DHp-xq-49D" firstAttribute="leading" secondItem="PqI-z4-upL" secondAttribute="leading" constant="32" id="lP5-cm-e6t"/>
@@ -1271,8 +1261,16 @@
                         <viewLayoutGuide key="safeArea" id="PqI-z4-upL"/>
                     </view>
                     <navigationItem key="navigationItem" id="Dot-MU-2ay">
-                        <barButtonItem key="rightBarButtonItem" image="ok_blue" id="gPq-MG-t15"/>
+                        <barButtonItem key="rightBarButtonItem" image="ok_blue" id="gPq-MG-t15">
+                            <connections>
+                                <action selector="saveButtonPressed:" destination="WSd-oT-yAb" id="ihU-0f-IAL"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="actionButton" destination="2MS-Aw-LQP" id="ebf-bm-0nO"/>
+                        <outlet property="deviceNameTextField" destination="DHp-xq-49D" id="2Oi-HY-icQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X7y-Fk-2iT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

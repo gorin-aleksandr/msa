@@ -116,7 +116,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func configureProgressHud() {
-        SVProgressHUD.setBackgroundColor(.white)
+        SVProgressHUD.setBackgroundColor(.clear)
         SVProgressHUD.setForegroundColor(.lightBlue)
     }
 
