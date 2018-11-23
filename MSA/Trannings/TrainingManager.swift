@@ -521,12 +521,12 @@ class TrainingManager {
             let s = snap as! DataSnapshot
             if let _ = s.childSnapshot(forPath: "id").value as? NSNull {return}
             let template = TrainingTemplate()
-            template.id = s.childSnapshot(forPath: "id").value as! Int
-            template.name = s.childSnapshot(forPath: "name").value as! String
-            template.trianerId = s.childSnapshot(forPath: "trainerId").value as! String
-            template.trainingId = s.childSnapshot(forPath: "trainingId").value as! Int
-            template.days = s.childSnapshot(forPath: "days").value as! Int
-            template.typeId = s.childSnapshot(forPath: "typeId").value as! Int
+            template.id = s.childSnapshot(forPath: "id").value as? Int ?? -1
+            template.name = s.childSnapshot(forPath: "name").value as? String ?? ""
+            template.trianerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
+            template.trainingId = s.childSnapshot(forPath: "trainingId").value as? Int ?? 0
+            template.days = s.childSnapshot(forPath: "days").value as? Int ?? 0
+            template.typeId = s.childSnapshot(forPath: "typeId").value as? Int ?? -1
             items.append(template)
         }
         self.dataSource?.templates = items
@@ -544,29 +544,29 @@ class TrainingManager {
             if let _ = s.childSnapshot(forPath: "id").value as? NSNull {
                 return
             }
-            if let _ = s.childSnapshot(forPath: "id").value as? Int {
+            guard let _ = s.childSnapshot(forPath: "id").value as? Int else {
                 continue
             }
             let training = Training()
-            training.id = s.childSnapshot(forPath: "id").value as! Int
-            training.name = s.childSnapshot(forPath: "name").value as! String
-            training.trianerId = s.childSnapshot(forPath: "trainerId").value as! String
-            training.userId = s.childSnapshot(forPath: "userId").value as! Int
+            training.id = s.childSnapshot(forPath: "id").value as? Int ?? 0
+            training.name = s.childSnapshot(forPath: "name").value as? String ?? ""
+            training.trianerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
+            training.userId = s.childSnapshot(forPath: "userId").value as? Int ?? -1
 
             if let weeks = s.childSnapshot(forPath: "weeks").value as? NSArray {
                 for w in (weeks as! [[String:Any]]) {
                     let week = TrainingWeek()
                     week.wasSync = true
-                    week.id = w["id"] as! Int
+                    week.id = w["id"] as? Int ?? -1
                     week.name = w["name"] as? String ?? ""
                     let daysInWeek = List<TrainingDay>()
                     if let days = w["days"] as? [[String:Any]] {
                         for d in days {
                             let day = TrainingDay()
                             day.wasSync = true
-                            day.id = d["id"] as! Int
-                            day.name = d["name"] as! String
-                            day.date = d["date"] as! String
+                            day.id = d["id"] as? Int ?? -1
+                            day.name = d["name"] as? String ?? ""
+                            day.date = d["date"] as? String ?? ""
                             if let exercIds = d["idsForRound"] as? String {
                                 let array = List<IdString>()
                                 let ids = exercIds.components(separatedBy: ", ")
@@ -583,8 +583,8 @@ class TrainingManager {
                                     let exercise = ExerciseInTraining()
                                     exercise.wasSync = true
                                     exercise.id = e["id"] as? String ?? UUID().uuidString
-                                    exercise.name = e["name"] as! String
-                                    exercise.exerciseId = e["exerciseId"] as! String
+                                    exercise.name = e["name"] as? String ?? ""
+                                    exercise.exerciseId = e["exerciseId"] as? String ?? ""
                                     let exerciseIterations = List<Iteration>()
                                     if let iterations = e["iterations"] as? [[String:Any]] {
                                         for i in iterations {
@@ -592,10 +592,10 @@ class TrainingManager {
                                             iteration.wasSync = true
                                             iteration.id = i["id"] as? String ?? UUID().uuidString
                                             iteration.exerciseInTrainingId = i["exerciseInTrainingId"] as? String ?? UUID().uuidString
-                                            iteration.counts = i["counts"] as! Int
-                                            iteration.weight = i["weight"] as! Int
-                                            iteration.restTime = i["restTime"] as! Int
-                                            iteration.workTime = i["workTime"] as! Int
+                                            iteration.counts = i["counts"] as? Int ?? 0
+                                            iteration.weight = i["weight"] as? Int ?? 0
+                                            iteration.restTime = i["restTime"] as? Int ?? 0
+                                            iteration.workTime = i["workTime"] as? Int ?? 0
                                             iteration.startTimerOnZero = (i["startTimerOnZero"] as? Int ?? 0) == 1 ? true : false
                                             exerciseIterations.append(iteration)
                                         }
