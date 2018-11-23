@@ -544,6 +544,9 @@ class TrainingManager {
             if let _ = s.childSnapshot(forPath: "id").value as? NSNull {
                 return
             }
+            if let _ = s.childSnapshot(forPath: "id").value as? Int {
+                continue
+            }
             let training = Training()
             training.id = s.childSnapshot(forPath: "id").value as! Int
             training.name = s.childSnapshot(forPath: "name").value as! String
