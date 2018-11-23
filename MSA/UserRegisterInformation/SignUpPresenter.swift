@@ -94,7 +94,7 @@ class SignUpPresenter {
     }
     
     func getlevels() -> [String] {
-        return ["Новичок", "Любитель", "Бодибилдер"]
+        return ["Новичок", "Любитель", "Продвинутый", "Профессионал"]
     }
     func getSexes() -> [String] {
         return [Sex.famale.rawValue, Sex.male.rawValue]

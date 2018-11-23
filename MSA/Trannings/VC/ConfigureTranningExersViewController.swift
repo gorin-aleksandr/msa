@@ -81,10 +81,22 @@ class ConfigureTranningExersViewController: UIViewController {
         checkBoxTapped()
         weightLabel.text = "\(iteration.weight)"
         countsLabel.text = "\(iteration.counts)"
-        let wMin = Int(iteration.workTime/60)
-        let rMin = Int(iteration.restTime/60)
-        let wSec = Int(iteration.workTime-wMin*60)
-        let rSec = Int(iteration.restTime-rMin*60)
+        var wMin = Int(iteration.workTime/60)
+        var rMin = Int(iteration.restTime/60)
+        var wSec = Int(iteration.workTime-wMin*60)
+        var rSec = Int(iteration.restTime-rMin*60)
+        if wMin < 0 {
+            wMin = 0
+        }
+        if wSec < 0 {
+            wSec = 0
+        }
+        if rMin < 0 {
+            rMin = 0
+        }
+        if rSec < 0 {
+            rSec = 0
+        }
         workTime = (wMin,wSec)
         restTime = (rMin,rSec)
         timeView.workMinutes.text = wMin<10 ? "0\(wMin)" : "\(wMin)"

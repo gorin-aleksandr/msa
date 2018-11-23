@@ -28,6 +28,9 @@ class CircleTrainingDayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.becameActive(_:)), name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: nil)
+
+        
         manager.initView(view: self)
         manager.initFlowView(view: self)
         configureUI()
@@ -40,7 +43,16 @@ class CircleTrainingDayViewController: UIViewController {
         heartBeatService.disconnect()
     }
 
+    @objc
+    private func becameActive(_ notification: NSNotification) {
+        guard let time = notification.object as? Int else {return}
+        if time > 5 && time < 10000 {
+            manager.resetFromBackground(with: time - 5)
+        }
+    }
+    
     private func configureUI() {
+        
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День #\(manager.numberOfDay()) . Упражнений: \(manager.exercisesCount())")
         configureTableView()
@@ -71,6 +83,17 @@ class CircleTrainingDayViewController: UIViewController {
         navigationController?.pushViewController(destintionVC, animated: true)
     }
     
+    private func disable(myButtons: [UIButton]) {
+        let buttons = [playButton,stopButton,playNextButton,pauseButton]
+        for button in buttons {
+            if myButtons.contains(button!) {
+                button?.isUserInteractionEnabled = false
+            } else {
+                button?.isUserInteractionEnabled = true
+            }
+        }
+    }
+    
     @objc private func nextIterationstate(_ sender: UIButton) {
         manager.nextStateOrIteration()
     }
@@ -78,18 +101,22 @@ class CircleTrainingDayViewController: UIViewController {
     @objc private func stopIteration(_ sender: UIButton) {
         tableView.isUserInteractionEnabled = true
         manager.fullStop()
+        disable(myButtons: [stopButton, pauseButton, playNextButton])
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
         manager.pauseIteration()
+        disable(myButtons: [pauseButton, playNextButton])
     }
     
     @objc private func resumeIteration(_ sender: UIButton) {
         manager.startOrContineIteration()
+        disable(myButtons: [playButton])
     }
     private func startTraining() {
         tableView.isUserInteractionEnabled = false
         manager.startTraining()
+        disable(myButtons: [playButton])
     }
 }
 

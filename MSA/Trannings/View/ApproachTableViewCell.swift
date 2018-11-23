@@ -31,10 +31,22 @@ class ApproachTableViewCell: UITableViewCell {
     func configureCell(iteration: Iteration, indexPath: IndexPath) {
         self.numberLabel.text = "#\(indexPath.row+1):"
         self.weightAndCountsLabel.text = "\(iteration.weight) кг х \(iteration.counts) раз"
-        let wMin = Int(iteration.workTime/60)
-        let rMin = Int(iteration.restTime/60)
-        let wSec = Int(iteration.workTime-wMin*60)
-        let rSec = Int(iteration.restTime-rMin*60)
+        var wMin = Int(iteration.workTime/60)
+        var rMin = Int(iteration.restTime/60)
+        var wSec = Int(iteration.workTime-wMin*60)
+        var rSec = Int(iteration.restTime-rMin*60)
+        if wMin < 0 {
+            wMin = 0
+        }
+        if wSec < 0 {
+            wSec = 0
+        }
+        if rMin < 0 {
+            rMin = 0
+        }
+        if rSec < 0 {
+            rSec = 0
+        }
         let wMinStr = wMin<10 ? "0\(wMin)" : "\(wMin)"
         let wSecStr = wSec<10 ? "0\(wSec)" : "\(wSec)"
         let rMinStr = rMin<10 ? "0\(rMin)" : "\(rMin)"

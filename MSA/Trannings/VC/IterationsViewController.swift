@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IterationsViewController: UIViewController {
+class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var traningLabel: UILabel!
@@ -34,6 +34,9 @@ class IterationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.becameActive(_:)), name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: nil)
+
+        
         manager.initView(view: self)
         manager.initFlowView(view: self)
         manager.setState(state: .iterationsOnly)
@@ -53,7 +56,7 @@ class IterationsViewController: UIViewController {
         manager.finish()
         heartBeatService.disconnect()
     }
-        
+    
     private func configureUI() {
         loadingView.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: true)
@@ -72,6 +75,24 @@ class IterationsViewController: UIViewController {
         
     }
     
+    private func disable(myButtons: [UIButton]) {
+        let buttons = [playButton,stopButton,playNextButton,pauseButton]
+        for button in buttons {
+            if myButtons.contains(button!) {
+                button?.isUserInteractionEnabled = false
+            } else {
+                button?.isUserInteractionEnabled = true
+            }
+        }
+    }
+    
+    @objc private func becameActive(_ notification: NSNotification) {
+        guard let time = notification.object as? Int else {return}
+        if time > 5 && time < 10000 {
+            manager.resetFromBackground(with: time - 5)
+        }
+    }
+    
     @objc private func nextIterationstate(_ sender: UIButton) {
         if iterationsPresent() {
             manager.nextStateOrIteration()
@@ -81,24 +102,28 @@ class IterationsViewController: UIViewController {
     @objc private func stopIteration(_ sender: UIButton) {
         if iterationsPresent() {
             manager.fullStop()
+            disable(myButtons: [stopButton, pauseButton, playNextButton])
         }
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
         if iterationsPresent() {
             manager.pauseIteration()
+            disable(myButtons: [pauseButton, playNextButton])
         }
     }
     
     @objc private func resumeIteration(_ sender: UIButton) {
         if iterationsPresent() {
             manager.startOrContineIteration()
+            disable(myButtons: [playButton])
         } else {
             AlertDialog.showAlert("Вы не можете начать!", message: "Добавьте хотя бы одну итерацию.", viewController: self)
         }
     }
     @objc private func startIteration(_ sender: UIButton) {
         manager.startExercise(from: sender.tag)
+        disable(myButtons: [playButton])
     }
     
     private func iterationsPresent() -> Bool {

@@ -22,7 +22,7 @@ protocol GalleryDataProtocol: class {
     func errorOccurred(err: String)
 }
 
-class MainViewController: BasicViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate {
+class MainViewController: BasicViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -38,9 +38,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var galleryView: UIView! {didSet{galleryView.layer.cornerRadius = 10}}
     @IBOutlet weak var profileViewbg: UIView! {didSet{profileViewbg.layer.cornerRadius = 10}}
     @IBOutlet weak var userImage: UIView!
-    @IBOutlet weak var trainerImage: UIImageView! {didSet{trainerImage.layer.cornerRadius = 15
-        trainerImage.isHidden = true}}
-    @IBOutlet weak var trainerName: UILabel!{didSet{trainerName.isHidden = true}}
+    @IBOutlet weak var coachIcon: UIImageView!
+    @IBOutlet weak var trainerImage: UIImageView! {didSet{trainerImage.layer.cornerRadius = 16}}
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userCity: UILabel!
     @IBOutlet weak var userLevel: UILabel!
@@ -50,15 +49,22 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     
     private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
     let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
-    
+    private let editProfilePresenter = EditProfilePresenter(profile: UserDataManager())
+
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         downloadData()
         myPicker.delegate = self
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     private func downloadData() {
@@ -96,6 +102,17 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         setShadow(outerView: profileView, shadowOpacity: 0.3)
         setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
         setProfileImage(image: nil, url: AuthModule.currUser.avatar)
+        self.coachIcon.isHidden = true
+        self.trainerImage.isHidden = true
+        if let trainerId = AuthModule.currUser.trainerId {
+            editProfilePresenter.getTrainerInfo(trainer: trainerId) { (trainer) in
+                if let imageUrl = trainer.avatar, imageUrl != "" {
+                    self.coachIcon.isHidden = false
+                    self.trainerImage.isHidden = false
+                    self.trainerImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                }
+            }
+        }
         if let name = AuthModule.currUser.firstName, let surname = AuthModule.currUser.lastName {
             userName.text = name + " " + surname
         }

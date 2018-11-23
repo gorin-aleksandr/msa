@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 import Firebase
-
+import AVFoundation
 
 @objc protocol TrainingsViewDelegate {
     func startLoading()
@@ -76,6 +76,28 @@ class TrainingManager {
     }
     func initFlowView(view: TrainingFlowDelegate) {
         self.flowView = view
+    }
+    
+    func synchronizeTrainingsData(success: (() -> Void)?, failture: (() -> Void)? = nil) {
+        let dispatchGroup = DispatchGroup()
+        
+        if !InternetReachability.isConnectedToNetwork() {
+            failture?()
+        } else {
+            dispatchGroup.enter()
+            loadTrainings(success: {
+                dispatchGroup.leave()
+            })
+            
+            dispatchGroup.enter()
+            getMyExercises(success: {
+                dispatchGroup.leave()
+            })
+            
+            dispatchGroup.notify(queue: .main) {
+                success?()
+            }
+        }
     }
     
     func getExercisesOf(day: Int) -> [ExerciseInTraining] {
@@ -249,6 +271,7 @@ class TrainingManager {
         if let iteration = getCurrentExercise()?.iterations[index] {
             let iterationCopy = Iteration(value: iteration)
             iterationCopy.id = UUID().uuidString
+            
             realm.saveObject(iterationCopy)
             try! realm.performWrite {
                 getCurrentTraining()?.wasSync = false
@@ -333,13 +356,33 @@ class TrainingManager {
         }
     }
     
-    func loadTrainings() {
+    func loadTrainings(success: (() -> Void)? = nil, failture: (([NSError]) -> Void)? = nil) {
         if let id = sportsmanId {
-            if id != AuthModule.currUser.id {
-                self.view?.startLoading()
-            }
+//            if id != AuthModule.currUser.id {
+//                self.view?.startLoading()
+//            }
             Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
-                self.observeTrainings(snapchot: snapchot)
+                self.observeTrainings(snapchot: snapchot, success: {
+                    success?()
+                })
+            }
+        }
+    }
+    
+    func getMyExercises(success: (() -> Void)?, failture: (([NSError]) -> Void)? = nil) {
+        if let id = sportsmanId {
+//            self.view?.startLoading()
+            Database.database().reference().child("ExercisesByTrainers").child(id).observeSingleEvent(of: .value) { (data) in
+                let items = parseExercises(snapchot: data)
+                let myExerc = MyExercises()
+                myExerc.id = AuthModule.currUser.id ?? ""
+                for item in items {
+                    myExerc.myExercises.append(item)
+                }
+                DispatchQueue.main.async {
+                    self.realm.saveObject(myExerc)
+                    success?()
+                }
             }
         }
     }
@@ -478,12 +521,12 @@ class TrainingManager {
             let s = snap as! DataSnapshot
             if let _ = s.childSnapshot(forPath: "id").value as? NSNull {return}
             let template = TrainingTemplate()
-            template.id = s.childSnapshot(forPath: "id").value as! Int
-            template.name = s.childSnapshot(forPath: "name").value as! String
-            template.trianerId = s.childSnapshot(forPath: "trainerId").value as! String
-            template.trainingId = s.childSnapshot(forPath: "trainingId").value as! Int
-            template.days = s.childSnapshot(forPath: "days").value as! Int
-            template.typeId = s.childSnapshot(forPath: "typeId").value as! Int
+            template.id = s.childSnapshot(forPath: "id").value as? Int ?? -1
+            template.name = s.childSnapshot(forPath: "name").value as? String ?? ""
+            template.trianerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
+            template.trainingId = s.childSnapshot(forPath: "trainingId").value as? Int ?? 0
+            template.days = s.childSnapshot(forPath: "days").value as? Int ?? 0
+            template.typeId = s.childSnapshot(forPath: "typeId").value as? Int ?? -1
             items.append(template)
         }
         self.dataSource?.templates = items
@@ -491,7 +534,7 @@ class TrainingManager {
         self.view?.templatesLoaded()
     }
     
-    func observeTrainings(snapchot: DataSnapshot) {
+    func observeTrainings(snapchot: DataSnapshot, success: (() -> Void)? = nil) {
         if sportsmanId != AuthModule.currUser.id {
             self.view?.finishLoading()
         }
@@ -501,26 +544,29 @@ class TrainingManager {
             if let _ = s.childSnapshot(forPath: "id").value as? NSNull {
                 return
             }
+            guard let _ = s.childSnapshot(forPath: "id").value as? Int else {
+                continue
+            }
             let training = Training()
-            training.id = s.childSnapshot(forPath: "id").value as! Int
-            training.name = s.childSnapshot(forPath: "name").value as! String
-            training.trianerId = s.childSnapshot(forPath: "trainerId").value as! String
-            training.userId = s.childSnapshot(forPath: "userId").value as! Int
+            training.id = s.childSnapshot(forPath: "id").value as? Int ?? 0
+            training.name = s.childSnapshot(forPath: "name").value as? String ?? ""
+            training.trianerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
+            training.userId = s.childSnapshot(forPath: "userId").value as? Int ?? -1
 
             if let weeks = s.childSnapshot(forPath: "weeks").value as? NSArray {
                 for w in (weeks as! [[String:Any]]) {
                     let week = TrainingWeek()
                     week.wasSync = true
-                    week.id = w["id"] as! Int
+                    week.id = w["id"] as? Int ?? -1
                     week.name = w["name"] as? String ?? ""
                     let daysInWeek = List<TrainingDay>()
                     if let days = w["days"] as? [[String:Any]] {
                         for d in days {
                             let day = TrainingDay()
                             day.wasSync = true
-                            day.id = d["id"] as! Int
-                            day.name = d["name"] as! String
-                            day.date = d["date"] as! String
+                            day.id = d["id"] as? Int ?? -1
+                            day.name = d["name"] as? String ?? ""
+                            day.date = d["date"] as? String ?? ""
                             if let exercIds = d["idsForRound"] as? String {
                                 let array = List<IdString>()
                                 let ids = exercIds.components(separatedBy: ", ")
@@ -537,8 +583,8 @@ class TrainingManager {
                                     let exercise = ExerciseInTraining()
                                     exercise.wasSync = true
                                     exercise.id = e["id"] as? String ?? UUID().uuidString
-                                    exercise.name = e["name"] as! String
-                                    exercise.exerciseId = e["exerciseId"] as! String
+                                    exercise.name = e["name"] as? String ?? ""
+                                    exercise.exerciseId = e["exerciseId"] as? String ?? ""
                                     let exerciseIterations = List<Iteration>()
                                     if let iterations = e["iterations"] as? [[String:Any]] {
                                         for i in iterations {
@@ -546,10 +592,10 @@ class TrainingManager {
                                             iteration.wasSync = true
                                             iteration.id = i["id"] as? String ?? UUID().uuidString
                                             iteration.exerciseInTrainingId = i["exerciseInTrainingId"] as? String ?? UUID().uuidString
-                                            iteration.counts = i["counts"] as! Int
-                                            iteration.weight = i["weight"] as! Int
-                                            iteration.restTime = i["restTime"] as! Int
-                                            iteration.workTime = i["workTime"] as! Int
+                                            iteration.counts = i["counts"] as? Int ?? 0
+                                            iteration.weight = i["weight"] as? Int ?? 0
+                                            iteration.restTime = i["restTime"] as? Int ?? 0
+                                            iteration.workTime = i["workTime"] as? Int ?? 0
                                             iteration.startTimerOnZero = (i["startTimerOnZero"] as? Int ?? 0) == 1 ? true : false
                                             exerciseIterations.append(iteration)
                                         }
@@ -577,6 +623,7 @@ class TrainingManager {
         setSynced()
         self.saveTrainingsToRealm(trainings: items)
         self.view?.trainingsLoaded()
+        success?()
     }
     
     func syncUnsyncedTrainings() {
@@ -685,13 +732,12 @@ class TrainingManager {
     private var currentExercise: ExerciseInTraining?
     private var iterations: [Iteration]?
     private var currentIteration: Iteration?
-    private var iterationsForRound = [Iteration]()
+    private var iterationsForTraining = [Iteration]()
     private var currentExerciseNumber = 0
     private var currentIterationNumber = 0
     private var currentRestTime = 0
     private var currentWorkTime = 0
     private var secondomerTime = 0
-
     
     private func createIterationsCopy(i: Int) {
         iterations = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
@@ -799,15 +845,78 @@ class TrainingManager {
         }
     }
     
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+// Preparing iterations
+    
+    func resetFromBackground(with time: Int) {
+        guard let iteration = currentIteration else {
+            return
+        }
+        switch iterationState {
+        case .rest:
+            if iteration.restTime == 0 {
+                if iteration.startTimerOnZero {
+                    currentRestTime += time
+                }
+            } else {
+                if (currentRestTime - time) < 0 {
+                    currentRestTime = 0
+                } else {
+                    currentRestTime -= time
+                }
+            }
+            self.eventWithTimer(time: self.currentRestTime)
+        case .work:
+            if iteration.workTime == 0 {
+                if iteration.startTimerOnZero {
+                    currentWorkTime += time
+                }
+            } else {
+                if (currentWorkTime - time) < 0 {
+                    currentWorkTime = 0
+                } else {
+                    currentWorkTime -= time
+                }
+            }
+            self.eventWithTimer(time: self.currentWorkTime)
+        }
+    }
+    
+    func setIterationsForNormal(completion: (() -> Void)? = nil) {
+        exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
+        iterationsForTraining.removeAll()
+        if let exercises = exercises {
+            for (index,_) in exercises.enumerated() {
+                iterationsForTraining.append(contentsOf: Array(exercises[index].iterations))
+            }
+        }
+        completion?()
+    }
+    
+    func getIterationsAsNormal(at index: Int) {
+        var iterations = [Iteration]()
+        if let exercises = exercises {
+            iterations = Array(exercises[index].iterations)
+        }
+        iterationsForTraining.append(contentsOf: iterations)
+    }
+    
     func setSpecialIterationsForRound(indexes: [Int], completion: @escaping ()->()) {
         exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
-        var tempIndexes = [Int]()
+        iterationsForTraining.removeAll()
         
+        var tempIndexes = [Int]()
+
         if let exercises = exercises {
             for (index, _) in exercises.enumerated() {
                 if indexes.contains(index) {
                     tempIndexes.append(index)
-                    continue
+                    if index == exercises.count-1 {
+                        getIterationsAsRound(atEx: tempIndexes)
+                    } else {
+                        continue
+                    }
                 } else {
                     if !tempIndexes.isEmpty {
                         getIterationsAsRound(atEx: tempIndexes)
@@ -831,19 +940,12 @@ class TrainingManager {
             }
             iterations = prepareIterationsForRound(from: neededExercises)
         }
-        iterationsForRound.append(contentsOf: iterations)
-    }
-    func getIterationsAsNormal(at index: Int) {
-        var iterations = [Iteration]()
-        if let exercises = exercises {
-            iterations = Array(exercises[index].iterations)
-        }
-        iterationsForRound.append(contentsOf: iterations)
+        iterationsForTraining.append(contentsOf: iterations)
     }
     
     func setIterationsForRound(completion: @escaping ()->()) {
         exercises = Array(dataSource?.currentDay?.exercises ?? List<ExerciseInTraining>())
-        iterationsForRound = prepareIterationsForRound(from: exercises!)
+        iterationsForTraining = prepareIterationsForRound(from: exercises!)
         completion()
     }
     
@@ -864,22 +966,27 @@ class TrainingManager {
         }
         return array
     }
+
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+//////////////////////// //////////////////////// //////////////////////// ////////////////////////
+
+    
     
     private func getNext() -> (Int,Int)? {
         var numInMainArray = 0
         var exersN = 0
         var iterN = 0
         
-        for iteration in iterationsForRound {
+        for iteration in iterationsForTraining {
             let curIter = exercises?[currentExerciseNumber].iterations[currentIterationNumber]
             if iteration.id == curIter!.id {
-                if numInMainArray == (iterationsForRound.count - 1) {
+                if numInMainArray == (iterationsForTraining.count - 1) {
                     return nil
                 } else {
                     for ex in exercises ?? [] {
                         iterN = 0
                         for i in ex.iterations {
-                            if i.id == iterationsForRound[numInMainArray+1].id {
+                            if i.id == iterationsForTraining[numInMainArray+1].id {
                                 return (exersN, iterN)
                             }
                             iterN += 1
@@ -1077,13 +1184,31 @@ class TrainingManager {
         var secStr = ""
         min = Int(time/60)
         sec = time - min*60
+        if min < 0 {
+            min = 0
+        }
+        if sec < 0 {
+            sec = 0
+        }
+
         minStr = min<10 ? "0\(min)" : "\(min)"
         secStr = sec<10 ? "0\(sec)" : "\(sec)"
+
         var timeString = "-"+minStr+":"+secStr
         if iterationState == .rest || secondomerStarted {
             timeString.removeFirst()
         }
+        self.audioEffect(on: time)
+//        if !secondomerStarted {
+//            NotificationTimer.timeToShow = Double(time)
+//        }
         self.flowView?.changeTime(time: timeString, iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
+    }
+    
+    private func audioEffect(on time: Int) {
+        if time < 4 && !secondomerStarted {
+            AudioServicesPlayAlertSound(SystemSoundID(1313))
+        }
     }
     
     func saveIterationsInfo() {

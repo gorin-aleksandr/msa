@@ -106,6 +106,7 @@ class UserSignInPresenter {
         task.heightType = user.heightType
         task.weightType = user.weightType
         task.purpose = user.purpose
+        task.trainerId = user.trainerId
         if let age = user.age {
             task.age = Int64(age)
         }
@@ -145,6 +146,7 @@ class UserSignInPresenter {
             loggedUser.heightType = user.first?.heightType
             loggedUser.avatar = user.first?.avatar
             loggedUser.purpose = user.first?.purpose
+            loggedUser.trainerId = user.first?.trainerId
 
             if let age = user.first?.age {
                 loggedUser.age = Int(age)

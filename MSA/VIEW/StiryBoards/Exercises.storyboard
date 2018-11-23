@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U7j-nU-ptn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U7j-nU-ptn">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -189,7 +189,7 @@
         <!--Новое упражнение-->
         <scene sceneID="lxV-ta-3b0">
             <objects>
-                <viewController storyboardIdentifier="NewExerciseViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xJO-oS-yzl" customClass="NewExerciseViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewExerciseViewController" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xJO-oS-yzl" customClass="NewExerciseViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZVG-yN-naj">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -321,7 +321,7 @@
         <!--Вид упражнения-->
         <scene sceneID="5TO-90-iSQ">
             <objects>
-                <viewController id="sCD-DE-wOG" customClass="ExercisesForTypeViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="sCD-DE-wOG" customClass="ExercisesForTypeViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="99a-St-jeD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -437,7 +437,7 @@
         <!--Упражнения-->
         <scene sceneID="AWD-H2-jtA">
             <objects>
-                <viewController restorationIdentifier="ExercisesInfoViewController" storyboardIdentifier="ExercisesInfoViewController" id="OsO-Nf-As9" customClass="ExercisesInfoViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ExercisesInfoViewController" storyboardIdentifier="ExercisesInfoViewController" hidesBottomBarWhenPushed="YES" id="OsO-Nf-As9" customClass="ExercisesInfoViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Xx-2u-gd7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -499,7 +499,7 @@
         <image name="ok_blue" width="16" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Erm-Q3-52b"/>
-        <segue reference="R91-kH-C6c"/>
+        <segue reference="IH0-2z-9zU"/>
+        <segue reference="AIz-3a-ssZ"/>
     </inferredMetricsTieBreakers>
 </document>

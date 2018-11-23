@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class ExercisesViewController: UIViewController {
+class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     enum SegueIDs: String {
         case exercisesSegueId = "exercisesSegueId"
@@ -28,13 +28,23 @@ class ExercisesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        configureNavContr()
         presenter.attachView(view: self)
         trainingManager?.initView(view: self)
         configureTable_CollectionView()
         initialDataPreparing()
         NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
         
+    }
+
+    private func configureNavContr() {
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -134,9 +144,6 @@ class ExercisesViewController: UIViewController {
         switch segue.identifier {
         case SegueIDs.exercisesSegueId.rawValue:
             if let destination = segue.destination as? ExercisesForTypeViewController {
-//                let ids = presenter.getCurrentExetcisesType().filterIDs
-//                guard let IDS = presenter.getFiltersByType(with: ids.map ({return $0.id}) ) else {return}
-//                presenter.setCurrentFilters(filt: IDS)
                 destination.presenter = self.presenter
                 destination.trainingManager = self.trainingManager
             }
