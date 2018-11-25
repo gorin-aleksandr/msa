@@ -544,27 +544,33 @@ class TrainingManager {
             if let _ = s.childSnapshot(forPath: "id").value as? NSNull {
                 return
             }
-            guard let _ = s.childSnapshot(forPath: "id").value as? Int else {
+            guard let id = s.childSnapshot(forPath: "id").value as? Int else {
                 continue
             }
+            if id == -1 { continue }
+            
             let training = Training()
             training.id = s.childSnapshot(forPath: "id").value as? Int ?? 0
             training.name = s.childSnapshot(forPath: "name").value as? String ?? ""
             training.trianerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
             training.userId = s.childSnapshot(forPath: "userId").value as? Int ?? -1
-
+            
             if let weeks = s.childSnapshot(forPath: "weeks").value as? NSArray {
                 for w in (weeks as! [[String:Any]]) {
                     let week = TrainingWeek()
                     week.wasSync = true
-                    week.id = w["id"] as? Int ?? -1
+                    let id = w["id"] as? Int ?? -1
+                    if id == -1 { continue }
+                    week.id = id
                     week.name = w["name"] as? String ?? ""
                     let daysInWeek = List<TrainingDay>()
                     if let days = w["days"] as? [[String:Any]] {
                         for d in days {
                             let day = TrainingDay()
                             day.wasSync = true
-                            day.id = d["id"] as? Int ?? -1
+                            let id = d["id"] as? Int ?? -1
+                            if id == -1 { continue }
+                            day.id = id
                             day.name = d["name"] as? String ?? ""
                             day.date = d["date"] as? String ?? ""
                             if let exercIds = d["idsForRound"] as? String {
