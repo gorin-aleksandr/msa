@@ -63,7 +63,7 @@ struct UserVO {
 
 enum Sex: String {
     case male = "male"
-    case famale = "famale"
+    case female = "female"
 }
 
 enum HeightType: String {

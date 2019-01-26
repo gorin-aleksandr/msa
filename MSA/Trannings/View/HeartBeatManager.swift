@@ -44,7 +44,7 @@ class HeartBeatManager: NSObject {
     
     func scanForDevices() {
         if centralManager.state == .poweredOn {
-            centralManager.scanForPeripherals(withServices: [], options: nil)
+            centralManager.scanForPeripherals(withServices: [heartRateServiceCBUUID], options: nil)
         }
         
     }

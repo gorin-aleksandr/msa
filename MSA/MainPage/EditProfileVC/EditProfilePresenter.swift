@@ -215,7 +215,7 @@ class EditProfilePresenter {
         return ["Новичок", "Любитель", "Продвинутый", "Профессионал"]
     }
     func getSexes() -> [String] {
-        return [Sex.famale.rawValue, Sex.male.rawValue]
+        return ["женский", "мужской"]
     }
     func getAges() -> [Int] {
         var ages = [Int]()

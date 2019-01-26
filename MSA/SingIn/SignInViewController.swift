@@ -81,7 +81,7 @@ extension SignInViewController: SignInViewProtocol {
     }
     
     func loggedWithFacebook() {
-        UserDataManager().getUser { (user) in
+        UserDataManager().getUser { (user, error) in
             if user == nil {
                 DispatchQueue.main.async {
                     let storyBoard = UIStoryboard(name: "Main", bundle:nil)

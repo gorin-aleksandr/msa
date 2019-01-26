@@ -11,13 +11,30 @@ import Firebase
 
 class UserDataManager {
     
-    init() {
-        print("init")
-    }
-    
     var userRef = Database.database().reference().child("Users")
     var storageRef = Storage.storage().reference()
     var levelsRef = Database.database().reference().child("Levels")
+    let disconnectMessage = Database.database().reference(withPath: "disconnectmessage")
+    let connectedRef = Database.database().reference(withPath: ".info/connected")
+    
+    var isConnectionEnabled: Bool = true //{
+//        didSet {
+//            isConnectionEnabled ? NotificationCenter.default.post(name: .connectionEnabled, object: nil) :
+//                NotificationCenter.default.post(name: .connectionDisabled, object: nil)
+//        }
+//    }
+    
+    func checkConnection(completion: @escaping (_ isConnected: Bool) -> ()) {
+        connectedRef.observe(.value, with: { snapshot in
+            if let connected = snapshot.value as? Bool, connected {
+                print("Connected to network")
+                completion(true)
+            } else {
+                print("Not connected")
+                completion(false)
+            }
+        })
+    }
     
     func addInfo(user: UserVO, callback: @escaping (_ created: Bool)->()) {
         if let key = AuthModule.currUser.id {
@@ -74,22 +91,27 @@ class UserDataManager {
         }
     }
     
-    func getUser(callback: @escaping (_ user: UserVO?)->()) {
+    func getUser(callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+           callback(nil, connectionError)
+            return
+        }
         if let userId = AuthModule.currUser.id {
             userRef.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
                 // Get user value
                 let value = snapshot.value as? [String : Any]
                 let user = self.makeUser(from: value)
-                callback(user)
+                callback(user, nil)
             }) { (error) in
                 print(error.localizedDescription)
-                callback(nil)
+                callback(nil, error)
             }
         }
     }
     
     func loadAllUsers(callback: @escaping (_ community: [UserVO]) -> ()) {
-        userRef.observeSingleEvent(of: .value) { (snapshot) in
+        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let data = snapshot.value as? [String : [String : Any]] else {
                 print("Error occured while parsing community for key from database")
                 return
@@ -98,13 +120,31 @@ class UserDataManager {
             let values = Array(data.values)
             
             var community: [UserVO] = []
-                for value in values {
-                    if let user = self.makeUser(from: value) {
-                        community.append(user)
-                    }
+            for value in values {
+                if let user = self.makeUser(from: value) {
+                    community.append(user)
                 }
+            }
             callback(community)
+        }) { (error) in
+            print(error)
         }
+//        userRef.observeSingleEvent(of: .value) { (snapshot) in
+//            guard let data = snapshot.value as? [String : [String : Any]] else {
+//                print("Error occured while parsing community for key from database")
+//                return
+//            }
+//
+//            let values = Array(data.values)
+//
+//            var community: [UserVO] = []
+//                for value in values {
+//                    if let user = self.makeUser(from: value) {
+//                        community.append(user)
+//                    }
+//                }
+//            callback(community)
+//        }
     }
     
     private func makeUser(from value: [String : Any]?) -> UserVO? {
@@ -219,7 +259,7 @@ class UserDataManager {
         
     }
     
-    func removeTrainer(with id: String, from userId: String, callback callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+    func removeTrainer(with id: String, from userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
             userRef.child(userId).child("trainer").removeValue() { error, success in
                 if let error = error {
                     callback(false, error)

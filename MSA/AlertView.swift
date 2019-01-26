@@ -24,4 +24,13 @@ class AlertDialog {
         
     }
     
+    class func showGeneralErrorAlert(on viewController: UIViewController) {
+        let alertController = UIAlertController(title: "Ошибка", message: "Попробуйте еще раз.", preferredStyle: .alert)
+        
+        let dismissAction = UIAlertAction(title: "Ok", style: .cancel)
+        alertController.addAction(dismissAction)
+        viewController.present(alertController, animated: true, completion: nil)
+
+    }
+    
 }

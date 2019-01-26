@@ -14,9 +14,12 @@ protocol CommunityListViewProtocol: class {
     func configureFilterView(dataSource: [String], selectedFilterIndex: Int)
     func setCityFilterTextField(name: String?)
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool)
+    func setErrorViewHidden(_ isHidden: Bool)
+    func setLoaderVisible(_ visible: Bool)
+    func stopLoadingViewState()
 }
 
-class CommunityListViewController: UIViewController, CommunityListViewProtocol, UIGestureRecognizerDelegate {
+class CommunityListViewController: UIViewController, CommunityListViewProtocol, UIGestureRecognizerDelegate, ErrorViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var communityTableView: UITableView!
     @IBOutlet weak var filterView: UIView!
@@ -24,11 +27,14 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     @IBOutlet weak var cityTextField: UITextField!
     @IBOutlet weak var myCommunityButton: UIBarButtonItem!
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var errorView: ErrorView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    private let refreshControl = UIRefreshControl()
     
     let cityPicker = UIPickerView()
     
     var presenter: CommunityListPresenterProtocol!
-    let searchController = UISearchController(searchResultsController: nil)
     
     let button = UIButton()
     
@@ -38,10 +44,14 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        searchBar.delegate = self
         presenter = CommunityListPresenter(view: self)
         communityTableView.delegate = self
         communityTableView.dataSource = self
-        presenter.start()
+        errorView.delegate = self
+        configureRefresh()
+        setLoaderVisible(true)
+        presenter.fetchData()
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -51,54 +61,52 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        configureSearchController()
         configureCityPicker()
-        hideableNavigationBar(false)
         updateTableView()
         configureSegmentedControl()
-        //presenter.applyFilters(with: cityTextField.text)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        hideableNavigationBar(true)
+        //hideableNavigationBar(true)
     }
     
     func updateTableView() {
-        communityTableView.reloadData()
-        SVProgressHUD.dismiss()
+        DispatchQueue.main.async { [weak self] in
+            self?.communityTableView.reloadData()
+        }
+        
     }
     
     func setCityFilterTextField(name: String?) {
         cityTextField.text = name
     }
     
+    func setErrorViewHidden(_ isHidden: Bool) {
+        errorView.isHidden = isHidden
+    }
+    
     func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
-//        for subView in filterScrollView.subviews {
-//            if let subView = subView as? UIButton {
-//                subView.removeFromSuperview()
-//            }
-//        }
-//        var xOffset: CGFloat = 8
-//        let buttonPadding: CGFloat = 10
         var segmentIndex = 0
         for filterName in dataSource {
             filterSegmentedControl.setTitle(filterName, forSegmentAt: segmentIndex)
-//            let button = UIButton()
-//            button.tag = buttonIndex
-//            button.isSelected = buttonIndex == selectedFilterIndex
-//            button.addTarget(self, action: #selector(filterButtonTapped(_:)), for: .touchUpInside)
-//            button.configureAsFilterButton(title: filterName, xOffset: xOffset, padding: buttonPadding)
-//            xOffset = xOffset + buttonPadding + button.frame.size.width
-//            filterScrollView.addSubview(button)
             segmentIndex += 1
-//            if button.isSelected  {
-//                button.backgroundColor = lightWhiteBlue
-//            } else {
-//                button.backgroundColor = darkCyanGreen45
-//            }
         }
-        //filterScrollView.contentSize = CGSize(width: xOffset, height: filterScrollView.frame.height)
+    }
+    
+    func tryAgainButtonDidTapped() {
+        setErrorViewHidden(true)
+        setLoaderVisible(true)
+        presenter.fetchData()
+    }
+    
+    func stopLoadingViewState() {
+        refreshControl.endRefreshing()
+        setLoaderVisible(false)
+    }
+    
+    func setLoaderVisible(_ visible: Bool) {
+        visible ? SVProgressHUD.show() : SVProgressHUD.dismiss()
     }
     
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
@@ -139,25 +147,20 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         cityTextField.tintColor = .clear
     }
     
-    private func configureSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Поиск"
-        searchController.dimsBackgroundDuringPresentation = false
-        definesPresentationContext = true
-        if #available(iOS 9.1, *) {
-            searchController.obscuresBackgroundDuringPresentation = false
+    private func configureRefresh() {
+//        let attributes = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+//                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 14)!]
+//          refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация ...", attributes: attributes)
+        if #available(iOS 10.0, *) {
+            communityTableView.refreshControl = refreshControl
+        } else {
+            communityTableView.addSubview(refreshControl)
         }
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = nil
-            navigationItem.searchController = searchController
-        }
-        searchController.searchBar.tintColor = .darkCyanGreen
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
     
-    private func hideableNavigationBar(_ hide: Bool) {
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = hide
-        }
+    @objc private func refreshData(_ sender: Any) {
+            self.presenter.fetchData()
     }
     
     private func setupNavigationBar() {
@@ -238,26 +241,10 @@ extension CommunityListViewController: UIPickerViewDelegate, UIPickerViewDataSou
 
 
 //MARK: - Search Results Updating
-extension CommunityListViewController: UISearchResultsUpdating {
-   
-    func updateSearchResults(for searchController: UISearchController) {
-        presenter.applyFilters(with: searchController.searchBar.text)
-    }
+extension CommunityListViewController {
     
-//
-//    private func isFiltering() -> Bool {
-//        return searchController.isActive && !searchBarIsEmpty()
-//    }
-//
-//    private func searchBarIsEmpty() -> Bool {
-//        // Returns true if the text is empty or nil
-//        return searchController.searchBar.text?.isEmpty ?? true
-//    }
-//
-//    private func filterContentForSearchText(_ searchText: String, scope: String = "All") {
-//        let filteretElements = presenter.communityDataSource.filter { element in return element.firstName.lowercased().contains(searchText.lowercased()) }
-//        self.filteredArray = getSortedArray(of: filteretElements)
-//        communityTableView.reloadData()
-//    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+          presenter.applyFilters(with: searchBar.text)
+    }
     
 }

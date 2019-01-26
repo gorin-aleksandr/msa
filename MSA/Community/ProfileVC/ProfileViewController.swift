@@ -51,6 +51,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
         
     }
+    @IBOutlet weak var buttonsStackView: UIStackView!
     
     var profilePresenter: ProfilePresenterProtocol!
     
@@ -108,6 +109,8 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         if state != .trainersSportsman {
             containerViewHeightConstraint.constant -= viewWithButtons.frame.height
             buttViewHeight.constant = 0
+            buttonsStackView.isHidden = true
+            
         }
         if state == .all {
             navigationItem.rightBarButtonItem?.tintColor = .lightBlue

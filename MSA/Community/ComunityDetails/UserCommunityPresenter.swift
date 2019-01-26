@@ -22,6 +22,7 @@ protocol UserCommunityPresenterProtocol {
     func deleteButtonTapped(atIndex: Int)
     func deleteAction(for user: UserVO)
     func createProfilePresenter(user: UserVO, for view: ProfileViewProtocol) -> ProfilePresenterProtocol
+    func refresh()
 }
 
 
@@ -118,6 +119,35 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
             }
         }
         userCommunityDataSource = sportsmen
+    }
+    
+    func refresh() {
+        dataLoader.getUser { [weak self] (user, error) in
+            if error != nil {
+                Errors.handleError(error, completion: { message in
+                    print(message)
+                })
+            } else {
+                guard let user = user  else {return}
+                AuthModule.currUser = user
+                    self?.setDatasourceFor(self?.state ?? .requests)
+
+            }
+        }
+    }
+    
+    private func setDatasourceFor(_ state: UserCommunityState) {
+        switch state {
+        case .friends:
+            setFriendsDataSource()
+        case .sportsmen:
+            setSportsmenDataSource()
+        case .trainers:
+            setTrainerDataSource()
+        case .requests:
+            setRequestDataSource()
+        }
+        searchBy(string: searchText)
     }
     
     func setDataSource(with searchText: String?, and selectedState: Int) {

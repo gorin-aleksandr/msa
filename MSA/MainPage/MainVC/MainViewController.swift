@@ -54,6 +54,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

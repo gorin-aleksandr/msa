@@ -8,10 +8,17 @@
 
 import UIKit
 
+protocol ErrorViewDelegate: class {
+    func tryAgainButtonDidTapped()
+}
+
 class ErrorView: UIView {
     
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var errorMessageLabel: UILabel!
+    @IBOutlet weak var tryAgainButton: UIButton!
+    
+    weak var delegate: ErrorViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,7 +26,6 @@ class ErrorView: UIView {
         addSubview(contentView)
         contentView.addSubview(errorMessageLabel)
         contentView.frame = self.bounds
-        contentView.backgroundColor = .red
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         //self.isHidden = true
     }
@@ -30,8 +36,19 @@ class ErrorView: UIView {
         addSubview(contentView)
         contentView.addSubview(errorMessageLabel)
         contentView.frame = self.bounds
-        contentView.backgroundColor = .red
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        configureButton()
+    }
+    
+    private func configureButton() {
+        tryAgainButton.layer.masksToBounds = true
+        tryAgainButton.layer.cornerRadius = 12
+        tryAgainButton.layer.borderWidth = 1
+        tryAgainButton.layer.borderColor = UIColor.darkGreenColor.cgColor
+    }
+    
+    @IBAction func tryAgainButtonDidTapped(_ sender: Any) {
+        delegate?.tryAgainButtonDidTapped()
     }
     
 }

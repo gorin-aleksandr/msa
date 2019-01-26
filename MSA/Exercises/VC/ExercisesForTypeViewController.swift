@@ -219,7 +219,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return 68
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var exercise = Exercise()

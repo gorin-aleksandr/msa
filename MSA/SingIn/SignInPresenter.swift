@@ -30,7 +30,7 @@ class UserSignInPresenter {
             if error == nil && user != nil {
                 let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: user?.level, age: user?.age, sex: user?.sex, height: user?.height, heightType: user?.heightType, weight: user?.weight,weightType: user?.weightType, type: user?.type, purpose: user?.purpose, gallery: user?.gallery, friends: user?.friends, trainerId: user?.trainerId, sportsmen: user?.sportsmen, requests: user?.requests, city: user?.city)
                     self.view?.setUser(user: user)
-                    UserDataManager().getUser(callback: { (user) in
+                    UserDataManager().getUser(callback: { (user, error) in
                         if let user = user {
                             self.view?.setUser(user: user)
                             self.view?.logged()

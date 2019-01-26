@@ -19,6 +19,7 @@ class MyTranningsViewController: UIViewController {
     @IBOutlet weak var nextWeekButton: UIButton!
     @IBOutlet weak var prevWeekButton: UIButton!
     @IBOutlet weak var addDayView: UIView! {didSet{addDayView.layer.cornerRadius = 12}}
+    private var tap: TapGesture!
     
     private let refreshControl = UIRefreshControl()
 
@@ -118,6 +119,16 @@ class MyTranningsViewController: UIViewController {
                 self.refreshControl.endRefreshing()
             })
         })
+    }
+    
+    @objc func handleTap(sender: TapGesture) {
+        let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "ExercisesInfoViewController") as! ExercisesInfoViewController
+        guard  let indexPath = sender.indexPath else {
+            return
+        }
+        let ex = manager.getExercisesOf(day: indexPath.section)[indexPath.row]
+        destinationVC.execise = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", ex.exerciseId)) ?? nil
+        self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     @IBAction func back(_ sender: Any) {
@@ -479,6 +490,10 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", exercise.exerciseId)) {
                 cell.exerciseNameLable.text = ex.name
                 cell.exerciseImageView.sd_setImage(with: URL(string: ex.pictures.first?.url ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                tap = TapGesture(target: self, action: #selector(handleTap(sender:)))
+                tap.indexPath = indexPath
+                cell.exerciseImageView.addGestureRecognizer(tap)
+                cell.exerciseImageView.tag = indexPath.row
             }
             return cell
         }

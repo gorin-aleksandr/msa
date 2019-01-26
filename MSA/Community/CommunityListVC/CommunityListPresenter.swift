@@ -7,9 +7,10 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CommunityListPresenterProtocol {
-    func start() -> ()
+    func fetchData() -> ()
     var communityDataSource: [UserVO] { get }
     var isTrainerEnabled: Bool { get }
     func setFilterForState(index: Int)
@@ -94,18 +95,29 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         self.dataLoader = UserDataManager()
     }
     
-    func start() {
-        selectFilter()
-        dataLoader.getUser { [weak self] user in
+    func fetchData() {
+        dataLoader.getUser { [weak self] user, error  in
             //self?.currentUser = user
             if let user = user {
                 AuthModule.currUser = user
+            } else {
+                Errors.handleError(error, completion: { [weak self] message in
+                    if let _ = error as? MSAError {
+                        self?.view.setErrorViewHidden(false)
+                    } else {
+                        guard let `self` = self else { return }
+                        AlertDialog.showGeneralErrorAlert(on: self.view as! UIViewController)
+                    }
+                    self?.view.stopLoadingViewState()
+                })
             }
         }
         dataLoader.loadAllUsers { [weak self] (users) in
-            self?.users = users.filter { $0.id != self?.currentUser?.id }
-            self?.setCitiesDataSource(from: users)
-            self?.view.updateTableView()
+                self?.users = users.filter { $0.id != self?.currentUser?.id }
+                self?.setCitiesDataSource(from: users)
+                self?.view.setErrorViewHidden(true)
+                self?.selectFilter()
+                self?.view.stopLoadingViewState()
         }
     }
     
@@ -166,6 +178,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         guard let id = user.id, let currentId = currentUser?.id else { return }
         dataLoader.addToFriend(with: id) { [weak self] (success, error) in
             if error != nil {
+                
                 print((error?.localizedDescription)! +  "unable to add to friends")
             } else {
                 self?.updateFriendInDatasource(for: id)
@@ -286,17 +299,6 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     
     private func applyTypeFilter() {
         switch  typeFilterState {
-//        case .friends:
-//            var friends = [UserVO]()
-//            guard let friendsArray = AuthModule.currUser.friends else {return}
-//            for friendId in friendsArray {
-//                let friend = communityDataSource.first {$0.id == friendId}
-//                if let friend = friend {
-//                    friends.append(friend)
-//                }
-//                communityDataSource = friends
-//            }
-            
         case .sportsmen:
             communityDataSource = users.filter {$0.type == typeFilterState.getUserTypeString()}
         case .trainers:

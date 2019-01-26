@@ -28,6 +28,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var heartBeatButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
+
     
     var manager = TrainingManager(type: .my)
     let heartBeatService = HeartBeatManager()

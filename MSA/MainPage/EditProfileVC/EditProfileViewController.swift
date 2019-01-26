@@ -54,6 +54,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var cityTF: SkyFloatingLabelTextField!
     
     @IBOutlet weak var pickerView: UIPickerView! {didSet{pickerView.alpha = 0}}
+    @IBOutlet weak var measureStackView: UIStackView!
     
     @IBOutlet weak var approveEmail: UIButton! {
         didSet {
@@ -86,6 +87,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         configureNavigationItem()
         presenter.attachView(view: self)
+        
+        // temporary fix
+        measureStackView.layer.opacity = 0
+        
         // Do any additional setup after loading the view.
     }
     
@@ -129,10 +134,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             sexLabel.text = sex
         }
         if let height = user.height {
-            heightLabel.text = "\(height)"
+            heightLabel.text = "\(height)" + " " + "см" // hotfix
         }
         if let weight = user.weight {
-            weightLabel.text = "\(weight)"
+            weightLabel.text = "\(weight)" + " " + "кг" // hotfix
         }
         if let level = user.level {
             levelLabel.text = level

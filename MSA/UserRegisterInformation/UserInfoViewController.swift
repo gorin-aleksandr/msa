@@ -33,6 +33,7 @@ class UserInfoViewController: BasicViewController {
     @IBOutlet weak var pounds: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     
+    @IBOutlet weak var measureStackView: UIStackView!
     private let presenter = SignUpPresenter(signUp: UserDataManager())
     private var dataType: PickerDataType!
     
@@ -42,6 +43,9 @@ class UserInfoViewController: BasicViewController {
         presenter.attachView(view: self)
         presenter.setHeightType(type: .sm)
         presenter.setWeightType(type: .kg)
+        
+        //Temporary fix
+        measureStackView.layer.opacity = 0
         
         // Do any additional setup after loading the view.
     }

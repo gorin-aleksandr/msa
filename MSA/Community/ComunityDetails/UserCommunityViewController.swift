@@ -14,12 +14,13 @@ protocol UserCommunityViewProtocol: class {
     func showAlert(for user: UserVO)
 }
 
-class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
+class UserCommunityViewController: UIViewController, UserCommunityViewProtocol, UISearchBarDelegate {
     
     @IBOutlet weak var stateSegmentedControl: UISegmentedControl!
     @IBOutlet weak var userCommunityTableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    let searchController = UISearchController(searchResultsController: nil)
+    private let refreshControl = UIRefreshControl()
     
     var presenter: UserCommunityPresenterProtocol!
 
@@ -27,7 +28,9 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
         super.viewDidLoad()
         userCommunityTableView.delegate = self
         userCommunityTableView.dataSource = self
+        configureRefresh()
         presenter.start()
+        searchBar.delegate = self
         if presenter.isTrainer {
             stateSegmentedControl.insertSegment(withTitle: "Спортсмены", at: 3, animated: false)
         }
@@ -35,19 +38,21 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        hideableNavigationBar(false)
-        configureSearchController()
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        //configureSearchController()
         configureSegmentedControl()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        hideableNavigationBar(true)
     }
     
     func reloadData() {
         SVProgressHUD.dismiss()
-        userCommunityTableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.userCommunityTableView.reloadData()
+            self?.refreshControl.endRefreshing()
+        }
     }
     
     func showAlert(for user: UserVO) {
@@ -61,26 +66,31 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
         present(alert, animated: true)
     }
     
-    private func configureSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Поиск"
-        searchController.dimsBackgroundDuringPresentation = false
-        definesPresentationContext = true
-        if #available(iOS 9.1, *) {
-            searchController.obscuresBackgroundDuringPresentation = false
-        }
-        if #available(iOS 11.0, *) {
-            navigationItem.searchController = nil
-            navigationItem.searchController = searchController
-        }
-        searchController.searchBar.tintColor = .darkCyanGreen
+    private func configureSearchBar() {
+        searchBar.backgroundImage = nil
     }
     
-    private func hideableNavigationBar(_ hide: Bool) {
-        if #available(iOS 11.0, *) {
-            navigationItem.hidesSearchBarWhenScrolling = hide
+    private func configureRefresh() {
+//        let attributes = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
+//                          NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 14)!]
+//        refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация ...", attributes: attributes)
+        if #available(iOS 10.0, *) {
+            userCommunityTableView.refreshControl = refreshControl
+        } else {
+            userCommunityTableView.addSubview(refreshControl)
         }
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
     }
+    
+    @objc private func refreshData(_ sender: Any) {
+        presenter.refresh()
+    }
+    
+//    private func hideableNavigationBar(_ hide: Bool) {
+//        if #available(iOS 11.0, *) {
+//            navigationItem.hidesSearchBarWhenScrolling = hide
+//        }
+//    }
     
     private func configureSegmentedControl() {
         stateSegmentedControl.tintColor = UIColor.lightWhiteBlue
@@ -96,7 +106,7 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol {
     }
 
     @IBAction func segmetedControlDidTapped(_ sender: UISegmentedControl) {
-        presenter.setDataSource(with: searchController.searchBar.text, and: sender.selectedSegmentIndex)
+        presenter.setDataSource(with: searchBar.text, and: sender.selectedSegmentIndex)
     }
 }
 
@@ -127,6 +137,18 @@ extension UserCommunityViewController: UITableViewDelegate, UITableViewDataSourc
 //MARK: - Search Results Updating
 
 extension UserCommunityViewController: UISearchResultsUpdating {
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+    
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+         presenter.setDataSource(with: searchText, and:stateSegmentedControl.selectedSegmentIndex)
+    }
     
     func updateSearchResults(for searchController: UISearchController) {
         presenter.setDataSource(with: searchController.searchBar.text, and:stateSegmentedControl.selectedSegmentIndex)
