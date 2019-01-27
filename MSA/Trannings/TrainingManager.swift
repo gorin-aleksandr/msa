@@ -126,7 +126,9 @@ class TrainingManager {
     }
     
     func checkForRoundTraining(at source: IndexPath, to destination: IndexPath) -> Bool {
-        return !(dataSource?.currentWeek?.days[source.section].roundExercisesIds.isEmpty ?? true) || !(dataSource?.currentWeek?.days[destination.section].roundExercisesIds.isEmpty ?? true)
+        let firstDay = dataSource?.currentWeek?.days[source.section]
+        let secondDay = dataSource?.currentWeek?.days[destination.section]
+        return (!(firstDay?.roundExercisesIds.isEmpty ?? true) && !(firstDay?.roundExercisesIds.first?.id == "")) || (!(secondDay?.roundExercisesIds.isEmpty ?? true)  && !(firstDay?.roundExercisesIds.first?.id == ""))
     }
     
     func isEmptyExercise() -> (Bool,[Int]?) {

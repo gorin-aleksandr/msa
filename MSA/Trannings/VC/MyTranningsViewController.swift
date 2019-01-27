@@ -505,7 +505,6 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExerciseTableViewCell", for: indexPath) as? ExerciseTableViewCell else {return UITableViewCell()}
             
-//            cell.editingAccessoryView?.isHidden = true
             
             let exercise = manager.getExercisesOf(day: indexPath.section)[indexPath.row]
             if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", exercise.exerciseId)) {
@@ -528,7 +527,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         }
     }
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.none
+        return UITableViewCellEditingStyle.delete
     }
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
@@ -569,6 +568,13 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
         } else {
             self.performSegue(withIdentifier: "addExercise", sender: nil)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
+    {
+        if editingStyle == .delete {
+//            savedConversions.remove(at: indexPath.row)
         }
     }
     
