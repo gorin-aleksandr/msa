@@ -673,7 +673,11 @@ extension MyTranningsViewController: MultipleChoicesViewControllerDelegate, Mult
     func selectionWasDone(with result: [String]) {
         manager.setDayRoundExercises(with: result)
     }
-    
+    func allSelected() -> Bool {
+        guard let exercises = manager.getCurrentday()?.exercises else {return false}
+        guard let IDS = manager.getCurrentday()?.roundExercisesIds else {return false}
+        return exercises.count == IDS.count 
+    }
     func elementsForMultipleChoiceController() -> [ExerciseInTraining]? {
         guard let exercies = manager.getCurrentday()?.exercises else {return nil}
         return Array(exercies)

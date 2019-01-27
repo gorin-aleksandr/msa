@@ -55,7 +55,7 @@ class ReusableMultipleSelectionTableViewCell: UITableViewCell {
         }
     }
     
-    private func setState(_ state: CellState) {
+    func setState(_ state: CellState) {
         switch state {
         case .unselected:
             radioImage.image = imageForUnselectedStage

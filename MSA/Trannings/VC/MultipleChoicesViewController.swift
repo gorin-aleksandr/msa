@@ -19,6 +19,7 @@ protocol MultipleChoicesViewControllerDataSource: AnyObject {
 //MARK: - Multiple Choices View Controller Delegate protocol
 @objc protocol MultipleChoicesViewControllerDelegate: AnyObject {
     func selectionWasDone(with result: [String])
+    func allSelected() -> Bool
 }
 
 extension MultipleChoicesViewControllerDelegate {
@@ -57,7 +58,15 @@ class MultipleChoicesViewController: UIViewController {
             selectedIndexes.sort { $0 < $1 }
         }
     }
-    var allSelected: Bool = false
+    var allSelected: Bool = false {
+        didSet {
+            if !allSelected {
+                selectedDataArray.removeAll()
+            } else {
+                selectedDataArray = elementsForChoosing
+            }
+        }
+    }
     
     //MARK: Methods
     override func viewDidLoad() {
@@ -83,6 +92,7 @@ class MultipleChoicesViewController: UIViewController {
     }
     
     private func initialConfigureViewController() {
+        allSelected = delegate?.allSelected() ?? false
         configureControllerTitle()
         getPreviousSelectedElements()
         getElementsForChoosing()
@@ -185,6 +195,7 @@ class MultipleChoicesViewController: UIViewController {
     
     @IBAction func chooseAllExerc(_ sender: Any) {
         allSelected = !allSelected
+        self.tableView.reloadData()
         changeImage()
     }
     
@@ -230,8 +241,13 @@ extension MultipleChoicesViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         configureSelectionCell(selectionCell, for: tableView, at: indexPath, with: source)
+        if allSelected {
+            selectionCell.cellState = .selected
+        } else {
+            selectionCell.cellState = .unselected
+        }
         cell = selectionCell
-
+        
         return cell
     }
     
