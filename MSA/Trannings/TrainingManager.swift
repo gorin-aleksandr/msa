@@ -104,6 +104,31 @@ class TrainingManager {
         return Array(dataSource?.currentWeek?.days[day].exercises ?? List<ExerciseInTraining>())
     }
     
+    func replaceExercises(of day: Int, from index: Int, to day_: Int, at index_: Int) {
+        do {
+            try realm.performWrite {
+                if let replacementExercise = dataSource?.currentWeek?.days[day].exercises[index] {
+                    dataSource?.currentWeek?.wasSync = false
+                    dataSource?.currentWeek?.days[day].exercises.remove(at: index)
+                    if dataSource?.currentWeek?.days[day_].exercises.count == index_ - 1 {
+                        dataSource?.currentWeek?.days[day_].exercises.insert(replacementExercise, at: index_ - 1)
+                    } else {
+                        dataSource?.currentWeek?.days[day_].exercises.insert(replacementExercise, at: index_)
+                    }
+                    dataSource?.currentWeek?.days[day].roundExercisesIds.removeAll()
+                    dataSource?.currentWeek?.days[day_].roundExercisesIds.removeAll()
+                }
+            }
+        } catch {
+            print(error)
+        }
+        self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+    }
+    
+    func checkForRoundTraining(at source: IndexPath, to destination: IndexPath) -> Bool {
+        return !(dataSource?.currentWeek?.days[source.section].roundExercisesIds.isEmpty ?? true) || !(dataSource?.currentWeek?.days[destination.section].roundExercisesIds.isEmpty ?? true)
+    }
+    
     func isEmptyExercise() -> (Bool,[Int]?) {
         var indexes = [Int]()
         guard let exercises = dataSource?.currentDay?.exercises else {return (false,nil)}

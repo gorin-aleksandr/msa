@@ -92,6 +92,7 @@ class MyTranningsViewController: UIViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isEditing = true
         tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
         tableView.allowMultipleSectionsOpen = true
@@ -428,13 +429,27 @@ class MyTranningsViewController: UIViewController {
             self.showHideButtons()
             self.setData()
         }
-        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in
-            //
-        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in }
         alertController.addAction(cancelAction)
         alertController.addAction(yesAction)
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    private func replaceExercisesAlert(of day: Int, from index: Int, to day_: Int, at index_: Int) {
+        let alertController = UIAlertController(title: "Внимание!", message: "Изменение порядка приведет к отключению настройки режима круговой тренировки", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Ok", style: .destructive) { (action) in
+            self.manager.replaceExercises(of: day, from: index, to: day_, at: index_)
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in
+            self.tableView.reloadData()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(yesAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -486,6 +501,9 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ExerciseTableViewCell", for: indexPath) as? ExerciseTableViewCell else {return UITableViewCell()}
+            
+//            cell.editingAccessoryView?.isHidden = true
+            
             let exercise = manager.getExercisesOf(day: indexPath.section)[indexPath.row]
             if let ex = manager.realm.getElement(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", exercise.exerciseId)) {
                 cell.exerciseNameLable.text = ex.name
@@ -496,6 +514,28 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
                 cell.exerciseImageView.tag = indexPath.row
             }
             return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row == (manager.dataSource?.currentWeek?.days[indexPath.section].exercises.count ?? 0) {
+            return false
+        } else {
+            return true
+        }
+    }
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.none
+    }
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if manager.checkForRoundTraining(at: sourceIndexPath, to: destinationIndexPath) {
+            self.replaceExercisesAlert(of: sourceIndexPath.section, from: sourceIndexPath.row, to: destinationIndexPath.section, at: destinationIndexPath.row)
+        } else {
+            manager.replaceExercises(of: sourceIndexPath.section, from: sourceIndexPath.row, to: destinationIndexPath.section, at: destinationIndexPath.row)
+            self.tableView.reloadData()
         }
     }
     
