@@ -62,7 +62,6 @@ class ReusableMultipleSelectionTableViewCell: UITableViewCell {
         case .selected:
             radioImage.image = imageForSelectedStage
         }
-        
     }
     
     override func awakeFromNib() {

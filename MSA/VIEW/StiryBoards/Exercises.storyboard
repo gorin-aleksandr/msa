@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U7j-nU-ptn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U7j-nU-ptn">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -58,20 +58,34 @@
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="S5j-Ve-x73"/>
                                                     </constraints>
                                                 </view>
+                                                <imageView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox-empty" translatesAutoresizingMaskIntoConstraints="NO" id="4tn-uE-BcJ">
+                                                    <rect key="frame" x="340" y="25" width="20" height="20"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" image="YES" allowsDirectInteraction="YES"/>
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="LyL-xf-1zL"/>
+                                                        <constraint firstAttribute="height" constant="20" id="nDa-UB-inA"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Ou3-YE-fvJ" firstAttribute="leading" secondItem="PC0-37-FPF" secondAttribute="leading" constant="10" id="0wd-zI-CfT"/>
                                                 <constraint firstItem="ZtO-jl-Hae" firstAttribute="leading" secondItem="dN1-Cx-IqQ" secondAttribute="leading" id="Cgc-eS-pPI"/>
                                                 <constraint firstAttribute="bottom" secondItem="ZtO-jl-Hae" secondAttribute="bottom" id="G8s-RY-V7e"/>
+                                                <constraint firstItem="4tn-uE-BcJ" firstAttribute="centerY" secondItem="PC0-37-FPF" secondAttribute="centerY" id="INC-05-ozS"/>
                                                 <constraint firstAttribute="trailing" secondItem="dN1-Cx-IqQ" secondAttribute="trailing" constant="10" id="gUk-VY-hw5"/>
                                                 <constraint firstAttribute="trailing" secondItem="ZtO-jl-Hae" secondAttribute="trailing" id="hZH-k1-Esg"/>
                                                 <constraint firstItem="dN1-Cx-IqQ" firstAttribute="top" secondItem="PC0-37-FPF" secondAttribute="top" constant="5" id="koC-su-ga9"/>
                                                 <constraint firstItem="Ou3-YE-fvJ" firstAttribute="centerY" secondItem="PC0-37-FPF" secondAttribute="centerY" id="lsU-nF-eGP"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="4tn-uE-BcJ" secondAttribute="trailing" id="nNz-eT-lZk"/>
                                                 <constraint firstItem="dN1-Cx-IqQ" firstAttribute="leading" secondItem="Ou3-YE-fvJ" secondAttribute="trailing" constant="5" id="xhw-Hd-ivR"/>
                                                 <constraint firstAttribute="bottom" secondItem="dN1-Cx-IqQ" secondAttribute="bottom" constant="5" id="yQ3-VN-Iwa"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="checkBoxImage" destination="4tn-uE-BcJ" id="414-Ap-HHj"/>
                                             <outlet property="exerciseImage" destination="Ou3-YE-fvJ" id="S1I-qg-UuI"/>
                                             <outlet property="exercisename" destination="dN1-Cx-IqQ" id="G3Y-2h-0LR"/>
                                         </connections>
@@ -346,7 +360,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Упражнение" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eO8-zz-FeX">
-                                                    <rect key="frame" x="84" y="16" width="266" height="43"/>
+                                                    <rect key="frame" x="84" y="16" width="246" height="43"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -358,11 +372,24 @@
                                                         <constraint firstAttribute="height" constant="0.5" id="ZMi-qd-pj9"/>
                                                     </constraints>
                                                 </view>
+                                                <imageView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox-empty" translatesAutoresizingMaskIntoConstraints="NO" id="vTZ-Pb-1Ln">
+                                                    <rect key="frame" x="340" y="27.5" width="20" height="20"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" image="YES" allowsDirectInteraction="YES"/>
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="J2W-wj-ctk"/>
+                                                        <constraint firstAttribute="width" constant="20" id="as6-9P-xPi"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="vTZ-Pb-1Ln" firstAttribute="trailing" secondItem="dUD-RS-kjO" secondAttribute="trailingMargin" id="6qj-AN-y6u"/>
                                                 <constraint firstItem="eO8-zz-FeX" firstAttribute="leading" secondItem="Kpe-hx-AeM" secondAttribute="trailing" constant="8" id="BFI-ea-YQ9"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="eO8-zz-FeX" secondAttribute="trailing" constant="10" id="Wdc-ha-kXF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="eO8-zz-FeX" secondAttribute="trailing" constant="30" id="Wdc-ha-kXF"/>
                                                 <constraint firstItem="Kpe-hx-AeM" firstAttribute="centerY" secondItem="dUD-RS-kjO" secondAttribute="centerY" id="Wrf-nb-BeL"/>
+                                                <constraint firstItem="vTZ-Pb-1Ln" firstAttribute="centerY" secondItem="dUD-RS-kjO" secondAttribute="centerY" id="Zpx-0s-XWL"/>
                                                 <constraint firstItem="eO8-zz-FeX" firstAttribute="top" secondItem="dUD-RS-kjO" secondAttribute="topMargin" constant="5" id="bul-fu-FN1"/>
                                                 <constraint firstAttribute="trailing" secondItem="BmA-5K-EVp" secondAttribute="trailing" id="cic-GA-UnK"/>
                                                 <constraint firstItem="Kpe-hx-AeM" firstAttribute="centerY" secondItem="dUD-RS-kjO" secondAttribute="centerY" id="i4d-wR-Y15"/>
@@ -373,6 +400,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="checkBoxImage" destination="vTZ-Pb-1Ln" id="57M-gq-Hk2"/>
                                             <outlet property="exerciseImage" destination="Kpe-hx-AeM" id="kcu-Zu-jSp"/>
                                             <outlet property="exercisename" destination="eO8-zz-FeX" id="OnI-8S-lzG"/>
                                         </connections>
@@ -419,15 +447,16 @@
                             <color key="tintColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="plus:" destination="sCD-DE-wOG" id="hne-TV-9gw"/>
-                                <segue destination="xJO-oS-yzl" kind="show" id="AIz-3a-ssZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="rightButton" destination="Ax6-9k-wvn" id="RdC-ZV-3Ux"/>
                         <outlet property="scrollView" destination="q9G-TE-1xc" id="6mj-hi-w2T"/>
                         <outlet property="tableView" destination="VMi-73-eP6" id="FQH-U3-yR5"/>
                         <outlet property="viewWithScroll" destination="1mg-dg-jPb" id="FN8-El-TxT"/>
                         <segue destination="OsO-Nf-As9" kind="show" identifier="showExerciseInfoSegue" id="IH0-2z-9zU"/>
+                        <segue destination="xJO-oS-yzl" kind="show" identifier="newExerciseSegue" id="5un-LR-fho"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C44-JI-Hlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -495,11 +524,12 @@
     <resources>
         <image name="Plus" width="18" height="18"/>
         <image name="back" width="13" height="22"/>
+        <image name="checkbox-empty" width="18" height="18"/>
         <image name="edit-24px" width="26" height="26"/>
         <image name="ok_blue" width="16" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IH0-2z-9zU"/>
-        <segue reference="AIz-3a-ssZ"/>
+        <segue reference="5un-LR-fho"/>
     </inferredMetricsTieBreakers>
 </document>

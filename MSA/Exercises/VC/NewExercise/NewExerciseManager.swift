@@ -149,6 +149,25 @@ class NewExerciseManager {
             }
         }
     }
+    func addExercisesToUser(id: String, exercises: [Exercise], completion: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
+        var exInfo = [String:Any]()
+        for ex in exercises {
+            fillData(exercise: ex)
+            let newInfo = makeExerciseForFirebase(id: id, or: true)
+            guard let index = newInfo["id"] as? String else {return}
+            exInfo[index] = newInfo
+        }
+        Database.database().reference().child("ExercisesByTrainers").child(id).setValue(exInfo) { (error, databaseFer) in
+            if error == nil {
+                completion()
+                self.finish()
+            } else {
+                failure(error)
+                self.finish()
+            }
+        }
+    }
+    
     
     func fillData(exercise: Exercise) {
         self.dataSource.newExerciseModel = exercise

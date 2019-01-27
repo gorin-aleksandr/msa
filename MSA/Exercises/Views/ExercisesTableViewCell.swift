@@ -9,20 +9,77 @@
 import UIKit
 import SDWebImage
 
-class ExercisesTableViewCell: UITableViewCell {
+protocol ExercisesCellDelegate: class {
+    func selectCell(at index: Int)
+}
 
+class ExercisesTableViewCell: UITableViewCell {
+    
+
+    weak var delegate: ExercisesCellDelegate?
+    
+    @IBOutlet weak var checkBoxImage: UIImageView!
     @IBOutlet weak var exerciseImage: UIImageView! {didSet{exerciseImage.layer.cornerRadius = 10}}
     @IBOutlet weak var exercisename: UILabel!
     
+    enum CellClass {
+        case singleSelection, multipleSelection
+    }
+    
+    enum CellState: Toggable {
+        case unselected, selected
+        
+        mutating func toggle() {
+            switch self {
+            case .unselected:
+                self = .selected
+            case .selected:
+                self = .unselected
+            }
+        }
+    }
+    var selectionClass: CellClass = .multipleSelection {
+        didSet {
+            setImage(for: selectionClass)
+        }
+    }
+    var cellState: CellState = .unselected {
+        didSet{
+            setState(cellState)
+        }
+    }
+    private var imageForUnselectedStage: UIImage?
+    private var imageForSelectedStage: UIImage?
+    
+    private func setImage(for selectionClass: CellClass) {
+        switch selectionClass {
+        case .singleSelection:
+            imageForUnselectedStage = UIImage(named: "checkbox-empty")!
+            imageForSelectedStage = UIImage(named: "checkbox-filled")!
+        case .multipleSelection:
+            imageForUnselectedStage = UIImage(named: "checkbox-empty")!
+            imageForSelectedStage = UIImage(named: "checkbox-filled")!
+        }
+    }
+    
+    private func setState(_ state: CellState) {
+        switch state {
+        case .unselected:
+            checkBoxImage.image = UIImage(named: "checkbox-empty")!
+        case .selected:
+            checkBoxImage.image = UIImage(named: "checkbox-filled")!
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.selectionClass = .multipleSelection
+        self.cellState = .unselected
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
 
     func configureCell(with exercise: Exercise) {

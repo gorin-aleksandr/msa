@@ -92,7 +92,9 @@ class MyTranningsViewController: UIViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.isEditing = true
+        
+//        tableView.isEditing = true
+        
         tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
         tableView.allowMultipleSectionsOpen = true

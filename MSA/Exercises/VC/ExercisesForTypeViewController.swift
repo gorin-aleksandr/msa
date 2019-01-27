@@ -15,6 +15,27 @@ let lightGrey = UIColor(rgb: 0x030D15)
 
 class ExercisesForTypeViewController: UIViewController {
     
+    @IBOutlet weak var rightButton: UIBarButtonItem!
+    
+    ///////////////////
+    var elementsForChoosing: [Exercise] {
+        get {
+            if isFiltering() {
+                return filteredArray
+            } else {
+                return exercisesByFIlter ?? []
+            }
+        }
+    }
+    
+    var selectedDataArray: [Exercise] = []
+    var selectedIndexes: [Int] = [] {
+        didSet {
+            selectedIndexes.sort { $0 < $1 }
+        }
+    }
+    ////////////////////
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewWithScroll: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -32,6 +53,7 @@ class ExercisesForTypeViewController: UIViewController {
         super.viewDidLoad()
         
         trainingManager?.initView(view: self)
+        
         presenter?.attachView(view: self)
         initialDataFilling()
         configureFilterScrollView()
@@ -50,6 +72,11 @@ class ExercisesForTypeViewController: UIViewController {
         filters.insert(allFilter, at: 0)
         selectedFilter = filters.first?.name ?? ""
         exercisesByFIlter = presenter?.getCurrentTypeExerceses()
+        if let _ = trainingManager {
+            self.navigationItem.rightBarButtonItem?.image = nil
+            self.navigationItem.rightBarButtonItem?.title = "Добавить"
+            self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -171,7 +198,20 @@ class ExercisesForTypeViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func plus(_ sender: Any) {
-        
+        if let manager = trainingManager {
+            if manager.sportsmanId != AuthModule.currUser.id {
+                let newExMan = NewExerciseManager()
+                newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: selectedDataArray, completion: {
+                    self.addExercisesToTraining(newExercises: self.selectedDataArray, manager: manager)
+                }) { (error) in
+                    AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
+                }
+            } else {
+                self.addExercisesToTraining(newExercises: selectedDataArray, manager: manager)
+            }
+        } else {
+            self.performSegue(withIdentifier: "newExerciseSegue", sender: nil)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -210,6 +250,11 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "exerciseForTypeTableCell", for: indexPath) as? ExercisesTableViewCell else { return UITableViewCell() }
+        if let _ = trainingManager {
+            cell.checkBoxImage.isHidden = false
+        } else {
+            cell.checkBoxImage.isHidden = true
+        }
         if isFiltering() {
             cell.configureCell(with: filteredArray[indexPath.row])
         } else {
@@ -230,18 +275,9 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             exercise = ex
         }
         
-        if let manager = trainingManager {
-            let newExercise = exercise
-            if manager.sportsmanId != AuthModule.currUser.id {
-                let newExMan = NewExerciseManager()
-                newExMan.addExerciseToUser(id: manager.sportsmanId ?? "", ex: newExercise, completion: {
-                    self.addExToTraining(newExercise: newExercise, manager: manager)
-                }) { (error) in
-                    AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
-                }
-            } else {
-                addExToTraining(newExercise: newExercise, manager: manager)
-            }
+        if let _ = trainingManager {
+            let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
+            configureSelectedCell(selectedCell, in: tableView, at: indexPath)
         } else {
             presenter?.setCurrentIndex(index: indexPath.row)
             performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
@@ -261,19 +297,39 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         }
     }
     
+    private func addExercisesToTraining(newExercises: [Exercise], manager: TrainingManager) {
+        for newExercise in newExercises {
+            let ex = ExerciseInTraining()
+            ex.id = UUID().uuidString
+            ex.name = newExercise.name
+            ex.exerciseId = newExercise.id
+            try! manager.realm.performWrite {
+                manager.getCurrentday()?.exercises.append(ex)
+//                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+            }
+        }
+        manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+        self.back()
+    }
+    
+    private func configureSelectedCell(_ cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
+        guard let selectedCell = cell as? ExercisesTableViewCell else { return }
+        var selectedItem = Exercise()
+        
+        selectedItem = elementsForChoosing[indexPath.row]
+        
+        switch selectedCell.cellState {
+        case .unselected:
+            selectedDataArray.append(selectedItem)
+            selectedIndexes.append(indexPath.row)
+        case .selected:
+            selectedDataArray.remove(selectedItem)
+            selectedIndexes.remove(indexPath.row)
+        }
+        selectedCell.cellState.toggle()
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        var exercise = Exercise()
-//        if isFiltering() {
-//            exercise = filteredArray[indexPath.row]
-//        } else {
-//            guard let ex = exercisesByFIlter?[indexPath.row] else {return false}
-//            exercise = ex
-//        }
-//        if exercise.typeId == 12 {
-//            return true
-//        } else {
-//            return false
-//        }
         return false
     }
     
