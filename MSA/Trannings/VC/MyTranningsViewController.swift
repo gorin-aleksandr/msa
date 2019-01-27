@@ -93,7 +93,8 @@ class MyTranningsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-//        tableView.isEditing = true
+        tableView.isEditing = true
+        tableView.allowsSelectionDuringEditing = true
         
         tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
