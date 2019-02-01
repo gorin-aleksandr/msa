@@ -75,12 +75,6 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         return true
     }
     
-//    var pendingRequestExist: Bool {
-//        if let requests = AuthModule.currUser.trainerId {
-//            return false
-//        }
-//    }
-    
     
     private var typeFilterState: CommunityFilterState = .all
     private var filterDataSource = ["Все", "Спортсмены", "Тренеры"]
@@ -97,27 +91,38 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     
     func fetchData() {
         dataLoader.getUser { [weak self] user, error  in
-            //self?.currentUser = user
             if let user = user {
                 AuthModule.currUser = user
             } else {
-                Errors.handleError(error, completion: { [weak self] message in
+                Errors.handleError(error, completion: { [weak self] _ in
                     if let _ = error as? MSAError {
                         self?.view.setErrorViewHidden(false)
                     } else {
                         guard let `self` = self else { return }
-                        AlertDialog.showGeneralErrorAlert(on: self.view as! UIViewController)
+                        self.view.showGeneralAlert()
                     }
                     self?.view.stopLoadingViewState()
                 })
             }
         }
-        dataLoader.loadAllUsers { [weak self] (users) in
+        dataLoader.loadAllUsers { [weak self] (users, error) in
+            if let error = error {
+                Errors.handleError(error, completion: { [weak self] message in
+                    if let _ = error as? MSAError {
+                        self?.view.setErrorViewHidden(false)
+                    } else {
+                        guard let `self` = self else { return }
+                        self.view.showGeneralAlert()
+                    }
+                    self?.view.stopLoadingViewState()
+                })
+            } else {
                 self?.users = users.filter { $0.id != self?.currentUser?.id }
                 self?.setCitiesDataSource(from: users)
                 self?.view.setErrorViewHidden(true)
                 self?.selectFilter()
                 self?.view.stopLoadingViewState()
+            }
         }
     }
     
@@ -178,8 +183,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         guard let id = user.id, let currentId = currentUser?.id else { return }
         dataLoader.addToFriend(with: id) { [weak self] (success, error) in
             if error != nil {
-                
-                print((error?.localizedDescription)! +  "unable to add to friends")
+                self?.view.stopLoadingViewState()
+                self?.view.showGeneralAlert()
             } else {
                 self?.updateFriendInDatasource(for: id)
                 self?.removeFromRequests(idToRemove: id, userId: currentId)
@@ -194,16 +199,13 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         guard let id = user.id, let currentId = currentUser?.id else { return }
         dataLoader.addAsTrainer(with: id) { [weak self] (success, error) in
             if error != nil {
-                print((error?.localizedDescription)! +  "unable to add to friends")
+                self?.view.stopLoadingViewState()
+                self?.view.showGeneralAlert()
             } else {
                 self?.removeFromRequests(idToRemove: currentId, userId: id)
                 self?.addAsSportsman(idToAdd: currentId, userId: id)
                // self?.removeFromFriends()
                 self?.updateTrainerInDataSource(for: id)
-//                self?.removeFromRequests(idToRemove: id, userId: currentId)
-//                if let currentIsInUserFriends = user.friends?.contains(id), !currentIsInUserFriends {
-//                    self?.addRequest(idToAdd: currentId, userId: id)
-//                }
             }
         }
     }
@@ -211,7 +213,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     private func addAsSportsman(idToAdd: String, userId: String) {
         dataLoader.addToSportsmen(idToAdd: idToAdd, userId: userId, callback: { [weak self] (success, error) in
             if error != nil {
-                print(error?.localizedDescription)
+                self?.view.stopLoadingViewState()
+                self?.view.showGeneralAlert()
             }
         })
     }
@@ -219,7 +222,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     private func removeFromRequests(idToRemove: String, userId: String) {
         dataLoader.removeFromRequests(idToRemove: idToRemove, userId: userId, callback: { [weak self] (success, error) in
             if error != nil {
-                print(error?.localizedDescription)
+                self?.view.stopLoadingViewState()
+                self?.view.showGeneralAlert()
             } else {
                 guard let currentId = self?.currentUser?.id, currentId == userId else {return}
                 if let index = self?.currentUser?.requests?.index(of: idToRemove) {
@@ -232,7 +236,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     private func addRequest(idToAdd: String, userId: String) {
         dataLoader.addToRequests(idToAdd: idToAdd, userId: userId, callback: { [weak self] (success, error) in
             if error != nil {
-                print(error?.localizedDescription)
+                self?.view.stopLoadingViewState()
+                self?.view.showGeneralAlert()
             }
         })
     }

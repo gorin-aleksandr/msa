@@ -10,27 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "570191358.543964"
+            timestampString = "570674614.862057"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "addButtonTapped(at:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "570191358.545935"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "194"
+            endingLineNumber = "194"
             landmarkName = "addToFriends(user:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -112,22 +96,6 @@
             startingLineNumber = "927"
             endingLineNumber = "927"
             landmarkName = "setSpecialIterationsForRound(indexes:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "570191358.546352"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
-            landmarkName = "addAsSportsman(idToAdd:userId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -474,7 +442,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/andreykrit/Desktop/Develop/MSA/MSA/Exercises/VC/HeartBeatDevice/HeartBeatDevicePresenter.swift"
-                  timestampString = "570191359.378531"
+                  timestampString = "570674615.152661"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "126"
@@ -489,7 +457,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/andreykrit/Desktop/Develop/MSA/MSA/Exercises/VC/HeartBeatDevice/HeartBeatDevicePresenter.swift"
-                  timestampString = "570191359.3815089"
+                  timestampString = "570674615.154363"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "126"
@@ -617,38 +585,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "570191358.546919"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
-            landmarkName = "CommunityListPresenter"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MSA/Community/CommunityListVC/CommunityListViewController.swift"
-            timestampString = "569966978.484228"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "refreshData(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "MSA/Community/ComunityDetails/UserCommunityPresenter.swift"
             timestampString = "568303322.438629"
             startingColumnNumber = "9223372036854775807"
@@ -714,12 +650,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "570191358.547215"
+            timestampString = "570674614.862509"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "fetchData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
+            timestampString = "570674614.862569"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "addToFriends(user:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[1] = [Closure Propagated : closure #1 (Swift.Bool, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MSA.CommunityListPresenter.addToFriends(user: MSA.UserVO) -&gt; (), Argument Types : [{ var weak Swift.Optional&lt;MSA.CommunityListPresenter&gt; }Swift.StringSwift.StringMSA.UserVO]&gt; of MSA.UserDataManager.addToFriend(with: Swift.String, callback: (Swift.Bool, Swift.Optional&lt;Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andreykrit/Desktop/Develop/MSA/MSA/Community/CommunityListVC/CommunityListPresenter.swift"
+                  timestampString = "570674615.201692"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "721">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "function signature specialization &lt;Arg[0] = Dead, Arg[3] = Exploded&gt; of closure #1 (Swift.Bool, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in MSA.CommunityListPresenter.addToFriends(user: MSA.UserVO) -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/andreykrit/Desktop/Develop/MSA/MSA/Community/CommunityListVC/CommunityListPresenter.swift"
+                  timestampString = "570674615.203396"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "186"
+                  endingLineNumber = "186"
+                  offsetFromSymbolStart = "64">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MSA/Community/CommunityListVC/CommunityListViewController.swift"
+            timestampString = "570674614.862615"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "stopLoadingViewState()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

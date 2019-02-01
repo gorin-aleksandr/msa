@@ -110,7 +110,12 @@ class UserDataManager {
         }
     }
     
-    func loadAllUsers(callback: @escaping (_ community: [UserVO]) -> ()) {
+    func loadAllUsers(callback: @escaping (_ community: [UserVO], _ error: Error?) -> ()) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback([], connectionError)
+            return
+        }
         userRef.observeSingleEvent(of: .value, with: { (snapshot) in
             guard let data = snapshot.value as? [String : [String : Any]] else {
                 print("Error occured while parsing community for key from database")
@@ -125,26 +130,11 @@ class UserDataManager {
                     community.append(user)
                 }
             }
-            callback(community)
+            callback(community, nil)
         }) { (error) in
-            print(error)
+            print(error.localizedDescription)
+            callback([], error)
         }
-//        userRef.observeSingleEvent(of: .value) { (snapshot) in
-//            guard let data = snapshot.value as? [String : [String : Any]] else {
-//                print("Error occured while parsing community for key from database")
-//                return
-//            }
-//
-//            let values = Array(data.values)
-//
-//            var community: [UserVO] = []
-//                for value in values {
-//                    if let user = self.makeUser(from: value) {
-//                        community.append(user)
-//                    }
-//                }
-//            callback(community)
-//        }
     }
     
     private func makeUser(from value: [String : Any]?) -> UserVO? {
@@ -230,6 +220,11 @@ class UserDataManager {
     }
     
     func addToFriend(with id: String, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
         if let key = AuthModule.currUser.id {
             userRef.child(key).child("friends").child(id).setValue(true) { error, success in
                 if let error = error {
@@ -239,12 +234,17 @@ class UserDataManager {
                 }
             }
         } else {
-            print("error occe")
+            print("error occured")
         }
        
     }
     
     func addAsTrainer(with id: String, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
         if let key = AuthModule.currUser.id {
             userRef.child(key).child("trainer").setValue(id) { error, success in
                 if let error = error {
@@ -260,6 +260,11 @@ class UserDataManager {
     }
     
     func removeTrainer(with id: String, from userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
             userRef.child(userId).child("trainer").removeValue() { error, success in
                 if let error = error {
                     callback(false, error)
@@ -270,6 +275,11 @@ class UserDataManager {
     }
     
     func removeFromRequests(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
             userRef.child(userId).child("friendRequest").child(idToRemove).removeValue() {
                 error, success in
                 print(idToRemove)
@@ -282,6 +292,11 @@ class UserDataManager {
     }
     
     func removeFromSportsmen(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
         userRef.child(userId).child("sportsmen").child(idToRemove).removeValue() {
             error, success in
             print(idToRemove)
@@ -294,6 +309,11 @@ class UserDataManager {
     }
     
     func removeFromFriends(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
         userRef.child(userId).child("friends").child(idToRemove).removeValue() {
             error, success in
             if let error = error {
@@ -305,6 +325,11 @@ class UserDataManager {
     }
     
     func addToRequests(idToAdd: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
         userRef.child(userId).child("friendRequest").child(idToAdd).setValue(true) {
             error, success in
             if let error = error {
@@ -316,6 +341,11 @@ class UserDataManager {
     }
     
     func addToSportsmen(idToAdd: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+            callback(true, connectionError)
+            return
+        }
         userRef.child(userId).child("sportsmen").child(idToAdd).setValue(true) {
             error, success in
             if let error = error {
@@ -325,7 +355,6 @@ class UserDataManager {
             }
         }
     }
-    
     
     deinit {
         print("UserDatDeinited")
