@@ -17,6 +17,7 @@ protocol CommunityListViewProtocol: class {
     func setErrorViewHidden(_ isHidden: Bool)
     func setLoaderVisible(_ visible: Bool)
     func stopLoadingViewState()
+    func showGeneralAlert()
 }
 
 class CommunityListViewController: UIViewController, CommunityListViewProtocol, UIGestureRecognizerDelegate, ErrorViewDelegate, UISearchBarDelegate {
@@ -109,6 +110,10 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         visible ? SVProgressHUD.show() : SVProgressHUD.dismiss()
     }
     
+    func showGeneralAlert() {
+         AlertDialog.showGeneralErrorAlert(on: self)
+    }
+    
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
         let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Вы можете перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
@@ -116,8 +121,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         }
         if presenter.getPersonState(person: user) != .friend {
             let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
-                self?.presenter.addToFriends(user: user)
                 SVProgressHUD.show()
+                self?.presenter.addToFriends(user: user)
                 
             })
              alert.addAction(addFriendAction)
@@ -127,8 +132,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
        
         if isTrainerEnabled {
             let addTrainerAction = UIAlertAction(title: "Добавить в тренеры", style: .default, handler: { [weak self] _ in
-                self?.presenter.addAsTrainer(user: user)
                 SVProgressHUD.show()
+                self?.presenter.addAsTrainer(user: user)
             })
         alert.addAction(addTrainerAction)
         }
