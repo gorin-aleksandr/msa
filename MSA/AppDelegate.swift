@@ -13,7 +13,6 @@ import FBSDKCoreKit
 import CoreData
 import RealmSwift
 import SVProgressHUD
-import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
