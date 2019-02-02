@@ -53,6 +53,10 @@ class MyTranningsViewController: UIViewController {
         let indexPath = tableView.indexPathForRow(at: locationInView)
         if let index = indexPath {
             if index.row == manager.dataSource?.currentWeek?.days[index.section].exercises.count ?? 0 {
+                self.dragInitialIndexPath = nil
+                self.dragCellSnapshot?.removeFromSuperview()
+                self.dragCellSnapshot = nil
+                self.tableView.reloadData()
                 return
             }
         }
@@ -88,34 +92,41 @@ class MyTranningsViewController: UIViewController {
                 tableView.moveRow(at: dragInitialIndexPath!, to: indexPath!)
                 dragInitialIndexPath = indexPath
             }
-        } else if sender.state == .ended && dragInitialIndexPath != nil {
-            let cell = tableView.cellForRow(at: dragInitialIndexPath!)
-            cell?.isHidden = false
-            cell?.alpha = 0.0
-           
-            if let first = first, let indexPath = indexPath {
-                if manager.checkForRoundTraining(at: first, to: indexPath) {
-                    self.replaceExercisesAlert(of: first.section, from: first.row, to: indexPath.section, at: indexPath.row)
+        } else if sender.state == .ended {
+            guard let path = dragInitialIndexPath else {return}
+            if let cell = tableView.cellForRow(at: path) {
+                cell.isHidden = false
+                cell.alpha = 0.0
+               
+                if let first = first, let indexPath = indexPath {
+                    if manager.checkForRoundTraining(at: first, to: indexPath) {
+                        self.replaceExercisesAlert(of: first.section, from: first.row, to: indexPath.section, at: indexPath.row)
+                    } else {
+                        manager.replaceExercises(of: first.section, from: first.row, to: indexPath.section, at: indexPath.row)
+                        self.tableView.reloadData()
+                    }
                 } else {
-                    manager.replaceExercises(of: first.section, from: first.row, to: indexPath.section, at: indexPath.row)
                     self.tableView.reloadData()
                 }
+                
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                    self.dragCellSnapshot?.center = cell.center
+                    self.dragCellSnapshot?.transform = CGAffineTransform.identity
+                    self.dragCellSnapshot?.alpha = 0.0
+                    cell.alpha = 1.0
+                }, completion: { (finished) -> Void in
+                    if finished {
+                        self.dragInitialIndexPath = nil
+                        self.dragCellSnapshot?.removeFromSuperview()
+                        self.dragCellSnapshot = nil
+                    }
+                })
             } else {
+                self.dragInitialIndexPath = nil
+                self.dragCellSnapshot?.removeFromSuperview()
+                self.dragCellSnapshot = nil
                 self.tableView.reloadData()
             }
-            
-            UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                self.dragCellSnapshot?.center = (cell?.center)!
-                self.dragCellSnapshot?.transform = CGAffineTransform.identity
-                self.dragCellSnapshot?.alpha = 0.0
-                cell?.alpha = 1.0
-            }, completion: { (finished) -> Void in
-                if finished {
-                    self.dragInitialIndexPath = nil
-                    self.dragCellSnapshot?.removeFromSuperview()
-                    self.dragCellSnapshot = nil
-                }
-            })
         }
     }
     
