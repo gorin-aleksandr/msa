@@ -54,6 +54,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
     
+    var galleryUploadInProgress: Bool = false
+    var pendingForUpload: [[String : Any]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -285,8 +287,17 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if galleryUploadInProgress {
+            self.pendingForUpload.append(info)
+        } else {
+            self.uploadInfo(info: info)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func uploadInfo(info: [String : Any]) {
         if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            dismiss(animated: true, completion: nil)
+            self.galleryUploadInProgress = true
             presenter.uploadPhoto(image: chosenImage)
         } else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
             do {
@@ -295,12 +306,14 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 imgGenerator.appliesPreferredTrackTransform = true
                 let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
                 let thumbnail = UIImage(cgImage: cgImage)
+                
+                self.galleryUploadInProgress = true
+                
                 presenter.uploadVideo(videoURL.absoluteString, thumbnail)
                 presenter.setCurrentVideoPath(path: videoURL.absoluteString)
             } catch let error {
                 print("*** Error generating thumbnail: \(error.localizedDescription)")
             }
-            dismiss(animated: true, completion: nil)
         }
     }
     
@@ -312,12 +325,17 @@ extension MainViewController: GalleryDataProtocol {
         presenter.uploadPhoto(image: img)
     }
     
-    func errorOccurred(err: String) {
-        
-    }
+    func errorOccurred(err: String) { }
     
     func photoUploaded() {
         presenter.addItem(item: presenter.getCurrentItem())
+        if pendingForUpload.isEmpty {
+            self.galleryUploadInProgress = false
+        } else {
+            guard let itemForUpload = pendingForUpload.first else {return}
+            pendingForUpload.remove(at: 0)
+            self.uploadInfo(info: itemForUpload)
+        }
     }
     
     func startLoading() {

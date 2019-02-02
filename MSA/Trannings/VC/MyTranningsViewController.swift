@@ -193,6 +193,7 @@ class MyTranningsViewController: UIViewController {
             manager.syncUnsyncedTrainings()
         } else {
             manager.loadTrainings()
+            manager.getMyExercises(success: nil)
         }
     }
     
