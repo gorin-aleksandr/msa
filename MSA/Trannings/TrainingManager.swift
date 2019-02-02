@@ -104,6 +104,37 @@ class TrainingManager {
         return Array(dataSource?.currentWeek?.days[day].exercises ?? List<ExerciseInTraining>())
     }
     
+    func copyWeek() {
+        do {
+            try realm.performWrite {
+                guard let week = dataSource?.currentWeek else {return}
+                let newWeek = TrainingWeek(value: week)
+                newWeek.id = newWeek.incrementID()
+                dataSource?.currentTraining?.wasSync = false
+                dataSource?.currentTraining?.weeks.append(newWeek)
+            }
+        } catch {
+            print(error)
+        }
+        self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+    }
+    
+    func copyDay(at: Int) {
+        do {
+            try realm.performWrite {
+                if let day = dataSource?.currentWeek?.days[at] {
+                    let newDay = TrainingDay(value: day)
+                    newDay.id = newDay.incrementID()
+                    dataSource?.currentWeek?.wasSync = false
+                    dataSource?.currentWeek?.days.insert(newDay, at: at+1)
+                }
+            }
+        } catch {
+            print(error)
+        }
+        self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+    }
+    
     func replaceExercises(of day: Int, from index: Int, to day_: Int, at index_: Int) {
         do {
             try realm.performWrite {
