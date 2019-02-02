@@ -2142,10 +2142,10 @@
         <image name="back" width="13" height="22"/>
         <image name="bgProfile" width="375" height="667"/>
         <image name="big_black_outline" width="311" height="48"/>
-        <image name="bttn-diet" width="109" height="74"/>
-        <image name="bttn-measure" width="109" height="74"/>
-        <image name="bttn-stat" width="109" height="74"/>
-        <image name="bttn-training" width="109" height="74"/>
+        <image name="bttn-diet" width="328" height="222"/>
+        <image name="bttn-measure" width="328" height="222"/>
+        <image name="bttn-stat" width="328" height="222"/>
+        <image name="bttn-training" width="328" height="222"/>
         <image name="change_photo_edit_profile" width="253" height="24"/>
         <image name="coach_black_12px" width="12" height="12"/>
         <image name="community" width="34" height="26"/>

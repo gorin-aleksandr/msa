@@ -617,6 +617,7 @@
                         <outlet property="prevWeekButton" destination="F7H-Rg-du1" id="qro-hl-WJk"/>
                         <outlet property="segmentControl" destination="f4G-wE-94r" id="3eJ-Vt-TPd"/>
                         <outlet property="tableView" destination="M8B-Mh-1hH" id="dcl-pu-Rva"/>
+                        <outlet property="weekHeaderView" destination="8I7-J1-LcI" id="CyG-ac-yMS"/>
                         <outlet property="weekLabel" destination="gWc-7H-Xkd" id="qCK-hR-erl"/>
                         <segue destination="nXu-T9-iAK" kind="show" identifier="showExerciseInTraining" id="p0d-0V-Lcs"/>
                         <segue destination="c5c-HV-PAe" kind="show" identifier="roundTraining" id="SEK-vf-cWp"/>

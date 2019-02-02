@@ -9,9 +9,11 @@
 import UIKit
 import FZAccordionTableView
 import SDWebImage
+import AudioToolbox
 
 class MyTranningsViewController: UIViewController {
 
+    @IBOutlet weak var weekHeaderView: UIView!
     @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var tableView: FZAccordionTableView!
     @IBOutlet weak var weekLabel: UILabel!
@@ -28,11 +30,19 @@ class MyTranningsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(longPressed))
         self.tableView.addGestureRecognizer(longPressRecognizer)
+        let copyWeekRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(copyWeek))
+        self.weekHeaderView.addGestureRecognizer(copyWeekRecognizer)
         
     }
-    
+
+    ////////////////////////////////////////////
+    ////////////////////////////////////////////
+    ////////////////////////////////////////////
+//
+//    replace exercises
     
     var dragInitialIndexPath: IndexPath?
     var dragCellSnapshot: UIView?
@@ -123,6 +133,45 @@ class MyTranningsViewController: UIViewController {
         cellSnapshot.layer.shadowOpacity = 0.4
         return cellSnapshot
     }
+    
+    @objc func copyWeek(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            AudioServicesPlaySystemSound(1519)
+            let alertController = UIAlertController(title: "Внимание!", message: "Вы хотети скопировать неделю?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
+                self.manager.copyWeek()
+                self.showHideButtons()
+            }
+            let cancelAction = UIAlertAction(title: "Отменить", style: .default) { _ in }
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(yesAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func headerTapped(sender: UILongPressGestureRecognizer) {
+        guard let index = sender.view?.tag else {return}
+        if sender.state == .began {
+            
+            AudioServicesPlaySystemSound(1519)
+            
+            let alertController = UIAlertController(title: "Внимание!", message: "Вы хотети скопировать \(index+1) день?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
+                self.manager.copyDay(at: index)
+                self.tableView.reloadData()
+            }
+            let cancelAction = UIAlertAction(title: "Отменить", style: .default) { _ in }
+            
+            alertController.addAction(cancelAction)
+            alertController.addAction(yesAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    ////////////////////////////////////////////
+    ////////////////////////////////////////////
+    ///////////////////////////////////////////
 
     override func viewWillAppear(_ animated: Bool) {
         initialDataLoading()
@@ -144,6 +193,7 @@ class MyTranningsViewController: UIViewController {
             manager.syncUnsyncedTrainings()
         } else {
             manager.loadTrainings()
+            manager.getMyExercises(success: nil)
         }
     }
     
@@ -556,6 +606,11 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
             if let day = manager.dataSource?.currentWeek?.days[section] {
+                
+                headerView.tag = section
+                let longPressRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(headerTapped))
+                headerView.addGestureRecognizer(longPressRecognizer)
+                
                 headerView.dateLabel.text = day.date == "" ? "______(дата)" : day.date
                 headerView.dayLabel.text = "День #\(section + 1)"
                 headerView.nameTextField.text = day.name
@@ -658,13 +713,6 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             self.performSegue(withIdentifier: "showExerciseInTraining", sender: nil)
         } else {
             self.performSegue(withIdentifier: "addExercise", sender: nil)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
-    {
-        if editingStyle == .delete {
-//            savedConversions.remove(at: indexPath.row)
         }
     }
     

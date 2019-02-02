@@ -104,6 +104,83 @@ class TrainingManager {
         return Array(dataSource?.currentWeek?.days[day].exercises ?? List<ExerciseInTraining>())
     }
     
+    func copyWeek() {
+        do {
+            try realm.performWrite {
+                guard let week = dataSource?.currentWeek else {return}
+                let newWeek = TrainingWeek()
+                newWeek.id = newWeek.incrementID()
+                newWeek.name = week.name
+                let days = List<TrainingDay>()
+                for (index,day) in week.days.enumerated() {
+                    let newDay = makeDayCopy(of: day)
+                    newDay.id += index
+                    days.append(newDay)
+                }
+                newWeek.days = days
+                dataSource?.currentTraining?.wasSync = false
+                dataSource?.currentTraining?.weeks.append(newWeek)
+            }
+        } catch {
+            print(error)
+        }
+        self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+    }
+    
+    func copyDay(at: Int) {
+        do {
+            try realm.performWrite {
+                if let day = dataSource?.currentWeek?.days[at] {
+                    let newDay = makeDayCopy(of: day)
+                    dataSource?.currentWeek?.wasSync = false
+                    dataSource?.currentWeek?.days.insert(newDay, at: at+1)
+                }
+            }
+        } catch {
+            print(error)
+        }
+        self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+    }
+    
+    private func makeDayCopy(of day: TrainingDay) -> TrainingDay {
+        let newDay = TrainingDay()
+        newDay.id = day.incrementID()
+        newDay.date = day.date
+        newDay.name = day.name
+        newDay.roundExercisesIds = day.roundExercisesIds
+        
+        let exercises = List<ExerciseInTraining>()
+        for exe in day.exercises {
+            
+            let newExercise = ExerciseInTraining()
+            newExercise.id = UUID().uuidString
+            newExercise.byTrainer = exe.byTrainer
+            newExercise.exerciseId = exe.exerciseId
+            newExercise.name = exe.name
+
+            let iterations = List<Iteration>()
+            for iter in exe.iterations {
+                
+                let newIteration = Iteration()
+                newIteration.id = UUID().uuidString
+                newIteration.counts = iter.counts
+                newIteration.exerciseInTrainingId = iter.exerciseInTrainingId
+                newIteration.restTime = iter.restTime
+                newIteration.startTimerOnZero = iter.startTimerOnZero
+                newIteration.weight = iter.weight
+                newIteration.workTime = iter.workTime
+                
+                iterations.append(newIteration)
+            }
+            newExercise.iterations = iterations
+            exercises.append(newExercise)
+        }
+        
+        newDay.exercises = exercises
+        
+        return newDay
+    }
+    
     func replaceExercises(of day: Int, from index: Int, to day_: Int, at index_: Int) {
         do {
             try realm.performWrite {
@@ -385,9 +462,6 @@ class TrainingManager {
     
     func loadTrainings(success: (() -> Void)? = nil, failture: (([NSError]) -> Void)? = nil) {
         if let id = sportsmanId {
-//            if id != AuthModule.currUser.id {
-//                self.view?.startLoading()
-//            }
             Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
                 self.observeTrainings(snapchot: snapchot, success: {
                     success?()
@@ -398,7 +472,6 @@ class TrainingManager {
     
     func getMyExercises(success: (() -> Void)?, failture: (([NSError]) -> Void)? = nil) {
         if let id = sportsmanId {
-//            self.view?.startLoading()
             Database.database().reference().child("ExercisesByTrainers").child(id).observeSingleEvent(of: .value) { (data) in
                 let items = parseExercises(snapchot: data)
                 let myExerc = MyExercises()
