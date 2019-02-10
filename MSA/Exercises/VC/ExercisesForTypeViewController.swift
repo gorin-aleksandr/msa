@@ -43,6 +43,7 @@ class ExercisesForTypeViewController: UIViewController {
     let searchController = UISearchController(searchResultsController: nil)
     var presenter: ExersisesTypesPresenter?
     var trainingManager: TrainingManager?
+    private var tap: TapGesture!
     
     var exercisesByFIlter: [Exercise]?
     var filteredArray: [Exercise] = []
@@ -237,6 +238,22 @@ class ExercisesForTypeViewController: UIViewController {
         }
     }
     
+    @objc func handleTap(sender: TapGesture) {
+        let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "ExercisesInfoViewController") as! ExercisesInfoViewController
+        guard  let indexPath = sender.indexPath else {
+            return
+        }
+        var exercise = Exercise()
+        if isFiltering() {
+            exercise = filteredArray[indexPath.row]
+        } else {
+            guard let ex = exercisesByFIlter?[indexPath.row] else {return}
+            exercise = ex
+        }
+        destinationVC.execise = exercise
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
+    
 }
 
 //MARK: - TableView
@@ -261,6 +278,11 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             guard let ex = exercisesByFIlter?[indexPath.row] else {return UITableViewCell()}
             cell.configureCell(with: ex)
         }
+        tap = TapGesture(target: self, action: #selector(handleTap(sender:)))
+        tap.indexPath = indexPath
+        cell.exerciseImage.addGestureRecognizer(tap)
+        cell.exerciseImage.isUserInteractionEnabled = true
+        cell.exerciseImage.tag = indexPath.row
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
