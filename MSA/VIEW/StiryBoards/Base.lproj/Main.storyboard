@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bTq-1C-neB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bTq-1C-neB">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -226,7 +226,7 @@
                                                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="lnP-J3-vpg" secondAttribute="trailing" constant="45" id="AVO-NH-mo7"/>
                                                                     <constraint firstItem="cmV-aw-gMy" firstAttribute="centerY" secondItem="AJV-oB-jtX" secondAttribute="centerY" id="CLi-hX-b3l"/>
                                                                     <constraint firstAttribute="trailing" secondItem="Ezm-OP-Bxd" secondAttribute="trailing" id="Eao-R7-1WV"/>
-                                                                    <constraint firstItem="lnP-J3-vpg" firstAttribute="leading" relation="lessThanOrEqual" secondItem="cmV-aw-gMy" secondAttribute="trailing" constant="15" id="MHA-8R-8SO"/>
+                                                                    <constraint firstItem="lnP-J3-vpg" firstAttribute="leading" secondItem="cmV-aw-gMy" secondAttribute="trailing" constant="15" id="MHA-8R-8SO"/>
                                                                     <constraint firstAttribute="trailing" secondItem="Ey8-sj-XnH" secondAttribute="trailing" id="QhS-7H-71R"/>
                                                                     <constraint firstItem="Ey8-sj-XnH" firstAttribute="top" secondItem="AJV-oB-jtX" secondAttribute="top" id="ZjY-i5-1oe"/>
                                                                     <constraint firstItem="Ey8-sj-XnH" firstAttribute="leading" secondItem="AJV-oB-jtX" secondAttribute="leading" id="fW7-AS-6ES"/>
@@ -269,7 +269,7 @@
                                                                     <constraint firstAttribute="height" constant="40" id="QJe-9K-2FX"/>
                                                                     <constraint firstAttribute="bottom" secondItem="Y1H-GX-Npg" secondAttribute="bottom" id="Rhj-HG-ghM"/>
                                                                     <constraint firstItem="Y1H-GX-Npg" firstAttribute="leading" secondItem="MdF-VZ-8c4" secondAttribute="leading" id="SV0-mY-78S"/>
-                                                                    <constraint firstItem="6du-mt-yZY" firstAttribute="leading" relation="lessThanOrEqual" secondItem="tas-py-o8E" secondAttribute="trailing" constant="15" id="SgW-lO-wX6"/>
+                                                                    <constraint firstItem="6du-mt-yZY" firstAttribute="leading" secondItem="tas-py-o8E" secondAttribute="trailing" constant="15" id="SgW-lO-wX6"/>
                                                                     <constraint firstAttribute="bottom" secondItem="nZg-ya-aZd" secondAttribute="bottom" id="Um1-ID-Urn"/>
                                                                     <constraint firstItem="6du-mt-yZY" firstAttribute="centerY" secondItem="MdF-VZ-8c4" secondAttribute="centerY" id="V04-Ni-3Ok"/>
                                                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="6du-mt-yZY" secondAttribute="trailing" constant="45" id="ehQ-te-2hp"/>
@@ -328,6 +328,7 @@
                         <outlet property="blurView" destination="nyT-ne-dWG" id="hM8-nL-6nq"/>
                         <outlet property="emailTextField" destination="FCh-ac-lbB" id="q56-KC-Ibe"/>
                         <outlet property="fbButton" destination="Y1H-GX-Npg" id="tDY-T8-tHd"/>
+                        <outlet property="forgotPasswordButton" destination="gtN-KJ-h8x" id="Uq8-8y-ugE"/>
                         <outlet property="logInButton" destination="1nA-Xw-Y50" id="2cW-6E-eeq"/>
                         <outlet property="passwordTextField" destination="w5J-r7-NE3" id="7mU-BK-jxL"/>
                     </connections>

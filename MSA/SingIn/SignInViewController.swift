@@ -33,6 +33,7 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var fbButton: UIButton!
     @IBOutlet weak var logInButton: UIButton! { didSet { logInButton.layer.cornerRadius = 10 } }
+    @IBOutlet weak var forgotPasswordButton: UIButton!
     
     private let presenter = UserSignInPresenter(auth: AuthModule())
     
@@ -40,8 +41,10 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
 //        UserDataManager().getLevels()
         presenter.attachView(view: self)
-    self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+//      MARK: Temporary hidden while feature is not ready
+        forgotPasswordButton.isHidden = true
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {

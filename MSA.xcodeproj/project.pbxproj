@@ -148,6 +148,8 @@
 		35B70349219AEF3B00E83393 /* ExersisesTypesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B70346219AEF3B00E83393 /* ExersisesTypesPresenter.swift */; };
 		35B7034A219AEF3B00E83393 /* ExercisesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B70347219AEF3B00E83393 /* ExercisesViewController.swift */; };
 		35B7034B219AEF3B00E83393 /* ExersisesTypesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B70348219AEF3B00E83393 /* ExersisesTypesDataManager.swift */; };
+		35BCB9282210BEF50016C58F /* InAppPurchasesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BCB9272210BEF50016C58F /* InAppPurchasesService.swift */; };
+		35BCB92A2210C1CB0016C58F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BCB9292210C1CB0016C58F /* Product.swift */; };
 		35C9EC6A21BAD30F00FA32F1 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C9EC6921BAD30F00FA32F1 /* Errors.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
 		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
@@ -157,6 +159,7 @@
 		35D5C01421372FEB0014D450 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5C01321372FEB0014D450 /* ProfileViewController.swift */; };
 		35D5C018213734510014D450 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D5C017213734510014D450 /* ProfilePresenter.swift */; };
 		35DAD0FD21B491F60082D74F /* TapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35DAD0FC21B491F60082D74F /* TapGesture.swift */; };
+		35E4D9E22224A7FF0099C293 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35E4D9E12224A7FF0099C293 /* StoreKit.framework */; };
 		35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC83F420EFBDDF00AECFC8 /* Button+Ext.swift */; };
 		35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35FC83F720F37AB800AECFC8 /* UIColor+Ext.swift */; };
 		F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */; };
@@ -309,6 +312,8 @@
 		35B70346219AEF3B00E83393 /* ExersisesTypesPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExersisesTypesPresenter.swift; sourceTree = "<group>"; };
 		35B70347219AEF3B00E83393 /* ExercisesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExercisesViewController.swift; sourceTree = "<group>"; };
 		35B70348219AEF3B00E83393 /* ExersisesTypesDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExersisesTypesDataManager.swift; sourceTree = "<group>"; };
+		35BCB9272210BEF50016C58F /* InAppPurchasesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchasesService.swift; sourceTree = "<group>"; };
+		35BCB9292210C1CB0016C58F /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		35C9EC6921BAD30F00FA32F1 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
 		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
@@ -318,6 +323,7 @@
 		35D5C01321372FEB0014D450 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		35D5C017213734510014D450 /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		35DAD0FC21B491F60082D74F /* TapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapGesture.swift; sourceTree = "<group>"; };
+		35E4D9E12224A7FF0099C293 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		35FC83F420EFBDDF00AECFC8 /* Button+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Ext.swift"; sourceTree = "<group>"; };
 		35FC83F720F37AB800AECFC8 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MSA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */,
+				35E4D9E22224A7FF0099C293 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				29160B452035AA3B00DA7227 /* AppDelegate.swift */,
+				35BCB9262210BE680016C58F /* Subscriptions */,
 				35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */,
 				2923304A203AFD3E00EFA2C5 /* API_Moduls_Managers */,
 				291950B520474829004891FF /* Madel */,
@@ -670,6 +678,7 @@
 		31648AF8CF9D89128F0538E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				35E4D9E12224A7FF0099C293 /* StoreKit.framework */,
 				4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */,
 			);
 			name = Frameworks;
@@ -715,6 +724,15 @@
 			name = ExercisesTypesVC;
 			path = MSA/Trannings/ExercisesTypesVC;
 			sourceTree = SOURCE_ROOT;
+		};
+		35BCB9262210BE680016C58F /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				35BCB9272210BEF50016C58F /* InAppPurchasesService.swift */,
+				35BCB9292210C1CB0016C58F /* Product.swift */,
+			);
+			path = Subscriptions;
+			sourceTree = "<group>";
 		};
 		35CE070920ECC644006892B0 /* Community */ = {
 			isa = PBXGroup;
@@ -800,10 +818,13 @@
 				TargetAttributes = {
 					29160B412035AA3B00DA7227 = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
 							};
 						};
 					};
@@ -983,6 +1004,7 @@
 				35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */,
 				352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */,
 				29F9F2242147AE82006EDC6A /* NumberButtonView.swift in Sources */,
+				35BCB9282210BEF50016C58F /* InAppPurchasesService.swift in Sources */,
 				299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */,
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
 				295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */,
@@ -1058,6 +1080,7 @@
 				299B58EE208688E600CBE646 /* GalleryItemVO.swift in Sources */,
 				29F9F2342147B537006EDC6A /* CreateExerciseTableViewCell.swift in Sources */,
 				29F9F2452147B5B8006EDC6A /* VAMonthHeaderView.swift in Sources */,
+				35BCB92A2210C1CB0016C58F /* Product.swift in Sources */,
 				29A16935204836C8006864C2 /* BasicViewController.swift in Sources */,
 				29F9F2542147B665006EDC6A /* DatePicker.swift in Sources */,
 				354CE70A219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift in Sources */,
@@ -1206,7 +1229,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -1214,7 +1237,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = MSA_DEV_FOR_IAP;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1225,9 +1248,9 @@
 			baseConfigurationReference = 17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -1235,7 +1258,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = MSA_DEV_FOR_IAP;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

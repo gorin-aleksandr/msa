@@ -13,6 +13,7 @@ import FBSDKCoreKit
 import CoreData
 import RealmSwift
 import SVProgressHUD
+import StoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let realmVersion: UInt64 = 0
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        InAppPurchasesService.shared.loadProductOptions()
         
         let config = Realm.Configuration(
             schemaVersion: realmVersion,
