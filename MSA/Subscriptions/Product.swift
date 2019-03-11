@@ -20,6 +20,7 @@ private var formatter: NumberFormatter = {
 struct Product {
     let product: SKProduct
     let formattedPrice: String
+    let type: SubType
     
     init(product: SKProduct) {
         self.product = product
@@ -27,6 +28,7 @@ struct Product {
         if formatter.locale != self.product.priceLocale {
             formatter.locale = self.product.priceLocale
         }
+        type = SubType(productId: product.productIdentifier) ?? .sportsman
         
         formattedPrice = formatter.string(from: product.price) ?? "\(product.price)"
     }

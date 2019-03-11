@@ -34,8 +34,7 @@ struct UserVO {
     var trainerId: String?
     var sportsmen: [String]?
     var requests: [String]?
-    // FIXME: Change default value after testing
-    var city: String? = "Киев"
+    var city: String?
     var userType: UserType {
         switch  type  {
         case "ТРЕНЕР":

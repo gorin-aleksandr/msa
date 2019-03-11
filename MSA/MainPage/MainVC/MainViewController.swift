@@ -123,7 +123,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
             userLevel.text = level
         }
         if let city = AuthModule.currUser.city {
-            userCity.text = "г. "+city
+            userCity.text = "г. " + city
         }
         if let dream = AuthModule.currUser.purpose {
             dailyTraining.text = dream

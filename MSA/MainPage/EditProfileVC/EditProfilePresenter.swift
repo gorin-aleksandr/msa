@@ -171,6 +171,10 @@ class EditProfilePresenter {
         task.heightType = user.heightType
         task.weightType = user.weightType
         task.purpose = user.purpose
+        if let city = user.city {
+            task.city = city
+        }
+        
         if let age = user.age {
             task.age = Int64(age)
         }

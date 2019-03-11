@@ -25,8 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-        InAppPurchasesService.shared.loadProductOptions()
-        
         let config = Realm.Configuration(
             schemaVersion: realmVersion,
             migrationBlock: { migration, oldSchemaVersion in
@@ -125,6 +123,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initialConf() {
         window?.backgroundColor = .white
     }
+    
+    private func setupIAPObserver() {
+        SKPaymentQueue.default().add(self)
+    }
+    
 //
 //    private func registerNotification() {
 //        let content = UNMutableNotificationContent()
@@ -140,5 +143,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
 //        }
 //    }
+}
+
+extension AppDelegate: SKPaymentTransactionObserver {
+    
+    func paymentQueue(_ queue: SKPaymentQueue,
+                      updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchasing:
+                handlePurchasingState(for: transaction, in: queue)
+            case .purchased:
+                handlePurchasedState(for: transaction, in: queue)
+            case .restored:
+                handleRestoredState(for: transaction, in: queue)
+            case .failed:
+                handleFailedState(for: transaction, in: queue)
+            case .deferred:
+                handleDeferredState(for: transaction, in: queue)
+            }
+        }
+        
+    }
+    
+    func handlePurchasingState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
+        print("User is attempting to purchase product id: \(transaction.payment.productIdentifier)")
+    }
+    
+    func handlePurchasedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
+        print("User purchased product id: \(transaction.payment.productIdentifier)")
+        queue.finishTransaction(transaction)
+        InAppPurchasesService.shared.uploadReceipt { (success) in
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
+            }
+        }
+    }
+    
+    func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
+        print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
+        
+    }
+    
+    func handleFailedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
+        print("Purchase failed for product id: \(transaction.payment.productIdentifier)")
+    
+    }
+    
+    func handleDeferredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
+        print("Purchase deferred for product id: \(transaction.payment.productIdentifier)")
+    }
 }
 

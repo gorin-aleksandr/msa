@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 protocol CommunityListPresenterProtocol {
+    func start()
     func fetchData() -> ()
     var communityDataSource: [UserVO] { get }
     var isTrainerEnabled: Bool { get }
@@ -23,6 +24,7 @@ protocol CommunityListPresenterProtocol {
     func addButtonTapped(at index: Int)
     func addAsTrainer(user: UserVO)
     func createProfilePresenter(user: UserVO, for view: ProfileViewProtocol) -> ProfilePresenterProtocol
+    func createIAPPresenter(for view: IAPViewProtocol) -> IAPPresenterProtocol
 }
 
 enum CommunityFilterState: Int {
@@ -87,9 +89,23 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     init(view: CommunityListViewProtocol) {
         self.view = view
         self.dataLoader = UserDataManager()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(purchasesRestored(notification:)), name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
+    }
+    
+    func start() {
+        view.setLoaderVisible(true)
+        InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
+            if InAppPurchasesService.shared.currentSubscription != nil {
+                self?.fetchData()
+            } else {
+                self?.view.showIAP()
+            }
+        }
     }
     
     func fetchData() {
+        view.setLoaderVisible(true)
         dataLoader.getUser { [weak self] user, error  in
             if let user = user {
                 AuthModule.currUser = user
@@ -124,6 +140,11 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
                 self?.view.stopLoadingViewState()
             }
         }
+    }
+    
+    @objc func purchasesRestored(notification: Notification) {
+        self.view.hideAccessDeniedView()
+        self.fetchData()
     }
     
     private func setCitiesDataSource(from users: [UserVO]) {
@@ -273,6 +294,11 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     func createProfilePresenter(user: UserVO, for view: ProfileViewProtocol) -> ProfilePresenterProtocol {
         let presenter = ProfilePresenter(user: user, view: view)
         presenter.iconsDataSource = preparedIconsForProfile(for: user)
+        return presenter
+    }
+    
+    func createIAPPresenter(for view: IAPViewProtocol) -> IAPPresenterProtocol {
+        let presenter = IAPPresenter(view: view)
         return presenter
     }
     

@@ -132,6 +132,7 @@
 		29F9F2512147B5B8006EDC6A /* VACalendarMonthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9F2432147B5B8006EDC6A /* VACalendarMonthDelegate.swift */; };
 		29F9F2522147B5B8006EDC6A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29F9F2442147B5B8006EDC6A /* Info.plist */; };
 		29F9F2542147B665006EDC6A /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9F2532147B665006EDC6A /* DatePicker.swift */; };
+		350E865422366D3000955C16 /* PaidSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350E865322366D3000955C16 /* PaidSubscription.swift */; };
 		352355F9212E06080001255E /* UserCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355F8212E06080001255E /* UserCommunityViewController.swift */; };
 		352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355FA212E06220001255E /* UserCommunityPresenter.swift */; };
 		35314F47218909C100A6E323 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35314F46218909C100A6E323 /* ErrorView.xib */; };
@@ -140,6 +141,9 @@
 		353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */; };
 		354CE708219CBE50005F5DDA /* HeartBeatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CE707219CBE50005F5DDA /* HeartBeatDetailsViewController.swift */; };
 		354CE70A219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354CE709219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift */; };
+		354FBABC22260A5F003451B7 /* IAPTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FBABB22260A5F003451B7 /* IAPTableViewCell.swift */; };
+		354FBABE22260AE4003451B7 /* IAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FBABD22260AE4003451B7 /* IAPViewController.swift */; };
+		354FBAC022260AFE003451B7 /* IAPPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FBABF22260AFE003451B7 /* IAPPresenter.swift */; };
 		355581CF21C181C0001DCA75 /* NotificationNameExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355581CE21C181C0001DCA75 /* NotificationNameExtended.swift */; };
 		35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */; };
 		35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */; };
@@ -152,7 +156,7 @@
 		35BCB92A2210C1CB0016C58F /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BCB9292210C1CB0016C58F /* Product.swift */; };
 		35C9EC6A21BAD30F00FA32F1 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C9EC6921BAD30F00FA32F1 /* Errors.swift */; };
 		35CE070820EA4065006892B0 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35CE070720EA4065006892B0 /* Community.storyboard */; };
-		35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListViewController.swift */; };
+		35CE070C20ECC769006892B0 /* CommunityListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070B20ECC769006892B0 /* CommunityListVC.swift */; };
 		35CE070E20ECC782006892B0 /* CommunityListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */; };
 		35CE071120ECFE8D006892B0 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */; };
 		35D09C4C21314B4C00229A83 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D09C4B21314B4C00229A83 /* Fonts.swift */; };
@@ -296,6 +300,7 @@
 		29F9F2432147B5B8006EDC6A /* VACalendarMonthDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VACalendarMonthDelegate.swift; sourceTree = "<group>"; };
 		29F9F2442147B5B8006EDC6A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29F9F2532147B665006EDC6A /* DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
+		350E865322366D3000955C16 /* PaidSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidSubscription.swift; sourceTree = "<group>"; };
 		352355F8212E06080001255E /* UserCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityViewController.swift; sourceTree = "<group>"; };
 		352355FA212E06220001255E /* UserCommunityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityPresenter.swift; sourceTree = "<group>"; };
 		35314F46218909C100A6E323 /* ErrorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
@@ -304,6 +309,9 @@
 		353EB9E7217D1AE00054EDB0 /* HeartBeatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatManager.swift; sourceTree = "<group>"; };
 		354CE707219CBE50005F5DDA /* HeartBeatDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDetailsViewController.swift; sourceTree = "<group>"; };
 		354CE709219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDetailsPresenter.swift; sourceTree = "<group>"; };
+		354FBABB22260A5F003451B7 /* IAPTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPTableViewCell.swift; sourceTree = "<group>"; };
+		354FBABD22260AE4003451B7 /* IAPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPViewController.swift; sourceTree = "<group>"; };
+		354FBABF22260AFE003451B7 /* IAPPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPPresenter.swift; sourceTree = "<group>"; };
 		355581CE21C181C0001DCA75 /* NotificationNameExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtended.swift; sourceTree = "<group>"; };
 		35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceViewController.swift; sourceTree = "<group>"; };
@@ -316,7 +324,7 @@
 		35BCB9292210C1CB0016C58F /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		35C9EC6921BAD30F00FA32F1 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		35CE070720EA4065006892B0 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
-		35CE070B20ECC769006892B0 /* CommunityListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListViewController.swift; sourceTree = "<group>"; };
+		35CE070B20ECC769006892B0 /* CommunityListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListVC.swift; sourceTree = "<group>"; };
 		35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityListPresenter.swift; sourceTree = "<group>"; };
 		35CE071020ECFE8D006892B0 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		35D09C4B21314B4C00229A83 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -702,6 +710,16 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		354FBABA22260A0B003451B7 /* InnAppPurchases */ = {
+			isa = PBXGroup;
+			children = (
+				354FBABB22260A5F003451B7 /* IAPTableViewCell.swift */,
+				354FBABF22260AFE003451B7 /* IAPPresenter.swift */,
+				354FBABD22260AE4003451B7 /* IAPViewController.swift */,
+			);
+			path = InnAppPurchases;
+			sourceTree = "<group>";
+		};
 		35B7033C219A3CEC00E83393 /* HeartBeatDevice */ = {
 			isa = PBXGroup;
 			children = (
@@ -729,6 +747,7 @@
 			isa = PBXGroup;
 			children = (
 				35BCB9272210BEF50016C58F /* InAppPurchasesService.swift */,
+				350E865322366D3000955C16 /* PaidSubscription.swift */,
 				35BCB9292210C1CB0016C58F /* Product.swift */,
 			);
 			path = Subscriptions;
@@ -738,6 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				35CE070A20ECC6BF006892B0 /* CommunityListVC */,
+				354FBABA22260A0B003451B7 /* InnAppPurchases */,
 				352355F6212E05C80001255E /* ComunityDetails */,
 				35D5C01221372F6D0014D450 /* ProfileVC */,
 			);
@@ -747,7 +767,7 @@
 		35CE070A20ECC6BF006892B0 /* CommunityListVC */ = {
 			isa = PBXGroup;
 			children = (
-				35CE070B20ECC769006892B0 /* CommunityListViewController.swift */,
+				35CE070B20ECC769006892B0 /* CommunityListVC.swift */,
 				35CE070D20ECC782006892B0 /* CommunityListPresenter.swift */,
 				35CE070F20ECFE47006892B0 /* Views */,
 			);
@@ -1000,8 +1020,9 @@
 				35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */,
 				2934805920E8F7B80039028E /* ChoosingItemTableViewCell.swift in Sources */,
 				35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */,
+				354FBAC022260AFE003451B7 /* IAPPresenter.swift in Sources */,
 				29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */,
-				35CE070C20ECC769006892B0 /* CommunityListViewController.swift in Sources */,
+				35CE070C20ECC769006892B0 /* CommunityListVC.swift in Sources */,
 				352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */,
 				29F9F2242147AE82006EDC6A /* NumberButtonView.swift in Sources */,
 				35BCB9282210BEF50016C58F /* InAppPurchasesService.swift in Sources */,
@@ -1022,6 +1043,7 @@
 				295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */,
 				29F9F22B2147AE82006EDC6A /* ConfigureTranningExersViewController.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
+				350E865422366D3000955C16 /* PaidSubscription.swift in Sources */,
 				2962D48520D2B6A900870953 /* ExercisesVO.swift in Sources */,
 				35B70340219A3D3A00E83393 /* HeartBeatDevicePresenter.swift in Sources */,
 				2923AD8D20E6358300AE17C5 /* RealmManager.swift in Sources */,
@@ -1076,6 +1098,7 @@
 				35B70342219A4AFB00E83393 /* HeartBeatDeviceTableViewCell.swift in Sources */,
 				35B7034A219AEF3B00E83393 /* ExercisesViewController.swift in Sources */,
 				29F56789219AB462003B704B /* MultipleChoicesViewController.swift in Sources */,
+				354FBABE22260AE4003451B7 /* IAPViewController.swift in Sources */,
 				29F9F2272147AE82006EDC6A /* TimeView.swift in Sources */,
 				299B58EE208688E600CBE646 /* GalleryItemVO.swift in Sources */,
 				29F9F2342147B537006EDC6A /* CreateExerciseTableViewCell.swift in Sources */,
@@ -1089,6 +1112,7 @@
 				29F9F2482147B5B8006EDC6A /* VACalendar.swift in Sources */,
 				35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */,
 				353416B221A1A5AF00F6CC26 /* DeviceVO.swift in Sources */,
+				354FBABC22260A5F003451B7 /* IAPTableViewCell.swift in Sources */,
 				29F9F21D2147AE82006EDC6A /* ApproachTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

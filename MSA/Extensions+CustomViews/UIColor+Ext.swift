@@ -22,6 +22,8 @@ extension UIColor {
     static let darkCyanGreen45 = UIColor(red: 25/255, green: 100/255, blue: 126/255, alpha: 0.45)
     static let lightWhiteBlue = UIColor(red: 3/255, green: 175/255, blue: 255/255, alpha: 1.0)
     static let darkGreenColor = UIColor(red: 1/255, green: 76/255, blue: 102/255, alpha: 1.0)
+    static let startGradientColor = UIColor(red: 173/255, green: 202/255, blue: 214/255, alpha: 1.0)
+    static let endGradientColor = UIColor(red: 125/255, green: 142/255, blue: 147/255, alpha: 1.0)
     
 }
 
