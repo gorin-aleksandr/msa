@@ -109,6 +109,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         dataLoader.getUser { [weak self] user, error  in
             if let user = user {
                 AuthModule.currUser = user
+                self?.view.hideAccessDeniedView()
             } else {
                 Errors.handleError(error, completion: { [weak self] _ in
                     if let _ = error as? MSAError {

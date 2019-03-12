@@ -171,7 +171,12 @@ extension AppDelegate: SKPaymentTransactionObserver {
         queue.finishTransaction(transaction)
         InAppPurchasesService.shared.uploadReceipt { (success) in
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
+                if success {
+                       NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
+                } else {
+                    print("Ошибка же")
+                }
+             
             }
         }
     }

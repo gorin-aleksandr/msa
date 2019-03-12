@@ -82,6 +82,7 @@ class InAppPurchasesService: NSObject {
 //                }
             }
         } else {
+            completion?(false)
             print("Missing receipt data")
         }
     }
