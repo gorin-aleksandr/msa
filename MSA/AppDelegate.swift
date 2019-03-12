@@ -42,10 +42,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
         start.start()
-        
-//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {didAllow, error in
-//
-//        })
 
         return true
     }
