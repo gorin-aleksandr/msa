@@ -91,6 +91,10 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         self.dataLoader = UserDataManager()
         
         NotificationCenter.default.addObserver(self, selector: #selector(purchasesRestored(notification:)), name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handlePurchaseSuccessfull(notification:)),
+                                               name: InAppPurchasesService.purchaseSuccessfulNotification,
+                                               object: nil)
     }
     
     func start() {
@@ -147,6 +151,12 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         self.view.hideAccessDeniedView()
         self.fetchData()
     }
+    
+    @objc func handlePurchaseSuccessfull(notification: Notification) {
+        self.view.hideAccessDeniedView()
+        self.fetchData()
+    }
+    
     
     private func setCitiesDataSource(from users: [UserVO]) {
         var citiesList = [String]()

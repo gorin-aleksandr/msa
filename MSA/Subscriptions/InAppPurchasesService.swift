@@ -15,6 +15,7 @@ class InAppPurchasesService: NSObject {
     
     static let optionsLoadedNotification = Notification.Name("SubscriptionServiceOptionsLoadedNotification")
     static let restoreSuccessfulNotification = Notification.Name("SubscriptionServiceRestoreSuccessfulNotification")
+    static let purchaseSuccessfulNotification = Notification.Name("SubscriptionServiceRestoreSuccessfulNotification")
 
     static let shared = InAppPurchasesService()
     
@@ -57,7 +58,7 @@ class InAppPurchasesService: NSObject {
         guard let url = Bundle.main.appStoreReceiptURL else {
             return nil
         }
-        
+        print(url)
         do {
             let data = try Data(contentsOf: url)
             return data
