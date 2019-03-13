@@ -183,6 +183,7 @@ extension AppDelegate: SKPaymentTransactionObserver {
     
     func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
         print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
+        NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
         
     }
     
