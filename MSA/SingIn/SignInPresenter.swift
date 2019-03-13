@@ -27,6 +27,7 @@ class UserSignInPresenter {
         AuthModule.facebookAuth = false
         self.view?.startLoading()
         auth.loginUser(email: email, pass: password) { (user, error) in
+            self.view?.finishLoading()
             if error == nil && user != nil {
                 let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: user?.level, age: user?.age, sex: user?.sex, height: user?.height, heightType: user?.heightType, weight: user?.weight,weightType: user?.weightType, type: user?.type, purpose: user?.purpose, gallery: user?.gallery, friends: user?.friends, trainerId: user?.trainerId, sportsmen: user?.sportsmen, requests: user?.requests, city: user?.city)
                     self.view?.setUser(user: user)
@@ -38,18 +39,47 @@ class UserSignInPresenter {
                         }
                     })
                     return
-            } else if error?.localizedDescription == AuthErrors.noSuchUser.rawValue {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Неверный пароль.")
-            } else if error?.localizedDescription == AuthErrors.noRegistratedUser.rawValue {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Пользователь не зарегистрирован.")
-            } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Неверный формат email.")
             } else {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Повторите позже.")
+                if error?.localizedDescription == AuthErrors.wrongPassword.rawValue {
+                    self.view?.finishLoading()
+                    self.view?.notLogged(resp: "Неверный формат пароль.")
+                } else if error?.localizedDescription == AuthErrors.noRegistratedUser.rawValue {
+                    self.view?.finishLoading()
+                    self.view?.notLogged(resp: "Пользователь не зарегистрирован.")
+                } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
+                    self.view?.finishLoading()
+                    self.view?.notLogged(resp: "Неверный формат email.")
+                } else {
+                    self.view?.finishLoading()
+                    self.view?.notLogged(resp: "Повторите позже.")
+                }
+
+//                if let error = error, let nsError = error as? NSError, let name = nsError.userInfo["error_name"] as? String {
+//                    if name == "ERROR_USER_NOT_FOUND" {
+//                        self.view?.notLogged(resp: "Юзер не найден")
+//                    } else if name == "ERROR_USER_DISABLED" {
+//                       self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+//                    }else if name == "ERROR_USER_TOKEN_EXPIRED" {
+//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+//                    }else if name == "ERROR_INVALID_USER_TOKEN" {
+//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+//                    }else if name == "ERROR_EMAIL_ALREADY_IN_USE" {
+//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+//                    }else if name == "ERROR_CREDENTIAL_ALREADY_IN_USE" {
+//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+//                    }
+//                    if error.domain == "FIRAuthErrorCodeOperationNotAllowed" {
+//                        self.view?.notLogged(resp: "Учетные записи электронной почты и пароли не включены")
+//                    } else if error.domain == "FIRAuthErrorCodeInvalidEmail" {
+//                        self.view?.notLogged(resp: "Адрес электронной почты неверный")
+//                    } else if error.domain == "FIRAuthErrorCodeUserDisabled" {
+//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+//                    } else if error.domain == "FIRAuthErrorCodeWrongPassword" {
+//                        self.view?.notLogged(resp: "Неверный пароль")
+//                    } else {
+//                        self.view?.notLogged(resp: "")
+//                    }
+//                }
             }
         }
     }
@@ -89,7 +119,8 @@ class UserSignInPresenter {
                 self.view?.loggedWithFacebook()
                 return
             } else {
-                if let error = error as? NSError {
+                if let error = error {
+                    let error = error as NSError
                     if error.domain == "FIRAuthErrorCodeInvalidCredential" {
                         self.view?.notLogged(resp: "Предоставленные учетные данные недействительны")
                     } else if error.domain == "FIRAuthErrorCodeInvalidEmail" {
@@ -105,8 +136,6 @@ class UserSignInPresenter {
                     } else {
                         self.view?.notLogged(resp: "Ошибка авторизации")
                     }
-                } else {
-                    self.view?.notLogged(resp: "Ошибка авторизации")
                 }
             }
         }

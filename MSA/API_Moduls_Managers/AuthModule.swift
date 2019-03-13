@@ -15,7 +15,7 @@ import FBSDKLoginKit
 
 enum AuthErrors: String {
     case noRegistratedUser = "There is no user record corresponding to this identifier. The user may have been deleted."
-    case noSuchUser = "The password is invalid or the user does not have a password."
+    case wrongPassword = "The password is invalid or the user does not have a password."
     case userExist = "The email address is already in use by another account."
     case badEmailFormat = "The email address is badly formatted."
     case shortPassword = "The password must be 6 characters long or more."
