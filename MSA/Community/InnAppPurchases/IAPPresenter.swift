@@ -12,6 +12,7 @@ protocol IAPPresenterProtocol {
     func getProductsDataSource() -> [Product]
     func userSelectedProductAt(index: Int)
     func fetchSubscriptions()
+    func setPromotionText() -> String
 }
 
 class IAPPresenter: IAPPresenterProtocol {
@@ -42,6 +43,14 @@ class IAPPresenter: IAPPresenterProtocol {
     
     func userSelectedProductAt(index: Int) {
         InAppPurchasesService.shared.purchase(subscription: productsDataSource[index])
+    }
+    
+    func setPromotionText() -> String {
+        if AuthModule.currUser.userType == .trainer {
+            return "Получите доступ к Сообщесту и возможности составления программ тренировок для своих спортсменов, оформив подписку. Выберите один из вариантов."
+        } else {
+            return "Получите доступ к Сообществу и возможности выбора Тренера, оформив подписку. Выберите один из вариантов."
+        }
     }
     
     @objc func handleOptionsLoaded(notification: Notification) {

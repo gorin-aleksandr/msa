@@ -489,6 +489,7 @@
                         <viewLayoutGuide key="safeArea" id="bKX-6P-RFw"/>
                     </view>
                     <connections>
+                        <outlet property="promotionTextLabel" destination="vPc-hH-ZoP" id="bSu-Xt-Ovn"/>
                         <outlet property="tableView" destination="uwx-3i-iw4" id="yly-SZ-BsU"/>
                     </connections>
                 </viewController>

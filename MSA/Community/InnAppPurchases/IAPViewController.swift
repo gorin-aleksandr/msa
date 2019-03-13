@@ -16,12 +16,14 @@ protocol IAPViewProtocol: class {
 
 class IAPViewController: UIViewController, IAPViewProtocol {
     
+    @IBOutlet weak var promotionTextLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
     var presenter: IAPPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setPromotionText()
         presenter.fetchSubscriptions()
         configureTableView()
         configureNavigationBar()
@@ -42,6 +44,10 @@ class IAPViewController: UIViewController, IAPViewProtocol {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
+    }
+    
+    private func setPromotionText() {
+        promotionTextLabel.text = presenter.setPromotionText()
     }
     
     @objc func goBack() {
