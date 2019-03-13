@@ -54,14 +54,16 @@ class AuthModule {
     func loginFacebook(callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
         let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
         fbLoginManager.logIn(withReadPermissions: ["public_profile","email"], from: SignInViewController()) { (result, error) -> Void in
-            if (error == nil){
+            if (error == nil) {
                 let fbloginresult : FBSDKLoginManagerLoginResult = result!
                 guard let accessToken = FBSDKAccessToken.current() else {
                     print("Failed to get access token")
+                    callback(nil, error)
                     return
                 }
                 if (result?.isCancelled)!{
                     print("Canselled")
+                    callback(nil, error)
                     return
                 }
                 if (fbloginresult.grantedPermissions.contains("email")) {
@@ -79,10 +81,12 @@ class AuthModule {
                                 AuthModule.currUser.email = email
                                 AuthModule.currUser.firstName = nameArray?.first
                                 AuthModule.currUser.lastName = nameArray?.last
-                            } catch {}
+                            } catch {
+                                callback(nil, error)
+                            }
+                        } else {
+                            callback(nil, error)
                         }
-                        else
-                        { }
                     })
                     Auth.auth().signIn(with: credential, completion: { (user, error) in
                         if error == nil && user != nil {
@@ -93,6 +97,8 @@ class AuthModule {
                         }
                     })
                 }
+            } else {
+                callback(nil, error)
             }
         }
     }

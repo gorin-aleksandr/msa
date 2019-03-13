@@ -79,15 +79,35 @@ class UserSignInPresenter {
     }
     
     func loginWithFacebook() {
+        self.view?.startLoading()
         AuthModule.facebookAuth = true
         auth.loginFacebook { (user, error) in
+            self.view?.finishLoading()
             if error == nil && user != nil {
                 let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
                 self.view?.setUser(user: user)
                 self.view?.loggedWithFacebook()
                 return
             } else {
-                self.view?.notLogged(resp: "Ошибка авторизации")
+                if let error = error as? NSError {
+                    if error.domain == "FIRAuthErrorCodeInvalidCredential" {
+                        self.view?.notLogged(resp: "Предоставленные учетные данные недействительны")
+                    } else if error.domain == "FIRAuthErrorCodeInvalidEmail" {
+                        self.view?.notLogged(resp: "Адрес электронной почты искажен")
+                    } else if error.domain == "FIRAuthErrorCodeOperationNotAllowed" {
+                        self.view?.notLogged(resp: "Учетные записи с поставщиком удостоверений, представленным учетными данными, не включены")
+                    } else if error.domain == "FIRAuthErrorCodeEmailAlreadyInUse" {
+                        self.view?.notLogged(resp: "Электронная почта, указанная в учетных данных, уже используется существующей учетной записью")
+                    } else if error.domain == "FIRAuthErrorCodeUserDisabled" {
+                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+                    } else if error.domain == "FIRAuthErrorCodeWrongPassword" {
+                        self.view?.notLogged(resp: "Неверный пароль")
+                    } else {
+                        self.view?.notLogged(resp: "Ошибка авторизации")
+                    }
+                } else {
+                    self.view?.notLogged(resp: "Ошибка авторизации")
+                }
             }
         }
     }
