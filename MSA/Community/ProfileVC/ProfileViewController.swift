@@ -62,7 +62,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         super.viewDidLoad()
         relatedCollectionView.dataSource = self
         relatedCollectionView.delegate = self
-        relatedWidthConstraint.constant = CGFloat((profilePresenter.iconsDataSource.count - 1) * 12 + 32)
+        relatedWidthConstraint.constant = CGFloat(((profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count) - 1) * 12 + 32)
         configureButtonsView()
         profilePresenter.start()
     }
@@ -255,9 +255,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == relatedCollectionView {
-            return profilePresenter.iconsDataSource.count
+            return profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count
         }
-        return profilePresenter.gallery.count
+        return profilePresenter.gallery.count > 5 ? 5 : profilePresenter.gallery.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
