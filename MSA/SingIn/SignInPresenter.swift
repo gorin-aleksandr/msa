@@ -40,46 +40,34 @@ class UserSignInPresenter {
                     })
                     return
             } else {
-                if error?.localizedDescription == AuthErrors.wrongPassword.rawValue {
-                    self.view?.finishLoading()
-                    self.view?.notLogged(resp: "Неверный формат пароль.")
-                } else if error?.localizedDescription == AuthErrors.noRegistratedUser.rawValue {
-                    self.view?.finishLoading()
-                    self.view?.notLogged(resp: "Пользователь не зарегистрирован.")
-                } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
-                    self.view?.finishLoading()
-                    self.view?.notLogged(resp: "Неверный формат email.")
-                } else {
-                    self.view?.finishLoading()
-                    self.view?.notLogged(resp: "Повторите позже.")
-                }
-
-//                if let error = error, let nsError = error as? NSError, let name = nsError.userInfo["error_name"] as? String {
-//                    if name == "ERROR_USER_NOT_FOUND" {
-//                        self.view?.notLogged(resp: "Юзер не найден")
-//                    } else if name == "ERROR_USER_DISABLED" {
-//                       self.view?.notLogged(resp: "Учетная запись пользователя отключена")
-//                    }else if name == "ERROR_USER_TOKEN_EXPIRED" {
-//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
-//                    }else if name == "ERROR_INVALID_USER_TOKEN" {
-//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
-//                    }else if name == "ERROR_EMAIL_ALREADY_IN_USE" {
-//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
-//                    }else if name == "ERROR_CREDENTIAL_ALREADY_IN_USE" {
-//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
-//                    }
-//                    if error.domain == "FIRAuthErrorCodeOperationNotAllowed" {
-//                        self.view?.notLogged(resp: "Учетные записи электронной почты и пароли не включены")
-//                    } else if error.domain == "FIRAuthErrorCodeInvalidEmail" {
-//                        self.view?.notLogged(resp: "Адрес электронной почты неверный")
-//                    } else if error.domain == "FIRAuthErrorCodeUserDisabled" {
-//                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
-//                    } else if error.domain == "FIRAuthErrorCodeWrongPassword" {
-//                        self.view?.notLogged(resp: "Неверный пароль")
-//                    } else {
-//                        self.view?.notLogged(resp: "")
-//                    }
+//                if error?.localizedDescription == AuthErrors.wrongPassword.rawValue {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Неверный формат пароль.")
+//                } else if error?.localizedDescription == AuthErrors.noRegistratedUser.rawValue {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Пользователь не зарегистрирован.")
+//                } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Неверный формат email.")
+//                } else {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Повторите позже.")
 //                }
+
+                if let error = error {
+                    let nsError = error as NSError
+                    if nsError.code == 17006 {
+                        self.view?.notLogged(resp: "Учетные записи электронной почты и пароли не включены")
+                    } else if nsError.code == 17008 {
+                        self.view?.notLogged(resp: "Адрес электронной почты неверный")
+                    } else if nsError.code == 17005 {
+                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+                    } else if nsError.code == 17009 {
+                        self.view?.notLogged(resp: "Неверный пароль")
+                    } else {
+                        self.view?.notLogged(resp: "")
+                    }
+                }
             }
         }
     }
@@ -121,17 +109,17 @@ class UserSignInPresenter {
             } else {
                 if let error = error {
                     let error = error as NSError
-                    if error.domain == "FIRAuthErrorCodeInvalidCredential" {
+                    if error.code == 17004 {
                         self.view?.notLogged(resp: "Предоставленные учетные данные недействительны")
-                    } else if error.domain == "FIRAuthErrorCodeInvalidEmail" {
+                    } else if error.code == 17008 {
                         self.view?.notLogged(resp: "Адрес электронной почты искажен")
-                    } else if error.domain == "FIRAuthErrorCodeOperationNotAllowed" {
+                    } else if error.code == 17006 {
                         self.view?.notLogged(resp: "Учетные записи с поставщиком удостоверений, представленным учетными данными, не включены")
-                    } else if error.domain == "FIRAuthErrorCodeEmailAlreadyInUse" {
+                    } else if error.code == 17007 {
                         self.view?.notLogged(resp: "Электронная почта, указанная в учетных данных, уже используется существующей учетной записью")
-                    } else if error.domain == "FIRAuthErrorCodeUserDisabled" {
+                    } else if error.code == 17005 {
                         self.view?.notLogged(resp: "Учетная запись пользователя отключена")
-                    } else if error.domain == "FIRAuthErrorCodeWrongPassword" {
+                    } else if error.code == 17009 {
                         self.view?.notLogged(resp: "Неверный пароль")
                     } else {
                         self.view?.notLogged(resp: "Ошибка авторизации")

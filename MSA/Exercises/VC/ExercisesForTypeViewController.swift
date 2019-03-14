@@ -327,11 +327,24 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             ex.exerciseId = newExercise.id
             try! manager.realm.performWrite {
                 manager.getCurrentday()?.exercises.append(ex)
-//                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
             }
         }
-        manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
-        self.back()
+        let loader = UIActivityIndicatorView()
+        loader.center = self.view.center
+        loader.activityIndicatorViewStyle = .whiteLarge
+        loader.color = .blue
+        self.view.addSubview(loader)
+        loader.startAnimating()
+        self.view.isUserInteractionEnabled = false
+        manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {
+            self.view.isUserInteractionEnabled = false
+            loader.isHidden = true
+            self.back()
+        }) { (error) in
+            self.view.isUserInteractionEnabled = false
+            loader.isHidden = true
+            AlertDialog.showAlert("Ошибка", message: "", viewController: self)
+        }
     }
     
     private func configureSelectedCell(_ cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
