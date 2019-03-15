@@ -43,6 +43,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userLevel: UILabel!
+    @IBOutlet weak var levelBg: UIImageView!
     @IBOutlet weak var dailyTraining: UILabel!
     @IBOutlet weak var dreamInsideView: UIView! {
         didSet {dreamInsideView.layer.cornerRadius = 12
@@ -127,6 +128,15 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
         if let level = user.level {
             userLevel.text = level
+            userLevel.isHidden = false
+            levelBg.isHidden = false
+            if level == "" {
+                userLevel.isHidden = true
+                levelBg.isHidden = true
+            }
+        } else {
+            userLevel.isHidden = true
+            levelBg.isHidden = true
         }
         if let dream = user.purpose {
             dailyTraining.text = dream

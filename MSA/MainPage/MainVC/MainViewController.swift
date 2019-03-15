@@ -26,6 +26,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    @IBOutlet weak var levelView: UIView!
+    
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var buttViewHeight: NSLayoutConstraint!
     @IBOutlet weak var imagePreviewView: UIView!
@@ -93,6 +95,10 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     override func viewWillAppear(_ animated: Bool) {
         downloadExercises()
         configureProfile()
+        editProfilePresenter.getUser {
+            UserSignInPresenter(auth: AuthModule()).saveUser(context: self.context, user: AuthModule.currUser)
+            self.configureProfile()
+        }
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -109,9 +115,10 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         self.trainerImage.isHidden = true
         if let trainerId = AuthModule.currUser.trainerId {
             editProfilePresenter.getTrainerInfo(trainer: trainerId) { (trainer) in
-                if let imageUrl = trainer.avatar, imageUrl != "" {
+                if let imageUrl = trainer.avatar {
                     self.coachIcon.isHidden = false
                     self.trainerImage.isHidden = false
+                    self.trainerImage.image = UIImage(named: "avatar-placeholder")
                     self.trainerImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
                 }
             }
@@ -121,6 +128,12 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         }
         if let level = AuthModule.currUser.level {
             userLevel.text = level
+            levelView.isHidden = false
+            if level == "" {
+                levelView.isHidden = true
+            }
+        } else {
+            levelView.isHidden = true
         }
         if let city = AuthModule.currUser.city {
             userCity.text = "г. " + city
