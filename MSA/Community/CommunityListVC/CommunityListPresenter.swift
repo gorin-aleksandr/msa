@@ -98,14 +98,14 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     }
     
     func start() {
-        view.setLoaderVisible(true)
-        InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
-            if InAppPurchasesService.shared.currentSubscription != nil {
-                self?.fetchData()
-            } else {
-                self?.view.showIAP()
-            }
-        }
+//        view.setLoaderVisible(true)
+//        InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
+//            if InAppPurchasesService.shared.currentSubscription != nil {
+                self.fetchData()
+//            } else {
+//                self?.view.showIAP()
+//            }
+//        }
     }
     
     func fetchData() {
