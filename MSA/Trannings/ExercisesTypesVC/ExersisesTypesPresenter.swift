@@ -306,8 +306,10 @@ class ExersisesTypesPresenter {
     }
     
     func deleteAt(i: Int) {
-        
-        exercises.currentTypeExercisesArray.remove(at: i)
+        if exercises.currentTypeExercisesArray.count > i {
+            exercises.ownExercises.remove(at: i)
+            exercises.currentTypeExercisesArray.remove(at: i)
+        }
     }
     
     func getFiltersByType(with ids: [Int]) -> [ExerciseTypeFilter]? {

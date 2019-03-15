@@ -56,7 +56,7 @@ class ImageManager: NSObject, SelectingImagesManager {
     
     
     func presentVideoPicker() {
-        let actionSheetController = UIAlertController(title: "", message: "Вибрать видео с:", preferredStyle: .actionSheet)
+        let actionSheetController = UIAlertController(title: "", message: "Вибрать видео:", preferredStyle: .actionSheet)
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in }
         actionSheetController.addAction(cancelActionButton)
 
@@ -66,7 +66,7 @@ class ImageManager: NSObject, SelectingImagesManager {
     }
     
     private func getVideoAlertAction() -> UIAlertAction {
-        let getVideo = UIAlertAction(title: "С галлереи", style: .default) { action -> Void in
+        let getVideo = UIAlertAction(title: "Из галереи", style: .default) { action -> Void in
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = .photoLibrary

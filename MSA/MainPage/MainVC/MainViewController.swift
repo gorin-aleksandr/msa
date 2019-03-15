@@ -179,10 +179,10 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         self.openCamera()
     }
     @IBAction func addButton(_ sender: Any) {
-        let alert = UIAlertController(title: "Загрузить с:", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Загрузить:", message: nil, preferredStyle: .actionSheet)
         //        alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
         //        }))
-        alert.addAction(UIAlertAction(title: "Галлереи", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Из галлереи", style: .default, handler: { _ in
             self.openGallary()
         }))
         alert.addAction(UIAlertAction.init(title: "Отменить", style: .cancel, handler: { _ in

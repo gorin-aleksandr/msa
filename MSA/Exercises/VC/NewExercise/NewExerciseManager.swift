@@ -191,7 +191,7 @@ class NewExerciseManager {
             "howToDo": self.dataSource.howToDo,
             "filterIDs": filters,
             "id": index,
-            "link": self.dataSource.newExerciseModel.link,
+//            "link": self.dataSource.newExerciseModel.link,
             "name": self.dataSource.name,
             "pictures": pictures,
             "trainerId": id,
@@ -236,7 +236,6 @@ class NewExerciseManager {
                 DispatchQueue.main.async {
                     let ex = self.makeModel()
                     RealmManager.shared.saveObject(ex, update: true)
-                    
                     self.view?.exerciseUpdated()
                     self.finish()
                 }
@@ -248,7 +247,7 @@ class NewExerciseManager {
     
     func makeModel() -> Exercise {
         let exercise = Exercise()
-        exercise.id = dataSource.newExerciseModel.id
+        exercise.id = dataSource.id == "" ? UUID().uuidString : dataSource.id
         exercise.exerciseDescriprion = dataSource.descript
         let filt = Id()
         filt.id = dataSource.filterId

@@ -15,7 +15,6 @@ protocol ExercisesCellDelegate: class {
 
 class ExercisesTableViewCell: UITableViewCell {
     
-
     weak var delegate: ExercisesCellDelegate?
     
     @IBOutlet weak var checkBoxImage: UIImageView!

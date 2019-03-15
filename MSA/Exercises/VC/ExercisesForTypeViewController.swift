@@ -34,6 +34,7 @@ class ExercisesForTypeViewController: UIViewController {
             selectedIndexes.sort { $0 < $1 }
         }
     }
+    var selectedIds: [String] = []
     ////////////////////
     
     @IBOutlet weak var tableView: UITableView!
@@ -82,6 +83,7 @@ class ExercisesForTypeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        initialDataFilling()
         if presenter?.getCurrentExetcisesType().name == "" {
 //            exercisesByFIlter = Array(RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
             exercisesByFIlter = presenter?.getCurrentTypeExerceses()
@@ -269,20 +271,32 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "exerciseForTypeTableCell", for: indexPath) as? ExercisesTableViewCell else { return UITableViewCell() }
         if let _ = trainingManager {
             cell.checkBoxImage.isHidden = false
+            
         } else {
             cell.checkBoxImage.isHidden = true
         }
-        if isFiltering() {
-            cell.configureCell(with: filteredArray[indexPath.row])
+//        if isFiltering() {
+//            cell.configureCell(with: filteredArray[indexPath.row])
+//        } else {
+//            guard let ex = exercisesByFIlter?[indexPath.row] else {return UITableViewCell()}
+//            cell.configureCell(with: ex)
+//        }
+        let exercise = elementsForChoosing[indexPath.row]
+        cell.configureCell(with: exercise)
+        if selectedIds.contains(exercise.id) {
+            cell.cellState = .selected
         } else {
-            guard let ex = exercisesByFIlter?[indexPath.row] else {return UITableViewCell()}
-            cell.configureCell(with: ex)
+            cell.cellState = .unselected
         }
+        
         tap = TapGesture(target: self, action: #selector(handleTap(sender:)))
         tap.indexPath = indexPath
         cell.exerciseImage.addGestureRecognizer(tap)
         cell.exerciseImage.isUserInteractionEnabled = true
         cell.exerciseImage.tag = indexPath.row
+        
+        
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -357,9 +371,11 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         case .unselected:
             selectedDataArray.append(selectedItem)
             selectedIndexes.append(indexPath.row)
+            selectedIds.append(selectedItem.id)
         case .selected:
             selectedDataArray.remove(selectedItem)
             selectedIndexes.remove(indexPath.row)
+            selectedIds.remove(selectedItem.id)
         }
         selectedCell.cellState.toggle()
     }

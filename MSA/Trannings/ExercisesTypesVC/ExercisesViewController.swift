@@ -32,7 +32,6 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         presenter.attachView(view: self)
         trainingManager?.initView(view: self)
         configureTable_CollectionView()
-        initialDataPreparing()
         NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
         
     }
@@ -49,6 +48,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        initialDataPreparing()
         configurateSearchController()
         hideableNavigationBar(false)
         guard let _ = trainingManager else { return }
