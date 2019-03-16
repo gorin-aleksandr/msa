@@ -169,6 +169,22 @@ extension String {
     var length: Int {
         return self.characters.count
     }
+
+    var isValidEmail: Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: self)
+    }
+    
+    var isValidPassword: Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z]{5,100}$", options: .caseInsensitive)
+            if regex.matches(in: self, options: [], range: NSMakeRange(0, self.count)).count > 0 {
+                return true
+            }
+        } catch {}
+        return false
+    }
     
 //    subscript (i: Int) -> String {
 //        return self[Range(i ..< i + 1)]

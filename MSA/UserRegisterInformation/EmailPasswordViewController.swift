@@ -25,8 +25,6 @@ class EmailPasswordViewController: UIViewController {
         emailTF.delegate = self
         
         presenter.attachView(view: self)
-        
-        // Do any additional setup after loading the view.
     }
     @IBAction func secure(_ sender: Any) {
         if let button = sender as? UIButton {
@@ -38,14 +36,40 @@ class EmailPasswordViewController: UIViewController {
         }
     }
     
+    private func showTermsOfUse() {
+        guard let url = URL(string: "https://telegra.ph/Privacy-Police-and-Terms-Of-Use-03-12") else {
+            return
+        }
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
+    }
+    @IBAction func showTermsOfUseAction(_ sender: Any) {
+        showTermsOfUse()
+    }
+    
     @IBAction func back(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func confirm(_ sender: Any) {
-        if let email = emailTF.text, let pass = passTF.text, passTF.text == passConfirmFT.text {
-                presenter.setEmailAndPass(email: email, pass: pass)
+        if let email = emailTF.text, let pass = passTF.text, let passConf = passConfirmFT.text, email != "", pass != "", passConf != "" {
+            if pass != passConf {
+                AlertDialog.showAlert("Ошибка", message: "Пароли не совпадают!", viewController: self)
+                return
+            }
+            if !email.isValidEmail {
+                AlertDialog.showAlert("Ошибка", message: "Невалидная почта!", viewController: self)
+                return
+            }
+            if !pass.isValidPassword {
+                AlertDialog.showAlert("Ошибка", message: "Невалидный пароль!\nТолько 0-9 и a-Z", viewController: self)
+                return
+            }
+            presenter.setEmailAndPass(email: email, pass: pass)
         } else {
-            AlertDialog.showAlert("Ошибка", message: "Невалидный email, короткий пароль или пароли не совпадают", viewController: self)
+            AlertDialog.showAlert("Ошибка", message: "Заполните все поля!", viewController: self)
         }
     }
     

@@ -136,7 +136,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </textField>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtN-KJ-h8x">
-                                                                        <rect key="frame" x="110" y="50" width="115" height="20"/>
+                                                                        <rect key="frame" x="112.5" y="50" width="110" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="20" id="lah-T9-J9j"/>
                                                                         </constraints>
@@ -349,7 +349,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Регистрация [3]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGh-q6-02a">
-                                <rect key="frame" x="116" y="35" width="143.5" height="20.5"/>
+                                <rect key="frame" x="125.5" y="35" width="124.5" height="20"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -1128,7 +1128,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AE7-D5-Aem">
-                                <rect key="frame" x="50" y="592" width="275" height="20"/>
+                                <rect key="frame" x="106.5" y="592" width="162" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="E62-HD-M2c"/>
                                 </constraints>
@@ -1136,9 +1136,12 @@
                                 <state key="normal" title="Правилами пользования">
                                     <color key="titleColor" red="0.011764705882352941" green="0.68627450980392157" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="showTermsOfUseAction:" destination="fOA-Z6-gsF" eventType="touchUpInside" id="hwD-F3-vaF"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Регистрируясь в MSA вы соглашаетесь с " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RS3-Qk-kuT">
-                                <rect key="frame" x="50" y="568.5" width="275" height="15.5"/>
+                                <rect key="frame" x="57" y="568.5" width="261" height="15.5"/>
                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1161,14 +1164,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="RS3-Qk-kuT" secondAttribute="trailing" constant="50" id="0fv-p7-FX9"/>
+                            <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="RS3-Qk-kuT" secondAttribute="trailing" constant="50" id="0fv-p7-FX9"/>
                             <constraint firstItem="ZBh-K7-CM7" firstAttribute="top" secondItem="Qg8-hU-wjF" secondAttribute="top" id="38m-aL-4dd"/>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="ZBh-K7-CM7" secondAttribute="trailing" id="4dZ-e8-q43"/>
                             <constraint firstItem="ych-Gj-4qL" firstAttribute="top" secondItem="I9Q-33-1cw" secondAttribute="top" id="5ub-Kv-Tzp"/>
                             <constraint firstItem="ZBh-K7-CM7" firstAttribute="leading" secondItem="Qg8-hU-wjF" secondAttribute="trailing" id="AZz-6Q-xvm"/>
                             <constraint firstItem="EFN-Yo-8pm" firstAttribute="top" secondItem="Qg8-hU-wjF" secondAttribute="bottom" constant="10" id="Bnl-G6-3ep"/>
+                            <constraint firstItem="AE7-D5-Aem" firstAttribute="centerX" secondItem="I9Q-33-1cw" secondAttribute="centerX" id="H9o-1H-GId"/>
                             <constraint firstItem="cQ0-E6-HA0" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="15" id="IoN-Un-TIS"/>
-                            <constraint firstItem="RS3-Qk-kuT" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="50" id="Kmd-NZ-o5J"/>
+                            <constraint firstItem="RS3-Qk-kuT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="50" id="Kmd-NZ-o5J"/>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="qlu-WE-tng" secondAttribute="trailing" constant="20" id="Nq7-er-ohu"/>
                             <constraint firstItem="eks-nU-DsW" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="20" id="OkU-xW-lYJ"/>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="bottom" secondItem="AE7-D5-Aem" secondAttribute="bottom" constant="55" id="PKS-3m-Zrh"/>
@@ -1179,8 +1183,9 @@
                             <constraint firstItem="EFN-Yo-8pm" firstAttribute="centerX" secondItem="I9Q-33-1cw" secondAttribute="centerX" id="Vvc-fs-gwl"/>
                             <constraint firstItem="qlu-WE-tng" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="20" id="cc2-3c-qSL"/>
                             <constraint firstItem="nvh-Zh-Twg" firstAttribute="bottom" secondItem="6Ib-iA-y8D" secondAttribute="bottom" id="fSa-QW-PUa"/>
-                            <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="AE7-D5-Aem" secondAttribute="trailing" constant="50" id="lxX-xz-tli"/>
-                            <constraint firstItem="AE7-D5-Aem" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="50" id="mTR-Xk-Hzg"/>
+                            <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AE7-D5-Aem" secondAttribute="trailing" constant="50" id="lxX-xz-tli"/>
+                            <constraint firstItem="RS3-Qk-kuT" firstAttribute="centerX" secondItem="I9Q-33-1cw" secondAttribute="centerX" id="m8C-j7-U9T"/>
+                            <constraint firstItem="AE7-D5-Aem" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="50" id="mTR-Xk-Hzg"/>
                             <constraint firstItem="eks-nU-DsW" firstAttribute="centerX" secondItem="I9Q-33-1cw" secondAttribute="centerX" id="mfp-kc-9Q7"/>
                             <constraint firstItem="VbL-WB-Ri9" firstAttribute="centerX" secondItem="I9Q-33-1cw" secondAttribute="centerX" id="nWO-ah-wcj"/>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="bottom" secondItem="ych-Gj-4qL" secondAttribute="bottom" id="nnl-NI-yPq"/>
