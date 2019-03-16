@@ -1146,11 +1146,26 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="EFN-Yo-8pm">
                                 <rect key="frame" x="169" y="310" width="37" height="37"/>
                             </activityIndicatorView>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvh-Zh-Twg">
+                                <rect key="frame" x="330" y="180" width="45" height="40"/>
+                                <connections>
+                                    <action selector="secure:" destination="fOA-Z6-gsF" eventType="touchUpInside" id="JeN-9P-jmI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZBh-K7-CM7">
+                                <rect key="frame" x="330" y="260" width="45" height="40"/>
+                                <connections>
+                                    <action selector="secure:" destination="fOA-Z6-gsF" eventType="touchUpInside" id="Uyf-hx-HYZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="RS3-Qk-kuT" secondAttribute="trailing" constant="50" id="0fv-p7-FX9"/>
+                            <constraint firstItem="ZBh-K7-CM7" firstAttribute="top" secondItem="Qg8-hU-wjF" secondAttribute="top" id="38m-aL-4dd"/>
+                            <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="ZBh-K7-CM7" secondAttribute="trailing" id="4dZ-e8-q43"/>
                             <constraint firstItem="ych-Gj-4qL" firstAttribute="top" secondItem="I9Q-33-1cw" secondAttribute="top" id="5ub-Kv-Tzp"/>
+                            <constraint firstItem="ZBh-K7-CM7" firstAttribute="leading" secondItem="Qg8-hU-wjF" secondAttribute="trailing" id="AZz-6Q-xvm"/>
                             <constraint firstItem="EFN-Yo-8pm" firstAttribute="top" secondItem="Qg8-hU-wjF" secondAttribute="bottom" constant="10" id="Bnl-G6-3ep"/>
                             <constraint firstItem="cQ0-E6-HA0" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="15" id="IoN-Un-TIS"/>
                             <constraint firstItem="RS3-Qk-kuT" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="50" id="Kmd-NZ-o5J"/>
@@ -1159,9 +1174,11 @@
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="bottom" secondItem="AE7-D5-Aem" secondAttribute="bottom" constant="55" id="PKS-3m-Zrh"/>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="eks-nU-DsW" secondAttribute="trailing" constant="20" id="R4S-WU-y5y"/>
                             <constraint firstItem="VbL-WB-Ri9" firstAttribute="centerY" secondItem="cQ0-E6-HA0" secondAttribute="centerY" id="RAI-bw-9N3"/>
+                            <constraint firstItem="ZBh-K7-CM7" firstAttribute="bottom" secondItem="Qg8-hU-wjF" secondAttribute="bottom" id="S0X-X7-Hna"/>
                             <constraint firstItem="AE7-D5-Aem" firstAttribute="top" secondItem="RS3-Qk-kuT" secondAttribute="bottom" constant="8" id="V3q-aD-5N0"/>
                             <constraint firstItem="EFN-Yo-8pm" firstAttribute="centerX" secondItem="I9Q-33-1cw" secondAttribute="centerX" id="Vvc-fs-gwl"/>
                             <constraint firstItem="qlu-WE-tng" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="20" id="cc2-3c-qSL"/>
+                            <constraint firstItem="nvh-Zh-Twg" firstAttribute="bottom" secondItem="6Ib-iA-y8D" secondAttribute="bottom" id="fSa-QW-PUa"/>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="AE7-D5-Aem" secondAttribute="trailing" constant="50" id="lxX-xz-tli"/>
                             <constraint firstItem="AE7-D5-Aem" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" constant="50" id="mTR-Xk-Hzg"/>
                             <constraint firstItem="eks-nU-DsW" firstAttribute="centerX" secondItem="I9Q-33-1cw" secondAttribute="centerX" id="mfp-kc-9Q7"/>
@@ -1171,7 +1188,10 @@
                             <constraint firstItem="ych-Gj-4qL" firstAttribute="leading" secondItem="Gfk-rv-eS2" secondAttribute="leading" id="pVs-gh-lJx"/>
                             <constraint firstItem="eks-nU-DsW" firstAttribute="top" secondItem="cQ0-E6-HA0" secondAttribute="bottom" constant="30" id="qBO-8U-xXM"/>
                             <constraint firstItem="Gfk-rv-eS2" firstAttribute="trailing" secondItem="ych-Gj-4qL" secondAttribute="trailing" id="qOk-hy-BVm"/>
+                            <constraint firstAttribute="trailing" secondItem="nvh-Zh-Twg" secondAttribute="trailing" id="rSE-cA-1x0"/>
                             <constraint firstItem="cQ0-E6-HA0" firstAttribute="top" secondItem="Gfk-rv-eS2" secondAttribute="top" constant="10" id="tcs-2o-S0v"/>
+                            <constraint firstItem="nvh-Zh-Twg" firstAttribute="top" secondItem="6Ib-iA-y8D" secondAttribute="top" id="xNP-YM-fnu"/>
+                            <constraint firstItem="nvh-Zh-Twg" firstAttribute="leading" secondItem="6Ib-iA-y8D" secondAttribute="trailing" id="zsC-DP-zXZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Gfk-rv-eS2"/>
                     </view>

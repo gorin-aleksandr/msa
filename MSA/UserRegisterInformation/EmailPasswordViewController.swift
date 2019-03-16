@@ -29,8 +29,13 @@ class EmailPasswordViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     @IBAction func secure(_ sender: Any) {
-        passTF.isSecureTextEntry = !passTF.isSecureTextEntry
-        passConfirmFT.isSecureTextEntry = !passConfirmFT.isSecureTextEntry
+        if let button = sender as? UIButton {
+            if button.tag == 2 {
+                passTF.isSecureTextEntry = !passTF.isSecureTextEntry
+            } else if button.tag == 3 {
+                passConfirmFT.isSecureTextEntry = !passConfirmFT.isSecureTextEntry
+            }
+        }
     }
     
     @IBAction func back(_ sender: Any) {
