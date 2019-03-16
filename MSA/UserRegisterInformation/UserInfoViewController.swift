@@ -137,17 +137,17 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
  
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row])"
-            presenter.setAge(age: Int(ageLabel.text!)!)
+            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = presenter.getSexes()[row]
-            presenter.setSex(sex: sexLabel.text!)
+            sexLabel.text = "\(presenter.getSexes()[row])"
+            presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
-            heightLabel.text = "\(presenter.getHeight()[row])"
-            presenter.setHeight(height: Int(heightLabel.text!)!)
+            heightLabel.text = "\(presenter.getHeight()[row]), см"
+            presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row])"
-            presenter.setWeight(weight: Int(weightLabel.text!)!)
+            weightLabel.text = "\(presenter.getWeight()[row]), \(AuthModule.currUser.weightType ?? "кг")"
+            presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
             levelLabel.text = presenter.getlevels()[row]
             presenter.setLevel(level: levelLabel.text!)

@@ -52,7 +52,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/SingIn/SignInPresenter.swift"
-            timestampString = "574376252.367799"
+            timestampString = "574451085.569368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
@@ -67,30 +67,46 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MSA/UserRegisterInformation/SignUpPresenter.swift"
-            timestampString = "574447586.873971"
+            filePath = "MSA/API_Moduls_Managers/UserDataManagerFirebase.swift"
+            timestampString = "574448600.692053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "isAnyUserWith(userEmail:callback:)"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "createUser(user:callback:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MSA/UserRegisterInformation/SignUpPresenter.swift"
-            timestampString = "574447586.87451"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "isAnyUserWith(userEmail:callback:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MSA.UserDataManager.createUser(user: MSA.UserVO, callback: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/API_Moduls_Managers/UserDataManagerFirebase.swift"
+                  timestampString = "574448844.5125411"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "2465">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Error&gt;, __C.FIRDatabaseReference) -&gt; () in MSA.UserDataManager.createUser(user: MSA.UserVO, callback: (Swift.Bool) -&gt; ()) -&gt; ()"
+                  moduleName = "MSA"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/API_Moduls_Managers/UserDataManagerFirebase.swift"
+                  timestampString = "574448844.517387"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "79"
+                  endingLineNumber = "79"
+                  offsetFromSymbolStart = "42">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

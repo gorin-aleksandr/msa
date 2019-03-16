@@ -40,6 +40,7 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        UserDataManager().getLevels()
+        
         presenter.attachView(view: self)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -56,6 +57,7 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
 //        presenter.fetchUser(context: context)
+        AuthModule.currUser = UserVO()
     }
     
     @IBAction func securePasswordViewButton(_ sender: Any) {

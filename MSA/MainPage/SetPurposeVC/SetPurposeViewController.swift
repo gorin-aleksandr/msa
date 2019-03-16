@@ -43,8 +43,10 @@ class SetPurposeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         if let purp = AuthModule.currUser.purpose {
             purposeTextField.text = purp
-            countCharLabel.text = "\(purposeTextField.text?.count ?? 0) / 32"
+        } else {
+            purposeTextField.text = ""
         }
+        countCharLabel.text = "\(purposeTextField.text?.count ?? 0) / 32"
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     

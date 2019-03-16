@@ -136,9 +136,9 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
             levelView.isHidden = true
         }
         if let city = AuthModule.currUser.city {
-            userCity.text = "г. " + city
+            userCity.text = city == "" ? "" : "г. " + city
         }
-        if let dream = AuthModule.currUser.purpose {
+        if let dream = AuthModule.currUser.purpose, dream != "" {
             dailyTraining.text = dream
         }
     }

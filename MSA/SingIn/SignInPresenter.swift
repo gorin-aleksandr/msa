@@ -76,7 +76,7 @@ class UserSignInPresenter {
         self.view?.startLoading()
         auth.registerUser(email: email, pass: password) { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.id, email: user?.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: AuthModule.currUser.type, purpose: user?.purpose, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+                let user = UserVO(id: user?.id, email: user?.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: AuthModule.currUser.level, age: AuthModule.currUser.age, sex: AuthModule.currUser.sex, height: AuthModule.currUser.height, heightType: nil, weight: AuthModule.currUser.weight,weightType: nil, type: AuthModule.currUser.type, purpose: user?.purpose, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: AuthModule.currUser.city)
                 self.view?.setUser(user: user)
                 self.view?.registrated()
                 self.view?.finishLoading()
@@ -144,6 +144,7 @@ class UserSignInPresenter {
         task.weightType = user.weightType
         task.purpose = user.purpose
         task.trainerId = user.trainerId
+        task.city = user.city
         if let age = user.age {
             task.age = Int64(age)
         }

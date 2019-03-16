@@ -349,7 +349,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Регистрация [3]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGh-q6-02a">
-                                <rect key="frame" x="125.5" y="35" width="124.5" height="20"/>
+                                <rect key="frame" x="116" y="35" width="143.5" height="20.5"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -784,7 +784,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="357-ag-CRH">
-                                <rect key="frame" x="30" y="489" width="315" height="40"/>
+                                <rect key="frame" x="30" y="567" width="315" height="40"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RectangleBorderForButton" translatesAutoresizingMaskIntoConstraints="NO" id="I4P-uL-dA6">
                                         <rect key="frame" x="0.0" y="0.0" width="315" height="40"/>
@@ -836,7 +836,7 @@
                                 </connections>
                             </button>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TAi-7W-b1p">
-                                <rect key="frame" x="30" y="350" width="315" height="134"/>
+                                <rect key="frame" x="30" y="350" width="315" height="212"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="delegate" destination="x16-5X-sQk" id="PhN-QB-kBK"/>
@@ -855,6 +855,7 @@
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="tWO-gn-ezy" secondAttribute="trailing" constant="25" id="FLx-1g-suu"/>
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="NId-4H-QaA" secondAttribute="trailing" constant="25" id="J6P-co-JOo"/>
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="357-ag-CRH" secondAttribute="trailing" constant="30" id="NYP-Ax-vHw"/>
+                            <constraint firstItem="RO8-Ie-0FJ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="357-ag-CRH" secondAttribute="bottom" constant="60" id="Rpy-S1-wEP"/>
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="o3B-M3-sBV" secondAttribute="trailing" constant="25" id="Vag-f6-7UW"/>
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="eV7-1B-mlo" secondAttribute="trailing" constant="25" id="Vd1-Di-KjZ"/>
                             <constraint firstItem="tWO-gn-ezy" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="25" id="bIe-gg-TTr"/>
@@ -872,7 +873,7 @@
                             <constraint firstItem="dwk-0M-NCh" firstAttribute="centerX" secondItem="bif-wE-eA4" secondAttribute="centerX" id="r3P-1j-5K0"/>
                             <constraint firstItem="TAi-7W-b1p" firstAttribute="top" secondItem="NId-4H-QaA" secondAttribute="bottom" id="uHc-Qt-sJ5"/>
                             <constraint firstItem="dw7-dB-Sei" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="15" id="xKc-qZ-dNl"/>
-                            <constraint firstItem="RO8-Ie-0FJ" firstAttribute="bottom" secondItem="357-ag-CRH" secondAttribute="bottom" constant="138" id="xZL-Fv-9c7"/>
+                            <constraint firstItem="RO8-Ie-0FJ" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="357-ag-CRH" secondAttribute="bottom" constant="138" id="xZL-Fv-9c7"/>
                             <constraint firstItem="o3B-M3-sBV" firstAttribute="top" secondItem="eV7-1B-mlo" secondAttribute="bottom" constant="15" id="zkV-WF-5K7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RO8-Ie-0FJ"/>
