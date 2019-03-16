@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "574037212.703269"
+            timestampString = "574470496.051851"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
             endingLineNumber = "208"
-            landmarkName = "addToFriends(user:)"
+            landmarkName = "getPersonState(person:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -682,13 +682,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "574037212.704869"
+            timestampString = "574470496.060904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "110"
             endingLineNumber = "110"
-            landmarkName = "fetchData()"
-            landmarkType = "7">
+            landmarkName = "CommunityListPresenter"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -698,7 +698,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Community/CommunityListVC/CommunityListPresenter.swift"
-            timestampString = "574037212.705212"
+            timestampString = "574470496.061339"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "200"
@@ -1007,7 +1007,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "73"
             endingLineNumber = "73"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1055,7 +1055,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "170"
             endingLineNumber = "170"
-            landmarkName = "handlePurchasingState(for:in:)"
+            landmarkName = "handlePurchasedState(for:in:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1183,7 +1183,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "167"
             endingLineNumber = "167"
-            landmarkName = "hideAccessDeniedView()"
+            landmarkName = "showAlertFor(user:isTrainerEnabled:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

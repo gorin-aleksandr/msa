@@ -18,18 +18,18 @@ class IAPTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         productContainerView.layer.cornerRadius = 8
-        let gradient = CAGradientLayer()
-        gradient.frame = productContainerView.bounds
-        gradient.cornerRadius = 8
-        gradient.colors = [UIColor.startGradientColor.cgColor, UIColor.endGradientColor.cgColor]
-        productContainerView.layer.insertSublayer(gradient, at: 0)
-        
     }
     
     func configureWith(product: Product) {
         titleLabel.text = product.product.localizedTitle
         priceLabel.text = product.formattedPrice
         detailsLabel.text = product.product.localizedDescription
+        
+//        let gradient = CAGradientLayer()
+//        gradient.frame = productContainerView.bounds
+//        gradient.cornerRadius = 8
+//        gradient.colors = [UIColor.startGradientColor.cgColor, UIColor.endGradientColor.cgColor]
+//        productContainerView.layer.insertSublayer(gradient, at: 0)
     }
 
 }
