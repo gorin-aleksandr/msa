@@ -10,6 +10,7 @@ import UIKit
 
 class EmailPasswordViewController: UIViewController {
 
+    @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passTF: UITextField!
@@ -67,7 +68,24 @@ class EmailPasswordViewController: UIViewController {
                 AlertDialog.showAlert("Ошибка", message: "Невалидный пароль!\nТолько 0-9 и a-Z", viewController: self)
                 return
             }
-            presenter.setEmailAndPass(email: email, pass: pass)
+            
+            presenter.isAnyUserWith(userEmail: email) { (success, error) in
+                if success {
+                    self.presenter.setEmailAndPass(email: email, pass: pass)
+                    self.performSegue(withIdentifier: "reg2", sender: nil)
+                } else {
+                    if let customError = error as? MSAError {
+                        switch customError {
+                        case .customError(let error):
+                            let mess = error.message
+                            AlertDialog.showAlert("Ошибка", message: mess ?? "Пользователь с таким именем уже зарегистрирован!", viewController: self)
+                        default:
+                            AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "Пользователь с таким именем уже зарегистрирован!", viewController: self)
+                        }
+                    }
+                    AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "Пользователь с таким именем уже зарегистрирован!", viewController: self)
+                }
+            }
         } else {
             AlertDialog.showAlert("Ошибка", message: "Заполните все поля!", viewController: self)
         }
@@ -92,8 +110,14 @@ extension EmailPasswordViewController: UITextFieldDelegate {
 extension EmailPasswordViewController: SignUpViewProtocol {
     func notUpdated() {}
     func next() {}
-    func startLoading() {}
-    func finishLoading() {}
+    func startLoading() {
+        blurView.alpha = 0.3
+        activityIndicator.startAnimating()
+    }
+    func finishLoading() {
+        blurView.alpha = 0
+        activityIndicator.stopAnimating()
+    }
     func setUser(user: UserVO) {}
     func userCreated() {}
     func userNotCreated() {}

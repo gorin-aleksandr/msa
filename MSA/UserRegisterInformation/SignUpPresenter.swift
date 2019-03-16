@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import Firebase
 
 protocol SignUpViewProtocol: class {
     func startLoading()
@@ -21,7 +22,8 @@ protocol SignUpViewProtocol: class {
 }
 
 class SignUpPresenter {
-    
+    var userRef = Database.database().reference().child("Users")
+
     private let signUpManager: UserDataManager
     private weak var view: SignUpViewProtocol?
     
@@ -31,6 +33,45 @@ class SignUpPresenter {
     
     func attachView(view: SignUpViewProtocol){
         self.view = view
+    }
+    
+    func isAnyUserWith(userEmail: String, callback: @escaping (_ success: Bool,_ error: Error?) -> ()) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: "Нету соединения!"))
+            callback(false, connectionError)
+            return
+        }
+        view?.startLoading()
+        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+            self.view?.finishLoading()
+            guard let data = snapshot.value as? [String : [String : Any]] else {
+                callback(false, MSAError.customError(error: MSAError.CustomError(code: "", message: "")))
+                return
+            }
+            var emails = [String]()
+            for value in Array(data.values) {
+                if let email = self.getEmail(from: value) {
+                    emails.append(email)
+                }
+            }
+            if emails.contains(userEmail) {
+                callback(false, MSAError.customError(error: MSAError.CustomError(code: "User exist", message: "Пользователь с такой почтой уже зарегистрирован!")))
+            } else {
+                callback(true, nil)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+            callback(false, error)
+        }
+    }
+    
+    
+    private func getEmail(from value: [String : Any]?) -> String? {
+        if let value = value {
+           let email = value["email"] as? String
+           return email
+        }
+        return nil
     }
     
     func setEmailAndPass(email: String, pass: String) {

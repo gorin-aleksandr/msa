@@ -13,7 +13,6 @@ struct Errors {
     static func handleError(_ error: Error?, completion: (_ massage: String) -> ()) {
         var errorMessage = NSLocalizedString("Ошибка", comment: "")
         if let backendError = error as?  MSAError {
-            
             switch backendError {
             case .network(let error):
                 if (error as NSError).code == -1009 {
