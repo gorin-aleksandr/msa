@@ -43,6 +43,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userLevel: UILabel!
+    @IBOutlet weak var levelBg: UIImageView!
     @IBOutlet weak var dailyTraining: UILabel!
     @IBOutlet weak var dreamInsideView: UIView! {
         didSet {dreamInsideView.layer.cornerRadius = 12
@@ -62,7 +63,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         super.viewDidLoad()
         relatedCollectionView.dataSource = self
         relatedCollectionView.delegate = self
-        relatedWidthConstraint.constant = CGFloat((profilePresenter.iconsDataSource.count - 1) * 12 + 32)
+        relatedWidthConstraint.constant = CGFloat(((profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count) - 1) * 12 + 32)
         configureButtonsView()
         profilePresenter.start()
     }
@@ -127,6 +128,15 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
         if let level = user.level {
             userLevel.text = level
+            userLevel.isHidden = false
+            levelBg.isHidden = false
+            if level == "" {
+                userLevel.isHidden = true
+                levelBg.isHidden = true
+            }
+        } else {
+            userLevel.isHidden = true
+            levelBg.isHidden = true
         }
         if let dream = user.purpose {
             dailyTraining.text = dream
@@ -255,9 +265,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == relatedCollectionView {
-            return profilePresenter.iconsDataSource.count
+            return profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count
         }
-        return profilePresenter.gallery.count
+        return profilePresenter.gallery.count > 5 ? 5 : profilePresenter.gallery.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

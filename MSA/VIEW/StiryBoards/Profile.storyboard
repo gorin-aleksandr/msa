@@ -159,13 +159,13 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhw-OI-dYY">
-                                                        <rect key="frame" x="125.5" y="180" width="124" height="15"/>
+                                                        <rect key="frame" x="144" y="180" width="87" height="15"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="levelBG" translatesAutoresizingMaskIntoConstraints="NO" id="avs-JS-a6m">
-                                                                <rect key="frame" x="0.0" y="0.0" width="124" height="15"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="87" height="15"/>
                                                             </imageView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Профессионал" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uOC-kA-gzE">
-                                                                <rect key="frame" x="10" y="0.0" width="104" height="15"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uOC-kA-gzE">
+                                                                <rect key="frame" x="10" y="0.0" width="67" height="15"/>
                                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
@@ -588,6 +588,7 @@
                         <outlet property="galleryCollectionView" destination="cFU-Hd-4TS" id="R0m-sy-HsS"/>
                         <outlet property="galleryView" destination="bfM-N1-w02" id="HNE-Hy-40Z"/>
                         <outlet property="imagePreviewView" destination="GEC-V5-r1M" id="HBL-VQ-LRz"/>
+                        <outlet property="levelView" destination="hhw-OI-dYY" id="V7Y-0R-h86"/>
                         <outlet property="previewImage" destination="9fB-aP-Ip0" id="wVB-rV-0Vr"/>
                         <outlet property="profileView" destination="pX6-oD-Tqa" id="99I-bm-wf3"/>
                         <outlet property="profileViewbg" destination="pX6-oD-Tqa" id="FiR-fV-7Uc"/>
@@ -686,7 +687,7 @@
                                                                 <rect key="frame" x="47" y="40" width="20" height="20"/>
                                                                 <color key="color" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             </activityIndicatorView>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me" translatesAutoresizingMaskIntoConstraints="NO" id="VEL-e7-311">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="VEL-e7-311">
                                                                 <rect key="frame" x="32" y="25" width="50" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="50" id="RCy-pg-5i9"/>
@@ -2139,6 +2140,7 @@
         <image name="Triangle_black" width="8" height="4"/>
         <image name="aim-32px" width="70" height="70"/>
         <image name="amonestation" width="24" height="22"/>
+        <image name="avatar-placeholder" width="500" height="500"/>
         <image name="back" width="13" height="22"/>
         <image name="bgProfile" width="375" height="667"/>
         <image name="big_black_outline" width="311" height="48"/>
@@ -2153,7 +2155,6 @@
         <image name="gantelya" width="20" height="20"/>
         <image name="levelBG" width="87" height="16"/>
         <image name="logout" width="23" height="20"/>
-        <image name="me" width="776" height="1048"/>
         <image name="notSelected" width="14" height="14"/>
         <image name="plus Icon" width="16" height="16"/>
         <image name="question" width="21" height="24"/>

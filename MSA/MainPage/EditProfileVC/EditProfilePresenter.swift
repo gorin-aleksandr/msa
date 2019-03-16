@@ -26,6 +26,15 @@ class EditProfilePresenter {
         self.view = view
     }
     
+    func getUser(success: @escaping ()->()) {
+        UserDataManager().getUser(callback: { (user, error) in
+            if let user = user {
+                AuthModule.currUser = user
+                success()
+            }
+        })
+    }
+    
     func deleteTrainer(_ trainerId: String, deleted: ()->(), error: ()->()) {
         let myId = AuthModule.currUser.id ?? ""
         let dispatch = DispatchGroup()

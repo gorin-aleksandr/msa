@@ -47,6 +47,10 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol, 
         super.viewDidAppear(true)
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+    }
+    
     func reloadData() {
         SVProgressHUD.dismiss()
         DispatchQueue.main.async { [weak self] in

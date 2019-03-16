@@ -17,9 +17,9 @@ class Exercise: Object {
     @objc dynamic var typeId: Int = -1
     @objc dynamic var trainerId: String = ""
     @objc dynamic var videoUrl: String = ""
-    @objc dynamic var exerciseDescriprion: String = "No description"
-    @objc dynamic var howToDo: String = "No info about doing"
-    @objc dynamic var link: String = "No attached link"
+    @objc dynamic var exerciseDescriprion: String = ""
+    @objc dynamic var howToDo: String = ""
+    @objc dynamic var link: String = ""
     var filterIDs = List<Id>()
     @objc dynamic var realTypeId: Int = -1
 

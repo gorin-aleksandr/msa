@@ -16,6 +16,9 @@ class NewExerciseDataSource {
     var editMode = false
     var newExerciseModel = Exercise() {
         didSet {
+            if newExerciseModel.id != "" {
+                id = newExerciseModel.id
+            }
             name = newExerciseModel.name
             typeId = newExerciseModel.realTypeId
             filterId = newExerciseModel.filterIDs.first?.id ?? -1
@@ -25,7 +28,8 @@ class NewExerciseDataSource {
             videoUrl = newExerciseModel.videoUrl
         }
     }
-        
+    
+    var id = ""
     var name = ""
     var typeId = -1
     var filterId = -1

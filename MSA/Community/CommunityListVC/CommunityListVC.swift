@@ -124,6 +124,9 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
          AlertDialog.showGeneralErrorAlert(on: self)
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.view.endEditing(true)
+    }
     
     func configureAccessDeniedView() {
             restoreButton.layer.masksToBounds = true

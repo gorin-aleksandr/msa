@@ -192,12 +192,12 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     
     func configureTextInfo(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "infoTextTableViewCell", for:  indexPath) as! infoTextTableViewCell
-        cell.label.text = "Что бы создать упражнения вам необходимо заполнить все поля и загрузить фото/видео."
+        cell.label.text = "Чтобы создать упражнение вам необходимо заполнить все поля и загрузить фото/видео."
         return cell
     }
     func configureTypeCell(indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChoosingItemTableViewCell", for:  indexPath) as! ChoosingItemTableViewCell
-        cell.headerLabel.text = "Группа мышц / вид спорта"
+        cell.headerLabel.text = "Группа мыщц/вид спорта"
         if exercManager.created() && (exercManager.dataSource.typeId == -1){
             cell.errorLabel.isHidden = false
         } else {
@@ -393,6 +393,7 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         selectedRow = indexPath.row
         switch selectedRow {
         case 2,3:
+            self.view.endEditing(true)
             picker.reloadAllComponents()
             UIView.animate(withDuration: 0.3) {
                 self.greyView.isHidden = false

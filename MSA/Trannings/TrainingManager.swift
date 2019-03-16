@@ -340,7 +340,7 @@ class TrainingManager {
         ]
     }
     
-    func editTraining(wiht id: Int, success: @escaping()->()) {
+    func editTraining(wiht id: Int, success: @escaping()->(), failure: ((Error?)->())? = nil) {
         if let userId = sportsmanId {
             let newInfo = makeTrainingForFirebase(id: id, or: true)
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
@@ -353,6 +353,7 @@ class TrainingManager {
                     }
                     success()
                 } else {
+                    failure?(error)
                     self.view?.errorOccurred(err: error?.localizedDescription ?? "")
                 }
             }

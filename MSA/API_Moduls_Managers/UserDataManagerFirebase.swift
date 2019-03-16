@@ -280,15 +280,15 @@ class UserDataManager {
             callback(true, connectionError)
             return
         }
-            userRef.child(userId).child("friendRequest").child(idToRemove).removeValue() {
-                error, success in
-                print(idToRemove)
-                if let error = error {
-                    callback(false, error)
-                } else {
-                    callback(true, nil)
-                }
+        userRef.child(userId).child("friendRequest").child(idToRemove).removeValue() {
+            error, success in
+            print(idToRemove)
+            if let error = error {
+                callback(false, error)
+            } else {
+                callback(true, nil)
             }
+        }
     }
     
     func removeFromSportsmen(idToRemove: String, userId: String, callback: @escaping (_ success: Bool, _ error: Error?) -> () ) {

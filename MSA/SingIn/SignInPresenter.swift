@@ -27,6 +27,7 @@ class UserSignInPresenter {
         AuthModule.facebookAuth = false
         self.view?.startLoading()
         auth.loginUser(email: email, pass: password) { (user, error) in
+            self.view?.finishLoading()
             if error == nil && user != nil {
                 let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: user?.level, age: user?.age, sex: user?.sex, height: user?.height, heightType: user?.heightType, weight: user?.weight,weightType: user?.weightType, type: user?.type, purpose: user?.purpose, gallery: user?.gallery, friends: user?.friends, trainerId: user?.trainerId, sportsmen: user?.sportsmen, requests: user?.requests, city: user?.city)
                     self.view?.setUser(user: user)
@@ -38,18 +39,35 @@ class UserSignInPresenter {
                         }
                     })
                     return
-            } else if error?.localizedDescription == AuthErrors.noSuchUser.rawValue {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Неверный пароль.")
-            } else if error?.localizedDescription == AuthErrors.noRegistratedUser.rawValue {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Пользователь не зарегистрирован.")
-            } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Неверный формат email.")
             } else {
-                self.view?.finishLoading()
-                self.view?.notLogged(resp: "Повторите позже.")
+//                if error?.localizedDescription == AuthErrors.wrongPassword.rawValue {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Неверный формат пароль.")
+//                } else if error?.localizedDescription == AuthErrors.noRegistratedUser.rawValue {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Пользователь не зарегистрирован.")
+//                } else if error?.localizedDescription == AuthErrors.badEmailFormat.rawValue {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Неверный формат email.")
+//                } else {
+//                    self.view?.finishLoading()
+//                    self.view?.notLogged(resp: "Повторите позже.")
+//                }
+
+                if let error = error {
+                    let nsError = error as NSError
+                    if nsError.code == 17006 {
+                        self.view?.notLogged(resp: "Учетные записи электронной почты и пароли не включены")
+                    } else if nsError.code == 17008 {
+                        self.view?.notLogged(resp: "Адрес электронной почты неверный")
+                    } else if nsError.code == 17005 {
+                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+                    } else if nsError.code == 17009 {
+                        self.view?.notLogged(resp: "Неверный пароль")
+                    } else {
+                        self.view?.notLogged(resp: "")
+                    }
+                }
             }
         }
     }
@@ -79,15 +97,34 @@ class UserSignInPresenter {
     }
     
     func loginWithFacebook() {
+        self.view?.startLoading()
         AuthModule.facebookAuth = true
         auth.loginFacebook { (user, error) in
+            self.view?.finishLoading()
             if error == nil && user != nil {
                 let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
                 self.view?.setUser(user: user)
                 self.view?.loggedWithFacebook()
                 return
             } else {
-                self.view?.notLogged(resp: "Ошибка авторизации")
+                if let error = error {
+                    let error = error as NSError
+                    if error.code == 17004 {
+                        self.view?.notLogged(resp: "Предоставленные учетные данные недействительны")
+                    } else if error.code == 17008 {
+                        self.view?.notLogged(resp: "Адрес электронной почты искажен")
+                    } else if error.code == 17006 {
+                        self.view?.notLogged(resp: "Учетные записи с поставщиком удостоверений, представленным учетными данными, не включены")
+                    } else if error.code == 17007 {
+                        self.view?.notLogged(resp: "Электронная почта, указанная в учетных данных, уже используется существующей учетной записью")
+                    } else if error.code == 17005 {
+                        self.view?.notLogged(resp: "Учетная запись пользователя отключена")
+                    } else if error.code == 17009 {
+                        self.view?.notLogged(resp: "Неверный пароль")
+                    } else {
+                        self.view?.notLogged(resp: "Ошибка авторизации")
+                    }
+                }
             }
         }
     }

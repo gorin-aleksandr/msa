@@ -20,6 +20,10 @@ class EmailPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        passTF.delegate = self
+        passConfirmFT.delegate = self
+        emailTF.delegate = self
+        
         presenter.attachView(view: self)
         
         // Do any additional setup after loading the view.
@@ -40,6 +44,20 @@ class EmailPasswordViewController: UIViewController {
         }
     }
     
+}
+
+extension EmailPasswordViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        switch textField.tag {
+        case 2,3:
+            if string == "" {
+                textField.text = ""
+            }
+            return true
+        default:
+            return true
+        }
+    }
 }
 
 extension EmailPasswordViewController: SignUpViewProtocol {

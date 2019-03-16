@@ -31,6 +31,7 @@ class PersonTableViewCell: UITableViewCell {
     @IBOutlet weak var typeIconImage: UIImageView!
     @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var typeLabel: UILabel!
     
     var state: PersonTableViewCellState = .communityList
     
@@ -63,16 +64,18 @@ class PersonTableViewCell: UITableViewCell {
         } else {
             avatarImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
         }
-        switch person.userType {
-        case .sportsman:
-            typeIconImage.image = #imageLiteral(resourceName: "athlet-icon")
-        case .trainer:
-            typeIconImage.image = #imageLiteral(resourceName: "coach-icon")
-        }
+        
         acceptButton.isHidden = state == .communityList || userCommunityState != .requests
         deleteButton.isHidden = state == .communityList 
         addButton.isHidden = state != .communityList
-
+        switch person.userType {
+        case .sportsman:
+            typeLabel.text = "С"
+        //            typeIconImage.image = #imageLiteral(resourceName: "athlet-icon")
+        case .trainer:
+            typeLabel.text = "T"
+            //            typeIconImage.image = #imageLiteral(resourceName: "coach-icon")
+        }
     }
     
     func setupCell(basedOn state: PersonState, isTrainerEnabled: Bool) {
