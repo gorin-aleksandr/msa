@@ -262,11 +262,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     
     @IBAction func changeProfilePhotoButton(_ sender: Any) {
-        let alert = UIAlertController(title: "Загрузить с:", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Загрузить из:", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
             self.openCamera()
         }))
-        alert.addAction(UIAlertAction(title: "Галлереи", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Галереи", style: .default, handler: { _ in
             self.openGallary()
         }))
         alert.addAction(UIAlertAction.init(title: "Отменить", style: .cancel, handler: { _ in
