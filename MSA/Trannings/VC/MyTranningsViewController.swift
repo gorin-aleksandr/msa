@@ -189,7 +189,7 @@ class MyTranningsViewController: UIViewController {
         initialViewConfiguration()
         weekNumber = manager.getWeekNumber()
         weekLabel.text = "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
     private func initialDataLoading() {
@@ -203,6 +203,7 @@ class MyTranningsViewController: UIViewController {
             manager.loadTrainingsFromRealm()
             manager.syncUnsyncedTrainings()
         } else {
+            self.navigationItem.title = "Тренировки спортсмена"
             manager.loadTrainings()
             manager.getMyExercises(success: nil)
         }
@@ -223,6 +224,7 @@ class MyTranningsViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация тренировки ...", attributes: attrs)
         configureTableView()
         showHideButtons()
+        
     }
     
     private func showHideButtons() {
@@ -574,7 +576,8 @@ class MyTranningsViewController: UIViewController {
             prevWeekButton.isHidden = true
         }
         showHideButtons()
-        UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+//        UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+        self.tableView.reloadData()
     }
     
     @objc func showDeleteDayAlert(sender: UIButton) {

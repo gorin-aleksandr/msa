@@ -30,6 +30,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var profilePhoto: UIView!
     @IBOutlet weak var changeImageButton: UIButton! {didSet{changeImageButton.imageView?.contentMode = .scaleAspectFit}}
     
+    @IBOutlet weak var sportsmanTitle: UILabel!
+    @IBOutlet weak var trainerTitle: UILabel!
+    
     @IBOutlet weak var loadingTrainerView: UIView!
     @IBOutlet weak var trainerImageIndicator: UIActivityIndicatorView!
     @IBOutlet weak var trainerStackView: UIStackView!
@@ -92,6 +95,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         measureStackView.layer.opacity = 0
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidLayoutSubviews() {
+//        trainerTitle.font = sportsmanTitle.font
     }
     
     func setShadow(outerView: UIView) {
