@@ -22,7 +22,16 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredArray: [Exercise] = []
     
-    var selectedDataArray: [Exercise] = []
+    var selectedDataArray: [Exercise] = [] {
+        didSet {
+            if let _ = trainingManager {
+                self.navigationItem.rightBarButtonItem?.image = nil
+                self.navigationItem.rightBarButtonItem?.title = selectedDataArray.isEmpty ? "" : "Добавить"
+                self.navigationItem.rightBarButtonItem?.isEnabled = selectedDataArray.isEmpty ? false : true
+                self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
+            }
+        }
+    }
     var selectedIndexes: [Int] = [] {
         didSet {
             selectedIndexes.sort { $0 < $1 }
@@ -36,6 +45,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchController.hidesNavigationBarDuringPresentation = false
         configureNavContr()
         presenter.attachView(view: self)
         trainingManager?.initView(view: self)
@@ -48,6 +58,13 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        
+        if let _ = trainingManager {
+            self.navigationItem.rightBarButtonItem?.image = nil
+            self.navigationItem.rightBarButtonItem?.title = ""
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
+        }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -65,7 +82,8 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         button.addTarget(self, action: #selector(back), for: .touchUpInside)
         let barButt = UIBarButtonItem(customView: button)
         navigationItem.leftBarButtonItem = barButt
-    }
+        
+        }
     
     @objc
     func back() {
@@ -164,6 +182,50 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    @IBAction func plus(_ sender: Any) {
+        if let manager = trainingManager {
+            if manager.sportsmanId != AuthModule.currUser.id {
+                let newExMan = NewExerciseManager()
+                newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: selectedDataArray, completion: {
+                    self.addExercisesToTraining(newExercises: self.selectedDataArray, manager: manager)
+                }) { (error) in
+                    AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
+                }
+            } else {
+                self.addExercisesToTraining(newExercises: selectedDataArray, manager: manager)
+            }
+        } else {
+            self.performSegue(withIdentifier: "newExercise", sender: nil)
+        }
+    }
+    
+    private func addExercisesToTraining(newExercises: [Exercise], manager: TrainingManager) {
+        for newExercise in newExercises {
+            let ex = ExerciseInTraining()
+            ex.id = UUID().uuidString
+            ex.name = newExercise.name
+            ex.exerciseId = newExercise.id
+            try! manager.realm.performWrite {
+                manager.getCurrentday()?.exercises.append(ex)
+            }
+        }
+        let loader = UIActivityIndicatorView()
+        loader.center = self.view.center
+        loader.activityIndicatorViewStyle = .whiteLarge
+        loader.color = .blue
+        self.view.addSubview(loader)
+        loader.startAnimating()
+        self.view.isUserInteractionEnabled = false
+        manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {
+            self.view.isUserInteractionEnabled = false
+            loader.isHidden = true
+            self.back()
+        }) { (error) in
+            self.view.isUserInteractionEnabled = false
+            loader.isHidden = true
+            AlertDialog.showAlert("Ошибка", message: "", viewController: self)
+        }
+    }
 }
 
 //MARK: - TableView
@@ -177,10 +239,24 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "exerciseTableCell", for: indexPath) as! ExercisesTableViewCell
+        var exercise: Exercise!
         if isFiltering() {
-            cell.configureCell(with: filteredArray[indexPath.row])
+            exercise = filteredArray[indexPath.row]
+            cell.configureCell(with: exercise)
         } else {
-            cell.configureCell(with: presenter.getExercises()[indexPath.row])
+            exercise = presenter.getExercises()[indexPath.row]
+            cell.configureCell(with: exercise)
+        }
+        if let _ = trainingManager {
+            cell.checkBoxImage.isHidden = false
+        } else {
+            cell.checkBoxImage.isHidden = true
+        }
+
+        if selectedIds.contains(exercise.id) {
+            cell.cellState = .selected
+        } else {
+            cell.cellState = .unselected
         }
         return cell
     }
@@ -193,20 +269,32 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             presenter.setCurrentExercise(exerc: presenter.getExercises()[indexPath.row])
         }
-        if let manager = trainingManager {
-            let newExercise = presenter.getCurrentExercise()
-            let ex = ExerciseInTraining()
-            ex.id = UUID().uuidString
-            ex.name = newExercise.name
-            ex.exerciseId = newExercise.id
-            try! manager.realm.performWrite {
-                manager.getCurrentday()?.exercises.append(ex)
-                manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
-                self.back()
-            }
+        if let _ = trainingManager {
+            let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
+            configureSelectedCell(selectedCell, in: tableView, at: indexPath)
         } else {
             self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
         }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func configureSelectedCell(_ cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {
+        guard let selectedCell = cell as? ExercisesTableViewCell else { return }
+        var selectedItem = Exercise()
+        
+        selectedItem = filteredArray[indexPath.row]
+        
+        switch selectedCell.cellState {
+        case .unselected:
+            selectedDataArray.append(selectedItem)
+            selectedIndexes.append(indexPath.row)
+            selectedIds.append(selectedItem.id)
+        case .selected:
+            selectedDataArray.remove(selectedItem)
+            selectedIndexes.remove(indexPath.row)
+            selectedIds.remove(selectedItem.id)
+        }
+        selectedCell.cellState.toggle()
     }
 }
 
@@ -291,6 +379,8 @@ extension ExercisesViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
         //When user start searching remove indexer from the screen
     }
+    
+    
     
     private func isFiltering() -> Bool {
         if searchController.isActive && !searchBarIsEmpty() {

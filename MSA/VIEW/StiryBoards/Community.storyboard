@@ -380,7 +380,7 @@
                                             <rect key="frame" x="0.0" y="134" width="320" height="120"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPc-hH-ZoP">
-                                                    <rect key="frame" x="12" y="12.5" width="296" height="95"/>
+                                                    <rect key="frame" x="12" y="13.5" width="296" height="93.5"/>
                                                     <string key="text">Получите доступ к Сообщесту и
 возможности составления программ 
 тренировок для своих спортсменов,
@@ -400,7 +400,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14 ДНЕЙ БЕСПЛАТНО" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdL-ob-BOK">
-                                            <rect key="frame" x="74" y="262" width="172.5" height="19"/>
+                                            <rect key="frame" x="75.5" y="262" width="169.5" height="19"/>
                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -429,19 +429,19 @@
                                                     <rect key="frame" x="20" y="22" width="280" height="48"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIy-MU-J1a">
-                                                            <rect key="frame" x="135.5" y="14.5" width="9.5" height="19"/>
+                                                            <rect key="frame" x="137.5" y="14.5" width="5.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                                             <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 МЕС." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xki-iA-4fb">
-                                                            <rect key="frame" x="145" y="14.5" width="51" height="19"/>
+                                                            <rect key="frame" x="143" y="14.5" width="53.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                                             <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="59.99 $" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nx-IC-cTm">
-                                                            <rect key="frame" x="76.5" y="14.5" width="59" height="19"/>
+                                                            <rect key="frame" x="84" y="14.5" width="53.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                                             <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1246,6 +1246,11 @@
                         <viewLayoutGuide key="safeArea" id="a5C-aH-yln"/>
                     </view>
                     <navigationItem key="navigationItem" id="At7-fH-gRK">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="back_" id="sYj-8N-Sic">
+                            <connections>
+                                <action selector="back:" destination="gsh-Mn-3BS" id="yyd-nL-Ls6"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="plus_blue" id="iuU-ZE-1C3">
                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -1322,6 +1327,7 @@
         <image name="athlet-icon" width="8" height="9"/>
         <image name="avatarPlaceholder" width="115" height="144"/>
         <image name="back" width="13" height="22"/>
+        <image name="back_" width="13" height="22"/>
         <image name="background_MSA" width="375" height="665"/>
         <image name="bgProfile" width="375" height="667"/>
         <image name="bttn-diet" width="328" height="222"/>

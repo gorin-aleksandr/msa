@@ -184,7 +184,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="Plus" id="3nw-Vu-S9T">
                             <color key="tintColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="xJO-oS-yzl" kind="show" id="R91-kH-C6c"/>
+                                <action selector="plus:" destination="U7j-nU-ptn" id="eAa-rR-ylc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -193,6 +193,7 @@
                         <outlet property="tableView" destination="oOI-jN-UrX" id="sd5-cf-Gyh"/>
                         <segue destination="sCD-DE-wOG" kind="show" identifier="exercisesSegueId" id="ZdS-TS-eMo"/>
                         <segue destination="OsO-Nf-As9" kind="show" identifier="oneExerciseSegueId" id="Erm-Q3-52b"/>
+                        <segue destination="xJO-oS-yzl" kind="show" identifier="newExercise" id="tK7-KX-Pwn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fo6-OV-anj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -529,6 +530,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Erm-Q3-52b"/>
-        <segue reference="R91-kH-C6c"/>
+        <segue reference="tK7-KX-Pwn"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -119,6 +119,8 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
             navigationItem.rightBarButtonItem?.tintColor = .red
             navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "delete_red")
         }
+        navigationItem.leftBarButtonItem?.image = UIImage(named: "back_")
+        navigationItem.leftBarButtonItem?.title = "Назад"
     }
     
     func updateProfile(with user: UserVO) {
@@ -253,6 +255,9 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
     
+    @IBAction func back(_ sender: Any) {
+        dismiss()
+    }
     @IBAction func closePreview(_ sender: Any) {
         UIView.animate(withDuration: 0.5) { [weak self] in
             self?.imagePreviewView.alpha = 0

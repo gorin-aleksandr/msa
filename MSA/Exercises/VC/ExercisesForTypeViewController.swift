@@ -275,12 +275,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         } else {
             cell.checkBoxImage.isHidden = true
         }
-//        if isFiltering() {
-//            cell.configureCell(with: filteredArray[indexPath.row])
-//        } else {
-//            guard let ex = exercisesByFIlter?[indexPath.row] else {return UITableViewCell()}
-//            cell.configureCell(with: ex)
-//        }
+
         let exercise = elementsForChoosing[indexPath.row]
         cell.configureCell(with: exercise)
         if selectedIds.contains(exercise.id) {
