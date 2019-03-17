@@ -408,8 +408,10 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
 
 extension ExercisesForTypeViewController: ExercisesTypesDataProtocol {
     func myExercisesLoaded() {
-        exercisesByFIlter = presenter?.getOwnExercises()
-        tableView.reloadData()
+        if presenter?.getCurrentExetcisesType().id == 12 {
+            exercisesByFIlter = presenter?.getOwnExercises()
+            tableView.reloadData()
+        }
     }
     func startLoading() {}
     func finishLoading() {}

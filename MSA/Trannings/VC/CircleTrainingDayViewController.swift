@@ -136,7 +136,9 @@ extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataS
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CircleTrainingExerciseTableViewCell", for: indexPath) as? CircleTrainingExerciseTableViewCell else {return UITableViewCell()}
         if let ex = manager.getCurrentday()?.exercises[indexPath.row] {
             if let e = manager.realm.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", ex.exerciseId)).first {
-                cell.picture.sd_setImage(with: URL(string: (e.pictures.first?.url)!), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                if let url = e.pictures.first?.url {
+                    cell.picture.sd_setImage(with: URL(string: url), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+                }
                 cell.nameLabel.text = e.name
             }
             cell.podhodCountLabel.text =  "Подход #  из \(ex.iterations.count)"

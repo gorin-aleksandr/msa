@@ -547,6 +547,7 @@ class MyTranningsViewController: UIViewController {
         case "roundTraining":
             guard let vc = segue.destination as? CircleTrainingDayViewController else {return}
             vc.manager = self.manager
+            vc.manager.trainedIterationsIDS.removeAll()
         case "chooseExercisesForRoundTraining":
             guard let vc = segue.destination as? MultipleChoicesViewController else {return}
             vc.delegate = self

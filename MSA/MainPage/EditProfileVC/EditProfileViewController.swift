@@ -284,7 +284,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         presenter.deleteTrainer(trainerId, deleted: {
             self.finishLoading()
             findTrainerView.isHidden = false
-            AlertDialog.showAlert("Удаление прошло успешно!", message: "У вас теперь нету тренера.", viewController: self)
+            AlertDialog.showAlert("Удаление прошло успешно!", message: "У вас теперь нет тренера.", viewController: self)
         }) {
             self.finishLoading()
             AlertDialog.showAlert("Ошибка удаления!", message: "Повторите еще раз.", viewController: self)
@@ -292,6 +292,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     @IBAction func findTrainer(_ sender: Any) {
         self.tabBarController?.selectedIndex = 2
+        (self.tabBarController?.viewControllers?.last as? UINavigationController)?.popToRootViewController(animated: false)
     }
     @IBAction func setSportsmanType(_ sender: Any) {
         presenter.setType(type: .sport)

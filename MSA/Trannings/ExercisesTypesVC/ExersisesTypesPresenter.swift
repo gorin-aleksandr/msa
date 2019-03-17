@@ -279,7 +279,7 @@ class ExersisesTypesPresenter {
     
     func setExercisesForType(with id: Int) {
         if id == 12 {
-            exercises.currentTypeExercisesArray = exercises.ownExercises
+            exercises.currentTypeExercisesArray = exercises.ownExercises.filter({$0.trainerId == AuthModule.currUser.id})
         } else {
             exercises.currentTypeExercisesArray = self.realmManager.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "typeId = %d", id))
             var exerc = [Exercise]()

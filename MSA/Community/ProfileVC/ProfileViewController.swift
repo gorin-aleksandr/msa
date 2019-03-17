@@ -111,7 +111,6 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
             containerViewHeightConstraint.constant -= viewWithButtons.frame.height
             buttViewHeight.constant = 0
             buttonsStackView.isHidden = true
-            
         }
         if state == .all {
             navigationItem.rightBarButtonItem?.tintColor = .lightBlue
@@ -142,9 +141,12 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
             dailyTraining.text = dream
         }
         setProfileImage(image: nil, url: user.avatar)
-          if  user.userType == .trainer {
-            
+        if  user.userType == .trainer {
+
         }
+//        if let trainer = user.trainerId, trainer == AuthModule.currUser.id {
+//            configureButtonsView()
+//        }
     }
     
     func setProfileImage(image: UIImage?, url: String?) {

@@ -137,9 +137,10 @@ class NewExerciseManager {
     
     func addExerciseToUser(id: String, ex: Exercise, completion: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
         fillData(exercise: ex)
-        let newInfo = makeExerciseForFirebase(id: id, or: true)
+        var newInfo = makeExerciseForFirebase(id: id, or: true)
+        newInfo["trainerId"] = AuthModule.currUser.id
         guard let index = newInfo["id"] as? String else {return}
-        Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
+        Database.database().reference().child("ExercisesByTrainers").child(id).child(index).updateChildValues(newInfo) { (error, databaseFer) in
             if error == nil {
                 completion()
                 self.finish()
@@ -153,11 +154,12 @@ class NewExerciseManager {
         var exInfo = [String:Any]()
         for ex in exercises {
             fillData(exercise: ex)
-            let newInfo = makeExerciseForFirebase(id: id, or: true)
+            var newInfo = makeExerciseForFirebase(id: id, or: true)
+            newInfo["trainerId"] = AuthModule.currUser.id
             guard let index = newInfo["id"] as? String else {return}
             exInfo[index] = newInfo
         }
-        Database.database().reference().child("ExercisesByTrainers").child(id).setValue(exInfo) { (error, databaseFer) in
+        Database.database().reference().child("ExercisesByTrainers").child(id).updateChildValues(exInfo) { (error, databaseFer) in
             if error == nil {
                 completion()
                 self.finish()
@@ -173,7 +175,7 @@ class NewExerciseManager {
         self.dataSource.newExerciseModel = exercise
     }
     
-    func makeExerciseForFirebase(id: String, or edit: Bool) -> [String:Any] {
+    func makeExerciseForFirebase(id: String, or edit: Bool, toUser: Bool = false) -> [String:Any] {
         var filters = [[String:Any]]()
         filters.append(["id":self.dataSource.filterId])
         var pictures = [[String:Any]]()

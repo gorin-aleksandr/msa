@@ -22,6 +22,14 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredArray: [Exercise] = []
     
+    var selectedDataArray: [Exercise] = []
+    var selectedIndexes: [Int] = [] {
+        didSet {
+            selectedIndexes.sort { $0 < $1 }
+        }
+    }
+    var selectedIds: [String] = []
+    
     let presenter = ExersisesTypesPresenter(exercises: ExersisesDataManager())
     var trainingManager: TrainingManager? = nil
     
@@ -209,7 +217,8 @@ extension ExercisesViewController : UICollectionViewDelegateFlowLayout, UICollec
         return CGSize(width: self.view.frame.width/3, height: self.view.frame.width/3)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if presenter.getOwnExercises().count != 0 {
+        let own = presenter.getOwnExercises().filter({$0.trainerId == AuthModule.currUser.id})
+        if own.count != 0 {
             return presenter.getTypes().count + 1
         } else {
             return presenter.getTypes().count
@@ -217,7 +226,9 @@ extension ExercisesViewController : UICollectionViewDelegateFlowLayout, UICollec
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exerciseCollectionCell", for: indexPath) as! ExercisesCollectionViewCell
-        if presenter.getOwnExercises().count != 0 && indexPath.row == presenter.getTypes().count {
+        let own = presenter.getOwnExercises().filter({$0.trainerId == AuthModule.currUser.id})
+
+        if own.count != 0 && indexPath.row == presenter.getTypes().count {
             cell.nameLabel.text = "Свои"
             cell.imageView.sd_setImage(with: URL(string: "https://firebasestorage.googleapis.com/v0/b/msa-progect.appspot.com/o/%D0%A1%D0%B2%D0%BE%D0%B8.png?alt=media&token=2f923b39-8d90-43ff-97ce-c0fa7960de23"), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
         } else {
@@ -226,7 +237,9 @@ extension ExercisesViewController : UICollectionViewDelegateFlowLayout, UICollec
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if presenter.getOwnExercises().count != 0 && indexPath.row == presenter.getTypes().count {
+        let own = presenter.getOwnExercises().filter({$0.trainerId == AuthModule.currUser.id})
+
+        if own.count != 0 && indexPath.row == presenter.getTypes().count {
             presenter.setExercisesForType(with: 12)
             let type = ExerciseType()
             for exers in presenter.getCurrentTypeExerceses() {

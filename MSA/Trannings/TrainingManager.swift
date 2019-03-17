@@ -342,6 +342,7 @@ class TrainingManager {
     
     func editTraining(wiht id: Int, success: @escaping()->(), failure: ((Error?)->())? = nil) {
         if let userId = sportsmanId {
+            
             let newInfo = makeTrainingForFirebase(id: id, or: true)
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
                 self.view?.finishLoading()
@@ -829,11 +830,32 @@ class TrainingManager {
     private var trainingInProgress: Bool = false
     private var secondomerStarted: Bool = false
     
-    private var exercises: [ExerciseInTraining]?
+    private var exercises: [ExerciseInTraining]? {
+        didSet {
+            iterationsCount = 0
+            exercises?.forEach({iterationsCount += $0.iterations.count})
+        }
+    }
     private var currentExercise: ExerciseInTraining?
     private var iterations: [Iteration]?
-    private var currentIteration: Iteration?
+    private var currentIteration: Iteration? {
+        didSet {
+            if isTrainingFinished() {
+                fullStop()
+            }
+        }
+        willSet {
+            guard let id = currentIteration?.id else {
+                return
+            }
+            trainedIterationsIDS.append(id)
+        }
+    }
     private var iterationsForTraining = [Iteration]()
+    
+    var trainedIterationsIDS: [String] = []
+   
+    private var iterationsCount: Int = 0
     private var currentExerciseNumber = 0
     private var currentIterationNumber = 0
     private var currentRestTime = 0
@@ -873,7 +895,7 @@ class TrainingManager {
         return currentExercise?.iterations.count ?? 0
     }
     func getCurrentIterationInfo() -> Iteration {
-        return currentIteration!
+        return currentIteration ?? Iteration()
     }
     
     private func nextIterationState() {
@@ -923,6 +945,7 @@ class TrainingManager {
                 case .iterationsOnly:
                     currentIterationNumber += 1
             }
+            
             currentIteration = iterations?[currentIterationNumber]
             setCurrentTime()
         }
@@ -931,6 +954,16 @@ class TrainingManager {
         } else {
             self.flowView?.higlightIteration(on: currentIterationNumber)
         }
+        
+    }
+    
+    func isTrainingFinished() -> Bool {
+        if let id = currentIteration?.id, trainedIterationsIDS.contains(id) {
+            return true
+        } else if trainedIterationsIDS.count == iterationsCount {
+            return true
+        }
+        return false
     }
     
     private func roundFlow(withStart: Bool) {
@@ -1105,39 +1138,47 @@ class TrainingManager {
     private func startTimer() {
         trainingInProgress = true
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
-            if self.iterationState == .work {
-                if self.currentWorkTime != 0 {
-                    self.currentWorkTime -= 1
-                    self.eventWithTimer(time: self.currentWorkTime)
-                } else {
-                    if (self.currentIteration?.startTimerOnZero)! && self.currentIteration?.workTime == 0 {
-                        self.stopIteration()
-                        self.startSecondomer()
-                    } else if !(self.currentIteration?.startTimerOnZero)! && self.currentIteration?.workTime == 0 {
-                        self.stopIteration()
-                        self.eventWithTimer(time: self.currentWorkTime)
+            if !self.isTrainingFinished() {
+                if let current = self.currentIteration {
+                    if self.iterationState == .work {
+                        if self.currentWorkTime != 0 {
+                            self.currentWorkTime -= 1
+                            self.eventWithTimer(time: self.currentWorkTime)
+                        } else {
+                            if (current.startTimerOnZero) && current.workTime == 0 {
+                                self.stopIteration()
+                                self.startSecondomer()
+                            } else if !(current.startTimerOnZero) && current.workTime == 0 {
+                                self.stopIteration()
+                                self.eventWithTimer(time: self.currentWorkTime)
+                            } else {
+                                self.nextIterationState()
+                            }
+                        }
                     } else {
-                        self.nextIterationState()
+                        if self.currentRestTime != 0 {
+                            self.currentRestTime -= 1
+                            self.eventWithTimer(time: self.currentRestTime)
+                        } else {
+                            if (current.startTimerOnZero) && current.restTime == 0 {
+                                self.stopIteration()
+                                self.iterationState = .rest
+                                self.startSecondomer()
+                            } else if !(current.startTimerOnZero) && self.currentIteration?.restTime == 0 {
+                                self.stopIteration()
+                                self.iterationState = .rest
+                                self.eventWithTimer(time: self.currentRestTime)
+                            } else {
+                                self.nextIterationState()
+                                self.iterationsSwitcher()
+                            }
+                        }
                     }
                 }
             } else {
-                if self.currentRestTime != 0 {
-                    self.currentRestTime -= 1
-                    self.eventWithTimer(time: self.currentRestTime)
-                } else {
-                    if (self.currentIteration?.startTimerOnZero)! && self.currentIteration?.restTime == 0 {
-                        self.stopIteration()
-                        self.iterationState = .rest
-                        self.startSecondomer()
-                    } else if !(self.currentIteration?.startTimerOnZero)! && self.currentIteration?.restTime == 0 {
-                        self.stopIteration()
-                        self.iterationState = .rest
-                        self.eventWithTimer(time: self.currentRestTime)
-                    } else {
-                        self.nextIterationState()
-                        self.iterationsSwitcher()
-                    }
-                }
+                self.fullStop()
+
+                self.trainedIterationsIDS.removeAll()
             }
         }
     }
@@ -1258,6 +1299,7 @@ class TrainingManager {
                 }
             }
         }
+        
     }
     
     func stopIteration() {
@@ -1267,13 +1309,17 @@ class TrainingManager {
     }
     
     func fullStop() {
+        self.iterationsCount = 0
+//        self.trainedIterationsIDS.removeAll()
         self.flowView?.higlightIteration(on: 0)
         saveIterationsInfo()
         stopIteration()
         currentIterationNumber = 0
-        trainingStarted = false
-        trainingInProgress = false
+        timer.invalidate()
+        secondomer.invalidate()
         self.flowView?.changeTime(time: "--:--", iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
+        self.currentIteration = nil
+        self.currentExercise = nil
         editTraining(wiht: dataSource?.currentTraining?.id ?? 0, success: {})
         finish()
     }
