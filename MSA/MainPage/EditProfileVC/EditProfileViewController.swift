@@ -269,11 +269,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     
     @IBAction func changeProfilePhotoButton(_ sender: Any) {
-        let alert = UIAlertController(title: "Загрузить с:", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Загрузить из:", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
             self.openCamera()
         }))
-        alert.addAction(UIAlertAction(title: "Галлереи", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Галереи", style: .default, handler: { _ in
             self.openGallary()
         }))
         alert.addAction(UIAlertAction.init(title: "Отменить", style: .cancel, handler: { _ in
@@ -357,20 +357,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func rules(_ sender: Any) {
     }
     @IBAction func logout(_ sender: Any) {
+        AlertDialog.showConfirmationAlert("Выход из приложения", message: "Вы действительно хотите выйти из приложения?", viewController: self, confirmAction: logout)
+    }
+    
+    func logout() {
         presenter.deleteUserBlock(context: context) { (loggedOut) in
-        self.presenter.clearRealm()
-        if loggedOut {
+            self.presenter.clearRealm()
+            if loggedOut {
                 let storyBoard = UIStoryboard(name: "Main", bundle:nil)
                 let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainNVC") as! UINavigationController
                 self.navigationController?.show(nextViewController, sender: self)
                 AuthModule.currUser.id = nil
                 
             } else {
-                AlertDialog.showAlert("Ошибка", message: "Ошибка логаута", viewController: self)
+                AlertDialog.showAlert("Ошибка", message: "Ошибка при выходе из приложения", viewController: self)
             }
         }
-        
     }
+    
     @IBAction func hideTrainerView(_ sender: Any) {
 
     }

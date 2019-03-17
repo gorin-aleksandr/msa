@@ -24,6 +24,21 @@ class AlertDialog {
         
     }
     
+    class func showConfirmationAlert(_ title: String, message: String, viewController: UIViewController, confirmAction: (() -> Void)? = nil) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Oк", style: .default) { (action) in
+            confirmAction?()
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        viewController.present(alertController, animated: true, completion: nil)
+        
+    }
+    
     class func showGeneralErrorAlert(on viewController: UIViewController) {
         let alertController = UIAlertController(title: "Ошибка", message: "Попробуйте еще раз.", preferredStyle: .alert)
         

@@ -195,7 +195,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         let alert = UIAlertController(title: "Загрузить:", message: nil, preferredStyle: .actionSheet)
         //        alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
         //        }))
-        alert.addAction(UIAlertAction(title: "Из галлереи", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Из галереи", style: .default, handler: { _ in
             self.openGallary()
         }))
         alert.addAction(UIAlertAction.init(title: "Отменить", style: .cancel, handler: { _ in
@@ -224,7 +224,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     }
     @IBAction func deleteItem(_ sender: UIButton) {
         let index = sender.tag
-        let alert = UIAlertController(title: "Удаление с галлереи", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Удаление из галереи", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Удалить", style: .default, handler: { _ in
             self.presenter.deleteGaleryItem(index: index)
         }))

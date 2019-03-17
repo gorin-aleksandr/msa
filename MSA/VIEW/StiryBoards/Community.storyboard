@@ -1263,6 +1263,7 @@
                         <outlet property="activityIndicator" destination="5Mr-rO-RLg" id="nGW-ej-dj5"/>
                         <outlet property="buttViewHeight" destination="7d1-X9-qKI" id="nu0-hg-cTk"/>
                         <outlet property="buttonsStackView" destination="yrx-H9-4Wr" id="o5r-Dk-Q45"/>
+                        <outlet property="cityLabel" destination="PQL-Dy-583" id="nix-Zh-y5a"/>
                         <outlet property="containerViewHeightConstraint" destination="0Fv-t5-RBG" id="PjM-yd-hVF"/>
                         <outlet property="dailyTraining" destination="J5h-Si-Hfd" id="btP-Iy-ers"/>
                         <outlet property="dreamInsideView" destination="ZVe-5e-BlE" id="3qP-Ge-aIs"/>
@@ -1330,10 +1331,10 @@
         <image name="back_" width="13" height="22"/>
         <image name="background_MSA" width="375" height="665"/>
         <image name="bgProfile" width="375" height="667"/>
-        <image name="bttn-diet" width="328" height="222"/>
-        <image name="bttn-measure" width="328" height="222"/>
-        <image name="bttn-stat" width="328" height="222"/>
-        <image name="bttn-training" width="328" height="222"/>
+        <image name="bttn-diet" width="109" height="74"/>
+        <image name="bttn-measure" width="109" height="74"/>
+        <image name="bttn-stat" width="109" height="74"/>
+        <image name="bttn-training" width="109" height="74"/>
         <image name="coach-icon" width="8" height="8"/>
         <image name="delete_red" width="14" height="14"/>
         <image name="dropdown_navy" width="8" height="4"/>

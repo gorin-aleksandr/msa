@@ -28,6 +28,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     @IBOutlet weak var imagePreviewView: UIView!
     @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var cityLabel: UILabel!
     
     @IBOutlet weak var viewWithButtons: UIView!
     @IBOutlet weak var scrollView: UIView!
@@ -126,6 +127,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     func updateProfile(with user: UserVO) {
         if let name = user.firstName, let surname = user.lastName {
             userName.text = name + " " + surname
+            cityLabel.text = user.city
         }
         if let level = user.level {
             userLevel.text = level
