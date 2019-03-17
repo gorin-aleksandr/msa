@@ -70,10 +70,10 @@ class PersonTableViewCell: UITableViewCell {
         addButton.isHidden = state != .communityList
         switch person.userType {
         case .sportsman:
-            typeLabel.text = "С"
+            typeLabel.text = "А"
         //            typeIconImage.image = #imageLiteral(resourceName: "athlet-icon")
         case .trainer:
-            typeLabel.text = "T"
+            typeLabel.text = "С"
             //            typeIconImage.image = #imageLiteral(resourceName: "coach-icon")
         }
     }

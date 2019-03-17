@@ -359,7 +359,7 @@
                                                         <constraint firstAttribute="height" constant="64" id="gLD-Ar-2th"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Упражнение" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eO8-zz-FeX">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Упражнение" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eO8-zz-FeX">
                                                     <rect key="frame" x="84" y="16" width="246" height="43"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -529,7 +529,7 @@
         <image name="ok_blue" width="16" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Erm-Q3-52b"/>
-        <segue reference="tK7-KX-Pwn"/>
+        <segue reference="IH0-2z-9zU"/>
+        <segue reference="5un-LR-fho"/>
     </inferredMetricsTieBreakers>
 </document>

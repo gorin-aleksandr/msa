@@ -70,7 +70,7 @@ class ExercisesForTypeViewController: UIViewController {
         }
         filters = presenter?.getCurrentFilters() ?? []
         let allFilter = ExerciseTypeFilter()
-        allFilter.name = "ВСЕ В КАТЕГОРИИ"
+        allFilter.name = "Все в категории"
         filters.insert(allFilter, at: 0)
         selectedFilter = filters.first?.name ?? ""
         exercisesByFIlter = presenter?.getCurrentTypeExerceses()

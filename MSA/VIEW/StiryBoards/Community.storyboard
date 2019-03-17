@@ -380,7 +380,7 @@
                                             <rect key="frame" x="0.0" y="134" width="320" height="120"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPc-hH-ZoP">
-                                                    <rect key="frame" x="12" y="13.5" width="296" height="93.5"/>
+                                                    <rect key="frame" x="12" y="12.5" width="296" height="95"/>
                                                     <string key="text">Получите доступ к Сообщесту и
 возможности составления программ 
 тренировок для своих спортсменов,
@@ -400,7 +400,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14 ДНЕЙ БЕСПЛАТНО" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdL-ob-BOK">
-                                            <rect key="frame" x="75.5" y="262" width="169.5" height="19"/>
+                                            <rect key="frame" x="74" y="262" width="172.5" height="19"/>
                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -429,19 +429,19 @@
                                                     <rect key="frame" x="20" y="22" width="280" height="48"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="/" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIy-MU-J1a">
-                                                            <rect key="frame" x="137.5" y="14.5" width="5.5" height="19"/>
+                                                            <rect key="frame" x="135.5" y="14.5" width="9.5" height="19"/>
                                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                                             <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 МЕС." textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xki-iA-4fb">
-                                                            <rect key="frame" x="143" y="14.5" width="53.5" height="19"/>
+                                                            <rect key="frame" x="145" y="14.5" width="51" height="19"/>
                                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                                             <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="59.99 $" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nx-IC-cTm">
-                                                            <rect key="frame" x="84" y="14.5" width="53.5" height="19"/>
+                                                            <rect key="frame" x="76.5" y="14.5" width="59" height="19"/>
                                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                                             <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -825,7 +825,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <subviews>
-                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="me" translatesAutoresizingMaskIntoConstraints="NO" id="RSV-Wh-BmH">
+                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RSV-Wh-BmH">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="32" id="gwk-93-Xhm"/>
@@ -1673,7 +1673,6 @@ AABtAAAAAAAAAAAAAAAAAABLgQ
         <image name="levelBG" width="87" height="16"/>
         <image name="location_icon" width="12" height="15"/>
         <image name="main_logo_blue" width="185" height="118"/>
-        <image name="me" width="776" height="1048"/>
         <image name="my-community-button" width="26" height="24"/>
         <image name="plus Icon" width="16" height="16"/>
         <image name="plus_blue" width="18" height="18"/>

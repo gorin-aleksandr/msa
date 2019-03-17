@@ -66,7 +66,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
+        accessDeniedView.isHidden = true//InAppPurchasesService.shared.currentSubscription != nil
         setupNavigationBar()
         configureCityPicker()
         updateTableView()
