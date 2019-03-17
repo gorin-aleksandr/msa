@@ -164,10 +164,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     private func setTrainerInfo(of user: UserVO) {
-        if user.userType == .trainer {
-            trainerStackView.isHidden = true
-            return
-        }
+//        if user.userType == .trainer {
+//            trainerStackView.isHidden = true
+//            return
+//        }
         guard let trainerId = user.trainerId, trainerId != "" else {
             findTrainerView.isHidden = false
             return
