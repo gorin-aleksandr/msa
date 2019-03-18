@@ -177,7 +177,7 @@ class ExercisesForTypeViewController: UIViewController {
     @objc func filterTapped(_ sender: UIButton) {
         exercisesByFIlter?.removeAll()
         selectedFilter = filters[sender.tag].name
-        if selectedFilter == "ВСЕ В КАТЕГОРИИ" {
+        if selectedFilter == "Все в категории" {
             exercisesByFIlter = presenter?.getCurrentTypeExerceses()
         } else {
             for ex in (presenter?.getCurrentTypeExerceses())! {
