@@ -187,13 +187,22 @@ class TrainingManager {
                 if let replacementExercise = dataSource?.currentWeek?.days[day].exercises[index] {
                     dataSource?.currentWeek?.wasSync = false
                     dataSource?.currentWeek?.days[day].exercises.remove(at: index)
-                    if dataSource?.currentWeek?.days[day_].exercises.count == index_ - 1 {
-                        dataSource?.currentWeek?.days[day_].exercises.insert(replacementExercise, at: index_ - 1)
+                    if dataSource?.currentWeek?.days.count == day_ {
+                        if dataSource?.currentWeek?.days[day_-1].exercises.count == index_ - 1 {
+                            dataSource?.currentWeek?.days[day_-1].exercises.insert(replacementExercise, at: (dataSource?.currentWeek?.days[day_-1].exercises.count)! - 1)
+                        } else {
+                            dataSource?.currentWeek?.days[day_-1].exercises.insert(replacementExercise, at: (dataSource?.currentWeek?.days[day_-1].exercises.count)!)
+                        }
+                        dataSource?.currentWeek?.days[day_-1].roundExercisesIds.removeAll()
                     } else {
-                        dataSource?.currentWeek?.days[day_].exercises.insert(replacementExercise, at: index_)
+                        if dataSource?.currentWeek?.days[day_].exercises.count == index_ - 1 {
+                            dataSource?.currentWeek?.days[day_].exercises.insert(replacementExercise, at: index_ - 1)
+                        } else {
+                            dataSource?.currentWeek?.days[day_].exercises.insert(replacementExercise, at: index_)
+                        }
+                        dataSource?.currentWeek?.days[day_].roundExercisesIds.removeAll()
                     }
                     dataSource?.currentWeek?.days[day].roundExercisesIds.removeAll()
-                    dataSource?.currentWeek?.days[day_].roundExercisesIds.removeAll()
                 }
             }
         } catch {
@@ -203,8 +212,13 @@ class TrainingManager {
     }
     
     func checkForRoundTraining(at source: IndexPath, to destination: IndexPath) -> Bool {
+        var secondDay: TrainingDay?
+        if dataSource?.currentWeek?.days.count == destination.section {
+            secondDay = dataSource?.currentWeek?.days[destination.section - 1]
+        } else {
+            secondDay = dataSource?.currentWeek?.days[destination.section]
+        }
         let firstDay = dataSource?.currentWeek?.days[source.section]
-        let secondDay = dataSource?.currentWeek?.days[destination.section]
         return (!(firstDay?.roundExercisesIds.isEmpty ?? true) && !(firstDay?.roundExercisesIds.first?.id == "")) || (!(secondDay?.roundExercisesIds.isEmpty ?? true)  && !(firstDay?.roundExercisesIds.first?.id == ""))
     }
     
