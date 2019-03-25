@@ -36,7 +36,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "575053697.622175"
+                  timestampString = "575234630.756446"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "106"
@@ -51,7 +51,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "575053697.627301"
+                  timestampString = "575234630.760444"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "107"
@@ -84,7 +84,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "575053697.644092"
+                  timestampString = "575234630.7729191"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
@@ -99,7 +99,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "575053697.649709"
+                  timestampString = "575234630.776454"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "128"
@@ -116,11 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "575053697.507599"
+            timestampString = "575234913.192428"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1203"
-            endingLineNumber = "1203"
+            startingLineNumber = "1207"
+            endingLineNumber = "1207"
             landmarkName = "startSecondomer()"
             landmarkType = "7">
          </BreakpointContent>
@@ -132,11 +132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "575053697.508402"
+            timestampString = "575234913.193123"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1244"
-            endingLineNumber = "1244"
+            startingLineNumber = "1248"
+            endingLineNumber = "1248"
             landmarkName = "startTraining()"
             landmarkType = "7">
             <Locations>
@@ -171,22 +171,6 @@
                   offsetFromSymbolStart = "40">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "575053697.509588"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1155"
-            endingLineNumber = "1155"
-            landmarkName = "startTimer()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

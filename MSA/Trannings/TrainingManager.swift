@@ -972,12 +972,16 @@ class TrainingManager {
     }
     
     func isTrainingFinished() -> Bool {
-        if let id = currentIteration?.id, trainedIterationsIDS.contains(id) {
-            return true
-        } else if trainedIterationsIDS.count == iterationsCount {
-            return true
+        if trainingState == .iterationsOnly {
+            return false
+        } else {
+            if let id = currentIteration?.id, trainedIterationsIDS.contains(id) {
+                return true
+            } else if trainedIterationsIDS.count == iterationsCount {
+                return true
+            }
+            return false
         }
-        return false
     }
     
     private func roundFlow(withStart: Bool) {
@@ -1191,7 +1195,7 @@ class TrainingManager {
                 }
             } else {
                 self.fullStop()
-
+                self.timer.invalidate()
                 self.trainedIterationsIDS.removeAll()
             }
         }
@@ -1324,7 +1328,6 @@ class TrainingManager {
     
     func fullStop() {
         self.iterationsCount = 0
-//        self.trainedIterationsIDS.removeAll()
         self.flowView?.higlightIteration(on: 0)
         saveIterationsInfo()
         stopIteration()
