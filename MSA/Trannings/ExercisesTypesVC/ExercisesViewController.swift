@@ -25,10 +25,15 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     var selectedDataArray: [Exercise] = [] {
         didSet {
             if let _ = trainingManager {
-                self.navigationItem.rightBarButtonItem?.image = nil
-                self.navigationItem.rightBarButtonItem?.title = selectedDataArray.isEmpty ? "" : "Добавить"
-                self.navigationItem.rightBarButtonItem?.isEnabled = selectedDataArray.isEmpty ? false : true
-                self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
+                if selectedDataArray.isEmpty {
+                    self.navigationItem.rightBarButtonItem?.image = UIImage(named: "Plus")
+                    self.navigationItem.rightBarButtonItem?.title = ""
+                } else {
+                    self.navigationItem.rightBarButtonItem?.image = nil
+                    self.navigationItem.rightBarButtonItem?.title = selectedDataArray.isEmpty ? "" : "Добавить"
+//                    self.navigationItem.rightBarButtonItem?.isEnabled = selectedDataArray.isEmpty ? false : true
+                    self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
+                }
             }
         }
     }
@@ -55,16 +60,17 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     private func configureNavContr() {
+        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
         
-        if let _ = trainingManager {
-            self.navigationItem.rightBarButtonItem?.image = nil
-            self.navigationItem.rightBarButtonItem?.title = ""
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-            self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
-        }
+//        if let _ = trainingManager {
+//            self.navigationItem.rightBarButtonItem?.image = nil
+//            self.navigationItem.rightBarButtonItem?.title = ""
+//            self.navigationItem.rightBarButtonItem?.isEnabled = false
+//            self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
+//        }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -101,24 +107,15 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func initialDataPreparing() {
         getFromRealm()
-        //        if presenter.getFilters().isEmpty {
+
         presenter.getAllFilters()
-        //        } else {
-        //            presenter.detectFiltersChanges()
-        //        }
-        
-        //        if presenter.getExercises().isEmpty {
+
         presenter.getAllExersises()
-        //        } else {
-        //            presenter.detectExersisesChanges()
-        //        }
-        
-        //        if presenter.getTypes().isEmpty {
+
         presenter.getAllTypes()
-        //        } else {
-        //            presenter.detectTypesChanges()
-        //        }
+
         presenter.getMyExercises()
+        selectedDataArray = []
     }
     
     @objc func exerciseAddedN(notfication: NSNotification) {
@@ -183,7 +180,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func plus(_ sender: Any) {
-        if let manager = trainingManager {
+        if let manager = trainingManager, !selectedDataArray.isEmpty {
             if manager.sportsmanId != AuthModule.currUser.id {
                 let newExMan = NewExerciseManager()
                 newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: selectedDataArray, completion: {
@@ -379,8 +376,6 @@ extension ExercisesViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
         //When user start searching remove indexer from the screen
     }
-    
-    
     
     private func isFiltering() -> Bool {
         if searchController.isActive && !searchBarIsEmpty() {

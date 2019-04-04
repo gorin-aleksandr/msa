@@ -116,6 +116,7 @@ class ExercisesForTypeViewController: UIViewController {
     }
     
     private func configurateSearchController() {
+        searchController.hidesNavigationBarDuringPresentation = false
         let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
@@ -444,7 +445,6 @@ extension ExercisesForTypeViewController: UISearchResultsUpdating {
 
 extension ExercisesForTypeViewController: TrainingsViewDelegate {
     func synced() {}
-    
     func trainingEdited() {}
     func trainingsLoaded() {}
     func templateCreated() {}

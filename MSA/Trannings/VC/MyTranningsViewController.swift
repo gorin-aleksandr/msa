@@ -255,6 +255,8 @@ class MyTranningsViewController: UIViewController {
         showHideButtons()
     }
     @IBAction func renameWeek(_ sender: Any) {
+        guard let weekCount = manager.getCurrentTraining()?.weeks.count, weekCount != 0 else {return}
+
         let alert = UIAlertController(title: "Новое название", message: "Введите новое название для недели", preferredStyle: UIAlertControllerStyle.alert)
         
         let action = UIAlertAction(title: "Подтвердить", style: .default) { (alertAction) in
@@ -688,7 +690,6 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
             UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
         }
-
         return delete
     }
     
