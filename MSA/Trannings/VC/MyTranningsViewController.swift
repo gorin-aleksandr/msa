@@ -89,7 +89,7 @@ class MyTranningsViewController: UIViewController {
     @objc func copyWeek(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             AudioServicesPlaySystemSound(1519)
-            let alertController = UIAlertController(title: "Внимание!", message: "Вы хотети скопировать неделю?", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Внимание!", message: "Вы хотите скопировать неделю?", preferredStyle: .alert)
             let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
                 self.manager.copyWeek()
                 self.showHideButtons()
@@ -108,7 +108,7 @@ class MyTranningsViewController: UIViewController {
             
             AudioServicesPlaySystemSound(1519)
             
-            let alertController = UIAlertController(title: "Внимание!", message: "Вы хотети скопировать \(index+1) день?", preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Внимание!", message: "Вы хотите скопировать \(index+1) день?", preferredStyle: .alert)
             let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
                 self.manager.copyDay(at: index)
                 self.tableView.reloadData()
@@ -321,7 +321,8 @@ class MyTranningsViewController: UIViewController {
             if addDayWeek {
                 self.addDay()
             } else {
-                self.deleteTraining()
+//                self.deleteTraining()
+                self.showDeleteTrainingsAlert()
             }
         })
         let thirdAction = UIAlertAction(title: "Удалить неделю", style: .default, handler: { action in
@@ -332,9 +333,12 @@ class MyTranningsViewController: UIViewController {
         let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
         })
-        
-        alert.addAction(firstAction)
-        alert.addAction(secondAction)
+        if addDayWeek {
+            alert.addAction(firstAction)
+        }
+        if manager.isMyProfile() {
+            alert.addAction(secondAction)
+        }
         if !addDayWeek {
             alert.addAction(thirdAction)
         }
@@ -351,6 +355,8 @@ class MyTranningsViewController: UIViewController {
         setFont(action: cancel, text: "Отмена", regular: false)
     }
 
+    
+    
     private func setFont(action: UIAlertAction,text: String, regular: Bool) {
         var fontName = "Rubik"
         if !regular {
@@ -505,7 +511,7 @@ class MyTranningsViewController: UIViewController {
     func changeWeek() {
         if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
             manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
-            weekLabel.text =  "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
+            weekLabel.text =  "\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
             nextWeekButton.isHidden = false
             prevWeekButton.isHidden = false
         } else {
@@ -514,9 +520,20 @@ class MyTranningsViewController: UIViewController {
             prevWeekButton.isHidden = true
         }
         showHideButtons()
-//        UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
         self.tableView.reloadData()
     }
+    
+    private func showDeleteTrainingsAlert() {
+        let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить все созданные тренировки?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
+            self.deleteTraining()
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in }
+        alertController.addAction(cancelAction)
+        alertController.addAction(yesAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     
     @objc func showDeleteDayAlert(sender: UIButton) {
         let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить день?", preferredStyle: .alert)
@@ -565,7 +582,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
                 headerView.addGestureRecognizer(longPressRecognizer)
                 
                 headerView.dateLabel.text = day.date == "" ? "______(дата)" : day.date
-                headerView.dayLabel.text = "День #\(section + 1)"
+                headerView.dayLabel.text = "День \(section + 1)"
                 headerView.nameTextField.text = day.name
                 headerView.nameTextField.tag = section
                 headerView.nameTextField.delegate = self
@@ -710,6 +727,7 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     
     func trainingDeleted() {
         manager.loadTrainingsFromRealm()
+//        self.tableView.reloadData()
     }
     
     func synced() {
@@ -735,7 +753,7 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     
     func trainingsLoaded() {
         changeWeek()
-        manager.loadTemplates()
+//        manager.loadTemplates()
     }
     
     func errorOccurred(err: String) {

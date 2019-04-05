@@ -102,6 +102,11 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func nextIterationstate(_ sender: UIButton) {
         if iterationsPresent() {
             manager.nextStateOrIteration()
+            if manager.isLastIteration() {
+                tableView.isUserInteractionEnabled = true
+                manager.fullStop()
+                disable(myButtons: [stopButton, pauseButton, playNextButton])
+            }
         }
     }
 
@@ -313,13 +318,16 @@ extension IterationsViewController: TrainingFlowDelegate {
         restLabel.text = time
     }
     
-    func changeTime(time: String, iterationState: IterationState, i: (Int,Int)) {
+    func changeTime(time: String, iterationState: IterationState, i: (Int,Int), stop: Bool) {
         switch iterationState {
         case .work:
             configureWorkView(time: time)
         case .rest:
             configureRestView(time: time)
         }
+//        if stop {
+//            AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)
+//        }
     }
     
     func higlightIteration(on: Int) {

@@ -103,6 +103,11 @@ class CircleTrainingDayViewController: UIViewController {
     
     @objc private func nextIterationstate(_ sender: UIButton) {
         manager.nextStateOrIteration()
+        if manager.isLastIteration() {
+            tableView.isUserInteractionEnabled = true
+            manager.fullStop()
+            disable(myButtons: [stopButton, pauseButton, playNextButton])
+        }
     }
     
     @objc private func stopIteration(_ sender: UIButton) {
@@ -141,7 +146,7 @@ extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataS
                 }
                 cell.nameLabel.text = e.name
             }
-            cell.podhodCountLabel.text =  "Подход #  из \(ex.iterations.count)"
+            cell.podhodCountLabel.text =  "Подход 0 из \(ex.iterations.count)"
             cell.circleButton.isHidden = manager.trainingState == .round ? false : true
         }
         return cell
@@ -191,7 +196,7 @@ extension CircleTrainingDayViewController: TrainingFlowDelegate {
         restLabel.text = time
     }
     
-    func changeTime(time: String, iterationState: IterationState, i: (Int,Int)) {
+    func changeTime(time: String, iterationState: IterationState, i: (Int,Int), stop: Bool) {
         switch iterationState {
         case .work:
             configureWorkView(time: time)
@@ -200,10 +205,19 @@ extension CircleTrainingDayViewController: TrainingFlowDelegate {
         }
         let indexPath = IndexPath(row: i.0, section: 0)
         guard let cell = tableView.cellForRow(at: indexPath) as? CircleTrainingExerciseTableViewCell else {return}
-        cell.podhodCountLabel.text = "Подход #\(i.1+1) из \(manager.getIterationsCount())"
+        if let ex = manager.getCurrentday()?.exercises[indexPath.row] {
+            cell.podhodCountLabel.text = "Подход \(i.1+1) из \(ex.iterations.count)"
+        } else {
+            cell.podhodCountLabel.text = "Подход \(i.1+1) из \(manager.getIterationsCount())"
+        }
         cell.counts.setTitle("\(manager.getCurrentIterationInfo().counts)", for: .normal)
         cell.kdButton.setTitle("\(manager.getCurrentIterationInfo().weight) кг", for: .normal)
         cell.progressView.progress = Float(i.1+1)/Float(manager.getIterationsCount())
+        
+        if stop {
+            AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)
+            disable(myButtons: [stopButton, pauseButton, playNextButton, playButton])
+        }
     }
     
     func higlightIteration(on: Int) {

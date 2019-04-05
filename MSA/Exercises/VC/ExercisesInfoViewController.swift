@@ -107,6 +107,8 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let link = execise?.link, link == "" {
             return 5
+        } else if execise?.typeId == 12 {
+            return 5
         }
         return 6
     }

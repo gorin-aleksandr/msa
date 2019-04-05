@@ -29,7 +29,7 @@ class ApproachTableViewCell: UITableViewCell {
     }
     
     func configureCell(iteration: Iteration, indexPath: IndexPath) {
-        self.numberLabel.text = "#\(indexPath.row+1):"
+        self.numberLabel.text = "\(indexPath.row+1):"
         self.weightAndCountsLabel.text = "\(iteration.weight) кг х \(iteration.counts) раз"
         var wMin = Int(iteration.workTime/60)
         var rMin = Int(iteration.restTime/60)

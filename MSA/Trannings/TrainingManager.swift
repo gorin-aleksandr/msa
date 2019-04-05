@@ -24,7 +24,7 @@ import AVFoundation
 }
 
 protocol TrainingFlowDelegate: class {
-    func changeTime(time: String, iterationState: IterationState, i: (Int,Int))
+    func changeTime(time: String, iterationState: IterationState, i: (Int,Int), stop: Bool)
     func higlightIteration(on: Int)
     func rewriteIterations()
 }
@@ -61,6 +61,10 @@ class TrainingManager {
         case .notMine(let id):
             return id
         }
+    }
+    
+    func isMyProfile() -> Bool {
+        return sportsmanId == AuthModule.currUser.id
     }
     
     init(type: TrainingType) {
@@ -549,7 +553,9 @@ class TrainingManager {
                 self.view?.finishLoading()
                 if error == nil {
                     guard let object = RealmManager.shared.getElement(ofType: Training.self, filterWith: NSPredicate(format: "id = %d", Int(id) ?? -1)) else {return}
+                    
                     RealmManager.shared.deleteObject(object)
+                    self.clearRealm()
                     self.view?.trainingDeleted!()
                 } else {
                     self.view?.errorOccurred(err: error?.localizedDescription ?? "")
@@ -870,13 +876,18 @@ class TrainingManager {
     var trainedIterationsIDS: [String] = []
    
     private var iterationsCount: Int = 0
-    private var currentExerciseNumber = 0
-    private var currentIterationNumber = 0
+    var currentExerciseNumber = 0
+    var currentIterationNumber = 0
     private var currentRestTime = 0
     private var currentWorkTime = 0
     private var secondomerTime = 0
     
+    func isLastIteration() -> Bool {
+        return trainedIterationsIDS.count >= iterationsForTraining.count
+    }
+    
     private func createIterationsCopy(i: Int) {
+        self.iterationsForTraining = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
         iterations = Array(dataSource?.currentExerciseInDay?.iterations ?? List<Iteration>())
         currentIteration = iterations?[i]
         setCurrentTime()
@@ -1334,7 +1345,7 @@ class TrainingManager {
         currentIterationNumber = 0
         timer.invalidate()
         secondomer.invalidate()
-        self.flowView?.changeTime(time: "--:--", iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
+        self.flowView?.changeTime(time: "--:--", iterationState: iterationState, i: (currentExerciseNumber, -1), stop: true)
         self.currentIteration = nil
         self.currentExercise = nil
         editTraining(wiht: dataSource?.currentTraining?.id ?? 0, success: {})
@@ -1363,10 +1374,8 @@ class TrainingManager {
             timeString.removeFirst()
         }
         self.audioEffect(on: time)
-//        if !secondomerStarted {
-//            NotificationTimer.timeToShow = Double(time)
-//        }
-        self.flowView?.changeTime(time: timeString, iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber))
+
+        self.flowView?.changeTime(time: timeString, iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber), stop: false)
     }
     
     private func audioEffect(on time: Int) {
