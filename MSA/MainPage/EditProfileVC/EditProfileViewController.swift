@@ -300,6 +300,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func findTrainer(_ sender: Any) {
         self.tabBarController?.selectedIndex = 2
         (self.tabBarController?.viewControllers?.last as? UINavigationController)?.popToRootViewController(animated: false)
+        if let vc = (self.tabBarController?.viewControllers?.last as? UINavigationController)?.viewControllers.first as? CommunityListViewController {
+            vc.communityTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
     }
     @IBAction func setSportsmanType(_ sender: Any) {
         presenter.setType(type: .sport)
