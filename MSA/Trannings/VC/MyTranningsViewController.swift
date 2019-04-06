@@ -267,7 +267,12 @@ class MyTranningsViewController: UIViewController {
         let action2 = UIAlertAction(title: "Отменить", style: .default) { (alertAction) in }
         
         alert.addTextField { (textField) in
+            textField.tag = 999
+            textField.delegate = self
             textField.placeholder = "Введите название недели"
+            if let name = self.manager.dataSource?.currentWeek?.name {
+                textField.text = name
+            }
         }
         
         alert.addAction(action)
@@ -807,11 +812,16 @@ extension MyTranningsViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) { }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        try! manager.realm.performWrite {
-            guard let object = manager.dataSource?.currentWeek?.days[textField.tag] else {return}
-            object.name = (textField.text ?? "").capitalizingFirstLetter()
-            self.tableView.reloadData()
-            self.manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+        switch textField.tag {
+        case 999:
+            textField.text  = (textField.text ?? "").capitalizingFirstLetter()
+        default:
+            try! manager.realm.performWrite {
+                guard let object = manager.dataSource?.currentWeek?.days[textField.tag] else {return}
+                object.name = (textField.text ?? "").capitalizingFirstLetter()
+                self.tableView.reloadData()
+                self.manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
+            }
         }
     }
 }
