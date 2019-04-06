@@ -22,6 +22,7 @@ class CircleTrainingDayViewController: UIViewController {
     @IBOutlet weak var restOrWorkImageView: UIImageView!
     @IBOutlet weak var pulseImageView: UIImageView!
     @IBOutlet weak var heartBeatButton: UIButton!
+    @IBOutlet weak var circleBarButton: UIBarButtonItem!
     
     var manager = TrainingManager(type: .my)
     var heartBeatService = HeartBeatManager()
@@ -59,7 +60,7 @@ class CircleTrainingDayViewController: UIViewController {
     private func configureUI() {
         
         navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День #\(manager.numberOfDay()) . Упражнений: \(manager.exercisesCount())")
+        self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День \(manager.numberOfDay()) . Упражнений: \(manager.exercisesCount())")
         configureTableView()
         self.pauseButton.addTarget(self, action: #selector(pauseIteration(_:)), for: .touchUpInside)
         self.playButton.addTarget(self, action: #selector(resumeIteration(_:)), for: .touchUpInside)
@@ -67,6 +68,8 @@ class CircleTrainingDayViewController: UIViewController {
         self.playNextButton.addTarget(self, action: #selector(nextIterationstate(_:)), for: .touchUpInside)
         heartBeatButton.layer.cornerRadius = 6
         heartBeatButton.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        
+        self.circleBarButton.image = manager.trainingState == .round ? UIImage(named: "roundtraining-active-32px") : UIImage(named: "CircleGrey")
     }
     
     private func configureTableView() {
@@ -147,7 +150,8 @@ extension CircleTrainingDayViewController: UITableViewDelegate, UITableViewDataS
                 cell.nameLabel.text = e.name
             }
             cell.podhodCountLabel.text =  "Подход 0 из \(ex.iterations.count)"
-            cell.circleButton.isHidden = manager.trainingState == .round ? false : true
+//            cell.circleButton.isHidden = manager.trainingState == .round ? false : true
+            cell.circleButton.isHidden = true
         }
         return cell
     }
