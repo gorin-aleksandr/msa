@@ -60,6 +60,10 @@ class EmailPasswordViewController: UIViewController {
                 AlertDialog.showAlert("Ошибка", message: "Пароли не совпадают!", viewController: self)
                 return
             }
+            if pass.count < 6 {
+                AlertDialog.showAlert("Ошибка", message: "Пароль должен быть мимимум 6 символов!", viewController: self)
+                return
+            }
             if !email.isValidEmail {
                 AlertDialog.showAlert("Ошибка", message: "Невалидная почта!", viewController: self)
                 return
