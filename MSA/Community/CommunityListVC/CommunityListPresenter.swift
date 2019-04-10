@@ -214,8 +214,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     func addToFriends(user: UserVO) {
         guard let id = user.id, let currentId = currentUser?.id else { return }
         dataLoader.addToFriend(with: id) { [weak self] (success, error) in
+            self?.view.stopLoadingViewState()
             if error != nil {
-                self?.view.stopLoadingViewState()
                 self?.view.showGeneralAlert()
             } else {
                 self?.updateFriendInDatasource(for: id)
@@ -230,8 +230,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     func addAsTrainer(user: UserVO) {
         guard let id = user.id, let currentId = currentUser?.id else { return }
         dataLoader.addAsTrainer(with: id) { [weak self] (success, error) in
+            self?.view.stopLoadingViewState()
             if error != nil {
-                self?.view.stopLoadingViewState()
                 self?.view.showGeneralAlert()
             } else {
                 self?.removeFromRequests(idToRemove: currentId, userId: id)
@@ -244,8 +244,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
 
     private func addAsSportsman(idToAdd: String, userId: String) {
         dataLoader.addToSportsmen(idToAdd: idToAdd, userId: userId, callback: { [weak self] (success, error) in
+            self?.view.stopLoadingViewState()
             if error != nil {
-                self?.view.stopLoadingViewState()
                 self?.view.showGeneralAlert()
             }
         })
@@ -253,8 +253,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     
     private func removeFromRequests(idToRemove: String, userId: String) {
         dataLoader.removeFromRequests(idToRemove: idToRemove, userId: userId, callback: { [weak self] (success, error) in
+            self?.view.stopLoadingViewState()
             if error != nil {
-                self?.view.stopLoadingViewState()
                 self?.view.showGeneralAlert()
             } else {
                 guard let currentId = self?.currentUser?.id, currentId == userId else {return}
@@ -267,8 +267,8 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     
     private func addRequest(idToAdd: String, userId: String) {
         dataLoader.addToRequests(idToAdd: idToAdd, userId: userId, callback: { [weak self] (success, error) in
+            self?.view.stopLoadingViewState()
             if error != nil {
-                self?.view.stopLoadingViewState()
                 self?.view.showGeneralAlert()
             }
         })
