@@ -135,19 +135,19 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             trainerTypeImage.image = #imageLiteral(resourceName: "selected")
         }
         if let age = user.age {
-            ageLabel.text = "\(age)"
+            ageLabel.text = "\(age), лет"
         }
         if let sex = user.sex {
-            sexLabel.text = sex
+            sexLabel.text = sex + ", пол"
         }
         if let height = user.height {
-            heightLabel.text = "\(height)" + " " + "см" // hotfix
+            heightLabel.text = "\(height), см" // hotfix
         }
         if let weight = user.weight {
-            weightLabel.text = "\(weight)" + " " + "кг" // hotfix
+            weightLabel.text = "\(weight), кг" // hotfix
         }
         if let level = user.level {
-            levelLabel.text = level
+            levelLabel.text = "Уровень - \(level)"
         }
         if user.heightType == "sm" {
             smImage.image = #imageLiteral(resourceName: "selected")
@@ -420,23 +420,25 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row])"
-            presenter.setAge(age: Int(ageLabel.text!)!)
+            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = presenter.getSexes()[row]
-            presenter.setSex(sex: sexLabel.text!)
+            sexLabel.text = "\(presenter.getSexes()[row])" + ", пол"
+            presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
-            heightLabel.text = "\(presenter.getHeight()[row])"
-            presenter.setHeight(height: Int(heightLabel.text!)!)
+            heightLabel.text = "\(presenter.getHeight()[row]), см"
+            presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row])"
-            presenter.setWeight(weight: Int(weightLabel.text!)!)
+            weightLabel.text = "\(presenter.getWeight()[row]), \(AuthModule.currUser.weightType ?? "кг")"
+            presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
-            levelLabel.text = presenter.getlevels()[row]
-            presenter.setLevel(level: levelLabel.text!)
+            levelLabel.text = "\(presenter.getlevels()[row]), пол"
+            presenter.setLevel(level: presenter.getlevels()[row])
         }
         closePicker()
     }
+    
+    
     
     func openPicker() {
         pickerView.reloadAllComponents()

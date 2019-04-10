@@ -145,7 +145,7 @@ class MyTranningsViewController: UIViewController {
         }
     }
     
-     private func initialViewConfiguration() {
+    private func initialViewConfiguration() {
         loadingView.isHidden = true
         segmentControl.layer.masksToBounds = true
         segmentControl.layer.cornerRadius = 13
@@ -160,7 +160,6 @@ class MyTranningsViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация тренировки ...", attributes: attrs)
         configureTableView()
         showHideButtons()
-        
     }
     
     private func showHideButtons() {
