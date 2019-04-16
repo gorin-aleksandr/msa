@@ -340,7 +340,7 @@ class MyTranningsViewController: UIViewController {
         if addDayWeek {
             alert.addAction(firstAction)
         }
-        if manager.isMyProfile() {
+        if manager.isMyProfile() || addDayWeek {
             alert.addAction(secondAction)
         }
         if !addDayWeek {
