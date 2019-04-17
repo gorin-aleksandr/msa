@@ -115,7 +115,11 @@ extension SignInViewController: SignInViewProtocol {
     
     func notLogged(resp: String) {
         self.view.isUserInteractionEnabled = true
-        AlertDialog.showAlert("Ошибка авторизации", message: resp, viewController: self)
+        if resp == "" {
+            AlertDialog.showAlert("Нет подключения к интернету.", message: "Проверьте соединение и повторите попытку позже.", viewController: self)
+        } else {
+            AlertDialog.showAlert("Ошибка авторизации", message: resp, viewController: self)
+        }
     }
     
     func startLoading() {

@@ -58,6 +58,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var pickerView: UIPickerView! {didSet{pickerView.alpha = 0}}
     @IBOutlet weak var measureStackView: UIStackView!
+    @IBOutlet weak var measureHeight: NSLayoutConstraint!
     
     @IBOutlet weak var approveEmail: UIButton! {
         didSet {
@@ -301,7 +302,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.tabBarController?.selectedIndex = 2
         (self.tabBarController?.viewControllers?.last as? UINavigationController)?.popToRootViewController(animated: false)
         if let vc = (self.tabBarController?.viewControllers?.last as? UINavigationController)?.viewControllers.first as? CommunityListViewController {
-            vc.communityTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            if let _ = vc.communityTableView {
+                vc.communityTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     @IBAction func setSportsmanType(_ sender: Any) {
@@ -432,7 +435,7 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
             weightLabel.text = "\(presenter.getWeight()[row]), \(AuthModule.currUser.weightType ?? "кг")"
             presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
-            levelLabel.text = "\(presenter.getlevels()[row]), пол"
+            levelLabel.text = "Уровень - \(presenter.getlevels()[row])"
             presenter.setLevel(level: presenter.getlevels()[row])
         }
         closePicker()
@@ -441,11 +444,13 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     
     func openPicker() {
+        measureHeight.constant = 360
         pickerView.reloadAllComponents()
         pickerView.alpha = 1
     }
     
     func closePicker() {
+        measureHeight.constant = 240
         pickerView.alpha = 0
     }
     

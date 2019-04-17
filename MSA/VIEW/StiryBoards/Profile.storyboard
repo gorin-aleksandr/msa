@@ -88,6 +88,12 @@
                                                             <constraint firstItem="gtq-2q-1Dc" firstAttribute="bottom" secondItem="4TB-wt-NS3" secondAttribute="bottom" id="px1-ej-lug"/>
                                                         </constraints>
                                                     </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bFe-wK-HeN">
+                                                        <rect key="frame" x="312" y="85" width="32" height="32"/>
+                                                        <connections>
+                                                            <action selector="goToTrainer:" destination="9IR-Rq-7dp" eventType="touchUpInside" id="BCN-TB-aZa"/>
+                                                        </connections>
+                                                    </button>
                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCF-0j-T7T">
                                                         <rect key="frame" x="32" y="86" width="30" height="30"/>
                                                         <constraints>
@@ -203,14 +209,18 @@
                                                     <constraint firstAttribute="bottom" secondItem="FmJ-bh-Qxq" secondAttribute="bottom" constant="35" id="D9k-j9-ZSU"/>
                                                     <constraint firstItem="pX6-oD-Tqa" firstAttribute="leading" secondItem="Nzm-9b-E07" secondAttribute="leading" constant="16" id="DcC-rK-WqS"/>
                                                     <constraint firstItem="PCF-0j-T7T" firstAttribute="top" secondItem="pX6-oD-Tqa" secondAttribute="top" constant="16" id="JWm-oE-prn"/>
+                                                    <constraint firstItem="bFe-wK-HeN" firstAttribute="bottom" secondItem="4TB-wt-NS3" secondAttribute="bottom" id="NaO-GI-LHX"/>
                                                     <constraint firstItem="hhw-OI-dYY" firstAttribute="top" secondItem="bow-Q8-RvY" secondAttribute="bottom" constant="4" id="PQM-WU-WFX"/>
+                                                    <constraint firstItem="bFe-wK-HeN" firstAttribute="top" secondItem="4TB-wt-NS3" secondAttribute="top" id="PYc-tp-Okp"/>
                                                     <constraint firstItem="FmJ-bh-Qxq" firstAttribute="leading" secondItem="Nzm-9b-E07" secondAttribute="leading" constant="36" id="RCm-l8-kzg"/>
+                                                    <constraint firstItem="bFe-wK-HeN" firstAttribute="leading" secondItem="4TB-wt-NS3" secondAttribute="leading" id="Tvj-Cd-kez"/>
                                                     <constraint firstAttribute="height" constant="290" id="ZqF-fB-OJI"/>
                                                     <constraint firstItem="NGK-0M-sNH" firstAttribute="centerX" secondItem="Nzm-9b-E07" secondAttribute="centerX" id="cAr-cA-anv"/>
                                                     <constraint firstItem="bow-Q8-RvY" firstAttribute="centerX" secondItem="Nzm-9b-E07" secondAttribute="centerX" id="o43-ba-AWK"/>
                                                     <constraint firstAttribute="bottom" secondItem="pX6-oD-Tqa" secondAttribute="bottom" constant="20" id="peR-ex-w6A"/>
                                                     <constraint firstItem="aTR-v5-s7Q" firstAttribute="centerX" secondItem="Nzm-9b-E07" secondAttribute="centerX" id="r0Y-Xf-73s"/>
                                                     <constraint firstItem="PCF-0j-T7T" firstAttribute="leading" secondItem="pX6-oD-Tqa" secondAttribute="leading" constant="16" id="rUz-kz-F8e"/>
+                                                    <constraint firstItem="bFe-wK-HeN" firstAttribute="trailing" secondItem="4TB-wt-NS3" secondAttribute="trailing" id="tXb-rM-BNG"/>
                                                     <constraint firstItem="hhw-OI-dYY" firstAttribute="centerX" secondItem="Nzm-9b-E07" secondAttribute="centerX" id="u0Z-4H-sRN"/>
                                                     <constraint firstItem="bow-Q8-RvY" firstAttribute="top" secondItem="aTR-v5-s7Q" secondAttribute="bottom" id="urf-TS-mBd"/>
                                                     <constraint firstAttribute="trailing" secondItem="pX6-oD-Tqa" secondAttribute="trailing" constant="16" id="vI8-wl-TbU"/>
@@ -626,7 +636,7 @@
                                 <rect key="frame" x="0.0" y="20" width="414" height="1580"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gwp-op-1xp">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1181"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1121"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Y45-VH-HCs" userLabel="ProfileImageStack View">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="210"/>
@@ -1062,10 +1072,10 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jMY-Tl-VC0" userLabel="User_InfoStack View">
-                                                <rect key="frame" x="0.0" y="693" width="414" height="300"/>
+                                                <rect key="frame" x="0.0" y="693" width="414" height="240"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0uC-w3-VjA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="300"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="240"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="9Ik-Hp-J2Q">
                                                                 <rect key="frame" x="32" y="5" width="350" height="60"/>
@@ -1483,9 +1493,9 @@
                                                                 </constraints>
                                                             </view>
                                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ip-Qt-PEO">
-                                                                <rect key="frame" x="35" y="235" width="344" height="75"/>
+                                                                <rect key="frame" x="35" y="235" width="344" height="125"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="75" id="5uw-M5-hvL"/>
+                                                                    <constraint firstAttribute="height" constant="125" id="5uw-M5-hvL"/>
                                                                 </constraints>
                                                                 <connections>
                                                                     <outlet property="dataSource" destination="Py7-GS-EmO" id="LNI-XF-rmS"/>
@@ -1514,11 +1524,11 @@
                                                     </view>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="300" id="hQo-HX-qf2"/>
+                                                    <constraint firstAttribute="height" constant="240" id="hQo-HX-qf2"/>
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jX1-Pf-Afx">
-                                                <rect key="frame" x="0.0" y="993" width="414" height="8"/>
+                                                <rect key="frame" x="0.0" y="933" width="414" height="8"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1St-m3-RpD">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="8"/>
@@ -1530,7 +1540,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nAh-Qg-f6S" userLabel="EmailStack View">
-                                                <rect key="frame" x="0.0" y="1001" width="414" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="941" width="414" height="0.0"/>
                                                 <subviews>
                                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DTt-Am-6VQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="639.5" height="290"/>
@@ -1631,7 +1641,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xnD-Am-Vgq">
-                                                <rect key="frame" x="0.0" y="1001" width="414" height="8"/>
+                                                <rect key="frame" x="0.0" y="941" width="414" height="8"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ip3-La-do2">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="8"/>
@@ -1643,7 +1653,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="RFH-u4-WkI" userLabel="LastStack View">
-                                                <rect key="frame" x="0.0" y="1009" width="414" height="172"/>
+                                                <rect key="frame" x="0.0" y="949" width="414" height="172"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XFc-mf-xRd">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="172"/>
@@ -1860,6 +1870,7 @@
                         <outlet property="kgImage" destination="N5A-IT-uco" id="K1T-Cf-CB7"/>
                         <outlet property="levelLabel" destination="Svs-1S-8jN" id="aNi-Gp-ArR"/>
                         <outlet property="loadingTrainerView" destination="1Ym-Is-xyz" id="uJJ-gA-lQR"/>
+                        <outlet property="measureHeight" destination="hQo-HX-qf2" id="bez-nN-Cdo"/>
                         <outlet property="measureStackView" destination="9Te-eG-Ax9" id="cEH-Fv-qKW"/>
                         <outlet property="pdImage" destination="czF-oj-ggA" id="iEd-qi-a0G"/>
                         <outlet property="pickerView" destination="8ip-Qt-PEO" id="qkO-tZ-Keh"/>
@@ -1954,7 +1965,7 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/32" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKK-FW-gjy">
-                                        <rect key="frame" x="284.5" y="56.5" width="26.5" height="15.5"/>
+                                        <rect key="frame" x="281" y="56.5" width="30" height="15.5"/>
                                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
                                         <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2145,10 +2156,10 @@
         <image name="back" width="13" height="22"/>
         <image name="bgProfile" width="375" height="667"/>
         <image name="big_black_outline" width="311" height="48"/>
-        <image name="bttn-diet" width="109" height="74"/>
-        <image name="bttn-measure" width="109" height="74"/>
-        <image name="bttn-stat" width="109" height="74"/>
-        <image name="bttn-training" width="109" height="74"/>
+        <image name="bttn-diet" width="328" height="222"/>
+        <image name="bttn-measure" width="328" height="222"/>
+        <image name="bttn-stat" width="328" height="222"/>
+        <image name="bttn-training" width="328" height="222"/>
         <image name="change_photo_edit_profile" width="253" height="24"/>
         <image name="coach_black_12px" width="12" height="12"/>
         <image name="community" width="34" height="26"/>
@@ -2163,6 +2174,6 @@
         <image name="settingsFirst" width="18" height="18"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wXK-fd-Bcz"/>
+        <segue reference="v9Z-YQ-XFX"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -72,14 +72,19 @@ class EditProfilePresenter {
     
     func getTrainerInfo(trainer id: String, success: @escaping (_ trainer: UserVO)->()) {
         Database.database().reference().child("Users").child(id).observeSingleEvent(of: .value) { (s) in
-            guard let id = s.childSnapshot(forPath: "id").value as? String else {return}
-            var trainer = UserVO()
-            trainer.id = id
-            trainer.avatar = s.childSnapshot(forPath: "userPhoto").value as? String
-            trainer.firstName = s.childSnapshot(forPath: "name").value as? String
-            trainer.lastName = s.childSnapshot(forPath: "surname").value as? String
+            let value = s.value as? [String : Any]
+            if let trainer = UserDataManager().makeUser(from: value) {
+                success(trainer)
+            } else {
+//                guard let id = s.childSnapshot(forPath: "id").value as? String else {return}
+//                var trainer = UserVO()
+//                trainer.id = id
+//                trainer.avatar = s.childSnapshot(forPath: "userPhoto").value as? String
+//                trainer.firstName = s.childSnapshot(forPath: "name").value as? String
+//                trainer.lastName = s.childSnapshot(forPath: "surname").value as? String
+//                success(trainer)
+            }
 
-            success(trainer)
         }
     }
     

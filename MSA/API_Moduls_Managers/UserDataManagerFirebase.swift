@@ -137,7 +137,7 @@ class UserDataManager {
         }
     }
     
-    private func makeUser(from value: [String : Any]?) -> UserVO? {
+    func makeUser(from value: [String : Any]?) -> UserVO? {
         var user: UserVO?
         var gallery = [GalleryItemVO]()
         if let value = value {
