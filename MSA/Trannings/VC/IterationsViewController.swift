@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import SwipeCellKit
 
 class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
 
@@ -220,6 +221,7 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         if let iteration = manager.getCurrentExercise()?.iterations[indexPath.row] {
             cell.configureCell(iteration: iteration, indexPath: indexPath)
             cell.restButton.addTarget(self, action: #selector(startIteration(_:)), for: .touchUpInside)
+            cell.delegate = self
         }
         return cell
     }
@@ -243,11 +245,13 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = getDeleteAction()
-        let copy = getCopyAction()
-        return [delete, copy]
-    }
+    
+    
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//        let delete = getDeleteAction()
+//        let copy = getCopyAction()
+//        return [delete, copy]
+//    }
     
     private func getCopyAction() -> UITableViewRowAction {
         let copy = UITableViewRowAction(style: .normal, title: "Копировать") { (action, indexPath) in
@@ -370,14 +374,41 @@ extension IterationsViewController: HeartBeatManagerDelegate {
             heartBeatService.connectDevice(with: id)
         }
     }
-    
     func deviceDidFailedToConnect(peripheral: CBPeripheral, error: Error?) {}
-    
     func deviceDidConnected(peripheral: CBPeripheral) {}
-    
     func couldNotDiscoverServicesOrCharacteristics() {}
-    
     func deviceDidDisconnected() {}
+
+}
+
+extension IterationsViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        return [getDeleteSwipeAction(),getCopySwipeAction()]
+    }
     
-    
+    private func getDeleteSwipeAction() -> SwipeAction {
+        let deleteAction = SwipeAction(style: .destructive, title: "") { action, indexPath in
+            guard let object = self.manager.getCurrentExercise()?.iterations[indexPath.row] else {return}
+            self.manager.realm.deleteObject(object)
+            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+        }
+        deleteAction.image = UIImage(named: "cancel-24px")
+        deleteAction.title = nil
+        deleteAction.backgroundColor = .white
+        
+        return deleteAction
+    }
+    private func getCopySwipeAction() -> SwipeAction {
+        let copyAction = SwipeAction(style: .default, title: "") { action, indexPath in
+            self.copyIteration(at: indexPath.row)
+        }
+        copyAction.image = UIImage(named: "copy_blue")
+        copyAction.title = nil
+        copyAction.backgroundColor = .white
+        
+        return copyAction
+    }
 }

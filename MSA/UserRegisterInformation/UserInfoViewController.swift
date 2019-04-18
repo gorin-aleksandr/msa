@@ -33,6 +33,7 @@ class UserInfoViewController: BasicViewController {
     @IBOutlet weak var pounds: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     
+    @IBOutlet weak var stackWithMeasureButtons: UIStackView!
     @IBOutlet weak var weightStackView: UIStackView!
     @IBOutlet weak var measureStackView: UIStackView!
     private let presenter = SignUpPresenter(signUp: UserDataManager())
@@ -147,7 +148,7 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             heightLabel.text = "\(presenter.getHeight()[row]), см"
             presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row]), \(AuthModule.currUser.weightType ?? "кг")"
+            weightLabel.text = "\(presenter.getWeight()[row]), кг"
             presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
             levelLabel.text = presenter.getlevels()[row]
