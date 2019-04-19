@@ -61,7 +61,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        manager.finish()
+//        manager.finish()
     }
     
     private func configureUI() {
@@ -106,6 +106,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
             if manager.isLastIteration() {
                 tableView.isUserInteractionEnabled = true
                 manager.fullStop()
+                deselectTableView()
                 disable(myButtons: [stopButton, pauseButton, playNextButton])
             }
         }
@@ -114,6 +115,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     @objc private func stopIteration(_ sender: UIButton) {
         if iterationsPresent() {
             manager.fullStop()
+            deselectTableView()
             disable(myButtons: [stopButton, pauseButton, playNextButton])
         }
     }
@@ -154,6 +156,8 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func backAction(_ sender: Any) {
+        manager.finish()
+        manager.fullStop()
         back()
     }
     @IBAction func showExerciseInfo(_ sender: Any) {
@@ -168,7 +172,6 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc
     func back() {
-//        manager.fullStop()
         navigationController?.popViewController(animated: true)
     }
     
@@ -245,14 +248,11 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    
-    
-//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-//        let delete = getDeleteAction()
-//        let copy = getCopyAction()
-//        return [delete, copy]
-//    }
-    
+    func deselectTableView() {
+        for cell in tableView.visibleCells {
+            cell.backgroundColor = .white
+        }
+    }
     private func getCopyAction() -> UITableViewRowAction {
         let copy = UITableViewRowAction(style: .normal, title: "Копировать") { (action, indexPath) in
             self.copyIteration(at: indexPath.row)

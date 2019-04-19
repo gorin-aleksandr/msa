@@ -771,12 +771,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NId-4H-QaA">
                                 <rect key="frame" x="25" y="290" width="325" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Уровень подготовки" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7O7-7F-Rtd">
-                                        <rect key="frame" x="5" y="0.0" width="158" height="19"/>
-                                        <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fui-Wl-c8M">
                                         <rect key="frame" x="5" y="54.5" width="315" height="0.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -808,7 +802,6 @@
                                 <constraints>
                                     <constraint firstItem="CaD-3v-rD6" firstAttribute="leading" secondItem="NId-4H-QaA" secondAttribute="leading" constant="5" id="1E2-T8-zaF"/>
                                     <constraint firstAttribute="trailing" secondItem="1nh-mZ-Z1E" secondAttribute="trailing" id="73a-oY-b8f"/>
-                                    <constraint firstItem="7O7-7F-Rtd" firstAttribute="leading" secondItem="NId-4H-QaA" secondAttribute="leading" constant="5" id="Cc1-Gy-sBg"/>
                                     <constraint firstAttribute="trailing" secondItem="Sew-t1-iUI" secondAttribute="trailing" constant="5" id="HXe-jW-8XZ"/>
                                     <constraint firstAttribute="trailing" secondItem="Fui-Wl-c8M" secondAttribute="trailing" constant="5" id="Lez-WL-iIi"/>
                                     <constraint firstAttribute="height" constant="60" id="TvT-d2-46w"/>
@@ -819,7 +812,6 @@
                                     <constraint firstItem="1nh-mZ-Z1E" firstAttribute="leading" secondItem="NId-4H-QaA" secondAttribute="leading" id="emY-ja-gGJ"/>
                                     <constraint firstItem="CaD-3v-rD6" firstAttribute="centerY" secondItem="NId-4H-QaA" secondAttribute="centerY" id="mq1-Oc-srU"/>
                                     <constraint firstAttribute="bottom" secondItem="Fui-Wl-c8M" secondAttribute="bottom" constant="5" id="px0-WK-VOH"/>
-                                    <constraint firstItem="7O7-7F-Rtd" firstAttribute="top" secondItem="NId-4H-QaA" secondAttribute="top" id="tcK-Ib-TfL"/>
                                     <constraint firstItem="Sew-t1-iUI" firstAttribute="centerY" secondItem="NId-4H-QaA" secondAttribute="centerY" id="v8K-sw-TAk"/>
                                 </constraints>
                             </view>
@@ -929,7 +921,6 @@
                         <outlet property="heightHeader" destination="HQC-s3-eLR" id="a7f-zX-hlJ"/>
                         <outlet property="heightLabel" destination="fkU-rl-gWY" id="KFP-UF-nbU"/>
                         <outlet property="kgImage" destination="MEe-sh-JvX" id="IVn-Rl-dON"/>
-                        <outlet property="levelHeader" destination="7O7-7F-Rtd" id="eLd-KP-bef"/>
                         <outlet property="levelLabel" destination="CaD-3v-rD6" id="C5x-ss-FBw"/>
                         <outlet property="measureStackView" destination="hbc-xs-UhL" id="ECj-Vy-gU4"/>
                         <outlet property="pounds" destination="P12-Hi-cCI" id="GCZ-UN-KuS"/>
@@ -937,7 +928,6 @@
                         <outlet property="sexLabel" destination="uSH-2r-Z6n" id="EbK-Qu-pX3"/>
                         <outlet property="smImage" destination="zWz-p6-X29" id="u7l-X4-EUM"/>
                         <outlet property="stackWithMeasureButtons" destination="tWO-gn-ezy" id="5P0-2J-UsW"/>
-                        <outlet property="weightHeader" destination="xeB-3L-Jzg" id="Hnl-cn-B5q"/>
                         <outlet property="weightLabel" destination="Q49-3k-QJE" id="eBl-3s-Bk4"/>
                         <outlet property="weightStackView" destination="dqU-9w-Maf" id="FBg-5L-j9f"/>
                     </connections>
