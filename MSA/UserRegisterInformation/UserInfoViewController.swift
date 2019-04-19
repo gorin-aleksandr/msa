@@ -154,11 +154,42 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             levelLabel.text = presenter.getlevels()[row]
             presenter.setLevel(level: levelLabel.text!)
         }
-        closePicker()
+//        closePicker()
     }
     
     func openPicker() {
+        var row = 0
+        if dataType == PickerDataType.Age {
+            if let age = AuthModule.currUser.age {
+                row = presenter.getAges().firstIndex(of: age) ?? 16
+            } else {
+                row = 16
+            }
+        } else if dataType == PickerDataType.Sex {
+            if let sex = AuthModule.currUser.sex {
+                row = presenter.getSexes().firstIndex(of: sex) ?? 0
+            }
+        } else if dataType == PickerDataType.Height {
+            if let h = AuthModule.currUser.height {
+                row = presenter.getHeight().firstIndex(of: h) ?? 90
+            } else {
+                row = 90
+            }
+        } else if dataType == PickerDataType.Weight {
+            if let w = AuthModule.currUser.weight {
+                row = presenter.getWeight().firstIndex(of: w) ?? 20
+            } else {
+                row = 20
+            }
+        } else {
+            if let l = AuthModule.currUser.level {
+                row = presenter.getlevels().firstIndex(of: l) ?? 0
+            } else {
+                row = 0
+            }
+        }
         dataPicker.reloadAllComponents()
+        dataPicker.selectRow(row, inComponent: 0, animated: true)
         dataPicker.alpha = 1
     }
     

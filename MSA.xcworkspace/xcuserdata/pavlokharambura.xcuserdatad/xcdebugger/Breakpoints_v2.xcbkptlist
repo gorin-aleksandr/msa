@@ -36,7 +36,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "577216754.9124171"
+                  timestampString = "577365321.226719"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "106"
@@ -51,7 +51,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "577216754.916742"
+                  timestampString = "577365321.23114"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "107"
@@ -84,7 +84,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "577216754.927681"
+                  timestampString = "577365321.243035"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
@@ -99,7 +99,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseManager.swift"
-                  timestampString = "577216754.9317009"
+                  timestampString = "577365321.2480249"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "128"
@@ -121,8 +121,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1170"
             endingLineNumber = "1170"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "startTimer()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -132,7 +132,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/SingIn/SignInPresenter.swift"
-            timestampString = "577217421.1145231"
+            timestampString = "577293363.80968"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"

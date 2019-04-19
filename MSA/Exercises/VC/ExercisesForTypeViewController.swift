@@ -287,11 +287,9 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         
         tap = TapGesture(target: self, action: #selector(handleTap(sender:)))
         tap.indexPath = indexPath
-        cell.exerciseImage.addGestureRecognizer(tap)
+//        cell.exerciseImage.addGestureRecognizer(tap)
         cell.exerciseImage.isUserInteractionEnabled = true
         cell.exerciseImage.tag = indexPath.row
-        
-        
         
         return cell
     }

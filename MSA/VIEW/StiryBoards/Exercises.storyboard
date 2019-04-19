@@ -352,7 +352,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kpe-hx-AeM">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kpe-hx-AeM">
                                                     <rect key="frame" x="12" y="5.5" width="64" height="64"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="64" id="5Sb-PO-d1r"/>
@@ -529,7 +529,7 @@
         <image name="ok_blue" width="16" height="10"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Erm-Q3-52b"/>
-        <segue reference="tK7-KX-Pwn"/>
+        <segue reference="IH0-2z-9zU"/>
+        <segue reference="5un-LR-fho"/>
     </inferredMetricsTieBreakers>
 </document>

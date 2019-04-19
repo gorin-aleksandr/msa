@@ -107,13 +107,13 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Степан Швец-Каминский " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTR-v5-s7Q">
-                                                        <rect key="frame" x="84" y="140" width="207.5" height="20"/>
+                                                        <rect key="frame" x="81.5" y="139.5" width="212" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
                                                         <color key="textColor" red="0.0039215686274509803" green="0.29803921568627451" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="г. (город)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bow-Q8-RvY">
-                                                        <rect key="frame" x="160" y="160" width="55.5" height="16"/>
+                                                        <rect key="frame" x="159.5" y="160" width="56.5" height="16"/>
                                                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
                                                         <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -192,7 +192,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGK-0M-sNH">
-                                                        <rect key="frame" x="138" y="7" width="99" height="123"/>
+                                                        <rect key="frame" x="138" y="6.5" width="99" height="123"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="123" id="CUx-Gl-ZeC"/>
                                                             <constraint firstAttribute="width" constant="99" id="ZBr-WF-zNl"/>
@@ -242,7 +242,7 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="161.5" height="115"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Тренировки" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mgb-sF-yKX">
-                                                                                <rect key="frame" x="16" y="12" width="101.5" height="21"/>
+                                                                                <rect key="frame" x="16" y="12" width="108.5" height="21.5"/>
                                                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="18"/>
                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
@@ -275,7 +275,7 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="161.5" height="115"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Питание" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Obw-Eg-o5j">
-                                                                                <rect key="frame" x="16" y="12" width="71" height="21"/>
+                                                                                <rect key="frame" x="16" y="12" width="78" height="21.5"/>
                                                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="18"/>
                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
@@ -312,7 +312,7 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="161.5" height="115"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Замеры" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1NB-aq-2xg">
-                                                                                <rect key="frame" x="16" y="12" width="67" height="21"/>
+                                                                                <rect key="frame" x="16" y="12" width="70" height="21.5"/>
                                                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="18"/>
                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
@@ -344,7 +344,7 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="161.5" height="115"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Статистика" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WvI-2b-4GM">
-                                                                                <rect key="frame" x="16" y="12" width="97" height="21"/>
+                                                                                <rect key="frame" x="16" y="12" width="105.5" height="21.5"/>
                                                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="18"/>
                                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
@@ -387,7 +387,7 @@
                                                 <rect key="frame" x="0.0" y="550" width="375" height="380"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Галерея" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCY-aE-3kJ">
-                                                        <rect key="frame" x="28" y="15" width="202" height="20"/>
+                                                        <rect key="frame" x="28" y="15" width="202" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                                         <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -1782,6 +1782,17 @@
                                                                                     <action selector="logout:" destination="Py7-GS-EmO" eventType="touchUpInside" id="EXG-7e-K99"/>
                                                                                 </connections>
                                                                             </button>
+                                                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBe-V9-Agy">
+                                                                                <rect key="frame" x="239" y="0.0" width="100" height="50"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="50" id="1wZ-AP-XSu"/>
+                                                                                    <constraint firstAttribute="width" constant="100" id="ZkQ-M1-Y6c"/>
+                                                                                </constraints>
+                                                                                <state key="normal" title="Send to email"/>
+                                                                                <connections>
+                                                                                    <action selector="sendRecoverPasswordToEmail:" destination="Py7-GS-EmO" eventType="touchUpInside" id="0i7-y8-xnc"/>
+                                                                                </connections>
+                                                                            </button>
                                                                         </subviews>
                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <constraints>
@@ -1790,11 +1801,13 @@
                                                                             <constraint firstAttribute="trailing" secondItem="ece-cV-LD5" secondAttribute="trailing" id="4YN-5h-T2O"/>
                                                                             <constraint firstItem="euZ-FH-wPB" firstAttribute="leading" secondItem="51k-V5-smx" secondAttribute="leading" constant="5" id="8li-cn-Aic"/>
                                                                             <constraint firstItem="ece-cV-LD5" firstAttribute="leading" secondItem="51k-V5-smx" secondAttribute="leading" id="Gvb-iB-xSV"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="oBe-V9-Agy" secondAttribute="trailing" id="PpU-zt-5l0"/>
                                                                             <constraint firstItem="ece-cV-LD5" firstAttribute="top" secondItem="51k-V5-smx" secondAttribute="top" id="UAi-r6-8Oj"/>
                                                                             <constraint firstItem="euZ-FH-wPB" firstAttribute="top" secondItem="ece-cV-LD5" secondAttribute="bottom" id="bhz-AL-W6w"/>
                                                                             <constraint firstItem="ghX-cq-3E1" firstAttribute="leading" secondItem="evO-IF-Xtt" secondAttribute="trailing" constant="14" id="ibU-DS-x0g"/>
                                                                             <constraint firstAttribute="trailing" secondItem="euZ-FH-wPB" secondAttribute="trailing" constant="5" id="rMF-I5-xDI"/>
                                                                             <constraint firstItem="evO-IF-Xtt" firstAttribute="centerY" secondItem="51k-V5-smx" secondAttribute="centerY" id="riR-vg-qPC"/>
+                                                                            <constraint firstItem="oBe-V9-Agy" firstAttribute="top" secondItem="51k-V5-smx" secondAttribute="top" id="sLW-8Q-KHe"/>
                                                                             <constraint firstAttribute="trailing" secondItem="ghX-cq-3E1" secondAttribute="trailing" constant="5" id="vK9-KO-zK3"/>
                                                                             <constraint firstAttribute="bottom" secondItem="euZ-FH-wPB" secondAttribute="bottom" constant="2" id="w4p-Ib-95D"/>
                                                                         </constraints>

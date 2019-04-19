@@ -128,6 +128,8 @@ class UserSignInPresenter {
                     } else {
                         self.view?.notLogged(resp: "Ошибка авторизации")
                     }
+                } else {
+                    self.view?.notLogged(resp: "FBCancel")
                 }
             }
         }

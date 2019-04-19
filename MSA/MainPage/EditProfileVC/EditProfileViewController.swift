@@ -384,6 +384,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func hideTrainerView(_ sender: Any) {
 
     }
+    @IBAction func sendRecoverPasswordToEmail(_ sender: Any) {
+//        AuthModule.sendRecoverPasswordRequest { (error) in
+//            print(error?.localizedDescription)
+//        }
+    }
     
 }
 
@@ -444,8 +449,39 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     
     func openPicker() {
-        measureHeight.constant = 360
+        var row = 0
+        if dataType == PickerDataType.Age {
+            if let age = AuthModule.currUser.age {
+                row = presenter.getAges().firstIndex(of: age) ?? 16
+            } else {
+                row = 16
+            }
+        } else if dataType == PickerDataType.Sex {
+            if let sex = AuthModule.currUser.sex {
+                row = presenter.getSexes().firstIndex(of: sex) ?? 0
+            }
+        } else if dataType == PickerDataType.Height {
+            if let h = AuthModule.currUser.height {
+                row = presenter.getHeight().firstIndex(of: h) ?? 90
+            } else {
+                row = 90
+            }
+        } else if dataType == PickerDataType.Weight {
+            if let w = AuthModule.currUser.weight {
+                row = presenter.getWeight().firstIndex(of: w) ?? 20
+            } else {
+                row = 20
+            }
+        } else {
+            if let l = AuthModule.currUser.level {
+                row = presenter.getlevels().firstIndex(of: l) ?? 0
+            } else {
+                row = 0
+            }
+        }
         pickerView.reloadAllComponents()
+        pickerView.selectRow(row, inComponent: 0, animated: true)
+        measureHeight.constant = 360
         pickerView.alpha = 1
     }
     
