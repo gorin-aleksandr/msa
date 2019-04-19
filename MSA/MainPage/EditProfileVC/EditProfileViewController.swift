@@ -25,6 +25,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
+    @IBOutlet weak var sexHeader: UILabel!
+    @IBOutlet weak var heightHeader: UILabel!
+    @IBOutlet weak var weightHeader: UILabel!
+    @IBOutlet weak var ageHeader: UILabel!
+    @IBOutlet weak var levelHeader: UILabel!
+    
     @IBOutlet weak var findTrainerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var profilePhoto: UIView!
@@ -95,11 +101,15 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         // temporary fix
         measureStackView.layer.opacity = 0
         
-        // Do any additional setup after loading the view.
+        configureHeaders()
     }
-    
-    override func viewDidLayoutSubviews() {
-//        trainerTitle.font = sportsmanTitle.font
+
+    func configureHeaders() {
+        sexHeader.isHidden = AuthModule.currUser.sex == nil
+        ageHeader.isHidden = AuthModule.currUser.age == nil
+        weightHeader.isHidden = AuthModule.currUser.weight == nil
+        heightHeader.isHidden = AuthModule.currUser.height == nil
+        levelHeader.isHidden = AuthModule.currUser.level == nil
     }
     
     func setShadow(outerView: UIView) {
@@ -384,11 +394,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func hideTrainerView(_ sender: Any) {
 
     }
-    @IBAction func sendRecoverPasswordToEmail(_ sender: Any) {
-//        AuthModule.sendRecoverPasswordRequest { (error) in
-//            print(error?.localizedDescription)
-//        }
-    }
     
 }
 
@@ -428,21 +433,22 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            ageLabel.text = "\(presenter.getAges()[row]) лет"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = "\(presenter.getSexes()[row])" + ", пол"
+            sexLabel.text = "\(presenter.getSexes()[row])"
             presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
             heightLabel.text = "\(presenter.getHeight()[row]), см"
             presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row]), \(AuthModule.currUser.weightType ?? "кг")"
+            weightLabel.text = "\(presenter.getWeight()[row]), кг"
             presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
-            levelLabel.text = "Уровень - \(presenter.getlevels()[row])"
+            levelLabel.text = "\(presenter.getlevels()[row])"
             presenter.setLevel(level: presenter.getlevels()[row])
         }
+        configureHeaders()
         closePicker()
     }
     

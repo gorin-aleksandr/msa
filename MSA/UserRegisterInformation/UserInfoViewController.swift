@@ -20,6 +20,12 @@ class UserInfoViewController: BasicViewController {
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    @IBOutlet weak var sexHeader: UILabel!
+    @IBOutlet weak var heightHeader: UILabel!
+    @IBOutlet weak var weightHeader: UILabel!
+    @IBOutlet weak var ageHeader: UILabel!
+    @IBOutlet weak var levelHeader: UILabel!
+    
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var dataPicker: UIPickerView! {didSet{dataPicker.alpha = 0}}
     @IBOutlet weak var ageLabel: UILabel!
@@ -49,9 +55,17 @@ class UserInfoViewController: BasicViewController {
         //Temporary fix
         measureStackView.layer.opacity = 0
         weightStackView.layer.opacity = 0
-        // Do any additional setup after loading the view.
+        configureHeaders()
     }
 
+    func configureHeaders() {
+        sexHeader.isHidden = AuthModule.currUser.sex == nil
+        ageHeader.isHidden = AuthModule.currUser.age == nil
+        weightHeader.isHidden = AuthModule.currUser.weight == nil
+        heightHeader.isHidden = AuthModule.currUser.height == nil
+        levelHeader.isHidden = AuthModule.currUser.level == nil
+    }
+    
     @IBAction func setAgeButton(_ sender: Any) {
         dataType = PickerDataType.Age
         openPicker()
@@ -139,7 +153,7 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
  
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            ageLabel.text = "\(presenter.getAges()[row]) лет"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
             sexLabel.text = "\(presenter.getSexes()[row])"
@@ -154,7 +168,7 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             levelLabel.text = presenter.getlevels()[row]
             presenter.setLevel(level: levelLabel.text!)
         }
-//        closePicker()
+        configureHeaders()
     }
     
     func openPicker() {
