@@ -60,6 +60,10 @@ class ExercisesForTypeViewController: UIViewController {
         initialDataFilling()
         configureFilterScrollView()
         configureTable_CollectionView()
+        if let presenter = presenter {
+            selectedDataArray = presenter.selectedExercisesForTraining
+            selectedIds = presenter.selectedExercisesForTraining.map({$0.id})
+        }
     }
     
     func initialDataFilling() {
@@ -203,15 +207,16 @@ class ExercisesForTypeViewController: UIViewController {
     }
     @IBAction func plus(_ sender: Any) {
         if let manager = trainingManager {
+            guard let presenter = presenter else {return}
             if manager.sportsmanId != AuthModule.currUser.id {
                 let newExMan = NewExerciseManager()
-                newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: selectedDataArray, completion: {
-                    self.addExercisesToTraining(newExercises: self.selectedDataArray, manager: manager)
+                newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: presenter.selectedExercisesForTraining, completion: {
+                    self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
                 }) { (error) in
                     AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
                 }
             } else {
-                self.addExercisesToTraining(newExercises: selectedDataArray, manager: manager)
+                self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
             }
         } else {
             self.performSegue(withIdentifier: "newExerciseSegue", sender: nil)
@@ -364,10 +369,12 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         switch selectedCell.cellState {
         case .unselected:
             selectedDataArray.append(selectedItem)
+            presenter?.selectedExercisesForTraining.append(selectedItem)
             selectedIndexes.append(indexPath.row)
             selectedIds.append(selectedItem.id)
         case .selected:
             selectedDataArray.remove(selectedItem)
+            presenter?.selectedExercisesForTraining.remove(selectedItem)
             selectedIndexes.remove(indexPath.row)
             selectedIds.remove(selectedItem.id)
         }

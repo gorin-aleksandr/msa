@@ -28,6 +28,8 @@ class ExersisesTypesPresenter {
     private weak var view: ExercisesTypesDataProtocol?
     private let realmManager = RealmManager.shared
     
+    var selectedExercisesForTraining: [Exercise] = []
+
     init(exercises: ExersisesDataManager) {
         self.exercises = exercises
     }
