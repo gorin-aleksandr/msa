@@ -37,11 +37,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
             }
         }
     }
-    var selectedIndexes: [Int] = [] {
-        didSet {
-            selectedIndexes.sort { $0 < $1 }
-        }
-    }
+    
     var selectedIds: [String] = []
     
     let presenter = ExersisesTypesPresenter(exercises: ExersisesDataManager())
@@ -56,21 +52,16 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         trainingManager?.initView(view: self)
         configureTable_CollectionView()
         NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
-        
+
+        selectedDataArray = []
+        selectedIds = []
+        presenter.selectedExercisesForTraining = []
     }
 
     private func configureNavContr() {
-        
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         self.navigationController?.navigationBar.titleTextAttributes = [.font: UIFont(name: "Rubik-Medium", size: 17)!]
-        
-//        if let _ = trainingManager {
-//            self.navigationItem.rightBarButtonItem?.image = nil
-//            self.navigationItem.rightBarButtonItem?.title = ""
-//            self.navigationItem.rightBarButtonItem?.isEnabled = false
-//            self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([.font: UIFont(name: "Rubik-Medium", size: 17)!], for: .normal)
-//        }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -88,8 +79,9 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         button.addTarget(self, action: #selector(back), for: .touchUpInside)
         let barButt = UIBarButtonItem(customView: button)
         navigationItem.leftBarButtonItem = barButt
-        
-        }
+        selectedDataArray = presenter.selectedExercisesForTraining
+        selectedIds = presenter.selectedExercisesForTraining.map({$0.id})
+    }
     
     @objc
     func back() {
@@ -107,15 +99,10 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     private func initialDataPreparing() {
         getFromRealm()
-
         presenter.getAllFilters()
-
         presenter.getAllExersises()
-
         presenter.getAllTypes()
-
         presenter.getMyExercises()
-        selectedDataArray = []
     }
     
     @objc func exerciseAddedN(notfication: NSNotification) {
@@ -180,16 +167,16 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func plus(_ sender: Any) {
-        if let manager = trainingManager, !selectedDataArray.isEmpty {
+        if let manager = trainingManager, !presenter.selectedExercisesForTraining.isEmpty {
             if manager.sportsmanId != AuthModule.currUser.id {
                 let newExMan = NewExerciseManager()
-                newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: selectedDataArray, completion: {
-                    self.addExercisesToTraining(newExercises: self.selectedDataArray, manager: manager)
+                newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: presenter.selectedExercisesForTraining, completion: {
+                    self.addExercisesToTraining(newExercises: self.presenter.selectedExercisesForTraining, manager: manager)
                 }) { (error) in
                     AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
                 }
             } else {
-                self.addExercisesToTraining(newExercises: selectedDataArray, manager: manager)
+                self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
             }
         } else {
             self.performSegue(withIdentifier: "newExercise", sender: nil)
@@ -284,11 +271,11 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
         switch selectedCell.cellState {
         case .unselected:
             selectedDataArray.append(selectedItem)
-            selectedIndexes.append(indexPath.row)
+            presenter.selectedExercisesForTraining.append(selectedItem)
             selectedIds.append(selectedItem.id)
         case .selected:
             selectedDataArray.remove(selectedItem)
-            selectedIndexes.remove(indexPath.row)
+            presenter.selectedExercisesForTraining.remove(selectedItem)
             selectedIds.remove(selectedItem.id)
         }
         selectedCell.cellState.toggle()

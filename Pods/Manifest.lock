@@ -85,6 +85,7 @@ PODS:
   - SDWebImage/Core (4.3.0)
   - SkyFloatingLabelTextField (3.4.0)
   - SVProgressHUD (2.2.5)
+  - SwipeCellKit (2.5.4)
 
 DEPENDENCIES:
   - Bolts
@@ -103,6 +104,7 @@ DEPENDENCIES:
   - SDWebImage
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
+  - SwipeCellKit (~> 2.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -131,6 +133,7 @@ SPEC REPOS:
     - SDWebImage
     - SkyFloatingLabelTextField
     - SVProgressHUD
+    - SwipeCellKit
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -158,7 +161,8 @@ SPEC CHECKSUMS:
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
   SkyFloatingLabelTextField: 703aa1420b697392b1e7dba25571180dde018477
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwipeCellKit: 4eada3884ab1bbae5e8d2fb9030c242aa23d7f42
 
-PODFILE CHECKSUM: 8001746823d3e441dfd9273be2838756cbf4d4ac
+PODFILE CHECKSUM: 61355403b1b06af552c326bfe661b55aa575dd8a
 
 COCOAPODS: 1.5.3

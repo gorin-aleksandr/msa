@@ -66,7 +66,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        accessDeniedView.isHidden = true//InAppPurchasesService.shared.currentSubscription != nil
+        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
         setupNavigationBar()
         configureCityPicker()
         updateTableView()
@@ -82,7 +82,6 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         DispatchQueue.main.async { [weak self] in
             self?.communityTableView.reloadData()
         }
-        
     }
     
     func setCityFilterTextField(name: String?) {
@@ -167,7 +166,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     func hideAccessDeniedView() {
-        accessDeniedView.isHidden = true
+//        accessDeniedView.isHidden = true
     }
     
     func showRestoreAlert() {
@@ -202,9 +201,6 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     private func configureRefresh() {
-//        let attributes = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-//                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 14)!]
-//          refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация ...", attributes: attributes)
         if #available(iOS 10.0, *) {
             communityTableView.refreshControl = refreshControl
         } else {
@@ -214,7 +210,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     @objc private func refreshData(_ sender: Any) {
-            self.presenter.fetchData()
+        self.presenter.fetchData()
     }
     
     private func setupNavigationBar() {
@@ -244,9 +240,24 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
 
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
-        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
-        destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
-        self.navigationController?.pushViewController(destinationVC, animated: true)
+        if InAppPurchasesService.shared.currentSubscription != nil {
+            let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
+            destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
+            self.navigationController?.pushViewController(destinationVC, animated: true)
+        } else {
+            showNoMyComunityAlert()
+        }
+    }
+
+    private func showNoMyComunityAlert() {
+        let alert = UIAlertController(title: "Мое сообщество недоступно", message: "Получите доступ к Сообщесту и дополнительным функциям оформив подписку.", preferredStyle: .alert)
+        let restoreAction = UIAlertAction(title: "Перейти к покупкам", style: .default) { [weak self] _ in
+            self?.presentIAPViewController()
+        }
+        let okAction = UIAlertAction(title: "Ок", style: .cancel) { _ in }
+        alert.addAction(restoreAction)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func segmentedControlTapped(_ sender: UISegmentedControl) {
@@ -279,7 +290,8 @@ extension CommunityListViewController: UITableViewDelegate, UITableViewDataSourc
         let person = presenter.communityDataSource[indexPath.row]
         let personState =  presenter.getPersonState(person: person)
         cell.configure(with: person, userCommunityState: .friends)
-        cell.addButtonHandler = { [weak self] in self?.presenter?.addButtonTapped(at: indexPath.row)
+        cell.addButtonHandler = { [weak self] in
+            self?.presenter?.addButtonTapped(at: indexPath.row)
         }
         cell.setupCell(basedOn: personState, isTrainerEnabled: presenter.isTrainerEnabled)
         return cell

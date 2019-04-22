@@ -20,6 +20,12 @@ class UserInfoViewController: BasicViewController {
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    @IBOutlet weak var sexHeader: UILabel!
+    @IBOutlet weak var heightHeader: UILabel!
+    @IBOutlet weak var weightHeader: UILabel!
+    @IBOutlet weak var ageHeader: UILabel!
+    @IBOutlet weak var levelHeader: UILabel!
+    
     @IBOutlet weak var blurView: UIVisualEffectView!
     @IBOutlet weak var dataPicker: UIPickerView! {didSet{dataPicker.alpha = 0}}
     @IBOutlet weak var ageLabel: UILabel!
@@ -33,6 +39,7 @@ class UserInfoViewController: BasicViewController {
     @IBOutlet weak var pounds: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     
+    @IBOutlet weak var stackWithMeasureButtons: UIStackView!
     @IBOutlet weak var weightStackView: UIStackView!
     @IBOutlet weak var measureStackView: UIStackView!
     private let presenter = SignUpPresenter(signUp: UserDataManager())
@@ -48,9 +55,17 @@ class UserInfoViewController: BasicViewController {
         //Temporary fix
         measureStackView.layer.opacity = 0
         weightStackView.layer.opacity = 0
-        // Do any additional setup after loading the view.
+        configureHeaders()
     }
 
+    func configureHeaders() {
+        sexHeader.isHidden = AuthModule.currUser.sex == nil
+        ageHeader.isHidden = AuthModule.currUser.age == nil
+        weightHeader.isHidden = AuthModule.currUser.weight == nil
+        heightHeader.isHidden = AuthModule.currUser.height == nil
+        levelHeader.isHidden = AuthModule.currUser.level == nil
+    }
+    
     @IBAction func setAgeButton(_ sender: Any) {
         dataType = PickerDataType.Age
         openPicker()
@@ -138,7 +153,7 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
  
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            ageLabel.text = "\(presenter.getAges()[row]) лет"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
             sexLabel.text = "\(presenter.getSexes()[row])"
@@ -147,17 +162,48 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             heightLabel.text = "\(presenter.getHeight()[row]), см"
             presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row]), \(AuthModule.currUser.weightType ?? "кг")"
+            weightLabel.text = "\(presenter.getWeight()[row]), кг"
             presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
             levelLabel.text = presenter.getlevels()[row]
             presenter.setLevel(level: levelLabel.text!)
         }
-        closePicker()
+        configureHeaders()
     }
     
     func openPicker() {
+        var row = 0
+        if dataType == PickerDataType.Age {
+            if let age = AuthModule.currUser.age {
+                row = presenter.getAges().firstIndex(of: age) ?? 16
+            } else {
+                row = 16
+            }
+        } else if dataType == PickerDataType.Sex {
+            if let sex = AuthModule.currUser.sex {
+                row = presenter.getSexes().firstIndex(of: sex) ?? 0
+            }
+        } else if dataType == PickerDataType.Height {
+            if let h = AuthModule.currUser.height {
+                row = presenter.getHeight().firstIndex(of: h) ?? 90
+            } else {
+                row = 90
+            }
+        } else if dataType == PickerDataType.Weight {
+            if let w = AuthModule.currUser.weight {
+                row = presenter.getWeight().firstIndex(of: w) ?? 20
+            } else {
+                row = 20
+            }
+        } else {
+            if let l = AuthModule.currUser.level {
+                row = presenter.getlevels().firstIndex(of: l) ?? 0
+            } else {
+                row = 0
+            }
+        }
         dataPicker.reloadAllComponents()
+        dataPicker.selectRow(row, inComponent: 0, animated: true)
         dataPicker.alpha = 1
     }
     

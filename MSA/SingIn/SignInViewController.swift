@@ -45,7 +45,7 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
 //      MARK: Temporary hidden while feature is not ready
-        forgotPasswordButton.isHidden = true
+//        forgotPasswordButton.isHidden = true
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -64,6 +64,11 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
     }
     @IBAction func forgotPasswordButtonAction(_ sender: Any) {
+        DispatchQueue.main.async {
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "passwordRecover") as! PasswordRecoveryViewController
+            self.show(nextViewController, sender: nil)
+        }
     }
     @IBAction func login(_ sender: Any) {
         presenter.loginUserWithEmail(email: emailTextField.text!, password: passwordTextField.text!)
@@ -115,7 +120,13 @@ extension SignInViewController: SignInViewProtocol {
     
     func notLogged(resp: String) {
         self.view.isUserInteractionEnabled = true
-        AlertDialog.showAlert("Ошибка авторизации", message: resp, viewController: self)
+        if resp == "" {
+            AlertDialog.showAlert("Нет подключения к интернету.", message: "Проверьте соединение и повторите попытку позже.", viewController: self)
+        } else {
+            if resp != "FBCancel" {
+                AlertDialog.showAlert("Ошибка авторизации", message: resp, viewController: self)
+            }
+        }
     }
     
     func startLoading() {

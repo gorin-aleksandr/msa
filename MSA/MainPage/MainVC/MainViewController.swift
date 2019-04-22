@@ -59,6 +59,9 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     var galleryUploadInProgress: Bool = false
     var pendingForUpload: [[String : Any]] = []
     
+    var trainer: UserVO?
+    var comunityPresenter: CommunityListPresenterProtocol?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,17 +114,17 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         setShadow(outerView: profileView, shadowOpacity: 0.3)
         setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
         setProfileImage(image: nil, url: AuthModule.currUser.avatar)
-        self.coachIcon.isHidden = true
-        self.trainerImage.isHidden = true
+
         if let trainerId = AuthModule.currUser.trainerId {
             editProfilePresenter.getTrainerInfo(trainer: trainerId) { (trainer) in
-                if let imageUrl = trainer.avatar {
-                    self.coachIcon.isHidden = false
-                    self.trainerImage.isHidden = false
-                    self.trainerImage.image = UIImage(named: "avatar-placeholder")
-                    self.trainerImage.sd_setImage(with: URL(string: imageUrl), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
-                }
+                self.trainer = trainer
+                self.coachIcon.isHidden = false
+                self.trainerImage.isHidden = false
+                self.trainerImage.sd_setImage(with: URL(string: trainer.avatar ?? ""), placeholderImage: UIImage(named: "avatar-placeholder"), options: .allowInvalidSSLCertificates, completed: nil)
             }
+        } else {
+            self.coachIcon.isHidden = true
+            self.trainerImage.isHidden = true
         }
         if let name = AuthModule.currUser.firstName, let surname = AuthModule.currUser.lastName {
             userName.text = name + " " + surname
@@ -140,6 +143,20 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         }
         if let dream = AuthModule.currUser.purpose, dream != "" {
             dailyTraining.text = dream
+        }
+    }
+    
+    
+    @IBAction func goToTrainer(_ sender: Any) {
+        if let trainer = trainer {
+            let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            
+             comunityPresenter = CommunityListPresenter(view: self)
+             if let presenter = comunityPresenter {
+                navigationController?.setNavigationBarHidden(false, animated: true)
+                destinationVC.profilePresenter = presenter.createProfilePresenter(user: trainer, for: destinationVC)
+                navigationController?.pushViewController(destinationVC, animated: true)
+            }
         }
     }
     
@@ -390,5 +407,18 @@ extension MainViewController: GalleryDataProtocol {
         
     }
     
-    
+}
+
+extension MainViewController: CommunityListViewProtocol {
+    func updateTableView() {}
+    func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {}
+    func setCityFilterTextField(name: String?) {}
+    func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {}
+    func setErrorViewHidden(_ isHidden: Bool) {}
+    func setLoaderVisible(_ visible: Bool) { }
+    func stopLoadingViewState() {}
+    func showGeneralAlert() {}
+    func showRestoreAlert() {}
+    func showIAP() {}
+    func hideAccessDeniedView() {}
 }

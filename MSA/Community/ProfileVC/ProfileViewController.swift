@@ -232,6 +232,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     }
     
     func dismiss() {
+        SVProgressHUD.dismiss()
         self.navigationController?.popViewController(animated: true)
     }
     

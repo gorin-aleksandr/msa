@@ -8,8 +8,9 @@
 //
 
 import UIKit
+import SwipeCellKit
 
-class ApproachTableViewCell: UITableViewCell {
+class ApproachTableViewCell: SwipeTableViewCell {
 
     @IBOutlet weak var numberLabel: UILabel!
     @IBOutlet weak var weightAndCountsLabel: UILabel!

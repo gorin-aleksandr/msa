@@ -23,5 +23,5 @@ target 'MSA' do
   pod 'RealmSwift'
   pod 'SVProgressHUD'
   pod 'FZAccordionTableView'
-
+  pod 'SwipeCellKit', '~> 2.0'
 end

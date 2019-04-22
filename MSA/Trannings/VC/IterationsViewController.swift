@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import SwipeCellKit
 
 class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
 
@@ -29,6 +30,8 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
 
+    var currentIteration: Int = 0
+    var state: IterationState = .work
     
     var manager = TrainingManager(type: .my)
     let heartBeatService = HeartBeatManager()
@@ -42,7 +45,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.becameActive(_:)), name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: nil)
 
-        
+        disable(myButtons: [stopButton,playNextButton,pauseButton])
         manager.initView(view: self)
         manager.initFlowView(view: self)
         manager.setState(state: .iterationsOnly)
@@ -57,10 +60,6 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillLayoutSubviews() {
         addPodhodButton.setShadow(shadowOpacity: 0.4)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        manager.finish()
     }
     
     private func configureUI() {
@@ -78,7 +77,6 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
         self.playNextButton.addTarget(self, action: #selector(nextIterationstate(_:)), for: .touchUpInside)
         heartBeatButton.backgroundColor = UIColor.white.withAlphaComponent(0.2)
         heartBeatButton.layer.cornerRadius = 6
-        
     }
     
     private func disable(myButtons: [UIButton]) {
@@ -100,21 +98,26 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func nextIterationstate(_ sender: UIButton) {
-        if iterationsPresent() {
-            manager.nextStateOrIteration()
-            if manager.isLastIteration() {
-                tableView.isUserInteractionEnabled = true
-                manager.fullStop()
-                disable(myButtons: [stopButton, pauseButton, playNextButton])
-            }
+        guard let count = manager.getCurrentExercise()?.iterations.count else {
+            return
         }
+        if currentIteration == count - 1 && state == .rest {
+            tableView.isUserInteractionEnabled = true
+            manager.fullStop()
+            AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)
+            deselectTableView()
+            disable(myButtons: [stopButton, pauseButton, playNextButton])
+            return
+        }
+        manager.nextStateOrIteration()
     }
 
     @objc private func stopIteration(_ sender: UIButton) {
-        if iterationsPresent() {
-            manager.fullStop()
-            disable(myButtons: [stopButton, pauseButton, playNextButton])
-        }
+        tableView.isUserInteractionEnabled = true
+        manager.fullStop()
+        AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)
+        deselectTableView()
+        disable(myButtons: [stopButton, pauseButton, playNextButton])
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
@@ -126,8 +129,13 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc private func resumeIteration(_ sender: UIButton) {
         if iterationsPresent() {
-            manager.startOrContineIteration()
+            if currentIteration == 0 && state == .work {
+                manager.startExercise(from: 0)
+            } else {
+                manager.startOrContineIteration()
+            }
             disable(myButtons: [playButton])
+            tableView.isUserInteractionEnabled = false
         } else {
             AlertDialog.showAlert("Вы не можете начать!", message: "Добавьте хотя бы одну итерацию.", viewController: self)
         }
@@ -153,6 +161,8 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func backAction(_ sender: Any) {
+        manager.fullStop()
+        tableView.isUserInteractionEnabled = true
         back()
     }
     @IBAction func showExerciseInfo(_ sender: Any) {
@@ -167,7 +177,6 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc
     func back() {
-//        manager.fullStop()
         navigationController?.popViewController(animated: true)
     }
     
@@ -220,6 +229,12 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         if let iteration = manager.getCurrentExercise()?.iterations[indexPath.row] {
             cell.configureCell(iteration: iteration, indexPath: indexPath)
             cell.restButton.addTarget(self, action: #selector(startIteration(_:)), for: .touchUpInside)
+            cell.delegate = self
+        }
+        if indexPath.row == currentIteration {
+            cell.backgroundColor = lightBLUE
+        } else {
+            cell.backgroundColor = .white
         }
         return cell
     }
@@ -243,12 +258,11 @@ extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let delete = getDeleteAction()
-        let copy = getCopyAction()
-        return [delete, copy]
+    func deselectTableView() {
+        for cell in tableView.visibleCells {
+            cell.backgroundColor = .white
+        }
     }
-    
     private func getCopyAction() -> UITableViewRowAction {
         let copy = UITableViewRowAction(style: .normal, title: "Копировать") { (action, indexPath) in
             self.copyIteration(at: indexPath.row)
@@ -325,25 +339,20 @@ extension IterationsViewController: TrainingFlowDelegate {
         case .rest:
             configureRestView(time: time)
         }
-//        if stop {
-//            AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)
-//        }
+        state = iterationState
+        if stop {
+            tableView.isUserInteractionEnabled = true
+            deselectTableView()
+        }
     }
     
     func higlightIteration(on: Int) {
+        currentIteration = on
         let indexPath = IndexPath(row: on, section: 0)
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.backgroundColor = lightBLUE
-        if on != 0 {
-            let prevIndexPath = IndexPath(row: on-1, section: 0)
-            let cell = tableView.cellForRow(at: prevIndexPath)
-            cell?.backgroundColor = .white
-        } else {
-            let row = (manager.getCurrentExercise()?.iterations.count ?? 0) - 1
-            let indexPath = IndexPath(row: row, section: 0)
-            let cell = tableView.cellForRow(at: indexPath)
-            cell?.backgroundColor = .white
+        UIView.animate(withDuration: 0.5, animations: {
+            self.tableView.scrollToRow(at: indexPath, at: .none, animated: true)
+        }) { (_) in
+            self.tableView.reloadData()
         }
     }
 }
@@ -361,7 +370,7 @@ extension IterationsViewController: HeartBeatDelegate {
 extension IterationsViewController: HeartBeatManagerDelegate {
     func handleBluetooth(status: CBManagerState) {
         if  let _ = lastConnectedDeviceId, status == .poweredOn {
-                  heartBeatService.scanForDevices()
+            heartBeatService.scanForDevices()
         }
     }
     
@@ -370,14 +379,41 @@ extension IterationsViewController: HeartBeatManagerDelegate {
             heartBeatService.connectDevice(with: id)
         }
     }
-    
     func deviceDidFailedToConnect(peripheral: CBPeripheral, error: Error?) {}
-    
     func deviceDidConnected(peripheral: CBPeripheral) {}
-    
     func couldNotDiscoverServicesOrCharacteristics() {}
-    
     func deviceDidDisconnected() {}
+
+}
+
+extension IterationsViewController: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        return [getDeleteSwipeAction(),getCopySwipeAction()]
+    }
     
-    
+    private func getDeleteSwipeAction() -> SwipeAction {
+        let deleteAction = SwipeAction(style: .destructive, title: "") { action, indexPath in
+            guard let object = self.manager.getCurrentExercise()?.iterations[indexPath.row] else {return}
+            self.manager.realm.deleteObject(object)
+            self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+        }
+        deleteAction.image = UIImage(named: "cancel-24px")
+        deleteAction.title = nil
+        deleteAction.backgroundColor = .white
+        
+        return deleteAction
+    }
+    private func getCopySwipeAction() -> SwipeAction {
+        let copyAction = SwipeAction(style: .default, title: "") { action, indexPath in
+            self.copyIteration(at: indexPath.row)
+        }
+        copyAction.image = UIImage(named: "copy_blue")
+        copyAction.title = nil
+        copyAction.backgroundColor = .white
+        
+        return copyAction
+    }
 }

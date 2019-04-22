@@ -24,6 +24,10 @@ class UserSignInPresenter {
     }
     
     func loginUserWithEmail(email: String, password: String) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            self.view?.notLogged(resp: "")
+            return
+        }
         AuthModule.facebookAuth = false
         self.view?.startLoading()
         auth.loginUser(email: email, pass: password) { (user, error) in
@@ -65,7 +69,7 @@ class UserSignInPresenter {
                     } else if nsError.code == 17009 {
                         self.view?.notLogged(resp: "Неверный пароль")
                     } else {
-                        self.view?.notLogged(resp: "")
+                        self.view?.notLogged(resp: "Ошибка авторизации")
                     }
                 }
             }
@@ -124,6 +128,8 @@ class UserSignInPresenter {
                     } else {
                         self.view?.notLogged(resp: "Ошибка авторизации")
                     }
+                } else {
+                    self.view?.notLogged(resp: "FBCancel")
                 }
             }
         }

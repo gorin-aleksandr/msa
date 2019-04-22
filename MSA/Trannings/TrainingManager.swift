@@ -1170,14 +1170,14 @@ class TrainingManager {
             if !self.isTrainingFinished() {
                 if let current = self.currentIteration {
                     if self.iterationState == .work {
-                        if self.currentWorkTime != 0 {
+                        if self.currentWorkTime >= 0 {
                             self.currentWorkTime -= 1
                             self.eventWithTimer(time: self.currentWorkTime)
                         } else {
-                            if (current.startTimerOnZero) && current.workTime == 0 {
+                            if (current.startTimerOnZero) && current.workTime <= 0 {
                                 self.stopIteration()
                                 self.startSecondomer()
-                            } else if !(current.startTimerOnZero) && current.workTime == 0 {
+                            } else if !(current.startTimerOnZero) && current.workTime <= 0 {
                                 self.stopIteration()
                                 self.eventWithTimer(time: self.currentWorkTime)
                             } else {
@@ -1185,15 +1185,15 @@ class TrainingManager {
                             }
                         }
                     } else {
-                        if self.currentRestTime != 0 {
+                        if self.currentRestTime >= 0 {
                             self.currentRestTime -= 1
                             self.eventWithTimer(time: self.currentRestTime)
                         } else {
-                            if (current.startTimerOnZero) && current.restTime == 0 {
+                            if (current.startTimerOnZero) && current.restTime <= 0 {
                                 self.stopIteration()
                                 self.iterationState = .rest
                                 self.startSecondomer()
-                            } else if !(current.startTimerOnZero) && self.currentIteration?.restTime == 0 {
+                            } else if !(current.startTimerOnZero) && current.restTime <= 0 {
                                 self.stopIteration()
                                 self.iterationState = .rest
                                 self.eventWithTimer(time: self.currentRestTime)

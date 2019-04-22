@@ -29,6 +29,10 @@ class AuthModule {
     static var pass = String()
     static var facebookAuth = false
     
+    static func sendRecoverPasswordRequest(email: String, callback: @escaping (_ error: Error?)->()) {
+        Auth.auth().sendPasswordReset(withEmail: email, completion: callback)
+    }
+    
     func registerUser(email: String, pass: String, callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
         Auth.auth().createUser(withEmail: email, password: pass) { (user, error) in
             if error == nil && user != nil {

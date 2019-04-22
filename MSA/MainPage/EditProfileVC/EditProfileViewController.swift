@@ -25,6 +25,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
+    @IBOutlet weak var sexHeader: UILabel!
+    @IBOutlet weak var heightHeader: UILabel!
+    @IBOutlet weak var weightHeader: UILabel!
+    @IBOutlet weak var ageHeader: UILabel!
+    @IBOutlet weak var levelHeader: UILabel!
+    
     @IBOutlet weak var findTrainerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
     @IBOutlet weak var profilePhoto: UIView!
@@ -58,6 +64,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var pickerView: UIPickerView! {didSet{pickerView.alpha = 0}}
     @IBOutlet weak var measureStackView: UIStackView!
+    @IBOutlet weak var measureHeight: NSLayoutConstraint!
     
     @IBOutlet weak var approveEmail: UIButton! {
         didSet {
@@ -94,11 +101,15 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         // temporary fix
         measureStackView.layer.opacity = 0
         
-        // Do any additional setup after loading the view.
+        configureHeaders()
     }
-    
-    override func viewDidLayoutSubviews() {
-//        trainerTitle.font = sportsmanTitle.font
+
+    func configureHeaders() {
+        sexHeader.isHidden = AuthModule.currUser.sex == nil
+        ageHeader.isHidden = AuthModule.currUser.age == nil
+        weightHeader.isHidden = AuthModule.currUser.weight == nil
+        heightHeader.isHidden = AuthModule.currUser.height == nil
+        levelHeader.isHidden = AuthModule.currUser.level == nil
     }
     
     func setShadow(outerView: UIView) {
@@ -301,7 +312,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.tabBarController?.selectedIndex = 2
         (self.tabBarController?.viewControllers?.last as? UINavigationController)?.popToRootViewController(animated: false)
         if let vc = (self.tabBarController?.viewControllers?.last as? UINavigationController)?.viewControllers.first as? CommunityListViewController {
-            vc.communityTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            if let _ = vc.communityTableView {
+                vc.communityTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     @IBAction func setSportsmanType(_ sender: Any) {
@@ -420,32 +433,66 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            ageLabel.text = "\(presenter.getAges()[row]) лет"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = "\(presenter.getSexes()[row])" + ", пол"
+            sexLabel.text = "\(presenter.getSexes()[row])"
             presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
             heightLabel.text = "\(presenter.getHeight()[row]), см"
             presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row]), \(AuthModule.currUser.weightType ?? "кг")"
+            weightLabel.text = "\(presenter.getWeight()[row]), кг"
             presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
-            levelLabel.text = "\(presenter.getlevels()[row]), пол"
+            levelLabel.text = "\(presenter.getlevels()[row])"
             presenter.setLevel(level: presenter.getlevels()[row])
         }
+        configureHeaders()
         closePicker()
     }
     
     
     
     func openPicker() {
+        var row = 0
+        if dataType == PickerDataType.Age {
+            if let age = AuthModule.currUser.age {
+                row = presenter.getAges().firstIndex(of: age) ?? 16
+            } else {
+                row = 16
+            }
+        } else if dataType == PickerDataType.Sex {
+            if let sex = AuthModule.currUser.sex {
+                row = presenter.getSexes().firstIndex(of: sex) ?? 0
+            }
+        } else if dataType == PickerDataType.Height {
+            if let h = AuthModule.currUser.height {
+                row = presenter.getHeight().firstIndex(of: h) ?? 90
+            } else {
+                row = 90
+            }
+        } else if dataType == PickerDataType.Weight {
+            if let w = AuthModule.currUser.weight {
+                row = presenter.getWeight().firstIndex(of: w) ?? 20
+            } else {
+                row = 20
+            }
+        } else {
+            if let l = AuthModule.currUser.level {
+                row = presenter.getlevels().firstIndex(of: l) ?? 0
+            } else {
+                row = 0
+            }
+        }
         pickerView.reloadAllComponents()
+        pickerView.selectRow(row, inComponent: 0, animated: true)
+        measureHeight.constant = 360
         pickerView.alpha = 1
     }
     
     func closePicker() {
+        measureHeight.constant = 240
         pickerView.alpha = 0
     }
     
