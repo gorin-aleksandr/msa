@@ -161,7 +161,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func backAction(_ sender: Any) {
-        manager.fullStop()
+        manager.fullStop(back: true)
         tableView.isUserInteractionEnabled = true
         back()
     }

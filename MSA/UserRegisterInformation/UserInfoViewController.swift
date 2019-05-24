@@ -63,7 +63,7 @@ class UserInfoViewController: BasicViewController {
         ageHeader.isHidden = AuthModule.currUser.age == nil
         weightHeader.isHidden = AuthModule.currUser.weight == nil
         heightHeader.isHidden = AuthModule.currUser.height == nil
-        levelHeader.isHidden = AuthModule.currUser.level == nil
+//        levelHeader.isHidden = AuthModule.currUser.level == nil
     }
     
     @IBAction func setAgeButton(_ sender: Any) {

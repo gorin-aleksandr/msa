@@ -1337,9 +1337,11 @@ class TrainingManager {
         iterationState = .work
     }
     
-    func fullStop() {
+    func fullStop(back: Bool = true) {
         self.iterationsCount = 0
-        self.flowView?.higlightIteration(on: 0)
+        if !back {
+            self.flowView?.higlightIteration(on: 0)
+        }
         saveIterationsInfo()
         stopIteration()
         currentIterationNumber = 0

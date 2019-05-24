@@ -30,10 +30,14 @@ class PasswordRecoveryViewController: UIViewController {
                 self.view.isUserInteractionEnabled = true
                 DispatchQueue.main.async {
                     if error == nil {
-                        self.navigationController?.popViewController(animated: true)
+                        let alert = UIAlertController(title: "", message: "На указанный email отправлено сообщение для смены пароля", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                     } else {
                         if error?.localizedDescription == "There is no user record corresponding to this identifier. The user may have been deleted." {
-                            AlertDialog.showAlert("Ошибка", message: "Нету пользователя с такой почтой", viewController: self)
+                            AlertDialog.showAlert("Ошибка", message: "Пользователь с таким email не зарегистрирован", viewController: self)
                         } else {
                             AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "Повторите позже", viewController: self)
                         }

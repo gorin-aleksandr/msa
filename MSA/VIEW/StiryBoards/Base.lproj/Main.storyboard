@@ -61,7 +61,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email*" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FCh-ac-lbB" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                                        <rect key="frame" x="5" y="0.0" width="344" height="41"/>
+                                                                        <rect key="frame" x="5" y="0.0" width="344" height="19"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
@@ -105,7 +105,7 @@
                                                                 <rect key="frame" x="0.0" y="60" width="374" height="50"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w5J-r7-NE3" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                                        <rect key="frame" x="5" y="0.0" width="344" height="41"/>
+                                                                        <rect key="frame" x="5" y="0.0" width="344" height="19"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
@@ -136,7 +136,7 @@
                                                                         </userDefinedRuntimeAttributes>
                                                                     </textField>
                                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvR-AC-v8W">
-                                                                        <rect key="frame" x="354" y="13" width="20" height="15"/>
+                                                                        <rect key="frame" x="354" y="2" width="20" height="15"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="15" id="Gb7-nn-kdk"/>
                                                                             <constraint firstAttribute="width" constant="20" id="fR8-5m-dD7"/>
@@ -275,7 +275,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtN-KJ-h8x">
-                                <rect key="frame" x="152" y="570" width="110" height="20"/>
+                                <rect key="frame" x="149.5" y="548" width="115" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="lah-T9-J9j"/>
                                 </constraints>
@@ -288,7 +288,7 @@
                                 </connections>
                             </button>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="bqg-PE-rL3">
-                                <rect key="frame" x="188.5" y="590" width="37" height="37"/>
+                                <rect key="frame" x="188.5" y="568" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                             <visualEffectView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyT-ne-dWG">
@@ -349,7 +349,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Антропометрия" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGh-q6-02a">
-                                <rect key="frame" x="144.5" y="59" width="125" height="20"/>
+                                <rect key="frame" x="137" y="59" width="140" height="20.5"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -399,7 +399,7 @@
                                                 <blurEffect style="dark"/>
                                             </visualEffectView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Возраст" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9k-1F-N1H">
-                                                <rect key="frame" x="5" y="0.0" width="62.5" height="19"/>
+                                                <rect key="frame" x="5" y="0.0" width="64" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -455,7 +455,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пол" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TdL-F8-AJl">
-                                                <rect key="frame" x="5" y="0.0" width="30" height="19"/>
+                                                <rect key="frame" x="5" y="0.0" width="30.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -490,12 +490,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ek-yf-C0v">
                                         <rect key="frame" x="0.0" y="0.0" width="167" height="60"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рост" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-s3-eLR">
-                                                <rect key="frame" x="5" y="0.0" width="36" height="19"/>
-                                                <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jah-Wz-V08">
                                                 <rect key="frame" x="5" y="54.5" width="157" height="0.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -522,6 +516,12 @@
                                                     <action selector="setHeightButton:" destination="x16-5X-sQk" eventType="touchUpInside" id="ojx-7M-gin"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рост" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-s3-eLR">
+                                                <rect key="frame" x="5" y="0.0" width="37" height="19"/>
+                                                <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -851,7 +851,7 @@
                                 </constraints>
                             </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dwk-0M-NCh">
-                                <rect key="frame" x="188.5" y="374" width="37" height="37"/>
+                                <rect key="frame" x="188.5" y="734" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dw7-dB-Sei">
@@ -891,7 +891,6 @@
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="o3B-M3-sBV" secondAttribute="trailing" constant="25" id="Vag-f6-7UW"/>
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="eV7-1B-mlo" secondAttribute="trailing" constant="25" id="Vd1-Di-KjZ"/>
                             <constraint firstItem="tWO-gn-ezy" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="25" id="bIe-gg-TTr"/>
-                            <constraint firstItem="dwk-0M-NCh" firstAttribute="top" secondItem="NId-4H-QaA" secondAttribute="bottom" id="bcb-fm-OUq"/>
                             <constraint firstItem="XGh-q6-02a" firstAttribute="centerY" secondItem="dw7-dB-Sei" secondAttribute="centerY" id="dsA-YU-zuG"/>
                             <constraint firstAttribute="bottom" secondItem="Zqa-YL-294" secondAttribute="bottom" id="fbF-gK-lWh"/>
                             <constraint firstItem="XGh-q6-02a" firstAttribute="centerX" secondItem="bif-wE-eA4" secondAttribute="centerX" id="fea-9Y-nvm"/>
@@ -906,6 +905,7 @@
                             <constraint firstItem="TAi-7W-b1p" firstAttribute="top" secondItem="NId-4H-QaA" secondAttribute="bottom" id="uHc-Qt-sJ5"/>
                             <constraint firstItem="dw7-dB-Sei" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="15" id="xKc-qZ-dNl"/>
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="357-ag-CRH" secondAttribute="bottom" constant="138" id="xZL-Fv-9c7"/>
+                            <constraint firstItem="dwk-0M-NCh" firstAttribute="top" secondItem="ogT-rS-sSU" secondAttribute="bottom" constant="10" id="xnq-Al-4zz"/>
                             <constraint firstItem="o3B-M3-sBV" firstAttribute="top" secondItem="eV7-1B-mlo" secondAttribute="bottom" constant="15" id="zkV-WF-5K7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RO8-Ie-0FJ"/>
@@ -928,6 +928,7 @@
                         <outlet property="sexLabel" destination="uSH-2r-Z6n" id="EbK-Qu-pX3"/>
                         <outlet property="smImage" destination="zWz-p6-X29" id="u7l-X4-EUM"/>
                         <outlet property="stackWithMeasureButtons" destination="tWO-gn-ezy" id="5P0-2J-UsW"/>
+                        <outlet property="weightHeader" destination="xeB-3L-Jzg" id="v3f-hF-0Zh"/>
                         <outlet property="weightLabel" destination="Q49-3k-QJE" id="eBl-3s-Bk4"/>
                         <outlet property="weightStackView" destination="dqU-9w-Maf" id="FBg-5L-j9f"/>
                     </connections>
@@ -1159,13 +1160,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Регистрация" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VbL-WB-Ri9">
-                                <rect key="frame" x="156" y="59" width="102" height="20"/>
+                                <rect key="frame" x="149.5" y="59" width="115" height="20.5"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AE7-D5-Aem">
-                                <rect key="frame" x="131" y="787" width="152" height="20"/>
+                                <rect key="frame" x="126" y="787" width="162" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="E62-HD-M2c"/>
                                 </constraints>
@@ -1178,7 +1179,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Регистрируясь в MSA вы соглашаетесь с " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="RS3-Qk-kuT">
-                                <rect key="frame" x="78.5" y="763.5" width="257" height="15.5"/>
+                                <rect key="frame" x="76.5" y="763.5" width="261" height="15.5"/>
                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -1456,7 +1457,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Персональная информация" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsk-eV-Jhr">
-                                <rect key="frame" x="96" y="59" width="222" height="20"/>
+                                <rect key="frame" x="84.5" y="59" width="245.5" height="20.5"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -1691,10 +1692,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYv-Ji-mW8">
-                                <rect key="frame" x="20" y="262" width="374" height="50"/>
+                                <rect key="frame" x="20" y="262.5" width="374" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email*" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wU-wa-Eg8" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="5" y="0.0" width="344" height="41"/>
+                                        <rect key="frame" x="5" y="0.0" width="344" height="19"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
@@ -1743,7 +1744,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xPB-pV-yNE" userLabel="FB&amp;GOOGLEStack View">
-                                <rect key="frame" x="20" y="369" width="374" height="120"/>
+                                <rect key="frame" x="20" y="369.5" width="374" height="120"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIp-p2-eJf">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -1752,7 +1753,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Сбросить пароль" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hIS-GV-vW3">
-                                                <rect key="frame" x="121.5" y="15.5" width="131.5" height="19"/>
+                                                <rect key="frame" x="118" y="15.5" width="138" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -1786,7 +1787,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отмена" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jtD-l4-exF">
-                                                <rect key="frame" x="158.5" y="15.5" width="57" height="19"/>
+                                                <rect key="frame" x="157.5" y="15.5" width="59.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -1817,13 +1818,13 @@
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Забыли пароль?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3i-d0-t4v">
-                                <rect key="frame" x="23" y="222" width="371" height="20"/>
+                                <rect key="frame" x="23" y="222" width="371" height="20.5"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Q0y-3u-bVw">
-                                <rect key="frame" x="188.5" y="312" width="37" height="37"/>
+                                <rect key="frame" x="188.5" y="312.5" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>
