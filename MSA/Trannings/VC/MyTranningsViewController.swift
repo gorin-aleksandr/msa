@@ -10,6 +10,7 @@ import UIKit
 import FZAccordionTableView
 import SDWebImage
 import AudioToolbox
+import SVProgressHUD
 
 class MyTranningsViewController: UIViewController {
 
@@ -43,7 +44,6 @@ class MyTranningsViewController: UIViewController {
         copyWeekRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(copyWeek))
         self.tableView.addGestureRecognizer(longPressRecognizer)
         self.weekHeaderView.addGestureRecognizer(copyWeekRecognizer)
-        
     }
     
     @objc
@@ -225,9 +225,25 @@ class MyTranningsViewController: UIViewController {
     
     @IBAction func back(_ sender: Any) {
         if manager.sportsmanId != AuthModule.currUser.id {
-            manager.clearRealm()
+            SVProgressHUD.show()
+            manager.editTraining(wiht:  manager.getCurrentTraining()?.id ?? -1, success: { [weak self] in
+                guard let self = self else {return}
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else {return}
+                    SVProgressHUD.dismiss()
+                    self.manager.clearRealm()
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }) { [weak self] (error) in
+                guard let self = self else {return}
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else {return}
+                    SVProgressHUD.dismiss()
+                    AlertDialog.showAlert("Error", message: "\(error?.localizedDescription ?? "")", viewController: self)
+                }
+            }
         }
-        navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     @IBAction func optionsButton(_ sender: Any) {
         showOptionsAlert(addDayWeek: false)
@@ -731,7 +747,6 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     
     func trainingDeleted() {
         manager.loadTrainingsFromRealm()
-//        self.tableView.reloadData()
     }
     
     func synced() {
