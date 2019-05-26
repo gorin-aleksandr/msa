@@ -18,6 +18,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     
     @IBOutlet weak var promotionTextLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var termsButton: UIButton!
     
     var presenter: IAPPresenterProtocol!
     
@@ -62,6 +63,9 @@ class IAPViewController: UIViewController, IAPViewProtocol {
         visible ? SVProgressHUD.show() : SVProgressHUD.dismiss()
     }
 
+    @IBAction func temsButtonDidTapped(_ sender: Any) {
+        presenter.presentTermsAndConditions()
+    }
 }
 
 extension IAPViewController: UITableViewDelegate, UITableViewDataSource {

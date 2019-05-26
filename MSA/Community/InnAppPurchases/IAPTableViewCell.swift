@@ -18,11 +18,12 @@ class IAPTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         productContainerView.layer.cornerRadius = 8
+        titleLabel.isHidden = true
     }
     
     func configureWith(product: Product) {
         titleLabel.text = product.product.localizedTitle
-        priceLabel.text = product.formattedPrice
+        priceLabel.text = product.formattedPrice + " / " + product.product.localizedTitle
         detailsLabel.text = product.product.localizedDescription
         
 //        let gradient = CAGradientLayer()

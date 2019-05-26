@@ -105,6 +105,7 @@ extension HeartBeatDevicePresenter: HeartBeatManagerDelegate {
             view?.showAlert(title: "Разрешите доступ", message: "Разрешите приложению доступ к Bluetooth для использования пульсометра", action: { self.goToSettings() })
         case .poweredOff:
             view?.showAlert(title: "Включите Bluetooth", message: "Включите Bluetooth на устройстве для использования пульсометра", action: nil)
+            
         case .poweredOn:
             heartBeatService.scanForDevices()
             DispatchQueue.main.asyncAfter(deadline: .now() + 20) {[weak self] in

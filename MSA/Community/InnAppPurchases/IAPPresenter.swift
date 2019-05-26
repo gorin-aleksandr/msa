@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 protocol IAPPresenterProtocol {
     func getProductsDataSource() -> [Product]
     func userSelectedProductAt(index: Int)
     func fetchSubscriptions()
     func setPromotionText() -> String
+    func presentTermsAndConditions()
 }
 
 class IAPPresenter: IAPPresenterProtocol {
@@ -51,6 +53,13 @@ class IAPPresenter: IAPPresenterProtocol {
         } else {
             return "Получите доступ к Сообществу и возможности выбора Тренера, оформив подписку. Выберите один из вариантов."
         }
+    }
+    
+    func presentTermsAndConditions() {
+            let termsStringUrl = "https://telegra.ph/Privacy-Police-and-Terms-Of-Use-03-12"
+            if let url = URL(string: termsStringUrl) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
     }
     
     @objc func handleOptionsLoaded(notification: Notification) {
