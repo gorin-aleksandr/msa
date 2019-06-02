@@ -68,7 +68,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         super.viewWillAppear(animated)
         
         // MARK: Uncomment for IAPs
-        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
+        accessDeniedView.isHidden = true//InAppPurchasesService.shared.currentSubscription != nil
         
         setupNavigationBar()
         configureCityPicker()
