@@ -242,8 +242,9 @@ class MyTranningsViewController: UIViewController {
                     AlertDialog.showAlert("Error", message: "\(error?.localizedDescription ?? "")", viewController: self)
                 }
             }
+        } else {
+            self.navigationController?.popViewController(animated: true)
         }
-        self.navigationController?.popViewController(animated: true)
     }
     @IBAction func optionsButton(_ sender: Any) {
         showOptionsAlert(addDayWeek: false)
@@ -734,10 +735,18 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
 
 extension MyTranningsViewController: FZAccordionTableViewDelegate {
     func tableView(_ tableView: FZAccordionTableView, willOpenSection section: Int, withHeader header: UITableViewHeaderFooterView?) {
+        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return}
+        if section == daysCount {
+            return
+        }
         guard let sectionHeader = header as? TrainingDayHeaderView else { return }
         sectionHeader.headerState.toggle()
     }
     func tableView(_ tableView: FZAccordionTableView, willCloseSection section: Int, withHeader header: UITableViewHeaderFooterView?) {
+        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return}
+        if section == daysCount {
+            return
+        }
         guard let sectionHeader = header as? TrainingDayHeaderView else { return }
         sectionHeader.headerState.toggle()
     }
@@ -754,8 +763,10 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     }
 
     func trainingEdited() {
-        changeWeek()
-        self.tableView.reloadData()
+        if manager.sportsmanId == AuthModule.currUser.id {
+            changeWeek()
+            self.tableView.reloadData()
+        }
     }
     
     func templatesLoaded() {}

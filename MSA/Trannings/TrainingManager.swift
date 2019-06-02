@@ -361,7 +361,10 @@ class TrainingManager {
     func editTraining(wiht id: Int, success: @escaping()->(), failure: ((Error?)->())? = nil) {
         if let userId = sportsmanId {
             
-            let newInfo = makeTrainingForFirebase(id: id, or: true)
+            var newInfo = makeTrainingForFirebase(id: id, or: true)
+            if sportsmanId != AuthModule.currUser.id {
+                newInfo["editByTrainer"] = true
+            }
             Database.database().reference().child("Trainings").child(userId).child("\(id)").updateChildValues(newInfo) { (error, ref) in
                 self.view?.finishLoading()
                 self.view?.trainingEdited()
@@ -656,6 +659,21 @@ class TrainingManager {
         self.view?.templatesLoaded()
     }
     
+    func checkIfEditedByTrainer(callback: @escaping (_ byTrainer: Bool,_ snap: DataSnapshot?)->()) {
+        if let id = sportsmanId {
+            Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
+                for snap in snapchot.children {
+                    let s = snap as! DataSnapshot
+                    if let isTrainer = (s.childSnapshot(forPath: "editByTrainer").value as? Int) {
+                        callback(isTrainer == 1 ? true : false, s)
+                    } else {
+                        callback(false, s)
+                    }
+                }
+            }
+        }
+    }
+    
     func observeTrainings(snapchot: DataSnapshot, success: (() -> Void)? = nil) {
         if sportsmanId != AuthModule.currUser.id {
             self.view?.finishLoading()
@@ -674,7 +692,7 @@ class TrainingManager {
             training.name = s.childSnapshot(forPath: "name").value as? String ?? ""
             training.trianerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
             training.userId = s.childSnapshot(forPath: "userId").value as? Int ?? -1
-
+            
             if let weeks = s.childSnapshot(forPath: "weeks").value as? NSArray {
                 for w in (weeks as! [[String:Any]]) {
                     let week = TrainingWeek()
@@ -742,43 +760,58 @@ class TrainingManager {
         }
         dataSource?.set(trainings: items)
         dataSource?.currentTraining = items.first
-        setSynced()
         self.saveTrainingsToRealm(trainings: items)
+        self.setSynced()
         self.view?.trainingsLoaded()
         success?()
     }
     
     func syncUnsyncedTrainings() {
-        let trainings = realm.getArray(ofType: Training.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-        let weeks = realm.getArray(ofType: TrainingWeek.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-        let days = realm.getArray(ofType: TrainingDay.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-        let ex = realm.getArray(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-        let iterations = realm.getArray(ofType: Iteration.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-
-        let dispatch = DispatchGroup()
+        let trainings = realm.getArray(ofType: Training.self)
+        let weeks = realm.getArray(ofType: TrainingWeek.self)
+        let days = realm.getArray(ofType: TrainingDay.self)
+        let ex = realm.getArray(ofType: ExerciseInTraining.self)
+        let iterations = realm.getArray(ofType: Iteration.self)
+//, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false))
         
-        if trainings.contains(where: {$0.wasSync == false}) || weeks.contains(where: {$0.wasSync == false}) || days.contains(where: {$0.wasSync == false}) || ex.contains(where: {$0.wasSync == false}) || iterations.contains(where: {$0.wasSync == false}) {
-            for training in trainings {
-                dispatch.enter()
-                dataSource?.currentTraining = training
-                self.editTraining(wiht: training.id, success: {
-                    dispatch.leave()
-                })
+        if trainings.contains(where: {$0.wasSync == false && $0.id != -1}) || weeks.contains(where: {$0.wasSync == false && $0.id != -1}) || days.contains(where: {$0.wasSync == false && $0.id != -1}) || ex.contains(where: {$0.wasSync == false && $0.id != ""}) || iterations.contains(where: {$0.wasSync == false && $0.id != ""}) {
+            
+            self.checkIfEditedByTrainer { (edited, snap) in
+                if edited, let s = snap {
+                    self.observeTrainings(snapchot: s)
+                    return
+                } else {
+                    let dispatch = DispatchGroup()
+                    for training in trainings {
+                        dispatch.enter()
+                        if training.id == -1 {
+                            dispatch.leave()
+                        } else {
+                            self.dataSource?.currentTraining = training
+                            self.editTraining(wiht: training.id, success: {
+                                dispatch.leave()
+                            })
+                        }
+                    }
+                    dispatch.notify(queue: .main) {
+                        self.setSynced()
+                    }
+                }
             }
-            dispatch.notify(queue: .main) {
-               self.setSynced()
-            }
+        } else {
+            loadTrainings()
+            getMyExercises(success: nil)
         }
-        self.view?.synced()
     }
     
     func setSynced() {
         try! self.realm.performWrite {
-            let trainings = realm.getArray(ofType: Training.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-            let weeks = realm.getArray(ofType: TrainingWeek.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-            let days = realm.getArray(ofType: TrainingDay.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-            let ex = realm.getArray(ofType: ExerciseInTraining.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
-            let iterations = realm.getArray(ofType: Iteration.self, filterWith: NSPredicate(format: "wasSync = %@", NSNumber(booleanLiteral: false)))
+            let trainings = realm.getArray(ofType: Training.self)
+            let weeks = realm.getArray(ofType: TrainingWeek.self)
+            let days = realm.getArray(ofType: TrainingDay.self)
+            let ex = realm.getArray(ofType: ExerciseInTraining.self)
+            let iterations = realm.getArray(ofType: Iteration.self)
+            
             for training in trainings {
                 training.wasSync = true
             }
@@ -794,6 +827,7 @@ class TrainingManager {
             for i in iterations {
                 i.wasSync = true
             }
+            self.view?.synced()
         }
     }
     

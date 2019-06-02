@@ -217,7 +217,6 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
             SVProgressHUD.show()
             self?.profilePresenter.addToFriends(user: user)
-            
         })
         alert.addAction(cancelActionButton)
         alert.addAction(addFriendAction)

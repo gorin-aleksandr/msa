@@ -244,13 +244,13 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
 // MARK: Uncomment for IAPs
-       if InAppPurchasesService.shared.currentSubscription != nil {
+//       if InAppPurchasesService.shared.currentSubscription != nil {
             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
             destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
             self.navigationController?.pushViewController(destinationVC, animated: true)
-        } else {
-            showNoMyComunityAlert()
-        }
+//        } else {
+//            showNoMyComunityAlert()
+//        }
     }
 
     private func showNoMyComunityAlert() {
