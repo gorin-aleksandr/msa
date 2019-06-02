@@ -659,15 +659,17 @@ class TrainingManager {
         self.view?.templatesLoaded()
     }
     
-    func checkIfEditedByTrainer(callback: @escaping (_ byTrainer: Bool,_ snap: DataSnapshot?)->()) {
+    func checkIfEditedByTrainer(callback: ((_ byTrainer: Bool,_ snap: DataSnapshot?)->())?) {
         if let id = sportsmanId {
             Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
                 for snap in snapchot.children {
                     let s = snap as! DataSnapshot
-                    if let isTrainer = (s.childSnapshot(forPath: "editByTrainer").value as? Int) {
-                        callback(isTrainer == 1 ? true : false, s)
-                    } else {
-                        callback(false, s)
+                    if let id = s.childSnapshot(forPath: "id").value as? Int, id != -1 {
+                        if let isTrainer = (s.childSnapshot(forPath: "editByTrainer").value as? Int) {
+                            callback?(isTrainer == 1 ? true : false, snapchot)
+                        } else {
+                            callback?(false, snapchot)
+                        }
                     }
                 }
             }
@@ -675,9 +677,9 @@ class TrainingManager {
     }
     
     func observeTrainings(snapchot: DataSnapshot, success: (() -> Void)? = nil) {
-        if sportsmanId != AuthModule.currUser.id {
-            self.view?.finishLoading()
-        }
+//        if sportsmanId != AuthModule.currUser.id {
+//            self.view?.finishLoading()
+//        }
         var items = [Training]()
         for snap in snapchot.children {
             let s = snap as! DataSnapshot
@@ -778,7 +780,7 @@ class TrainingManager {
             
             self.checkIfEditedByTrainer { (edited, snap) in
                 if edited, let s = snap {
-                    self.observeTrainings(snapchot: s)
+                    self.observeTrainings(snapchot: s, success: {})
                     return
                 } else {
                     let dispatch = DispatchGroup()
@@ -795,6 +797,7 @@ class TrainingManager {
                     }
                     dispatch.notify(queue: .main) {
                         self.setSynced()
+                        self.view?.synced()
                     }
                 }
             }
@@ -827,7 +830,6 @@ class TrainingManager {
             for i in iterations {
                 i.wasSync = true
             }
-            self.view?.synced()
         }
     }
     
