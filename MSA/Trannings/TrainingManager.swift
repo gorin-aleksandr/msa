@@ -450,22 +450,25 @@ class TrainingManager {
     func deleteWeek(at: Int) {
         guard let week = dataSource?.currentWeek else {return}
         guard let trainingId = dataSource?.currentTraining?.id else {return}
-//        dataSource?.currentTraining?.weeks.remove(at: at)
+
         try! realm.performWrite {
             dataSource?.currentTraining?.wasSync = false
         }
-        realm.deleteObject(week)
-        if let _ = dataSource?.currentTraining?.weeks {
-            dataSource?.currentWeek = nil
-        } else {
-            if let week = dataSource?.currentTraining?.weeks[at-1] {
-                dataSource?.currentWeek = week
-            } else if let week_ = dataSource?.currentTraining?.weeks[at+1] {
-                dataSource?.currentWeek = week_
-            } else {
-                dataSource?.currentWeek = nil
-            }
+        for day in week.days {
+            realm.deleteObject(day)
         }
+//        realm.deleteObject(week)
+//        if let _ = dataSource?.currentTraining?.weeks {
+//            dataSource?.currentWeek = nil
+//        } else {
+//            if let week = dataSource?.currentTraining?.weeks[at-1] {
+//                dataSource?.currentWeek = week
+//            } else if let week_ = dataSource?.currentTraining?.weeks[at+1] {
+//                dataSource?.currentWeek = week_
+//            } else {
+//                dataSource?.currentWeek = nil
+//            }
+//        }
         self.editTraining(wiht: trainingId, success: {})
     }
     

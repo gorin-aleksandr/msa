@@ -125,7 +125,11 @@ class MyTranningsViewController: UIViewController {
         initialDataLoading()
         initialViewConfiguration()
         weekNumber = manager.getWeekNumber()
-        weekLabel.text = "#\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
+        if let name = manager.dataSource?.currentWeek?.name {
+            weekLabel.text = name
+        } else {
+            weekLabel.text = "#\(weekNumber+1) Неделя"
+        }
     }
     
     private func initialDataLoading() {
@@ -337,18 +341,17 @@ class MyTranningsViewController: UIViewController {
                 self.saveTemplate()
             }
         })
-        let secondAction = UIAlertAction(title: "Удалить тренировку", style: .default, handler: { action in
+        let secondAction = UIAlertAction(title: "Удалить все тренировки", style: .default, handler: { action in
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             if addDayWeek {
                 self.addDay()
             } else {
-//                self.deleteTraining()
                 self.showDeleteTrainingsAlert()
             }
         })
         let thirdAction = UIAlertAction(title: "Удалить неделю", style: .default, handler: { action in
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
-            self.deleteWeek()
+            self.showDeleteWeekAlert()
         })
         
         let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
@@ -391,9 +394,6 @@ class MyTranningsViewController: UIViewController {
     }
     
     func deleteWeek() {
-        if weekNumber == manager.getWeeksCount()-1 {
-            weekNumber -= 1
-        }
         manager.deleteWeek(at: weekNumber)
         setData()
     }
@@ -532,7 +532,12 @@ class MyTranningsViewController: UIViewController {
     func changeWeek() {
         if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
             manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
-            weekLabel.text =  "\(weekNumber+1) \(manager.dataSource?.currentWeek?.name ?? "Неделя")"
+            
+            if let name = manager.dataSource?.currentWeek?.name {
+                weekLabel.text = name
+            } else {
+                weekLabel.text = "#\(weekNumber+1) Неделя"
+            }
             nextWeekButton.isHidden = false
             prevWeekButton.isHidden = false
         } else {
@@ -548,6 +553,16 @@ class MyTranningsViewController: UIViewController {
         let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить все созданные тренировки?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
             self.deleteTraining()
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in }
+        alertController.addAction(cancelAction)
+        alertController.addAction(yesAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    private func showDeleteWeekAlert() {
+        let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить все упражнения в неделе?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
+            self.deleteWeek()
         }
         let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in }
         alertController.addAction(cancelAction)
@@ -834,7 +849,10 @@ extension MyTranningsViewController: MultipleChoicesViewControllerDelegate, Mult
 
 extension MyTranningsViewController: UITextFieldDelegate {
     
-    func textFieldDidBeginEditing(_ textField: UITextField) { }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        nextWeekButton.isEnabled = false
+        prevWeekButton.isEnabled = false
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch textField.tag {
@@ -848,6 +866,8 @@ extension MyTranningsViewController: UITextFieldDelegate {
                 self.manager.editTraining(wiht: manager.dataSource?.currentTraining?.id ?? -1, success: {})
             }
         }
+        nextWeekButton.isEnabled = true
+        prevWeekButton.isEnabled = true
     }
 }
 

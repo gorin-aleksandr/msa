@@ -54,6 +54,8 @@ class ExercisesForTypeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
+
         trainingManager?.initView(view: self)
         
         presenter?.attachView(view: self)
@@ -64,6 +66,16 @@ class ExercisesForTypeViewController: UIViewController {
             selectedDataArray = presenter.selectedExercisesForTraining
             selectedIds = presenter.selectedExercisesForTraining.map({$0.id})
         }
+    }
+    
+    @objc func exerciseAddedN(notfication: NSNotification) {
+        AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
+        presenter?.getExercisesFromRealm()
+        presenter?.getTypesFromRealm()
+        presenter?.getFiltersFromRealm()
+        presenter?.getMyExercisesFromRealm()
+        presenter?.setExercisesForType(with: presenter?.exercises.currType ?? 0)
+        initialDataFilling()
     }
     
     func initialDataFilling() {
@@ -249,9 +261,7 @@ class ExercisesForTypeViewController: UIViewController {
     
     @objc func handleTap(sender: TapGesture) {
         let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "ExercisesInfoViewController") as! ExercisesInfoViewController
-        guard  let indexPath = sender.indexPath else {
-            return
-        }
+        guard  let indexPath = sender.indexPath else {return}
         var exercise = Exercise()
         if isFiltering() {
             exercise = filteredArray[indexPath.row]

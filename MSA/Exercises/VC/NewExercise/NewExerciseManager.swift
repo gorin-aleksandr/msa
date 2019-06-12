@@ -108,9 +108,6 @@ class NewExerciseManager {
             if error == nil {
                 let ex = self.makeModel()
                 RealmManager.shared.saveObject(ex, update: true)
-//                let myEx = MyExercises()
-//                myEx.myExercises = ex
-//                myEx.id = UUID().uuidString
                 self.view?.exerciseCreated()
                 self.finish()
                 completion()

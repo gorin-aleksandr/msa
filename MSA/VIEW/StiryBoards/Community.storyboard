@@ -855,16 +855,16 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="levelBG" translatesAutoresizingMaskIntoConstraints="NO" id="3ZE-Rc-iw0">
-                                                                <rect key="frame" x="121" y="116" width="100" height="16"/>
+                                                                <rect key="frame" x="121" y="116" width="100" height="17"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Новичок" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Mf4-wp-7CA">
-                                                                <rect key="frame" x="131" y="115.5" width="80" height="17"/>
+                                                                <rect key="frame" x="131" y="116" width="80" height="17"/>
                                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="14"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZVe-5e-BlE">
-                                                                <rect key="frame" x="12" y="142" width="319" height="48"/>
+                                                                <rect key="frame" x="12" y="143" width="319" height="48"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="goal_icon" translatesAutoresizingMaskIntoConstraints="NO" id="MxO-It-iDp">
                                                                         <rect key="frame" x="8" y="8" width="32" height="32"/>
@@ -962,14 +962,18 @@
                                                             <constraint firstItem="Mf4-wp-7CA" firstAttribute="trailing" secondItem="3ZE-Rc-iw0" secondAttribute="trailing" constant="-10" id="HO4-aX-iTp"/>
                                                             <constraint firstItem="Mf4-wp-7CA" firstAttribute="leading" secondItem="3ZE-Rc-iw0" secondAttribute="leading" constant="10" id="HvR-to-ymu"/>
                                                             <constraint firstItem="PQL-Dy-583" firstAttribute="centerX" secondItem="J5P-3l-tF7" secondAttribute="centerX" id="M8y-ya-lm8"/>
+                                                            <constraint firstItem="Mf4-wp-7CA" firstAttribute="top" secondItem="3ZE-Rc-iw0" secondAttribute="top" id="Mch-5R-mpS"/>
                                                             <constraint firstAttribute="trailing" secondItem="0Mr-TE-9dX" secondAttribute="trailing" constant="16" id="PSD-e4-Ccq"/>
+                                                            <constraint firstItem="3ZE-Rc-iw0" firstAttribute="centerX" secondItem="J5P-3l-tF7" secondAttribute="centerX" id="Rda-m4-sVe"/>
+                                                            <constraint firstItem="Mf4-wp-7CA" firstAttribute="leading" secondItem="3ZE-Rc-iw0" secondAttribute="trailing" constant="-90" id="SgR-lO-ujr"/>
                                                             <constraint firstItem="Mf4-wp-7CA" firstAttribute="centerY" secondItem="3ZE-Rc-iw0" secondAttribute="centerY" id="WGn-eO-5f1"/>
                                                             <constraint firstItem="ZVe-5e-BlE" firstAttribute="top" secondItem="3ZE-Rc-iw0" secondAttribute="bottom" constant="10" id="ZVY-6B-syU"/>
-                                                            <constraint firstAttribute="trailing" secondItem="3ZE-Rc-iw0" secondAttribute="trailing" constant="122" id="aOp-8d-kzU"/>
+                                                            <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="3ZE-Rc-iw0" secondAttribute="trailing" constant="122" id="aOp-8d-kzU"/>
+                                                            <constraint firstItem="Mf4-wp-7CA" firstAttribute="bottom" secondItem="3ZE-Rc-iw0" secondAttribute="bottom" id="aTR-7u-sk4"/>
                                                             <constraint firstAttribute="trailing" secondItem="ZVe-5e-BlE" secondAttribute="trailing" constant="12" id="cpT-VO-xhM"/>
                                                             <constraint firstItem="0Mr-TE-9dX" firstAttribute="top" secondItem="J5P-3l-tF7" secondAttribute="top" constant="16" id="gB1-X1-C9u"/>
                                                             <constraint firstAttribute="height" constant="200" id="mIj-1A-UqZ"/>
-                                                            <constraint firstItem="3ZE-Rc-iw0" firstAttribute="leading" secondItem="J5P-3l-tF7" secondAttribute="leading" constant="121" id="q0o-jJ-82O"/>
+                                                            <constraint firstItem="3ZE-Rc-iw0" firstAttribute="leading" relation="lessThanOrEqual" secondItem="J5P-3l-tF7" secondAttribute="leading" constant="121" id="q0o-jJ-82O"/>
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Степан Швец-Каминский " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GaQ-wp-hhh">
@@ -1417,10 +1421,10 @@
         <image name="back_" width="13" height="22"/>
         <image name="background_MSA" width="375" height="665"/>
         <image name="bgProfile" width="375" height="667"/>
-        <image name="bttn-diet" width="109" height="74"/>
-        <image name="bttn-measure" width="109" height="74"/>
-        <image name="bttn-stat" width="109" height="74"/>
-        <image name="bttn-training" width="109" height="74"/>
+        <image name="bttn-diet" width="328" height="222"/>
+        <image name="bttn-measure" width="328" height="222"/>
+        <image name="bttn-stat" width="328" height="222"/>
+        <image name="bttn-training" width="328" height="222"/>
         <image name="coach-icon" width="8" height="8"/>
         <image name="delete_red" width="14" height="14"/>
         <image name="dropdown_navy" width="8" height="4"/>

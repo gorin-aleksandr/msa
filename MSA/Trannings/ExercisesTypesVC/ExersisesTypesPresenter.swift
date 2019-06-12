@@ -24,7 +24,7 @@ import Realm
 
 class ExersisesTypesPresenter {
     
-    private let exercises: ExersisesDataManager
+    let exercises: ExersisesDataManager
     private weak var view: ExercisesTypesDataProtocol?
     private let realmManager = RealmManager.shared
     
@@ -280,6 +280,7 @@ class ExersisesTypesPresenter {
     }
     
     func setExercisesForType(with id: Int) {
+        exercises.currType = id
         if id == 12 {
             exercises.currentTypeExercisesArray = exercises.ownExercises.filter({$0.trainerId == AuthModule.currUser.id})
         } else {

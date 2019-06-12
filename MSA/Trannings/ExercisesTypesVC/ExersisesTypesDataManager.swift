@@ -18,6 +18,7 @@ class ExersisesDataManager {
     var ownExercises: [Exercise] = []
     var allExersises: [Exercise] = []
     var currentTypeExercisesArray: [Exercise] = []
+    var currType: Int = 0
     var currentExercise: Exercise? = nil
     
     var allFilters: [ExerciseTypeFilter] = []

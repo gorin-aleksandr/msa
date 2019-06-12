@@ -394,6 +394,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func hideTrainerView(_ sender: Any) {
 
     }
+    @IBAction func hidePicker(_ sender: Any) {
+        closePicker()
+    }
     
 }
 
@@ -449,7 +452,6 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
             presenter.setLevel(level: presenter.getlevels()[row])
         }
         configureHeaders()
-        closePicker()
     }
     
     
