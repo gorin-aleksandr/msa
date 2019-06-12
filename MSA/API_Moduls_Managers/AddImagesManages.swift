@@ -39,9 +39,9 @@ class ImageManager: NSObject, SelectingImagesManager {
     
     func presentImagePicker() {
         guard presentingViewController.maximumImagesCanBePicked() > 0 else {return}
-        let actionSheetController = UIAlertController(title: "Please select a source of your photo", message: "Option to select", preferredStyle: .actionSheet)
-        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
-            print("Cancel")
+        let actionSheetController = UIAlertController(title: "Использовать:", message: nil, preferredStyle: .actionSheet)
+        let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
+            print("Отмена")
         }
         actionSheetController.addAction(cancelActionButton)
         
@@ -56,7 +56,7 @@ class ImageManager: NSObject, SelectingImagesManager {
     
     
     func presentVideoPicker() {
-        let actionSheetController = UIAlertController(title: "", message: "Вибрать видео:", preferredStyle: .actionSheet)
+        let actionSheetController = UIAlertController(title: "", message: "Выбрать видео:", preferredStyle: .actionSheet)
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in }
         actionSheetController.addAction(cancelActionButton)
 
@@ -79,7 +79,7 @@ class ImageManager: NSObject, SelectingImagesManager {
 
     
     private func getCameraAlertAction() -> UIAlertAction {
-        let cameraActionButton = UIAlertAction(title: "Camera", style: .default) { action -> Void in
+        let cameraActionButton = UIAlertAction(title: "Камера", style: .default) { action -> Void in
             let imagePicker = UIImagePickerController()
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.allowsEditing = false
@@ -87,10 +87,10 @@ class ImageManager: NSObject, SelectingImagesManager {
                 imagePicker.delegate = self
                 self.presentingViewController.present(imagePicker, animated: true, completion: nil)
             } else {
-                let alertController = UIAlertController(title: "Error", message: "You should enable camera usage for this application in Settings", preferredStyle: .alert)
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in }
+                let alertController = UIAlertController(title: "Ошибка", message: "Необходимо разрешить приложению доступ к камере", preferredStyle: .alert)
+                let cancelAction = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in }
                 alertController.addAction(cancelAction)
-                let enableAction = UIAlertAction(title: "Enable", style: .default) { action -> Void in
+                let enableAction = UIAlertAction(title: "Разрешить", style: .default) { action -> Void in
                     guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {return}
                     
                     if UIApplication.shared.canOpenURL(settingsUrl) {
@@ -112,7 +112,7 @@ class ImageManager: NSObject, SelectingImagesManager {
     private func getLibraryAlertAction() -> UIAlertAction {
         let selectedPhotoController = DKImagePickerController()
         
-        let photoLibraryActionButton = UIAlertAction(title: "Photo Library", style: .default) { action -> Void in
+        let photoLibraryActionButton = UIAlertAction(title: "Галерея", style: .default) { action -> Void in
             selectedPhotoController.maxSelectableCount = self.presentingViewController.maximumImagesCanBePicked()
             selectedPhotoController.allowMultipleTypes = false
             selectedPhotoController.sourceType = .both

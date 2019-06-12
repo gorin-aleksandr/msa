@@ -125,7 +125,7 @@ class ExercisesForTypeViewController: UIViewController {
                      NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.placeholder = "Поиск"
         definesPresentationContext = true
         if #available(iOS 9.1, *) {
             searchController.obscuresBackgroundDuringPresentation = false
@@ -133,6 +133,7 @@ class ExercisesForTypeViewController: UIViewController {
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         }
+        searchController.searchBar.setValue("Отмена", forKey:"_cancelButtonText")
     }
     
     private func getSortedArray(of array: [Exercise]) -> [Exercise] {
@@ -455,3 +456,18 @@ extension ExercisesForTypeViewController: TrainingsViewDelegate {
     func templateCreated() {}
     func templatesLoaded() {}
 }
+
+//extension ExercisesForTypeViewController: UISearchControllerDelegate {
+//    func searchDisplayControllerWillBeginSearch(controller: UISearchDisplayController) {
+//        for view:UIView in (searchController.searchBar.subviews)        {
+//            for subView:UIView in (view.subviews)
+//            {
+//                if ( subView is UIButton )
+//                {
+//                    let cancelBut = subView as! UIButton
+//                    cancelBut.setTitle("sdfsdfsdf", for: .normal)
+//                }
+//            }
+//        }
+//    }
+//}
