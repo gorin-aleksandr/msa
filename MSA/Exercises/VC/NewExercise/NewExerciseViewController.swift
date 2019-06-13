@@ -409,8 +409,10 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
             tableView.reloadData()
         case 9:
             startLoading()
-            exercManager.deleteExercise(deleted: {
-                self.exerciseDeleted()
+            exercManager.deleteExercise(deleted: { id in
+                self.removeDeletedExercisesFromTraining(id: id ?? "", completion: {
+                    self.exerciseDeleted()
+                })
             }, failure: {_ in
                 self.finishLoading()
                 AlertDialog.showAlert("Ошибка удаления", message: "Повторите позже", viewController: self)
@@ -420,10 +422,32 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         }
         
     }
-    
+    func removeDeletedExercisesFromTraining(id: String, completion: @escaping ()->()) {
+        guard let training = TrainingsDataSource.shared.currentTraining else {return}
+        let manager = TrainingManager(type: .my)
+        for week in training.weeks {
+            for day in week.days {
+                for exercise in day.exercises {
+                    if exercise.exerciseId == id {
+                        manager.realm.deleteObject(exercise)
+                    }
+                }
+            }
+        }
+        manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {
+            completion()
+        })
+    }
     func updateExercise() {
         if exercManager.dataSource.name != "" && exercManager.dataSource.filterId != -1 &&  exercManager.dataSource.typeId != -1 {
-            exercManager.updateNewExerciseInFirebase()
+            exercManager.updateNewExerciseInFirebase { (ex) in
+                if self.presenter?.exercises.currentTypeExercisesArray.first?.typeId == ex.typeId || self.presenter?.exercises.currentTypeExercisesArray.first?.typeId == ex.realTypeId {
+                    if let index = self.presenter?.exercises.currentTypeExercisesArray.firstIndex(where: {$0.id  == ex.id}) {
+                        self.presenter?.exercises.currentTypeExercisesArray.remove(at: index)
+                        self.presenter?.exercises.currentTypeExercisesArray.insert(ex, at: index)
+                    }
+                }
+            }
         } else {
             AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
             tableView.reloadData()
@@ -432,7 +456,13 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     
     func createExercise() {
         if exercManager.dataSource.name != "" && exercManager.dataSource.filterId != -1 &&  exercManager.dataSource.typeId != -1 {
-            exercManager.createNewExerciseInFirebase()
+            exercManager.createNewExerciseInFirebase { (ex) in
+                self.presenter?.exercises.ownExercises.append(ex)
+                self.presenter?.exercises.allExersises.append(ex)
+                if self.presenter?.exercises.currentTypeExercisesArray.first?.typeId == ex.typeId || self.presenter?.exercises.currentTypeExercisesArray.first?.typeId == ex.realTypeId {
+                    self.presenter?.exercises.currentTypeExercisesArray.insert(ex, at: 0)
+                }
+            }
         } else {
             AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
             tableView.reloadData()

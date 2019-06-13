@@ -377,6 +377,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func logout() {
+        TrainingsDataSource.shared.clearDB()
         presenter.deleteUserBlock(context: context) { (loggedOut) in
             self.presenter.clearRealm()
             if loggedOut {
@@ -393,6 +394,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func hideTrainerView(_ sender: Any) {
 
+    }
+    @IBAction func hidePicker(_ sender: Any) {
+        closePicker()
     }
     
 }
@@ -449,7 +453,6 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
             presenter.setLevel(level: presenter.getlevels()[row])
         }
         configureHeaders()
-        closePicker()
     }
     
     

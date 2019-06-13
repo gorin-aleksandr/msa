@@ -100,27 +100,24 @@ class NewExerciseManager {
         }
     }
     
-    func sendNewExerciseInfoBlock(id: String, completion: @escaping ()->()) {
+    func sendNewExerciseInfoBlock(id: String, completion: @escaping (_ ex: Exercise)->()) {
         let newInfo = makeExerciseForFirebase(id: id, or: false)
         guard let index = newInfo["id"] as? String else {return}
         Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
                 let ex = self.makeModel()
+                completion(ex)
                 RealmManager.shared.saveObject(ex, update: true)
-//                let myEx = MyExercises()
-//                myEx.myExercises = ex
-//                myEx.id = UUID().uuidString
                 self.view?.exerciseCreated()
                 self.finish()
-                completion()
             } else {
                 self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
             }
         }
     }
     
-    func deleteExercise(deleted: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
+    func deleteExercise(deleted: @escaping (_ id: String?)->(), failure: @escaping (_ error: Error?)->()) {
         guard let id = AuthModule.currUser.id else { return }
         let newInfo = makeExerciseForFirebase(id: id, or: true)
         guard let index = newInfo["id"] as? String else {return}
@@ -128,7 +125,7 @@ class NewExerciseManager {
             self.finish()
             if error == nil {
                 RealmManager.shared.deleteObject(self.dataSource.newExerciseModel)
-                deleted()
+                deleted(index)
             } else {
                 failure(error)
             }
@@ -204,7 +201,7 @@ class NewExerciseManager {
             ] as [String:Any]
     }
     
-    func createNewExerciseInFirebase() {
+    func createNewExerciseInFirebase(completion: ((_ ex: Exercise)->())? = nil) {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
             uploadVideo(dataSource.videoPath) { (success) in
@@ -217,7 +214,9 @@ class NewExerciseManager {
                     }
                     self.uploadPhoto(images: images, success: { (success) in
                         if success {
-                            self.sendNewExerciseInfoBlock(id: id, completion: {})
+                            self.sendNewExerciseInfoBlock(id: id, completion: { ex in
+                                completion?(ex)
+                            })
                         } else {
                             self.view?.finishLoading()
                         }
@@ -229,7 +228,7 @@ class NewExerciseManager {
         }
     }
     
-    func updateExerciseBlock(id: String) {
+    func updateExerciseBlock(id: String, completion: ((_ ex: Exercise)->())? = nil) {
         let newInfo = makeExerciseForFirebase(id: id, or: true)
         //        let child = [self.dataSource.newExerciseModel.id:newInfo] as! [Int:Any]
         Database.database().reference().child("ExercisesByTrainers").child(id).child("\(self.dataSource.newExerciseModel.id)").updateChildValues(newInfo) { (error, databaseFer) in
@@ -237,6 +236,7 @@ class NewExerciseManager {
             if error == nil {
                 DispatchQueue.main.async {
                     let ex = self.makeModel()
+                    completion?(ex)
                     RealmManager.shared.saveObject(ex, update: true)
                     self.view?.exerciseUpdated()
                     self.finish()
@@ -266,7 +266,7 @@ class NewExerciseManager {
         return exercise
     }
     
-    func updateNewExerciseInFirebase() {
+    func updateNewExerciseInFirebase(completion: ((_ ex: Exercise)->())? = nil) {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
             uploadVideo(dataSource.videoPath) { (success) in
@@ -280,13 +280,13 @@ class NewExerciseManager {
                         }
                         self.uploadPhoto(images: images, success: { (success) in
                             if success {
-                                self.updateExerciseBlock(id: id)
+                                self.updateExerciseBlock(id: id, completion: completion)
                             } else {
                                 self.view?.finishLoading()
                             }
                         })
                     } else {
-                        self.updateExerciseBlock(id: id)
+                        self.updateExerciseBlock(id: id, completion: completion)
                     }
                 } else {
                     self.view?.finishLoading()
