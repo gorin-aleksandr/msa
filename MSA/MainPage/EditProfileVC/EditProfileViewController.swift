@@ -138,13 +138,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if let city = user.city {
             cityTF.text = city
         }
-        if user.type == "СПОРТСМЕН" {
-            sportsmanTypeImage.image = #imageLiteral(resourceName: "selected")
-            trainerTypeImage.image = #imageLiteral(resourceName: "notSelected")
-        } else {
-            sportsmanTypeImage.image = #imageLiteral(resourceName: "notSelected")
-            trainerTypeImage.image = #imageLiteral(resourceName: "selected")
-        }
+//        if user.type == "СПОРТСМЕН" {
+//            sportsmanTypeImage.image = #imageLiteral(resourceName: "selected")
+//            trainerTypeImage.image = #imageLiteral(resourceName: "notSelected")
+//        } else {
+//            sportsmanTypeImage.image = #imageLiteral(resourceName: "notSelected")
+//            trainerTypeImage.image = #imageLiteral(resourceName: "selected")
+//        }
         if let age = user.age {
             ageLabel.text = "\(age), лет"
         }
@@ -158,7 +158,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             weightLabel.text = "\(weight), кг" // hotfix
         }
         if let level = user.level {
-            levelLabel.text = "Уровень - \(level)"
+            levelLabel.text = "\(level)"
         }
         if user.heightType == "sm" {
             smImage.image = #imageLiteral(resourceName: "selected")
@@ -433,10 +433,10 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]) лет"
+            ageLabel.text = "\(presenter.getAges()[row]), лет"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = "\(presenter.getSexes()[row])"
+            sexLabel.text = "\(presenter.getSexes()[row]), пол"
             presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
             heightLabel.text = "\(presenter.getHeight()[row]), см"
