@@ -47,7 +47,7 @@ enum TrainingType {
 class TrainingManager {
     
     let realm = RealmManager.shared
-    var dataSource: TrainingsDataSource?
+    var dataSource: TrainingsDataSource? = TrainingsDataSource.shared
     var dataSourceCopy = TrainingsDataSource()
     private weak var view: TrainingsViewDelegate?
     private weak var flowView: TrainingFlowDelegate?

@@ -23,7 +23,8 @@ class CircleTrainingDayViewController: UIViewController {
     @IBOutlet weak var pulseImageView: UIImageView!
     @IBOutlet weak var heartBeatButton: UIButton!
     @IBOutlet weak var circleBarButton: UIBarButtonItem!
-    
+
+    var currentIndexPaht: IndexPath = IndexPath(row: 0, section: 0)
     var manager = TrainingManager(type: .my)
     var heartBeatService = HeartBeatManager()
     
@@ -58,7 +59,6 @@ class CircleTrainingDayViewController: UIViewController {
     }
     
     private func configureUI() {
-        
         navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.setTitle(title: manager.getCurrentTraining()?.name ?? "", subtitle: "День \(manager.numberOfDay()) . Упражнений: \(manager.exercisesCount())")
         configureTableView()
@@ -226,7 +226,13 @@ extension CircleTrainingDayViewController: TrainingFlowDelegate {
     
     func higlightIteration(on: Int) {
         let indexPath = IndexPath(row: on, section: 0)
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        if currentIndexPaht.row != indexPath.row {
+            if indexPath.row == (manager.getCurrentday()?.exercises.count ?? 0) - 1 {
+                tableView.scrollToRow(at: indexPath, at: .middle, animated: true)
+            } else {
+                tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
+        }
         guard let cell = tableView.cellForRow(at: indexPath) as? CircleTrainingExerciseTableViewCell else {return}
         cell.bgView.backgroundColor = lightBLUE
         if on != 0 {
@@ -239,6 +245,7 @@ extension CircleTrainingDayViewController: TrainingFlowDelegate {
             guard let cell = tableView.cellForRow(at: indexPath) as? CircleTrainingExerciseTableViewCell else {return}
             cell.bgView.backgroundColor = .white
         }
+        self.currentIndexPaht = indexPath
     }
 }
 

@@ -409,8 +409,10 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
             tableView.reloadData()
         case 9:
             startLoading()
-            exercManager.deleteExercise(deleted: {
-                self.exerciseDeleted()
+            exercManager.deleteExercise(deleted: { id in
+                self.removeDeletedExercisesFromTraining(id: id ?? "", completion: {
+                    self.exerciseDeleted()
+                })
             }, failure: {_ in
                 self.finishLoading()
                 AlertDialog.showAlert("Ошибка удаления", message: "Повторите позже", viewController: self)
@@ -420,7 +422,22 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
         }
         
     }
-    
+    func removeDeletedExercisesFromTraining(id: String, completion: @escaping ()->()) {
+        guard let training = TrainingsDataSource.shared.currentTraining else {return}
+        let manager = TrainingManager(type: .my)
+        for week in training.weeks {
+            for day in week.days {
+                for exercise in day.exercises {
+                    if exercise.exerciseId == id {
+                        manager.realm.deleteObject(exercise)
+                    }
+                }
+            }
+        }
+        manager.editTraining(wiht: manager.getCurrentTraining()?.id ?? -1, success: {
+            completion()
+        })
+    }
     func updateExercise() {
         if exercManager.dataSource.name != "" && exercManager.dataSource.filterId != -1 &&  exercManager.dataSource.typeId != -1 {
             exercManager.updateNewExerciseInFirebase()

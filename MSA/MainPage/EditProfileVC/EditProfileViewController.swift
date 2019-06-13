@@ -377,6 +377,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func logout() {
+        TrainingsDataSource.shared.clearDB()
         presenter.deleteUserBlock(context: context) { (loggedOut) in
             self.presenter.clearRealm()
             if loggedOut {

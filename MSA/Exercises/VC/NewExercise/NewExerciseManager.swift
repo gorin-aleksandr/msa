@@ -117,7 +117,7 @@ class NewExerciseManager {
         }
     }
     
-    func deleteExercise(deleted: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
+    func deleteExercise(deleted: @escaping (_ id: String?)->(), failure: @escaping (_ error: Error?)->()) {
         guard let id = AuthModule.currUser.id else { return }
         let newInfo = makeExerciseForFirebase(id: id, or: true)
         guard let index = newInfo["id"] as? String else {return}
@@ -125,7 +125,7 @@ class NewExerciseManager {
             self.finish()
             if error == nil {
                 RealmManager.shared.deleteObject(self.dataSource.newExerciseModel)
-                deleted()
+                deleted(index)
             } else {
                 failure(error)
             }

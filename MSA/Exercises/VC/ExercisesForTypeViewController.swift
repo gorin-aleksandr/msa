@@ -221,6 +221,10 @@ class ExercisesForTypeViewController: UIViewController {
     @IBAction func plus(_ sender: Any) {
         if let manager = trainingManager {
             guard let presenter = presenter else {return}
+            if presenter.selectedExercisesForTraining.isEmpty {
+                AlertDialog.showAlert("Добавьте хотя бы одно упражнение", message: "", viewController: self)
+                return
+            }
             if manager.sportsmanId != AuthModule.currUser.id {
                 let newExMan = NewExerciseManager()
                 newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: presenter.selectedExercisesForTraining, completion: {
@@ -259,19 +263,20 @@ class ExercisesForTypeViewController: UIViewController {
         }
     }
     
-    @objc func handleTap(sender: TapGesture) {
-        let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "ExercisesInfoViewController") as! ExercisesInfoViewController
-        guard  let indexPath = sender.indexPath else {return}
-        var exercise = Exercise()
-        if isFiltering() {
-            exercise = filteredArray[indexPath.row]
-        } else {
-            guard let ex = exercisesByFIlter?[indexPath.row] else {return}
-            exercise = ex
-        }
-        destinationVC.execise = exercise
-        self.navigationController?.pushViewController(destinationVC, animated: true)
-    }
+//    @objc func handleTap(sender: TapGesture) {
+//        let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "ExercisesInfoViewController") as! ExercisesInfoViewController
+//        guard let indexPath = sender.indexPath else {return}
+//
+//        var exercise = Exercise()
+//        if isFiltering() {
+//            exercise = filteredArray[indexPath.row]
+//        } else {
+//            guard let ex = exercisesByFIlter?[indexPath.row] else {return}
+//            exercise = ex
+//        }
+//        destinationVC.execise = exercise
+//        self.navigationController?.pushViewController(destinationVC, animated: true)
+//    }
     
 }
 
@@ -301,11 +306,11 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
             cell.cellState = .unselected
         }
         
-        tap = TapGesture(target: self, action: #selector(handleTap(sender:)))
-        tap.indexPath = indexPath
-        cell.exerciseImage.addGestureRecognizer(tap)
-        cell.exerciseImage.isUserInteractionEnabled = true
-        cell.exerciseImage.tag = indexPath.row
+//        tap = TapGesture(target: self, action: #selector(handleTap(sender:)))
+//        tap.indexPath = indexPath
+//        cell.exerciseImage.addGestureRecognizer(tap)
+//        cell.exerciseImage.isUserInteractionEnabled = true
+//        cell.exerciseImage.tag = indexPath.row
         
         return cell
     }
