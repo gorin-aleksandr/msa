@@ -63,6 +63,7 @@ class InAppPurchasesService: NSObject {
             let data = try Data(contentsOf: url)
             return data
         } catch {
+            
             print("Error loading receipt data: \(error.localizedDescription)")
             return nil
         }
@@ -70,17 +71,20 @@ class InAppPurchasesService: NSObject {
     
     func uploadReceipt(completion: ((_ success: Bool) -> Void)? = nil) {
         if let receiptData = loadReceipt() {
-            self.validate(receipt: receiptData) { [weak self] (loaded) in
-                completion?(loaded)
-//                switch result {
-//                case .success(let result):
-//                    strongSelf.currentSessionId = result.sessionId
-//                    strongSelf.currentSubscription = result.currentSubscription
-//                    completion?(true)
-//                case .failure(let error):
-//                    print("🚫 Receipt Upload Failed: \(error)")
-//                    completion?(false)
-//                }
+            self.validate(receipt: receiptData, url: "https://buy.itunes.apple.com/verifyReceipt") { [weak self] (loaded, error) in
+                if let error = error, error.code == 21007 {
+                    if let receiptData = self?.loadReceipt() {
+                        self?.validate(receipt: receiptData, url: "https://sandbox.itunes.apple.com/verifyReceipt") { (loaded, error) in
+                                completion?(loaded)
+                                return
+                            }
+                        } else {
+                            completion?(false)
+                            print("Missing receipt data")
+                            return
+                        }
+                }
+                    completion?(loaded)
             }
         } else {
             completion?(false)
@@ -88,22 +92,23 @@ class InAppPurchasesService: NSObject {
         }
     }
     
-    func validate(receipt data: Data, completion: @escaping (_ success: Bool) -> ()) {
+    func validate(receipt data: Data, url: String, completion: @escaping (_ success: Bool, _ error: NSError?) -> ()) {
         let body = [
             "receipt-data": data.base64EncodedString(),
             "password": sharedSecret
         ]
         let bodyData = try! JSONSerialization.data(withJSONObject: body, options: [])
         
-        let url = URL(string: "https://buy.itunes.apple.com/verifyReceipt")!
+        let url = URL(string: url)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = bodyData
         
         let task = URLSession.shared.dataTask(with: request) { (responseData, response, error) in
             if let error = error {
+            let nsError = error as NSError
                print("Error while loading")
-                completion(false)
+                completion(false, nsError)
             } else if let responseData = responseData {
                 let json = try! JSONSerialization.jsonObject(with: responseData, options: []) as! Dictionary<String, Any>
                 print(json["receipt"])
@@ -119,7 +124,7 @@ class InAppPurchasesService: NSObject {
                 } else {
                     self.paidSubscriptions = []
                 }
-                completion(true)
+                completion(true, nil)
             }
         }
         
