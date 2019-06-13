@@ -55,10 +55,7 @@ class ExercisesForTypeViewController: UIViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
-
-        trainingManager?.initView(view: self)
         
-        presenter?.attachView(view: self)
         initialDataFilling()
         configureFilterScrollView()
         configureTable_CollectionView()
@@ -68,14 +65,11 @@ class ExercisesForTypeViewController: UIViewController {
         }
     }
     
-    @objc func exerciseAddedN(notfication: NSNotification) {
+    @objc
+    func exerciseAddedN() {
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
-        presenter?.getExercisesFromRealm()
-        presenter?.getTypesFromRealm()
-        presenter?.getFiltersFromRealm()
-        presenter?.getMyExercisesFromRealm()
-        presenter?.setExercisesForType(with: presenter?.exercises.currType ?? 0)
         initialDataFilling()
+        self.tableView.reloadData()
     }
     
     func initialDataFilling() {
@@ -99,9 +93,11 @@ class ExercisesForTypeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        trainingManager?.initView(view: self)
+        presenter?.attachView(view: self)
         initialDataFilling()
         if presenter?.getCurrentExetcisesType().name == "" {
-//            exercisesByFIlter = Array(RealmManager.shared.getArray(ofType: MyExercises.self).first?.myExercises ?? List<Exercise>())
             exercisesByFIlter = presenter?.getCurrentTypeExerceses()
             tableView.reloadData()
         }
@@ -246,6 +242,9 @@ class ExercisesForTypeViewController: UIViewController {
             guard let exercise = sender as? Exercise else {return}
             guard let destination = segue.destination as? ExercisesInfoViewController else {return}
             destination.execise = exercise
+            destination.presenter = self.presenter
+        case "newExerciseSegue":
+            guard let destination = segue.destination as? NewExerciseViewController else {return}
             destination.presenter = self.presenter
         default:
             print("default")
