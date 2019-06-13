@@ -100,17 +100,17 @@ class NewExerciseManager {
         }
     }
     
-    func sendNewExerciseInfoBlock(id: String, completion: @escaping ()->()) {
+    func sendNewExerciseInfoBlock(id: String, completion: @escaping (_ ex: Exercise)->()) {
         let newInfo = makeExerciseForFirebase(id: id, or: false)
         guard let index = newInfo["id"] as? String else {return}
         Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
                 let ex = self.makeModel()
+                completion(ex)
                 RealmManager.shared.saveObject(ex, update: true)
                 self.view?.exerciseCreated()
                 self.finish()
-                completion()
             } else {
                 self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")
             }
@@ -201,7 +201,7 @@ class NewExerciseManager {
             ] as [String:Any]
     }
     
-    func createNewExerciseInFirebase() {
+    func createNewExerciseInFirebase(completion: ((_ ex: Exercise)->())? = nil) {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
             uploadVideo(dataSource.videoPath) { (success) in
@@ -214,7 +214,9 @@ class NewExerciseManager {
                     }
                     self.uploadPhoto(images: images, success: { (success) in
                         if success {
-                            self.sendNewExerciseInfoBlock(id: id, completion: {})
+                            self.sendNewExerciseInfoBlock(id: id, completion: { ex in
+                                completion?(ex)
+                            })
                         } else {
                             self.view?.finishLoading()
                         }
@@ -226,7 +228,7 @@ class NewExerciseManager {
         }
     }
     
-    func updateExerciseBlock(id: String) {
+    func updateExerciseBlock(id: String, completion: ((_ ex: Exercise)->())? = nil) {
         let newInfo = makeExerciseForFirebase(id: id, or: true)
         //        let child = [self.dataSource.newExerciseModel.id:newInfo] as! [Int:Any]
         Database.database().reference().child("ExercisesByTrainers").child(id).child("\(self.dataSource.newExerciseModel.id)").updateChildValues(newInfo) { (error, databaseFer) in
@@ -234,6 +236,7 @@ class NewExerciseManager {
             if error == nil {
                 DispatchQueue.main.async {
                     let ex = self.makeModel()
+                    completion?(ex)
                     RealmManager.shared.saveObject(ex, update: true)
                     self.view?.exerciseUpdated()
                     self.finish()
@@ -263,7 +266,7 @@ class NewExerciseManager {
         return exercise
     }
     
-    func updateNewExerciseInFirebase() {
+    func updateNewExerciseInFirebase(completion: ((_ ex: Exercise)->())? = nil) {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
             uploadVideo(dataSource.videoPath) { (success) in
@@ -277,13 +280,13 @@ class NewExerciseManager {
                         }
                         self.uploadPhoto(images: images, success: { (success) in
                             if success {
-                                self.updateExerciseBlock(id: id)
+                                self.updateExerciseBlock(id: id, completion: completion)
                             } else {
                                 self.view?.finishLoading()
                             }
                         })
                     } else {
-                        self.updateExerciseBlock(id: id)
+                        self.updateExerciseBlock(id: id, completion: completion)
                     }
                 } else {
                     self.view?.finishLoading()
