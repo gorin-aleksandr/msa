@@ -36,6 +36,7 @@ class TrainingDayHeaderView: FZAccordionTableViewHeaderView {
             setState(headerState)
         }
     }
+    var day: TrainingDay?
     
     enum HeaderState: Toggable {
         case unselected, selected

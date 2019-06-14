@@ -836,15 +836,16 @@ class TrainingManager {
         }
     }
     
-    func setWeekFromDay(day: TrainingDay) {
+    func setWeekFromDay(day: TrainingDay) -> (Int,Int) {
         if let weeks = getCurrentTraining()?.weeks {
-            for week in weeks {
+            for (i,week) in weeks.enumerated() {
                 if week.days.contains(day) {
                     dataSource?.currentWeek = week
-                    return
+                    return (i, week.days.firstIndex(where: {$0.id == day.id}) ?? 0)
                 }
             }
         }
+        return (0,0)
     }
     
     func getWeekNumber() -> Int {

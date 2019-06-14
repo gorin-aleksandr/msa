@@ -124,12 +124,12 @@ class MyTranningsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         initialDataLoading()
         initialViewConfiguration()
-        weekNumber = manager.getWeekNumber()
-        if let name = manager.dataSource?.currentWeek?.name {
-            weekLabel.text = name
-        } else {
-            weekLabel.text = "#\(weekNumber+1) Неделя"
-        }
+//        weekNumber = manager.getWeekNumber()
+//        if let name = manager.dataSource?.currentWeek?.name {
+//            weekLabel.text = name
+//        } else {
+//            weekLabel.text = "#\(weekNumber+1) Неделя"
+//        }
     }
     
     private func initialDataLoading() {
@@ -190,7 +190,7 @@ class MyTranningsViewController: UIViewController {
         
         tableView.showsVerticalScrollIndicator = false
         self.tableView.tableFooterView = UIView()
-        tableView.allowMultipleSectionsOpen = true
+        tableView.allowMultipleSectionsOpen = false
         
         tableView.register(UINib(nibName: "TrainingDayHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "TrainingDayHeaderView")
         tableView.register(UINib(nibName: "addWeekDayView", bundle: nil), forHeaderFooterViewReuseIdentifier: "addWeekDayView")
@@ -508,6 +508,7 @@ class MyTranningsViewController: UIViewController {
         case "showCalendar":
             guard let vc = segue.destination as? CalendarViewController else {return}
             vc.manager = self.manager
+            vc.delegate = self
         case "createTemplate":
             guard let vc = segue.destination as? CreateTemplateViewController else {return}
             vc.manager = self.manager
@@ -612,7 +613,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
             if let day = manager.dataSource?.currentWeek?.days[section] {
-                
+                headerView.day = day
                 headerView.tag = section
                 let longPressRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(headerTapped))
                 headerView.addGestureRecognizer(longPressRecognizer)
@@ -755,7 +756,9 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
             return
         }
         guard let sectionHeader = header as? TrainingDayHeaderView else { return }
-        sectionHeader.headerState.toggle()
+        if sectionHeader.day?.id ==  self.manager.dataSource?.currentWeek?.days[section].id {
+            sectionHeader.headerState.toggle()
+        }
     }
     func tableView(_ tableView: FZAccordionTableView, willCloseSection section: Int, withHeader header: UITableViewHeaderFooterView?) {
         guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return}
@@ -763,7 +766,9 @@ extension MyTranningsViewController: FZAccordionTableViewDelegate {
             return
         }
         guard let sectionHeader = header as? TrainingDayHeaderView else { return }
-        sectionHeader.headerState.toggle()
+        if sectionHeader.day?.id ==  self.manager.dataSource?.currentWeek?.days[section].id {
+            sectionHeader.headerState.toggle()
+        }
     }
 }
 
@@ -871,6 +876,28 @@ extension MyTranningsViewController: UITextFieldDelegate {
     }
 }
 
-extension MyTranningsViewController: UIGestureRecognizerDelegate {
+extension MyTranningsViewController: TrainingCalendarProtocol {
+    
+    func setWeek(index: Int) {
+        weekNumber = index
+        if let name = manager.dataSource?.currentWeek?.name {
+            weekLabel.text = name
+        } else {
+            weekLabel.text = "#\(weekNumber+1) Неделя"
+        }
+        self.tableView.reloadData()
+    }
+    
+    func setDay(index: Int) {
+        delay(sec: 0.5) {
+            self.tableView.scrollToRow(at: IndexPath(row: NSNotFound, section: index), at: .top, animated: false)
+            guard let header = self.tableView.headerView(forSection: index) as? TrainingDayHeaderView else {return}
+            if header.headerState == .unselected {
+                delay(sec: 0.2) {
+                    self.tableView.toggleSection(index)
+                }
+            }
+        }
+    }
     
 }

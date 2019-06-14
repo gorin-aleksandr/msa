@@ -8,8 +8,15 @@
 
 import UIKit
 
+protocol TrainingCalendarProtocol: class {
+    func setWeek(index: Int)
+    func setDay(index: Int)
+}
+
 class CalendarViewController: UIViewController {
 
+    weak var delegate: TrainingCalendarProtocol?
+    
     let defaultCalendar: Calendar = {
         var calendar = Calendar.current
         calendar.firstWeekday = 2
@@ -43,7 +50,9 @@ class CalendarViewController: UIViewController {
         if let date = notification.userInfo?["date"] as? Date {
             for day in days {
                 if day.date == stringFrom(date: date) {
-                    manager.setWeekFromDay(day: day)
+                    let info = manager.setWeekFromDay(day: day)
+                    delegate?.setWeek(index: info.0)
+                    delegate?.setDay(index: info.1)
                     navigationController?.popViewController(animated: true)
                 }
             }
