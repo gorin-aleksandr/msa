@@ -111,7 +111,7 @@ class ExercisesForTypeViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        trainingManager = nil
+//        trainingManager = nil
         navigationItem.searchController = nil
         
     }
@@ -304,35 +304,49 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         } else {
             cell.cellState = .unselected
         }
-        
-//        tap = TapGesture(target: self, action: #selector(handleTap(sender:)))
-//        tap.indexPath = indexPath
-//        cell.exerciseImage.addGestureRecognizer(tap)
-//        cell.exerciseImage.isUserInteractionEnabled = true
-//        cell.exerciseImage.tag = indexPath.row
-        
+        var exercise_ = Exercise()
+        if isFiltering() {
+            exercise_ = filteredArray[indexPath.row]
+        } else {
+            guard let ex = exercisesByFIlter?[indexPath.row] else { return UITableViewCell()}
+            exercise_ = ex
+        }
+        cell.descriptionTapped = {
+            if let _ = self.trainingManager {
+                let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
+                self.configureSelectedCell(selectedCell, in: tableView, at: indexPath)
+            } else {
+                self.presenter?.setCurrentIndex(index: indexPath.row)
+                self.performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise_)
+            }
+        }
+        cell.imageTapped = {
+            self.presenter?.setCurrentIndex(index: indexPath.row)
+            self.performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
+        }
+
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 68
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var exercise = Exercise()
-        if isFiltering() {
-            exercise = filteredArray[indexPath.row]
-        } else {
-            guard let ex = exercisesByFIlter?[indexPath.row] else {return}
-            exercise = ex
-        }
+//        var exercise = Exercise()
+//        if isFiltering() {
+//            exercise = filteredArray[indexPath.row]
+//        } else {
+//            guard let ex = exercisesByFIlter?[indexPath.row] else {return}
+//            exercise = ex
+//        }
         
-        if let _ = trainingManager {
-            let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
-            configureSelectedCell(selectedCell, in: tableView, at: indexPath)
-        } else {
-            presenter?.setCurrentIndex(index: indexPath.row)
-            performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
+//        if let _ = trainingManager {
+//            let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
+//            configureSelectedCell(selectedCell, in: tableView, at: indexPath)
+//        } else {
+//            presenter?.setCurrentIndex(index: indexPath.row)
+//            performSegue(withIdentifier: "showExerciseInfoSegue", sender: exercise)
+//        }
+//        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     private func addExToTraining(newExercise: Exercise, manager: TrainingManager) {

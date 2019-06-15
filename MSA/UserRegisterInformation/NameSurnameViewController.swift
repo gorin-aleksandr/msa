@@ -33,7 +33,9 @@ class NameSurnameViewController: BasicViewController {
 
         anotherPresenter.attachView(view: self)
         presenter.attachView(view: self)
-
+        nameTF.delegate = self
+        surnameTF.delegate = self
+        cityTF.delegate = self
         if let name = AuthModule.currUser.firstName {
             nameTF.text = name
         }
@@ -65,13 +67,13 @@ class NameSurnameViewController: BasicViewController {
                 anotherPresenter.setCity(city: city)
             }
             anotherPresenter.setType(type: type)
-            if !AuthModule.facebookAuth {
-                if let email = AuthModule.currUser.email {
-                    presenter.registerUser(email: email, password: AuthModule.pass)
-                }
-            } else {
+//            if !AuthModule.facebookAuth {
+//                if let email = AuthModule.currUser.email {
+//                    presenter.registerUser(email: email, password: AuthModule.pass)
+//                }
+//            } else {
                 registrated()
-            }
+//            }
         } else {
             AlertDialog.showAlert("Ошибка", message: "Заполните все поля", viewController: self)
         }
@@ -108,7 +110,15 @@ extension NameSurnameViewController: SignInViewProtocol {
         
     }
     func registrated() {
-        anotherPresenter.createNewUser(newUser: AuthModule.currUser)
+        DispatchQueue.main.async {
+            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "regThird") as! UserInfoViewController
+            nextViewController.presenter = self.anotherPresenter
+            nextViewController.presenter2 = self.presenter
+            self.show(nextViewController, sender: nil)
+        }
+
+//        anotherPresenter.createNewUser(newUser: AuthModule.currUser)
     }
 }
 
@@ -119,15 +129,28 @@ extension NameSurnameViewController: SignUpViewProtocol {
     func next() {
     }
     func userCreated() {
-        DispatchQueue.main.async {
-            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
-            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "regThird") as! UserInfoViewController
-            self.show(nextViewController, sender: nil)
-        }
+//        DispatchQueue.main.async {
+//            let storyBoard = UIStoryboard(name: "Main", bundle:nil)
+//            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "regThird") as! UserInfoViewController
+//            self.show(nextViewController, sender: nil)
+//        }
     }
     
     func userNotCreated() {
         AlertDialog.showAlert("Ошибка регистрации", message: "Повторите еще раз", viewController: self)
     }    
     
+}
+extension NameSurnameViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField == nameTF {
+            surnameTF.becomeFirstResponder()
+        } else if textField == surnameTF {
+            cityTF.becomeFirstResponder()
+        } else {
+            nameTF.becomeFirstResponder()
+        }
+        return true
+    }
 }

@@ -1433,7 +1433,11 @@ class TrainingManager {
                 if secondomerStarted {
                     currentIteration?.workTime = secondomerTime
                 } else {
-                    currentIteration?.workTime = (currentIteration?.workTime ?? 0) - currentWorkTime
+                    if currentIteration?.startTimerOnZero == false {
+                        currentIteration?.workTime = 0
+                    } else {
+                        currentIteration?.workTime = (currentIteration?.workTime ?? 0) - currentWorkTime
+                    }
                 }
             case .rest:
                 if secondomerStarted {
