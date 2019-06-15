@@ -9,13 +9,17 @@
 import UIKit
 import SDWebImage
 
-protocol ExercisesCellDelegate: class {
-    func selectCell(at index: Int)
-}
-
 class ExercisesTableViewCell: UITableViewCell {
     
-    weak var delegate: ExercisesCellDelegate?
+    var imageTapped: (()->())?
+    var descriptionTapped: (()->())?
+
+    @IBAction func imageTapped(_ sender: Any) {
+        imageTapped?()
+    }
+    @IBAction func descriptionTapped(_ sender: Any) {
+        descriptionTapped?()
+    }
     
     @IBOutlet weak var checkBoxImage: UIImageView!
     @IBOutlet weak var exerciseImage: UIImageView! {didSet{exerciseImage.layer.cornerRadius = 10}}

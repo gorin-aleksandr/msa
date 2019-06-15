@@ -52,7 +52,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseViewController.swift"
-                  timestampString = "582187691.691486"
+                  timestampString = "582288396.509611"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "413"
@@ -67,7 +67,7 @@
                   moduleName = "MSA"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/pavlokharambura/Documents/IOS/FitnessApp/MSA/Exercises/VC/NewExercise/NewExerciseViewController.swift"
-                  timestampString = "582187691.694333"
+                  timestampString = "582288396.513835"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "414"
@@ -100,13 +100,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MSA/Trannings/TrainingManager.swift"
-            timestampString = "582187046.8907599"
+            timestampString = "582213915.7902271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "844"
             endingLineNumber = "844"
-            landmarkName = "setWeekFromDay(day:)"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
             <Locations>
                <Location
                   shouldBeEnabled = "No"

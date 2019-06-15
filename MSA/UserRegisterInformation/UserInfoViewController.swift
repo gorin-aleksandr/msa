@@ -20,6 +20,7 @@ class UserInfoViewController: BasicViewController {
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    @IBOutlet weak var buttonClose: UIButton! {didSet{buttonClose.alpha = 0}}
     @IBOutlet weak var sexHeader: UILabel!
     @IBOutlet weak var heightHeader: UILabel!
     @IBOutlet weak var weightHeader: UILabel!
@@ -42,13 +43,16 @@ class UserInfoViewController: BasicViewController {
     @IBOutlet weak var stackWithMeasureButtons: UIStackView!
     @IBOutlet weak var weightStackView: UIStackView!
     @IBOutlet weak var measureStackView: UIStackView!
-    private let presenter = SignUpPresenter(signUp: UserDataManager())
-    private var dataType: PickerDataType!
+     var presenter = SignUpPresenter(signUp: UserDataManager())
+     var dataType: PickerDataType!
+     var presenter2 = UserSignInPresenter(auth: AuthModule())
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         presenter.attachView(view: self)
+        presenter2.attachView(view: self)
+
         presenter.setHeightType(type: .sm)
         presenter.setWeightType(type: .kg)
         
@@ -63,7 +67,13 @@ class UserInfoViewController: BasicViewController {
         ageHeader.isHidden = AuthModule.currUser.age == nil
         weightHeader.isHidden = AuthModule.currUser.weight == nil
         heightHeader.isHidden = AuthModule.currUser.height == nil
-//        levelHeader.isHidden = AuthModule.currUser.level == nil
+        levelHeader.isHidden = AuthModule.currUser.level == nil
+        
+        sexLabel.text = AuthModule.currUser.sex == nil ? "Пол" : (AuthModule.currUser.sex ?? "") + ", пол"
+        ageLabel.text = AuthModule.currUser.age == nil ? "Возраст" : "\(AuthModule.currUser.age ?? 0)" + ", лет"
+        weightLabel.text = AuthModule.currUser.weight == nil ? "Вес" : "\(AuthModule.currUser.weight ?? 0)" + ", кг"
+        heightLabel.text = AuthModule.currUser.height == nil ? "Рост" : "\(AuthModule.currUser.height ?? 0)" + ", см"
+        levelLabel.text = AuthModule.currUser.level == nil ? "Уровень подготовки" : "\(AuthModule.currUser.level ?? "")"
     }
     
     @IBAction func setAgeButton(_ sender: Any) {
@@ -91,7 +101,15 @@ class UserInfoViewController: BasicViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func confirmButton(_ sender: Any) {
-        presenter.addProfileInfo(user: AuthModule.currUser)
+        if !AuthModule.facebookAuth {
+            if let email = AuthModule.currUser.email {
+                presenter2.registerUser(email: email, password: AuthModule.pass)
+            }
+        } else {
+            presenter.createNewUser(newUser: AuthModule.currUser)
+        }
+
+//        presenter.addProfileInfo(user: AuthModule.currUser)
     }
     
     @IBAction func selectSantimeters(_ sender: Any) {
@@ -113,6 +131,9 @@ class UserInfoViewController: BasicViewController {
         kgImage.image = #imageLiteral(resourceName: "notSelected")
         pounds.image = #imageLiteral(resourceName: "selected")
         presenter.setWeightType(type: .pd)
+    }
+    @IBAction func closePicker(_ sender: Any) {
+        self.closePicker()
     }
     
 }
@@ -153,10 +174,10 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
  
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]) лет"
+            ageLabel.text = "\(presenter.getAges()[row]), лет"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = "\(presenter.getSexes()[row])"
+            sexLabel.text = "\(presenter.getSexes()[row]), пол"
             presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
             heightLabel.text = "\(presenter.getHeight()[row]), см"
@@ -205,24 +226,26 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         dataPicker.reloadAllComponents()
         dataPicker.selectRow(row, inComponent: 0, animated: true)
         dataPicker.alpha = 1
+        buttonClose.alpha = 1
     }
     
     func closePicker() {
         dataPicker.alpha = 0
+        buttonClose.alpha = 0
     }
     
 }
 
 extension UserInfoViewController: SignUpViewProtocol {
-    func startLoading() {
-        blurView.alpha = 0.3
-        activityIndicator.startAnimating()
-    }
-    
-    func finishLoading() {
-        blurView.alpha = 0
-        activityIndicator.stopAnimating()
-    }
+//    func startLoading() {
+//        blurView.alpha = 0.3
+//        activityIndicator.startAnimating()
+//    }
+//
+//    func finishLoading() {
+//        blurView.alpha = 0
+//        activityIndicator.stopAnimating()
+//    }
     func next() {
         presenter.saveUser(context: context, user: AuthModule.currUser)
         DispatchQueue.main.async {
@@ -235,15 +258,49 @@ extension UserInfoViewController: SignUpViewProtocol {
         AlertDialog.showAlert("Ошибка", message: "Ошибка добавления інформации", viewController: self)
     }
     
-    func setUser(user: UserVO) {
-        AuthModule.currUser = user
-    }
+//    func setUser(user: UserVO) {
+//        AuthModule.currUser = user
+//    }
     
     func userCreated() {
+        presenter.addProfileInfo(user: AuthModule.currUser)
     }
     
     func userNotCreated() {
+        AlertDialog.showAlert("Ошибка регистрации", message: "Повторите еще раз", viewController: self)
     }
     
 }
 
+extension UserInfoViewController: SignInViewProtocol {
+    func startLoading() {
+        blurView.alpha = 0.3
+        activityIndicator.startAnimating()
+    }
+    func finishLoading() {
+        blurView.alpha = 0
+        activityIndicator.stopAnimating()
+    }
+    func setUser(user: UserVO) {
+        AuthModule.currUser = user
+        presenter.saveUser(context: context, user: AuthModule.currUser)
+    }
+    func setNoUser() {
+        
+    }
+    func notRegistrated(resp: String) {
+        AlertDialog.showAlert("Ошибка", message: resp, viewController: self)
+    }
+    func notLogged(resp: String) {
+        
+    }
+    func loggedWithFacebook() {
+        
+    }
+    func logged() {
+        
+    }
+    func registrated() {
+        presenter.createNewUser(newUser: AuthModule.currUser)
+    }
+}

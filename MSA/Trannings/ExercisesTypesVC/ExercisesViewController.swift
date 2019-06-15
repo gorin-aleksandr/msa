@@ -243,6 +243,22 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             cell.cellState = .unselected
         }
+        if isFiltering() {
+            presenter.setCurrentExercise(exerc: filteredArray[indexPath.row])
+        } else {
+            presenter.setCurrentExercise(exerc: presenter.getExercises()[indexPath.row])
+        }
+
+        cell.descriptionTapped = {
+            if let _ = self.trainingManager {
+                let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
+                self.configureSelectedCell(selectedCell, in: tableView, at: indexPath)
+            } else {
+                self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
+            }
+        }
+        cell.imageTapped = {
+self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)        }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -254,13 +270,13 @@ extension ExercisesViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
             presenter.setCurrentExercise(exerc: presenter.getExercises()[indexPath.row])
         }
-        if let _ = trainingManager {
-            let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
-            configureSelectedCell(selectedCell, in: tableView, at: indexPath)
-        } else {
-            self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
+//        if let _ = trainingManager {
+//            let selectedCell = tableView.cellForRow(at: indexPath) ?? UITableViewCell()
+//            configureSelectedCell(selectedCell, in: tableView, at: indexPath)
+//        } else {
+//            self.performSegue(withIdentifier: SegueIDs.oneExerciseSegueId.rawValue, sender: nil)
+//        }
+//        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     private func configureSelectedCell(_ cell: UITableViewCell, in tableView: UITableView, at indexPath: IndexPath) {

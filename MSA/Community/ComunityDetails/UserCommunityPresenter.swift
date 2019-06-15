@@ -59,7 +59,9 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
         guard let text = searchText, !text.isEmpty else {
             
             return}
-        userCommunityDataSource = userCommunityDataSource.filter {$0.getFullName().lowercased().contains(text.lowercased())}
+        userCommunityDataSource = userCommunityDataSource
+                                    .filter {$0.getFullName().lowercased().contains(text.lowercased())}
+                                    .sorted { $0.getFullName() < $1.getFullName() }
     }
     
     private func setFriendsDataSource() {
@@ -74,7 +76,7 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
                 friends.append(friend)
             }
         }
-        userCommunityDataSource = friends
+        userCommunityDataSource = friends.sorted { $0.getFullName() < $1.getFullName() }
     }
     
     private func setRequestDataSource() {
@@ -89,7 +91,7 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
                 requests.append(request)
             }
         }
-        userCommunityDataSource = requests
+        userCommunityDataSource = requests.sorted { $0.getFullName() < $1.getFullName() }
     }
     
     private func setTrainerDataSource() {
@@ -103,7 +105,7 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
             if let trainer = trainer {
                 trainers.append(trainer)
             }
-        userCommunityDataSource = trainers
+        userCommunityDataSource = trainers.sorted { $0.getFullName() < $1.getFullName() }
     }
     
     private func setSportsmenDataSource() {
@@ -118,7 +120,7 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
                 sportsmen.append(sportsman)
             }
         }
-        userCommunityDataSource = sportsmen
+        userCommunityDataSource = sportsmen.sorted { $0.getFullName() < $1.getFullName() }
     }
     
     func refresh() {

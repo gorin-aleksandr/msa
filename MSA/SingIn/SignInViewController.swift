@@ -39,13 +39,12 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        UserDataManager().getLevels()
         
         presenter.attachView(view: self)
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-//      MARK: Temporary hidden while feature is not ready
-//        forgotPasswordButton.isHidden = true
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -148,4 +147,17 @@ extension SignInViewController: SignInViewProtocol {
         presenter.setNoUser()
     }
     
+}
+
+extension SignInViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        } else {
+            emailTextField.becomeFirstResponder()
+        }
+        return true
+    }
 }

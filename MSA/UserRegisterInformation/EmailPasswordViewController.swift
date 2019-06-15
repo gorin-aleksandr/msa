@@ -109,6 +109,19 @@ extension EmailPasswordViewController: UITextFieldDelegate {
             return true
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField == emailTF {
+            passTF.becomeFirstResponder()
+        } else if textField == passTF {
+            passConfirmFT.becomeFirstResponder()
+        } else {
+            emailTF.becomeFirstResponder()
+        }
+        return true
+    }
+
 }
 
 extension EmailPasswordViewController: SignUpViewProtocol {
@@ -126,5 +139,4 @@ extension EmailPasswordViewController: SignUpViewProtocol {
     func userCreated() {}
     func userNotCreated() {}
 }
-
 

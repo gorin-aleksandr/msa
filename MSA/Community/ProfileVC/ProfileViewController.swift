@@ -198,7 +198,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     }
     
     func showDeleteAlert(for user: UserVO) {
-        let alert = UIAlertController(title: nil, message: "Вы дейсвительно хотите удалить из запросов/друзей/спортсменов? ", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: profilePresenter.state == .userTrainer ? "Вы действительно хотите удалить тренера?" : "Вы дейсвительно хотите удалить из запросов/друзей/спортсменов?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             SVProgressHUD.show()
             self?.profilePresenter.deleteAction(for: user)
@@ -324,9 +324,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             playVideo(url: url)
         } else {
             if let url = profilePresenter.gallery[index].imageUrl {
+                self.tabBarController?.tabBar.isHidden = true
+                self.navigationController?.navigationBar.isHidden = true
                 UIView.animate(withDuration: 0.5) {
                     self.imagePreviewView.alpha = 1
-                    self.tabBarController?.tabBar.isHidden = true
                     if let imgUrl = URL(string: url) {
                         self.previewImage.sd_setImage(with: imgUrl, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
                     }

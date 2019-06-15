@@ -55,7 +55,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" textContentType="email"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
                                                         <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -345,7 +345,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Антропометрия" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGh-q6-02a">
-                                <rect key="frame" x="90" y="35" width="140" height="20.5"/>
+                                <rect key="frame" x="97.5" y="35" width="125" height="20"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -395,7 +395,7 @@
                                                 <blurEffect style="dark"/>
                                             </visualEffectView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Возраст" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j9k-1F-N1H">
-                                                <rect key="frame" x="5" y="0.0" width="64" height="19"/>
+                                                <rect key="frame" x="5" y="0.0" width="62.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -451,7 +451,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Пол" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TdL-F8-AJl">
-                                                <rect key="frame" x="5" y="0.0" width="30.5" height="19"/>
+                                                <rect key="frame" x="5" y="0.0" width="30" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -513,7 +513,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Рост" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-s3-eLR">
-                                                <rect key="frame" x="5" y="0.0" width="37" height="19"/>
+                                                <rect key="frame" x="5" y="0.0" width="36" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -793,6 +793,12 @@
                                             <action selector="setLevelButton:" destination="x16-5X-sQk" eventType="touchUpInside" id="HAi-a3-33R"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Уровень подготовки" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfB-qc-0cS">
+                                        <rect key="frame" x="5" y="0.0" width="154" height="19"/>
+                                        <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -806,6 +812,8 @@
                                     <constraint firstAttribute="bottom" secondItem="1nh-mZ-Z1E" secondAttribute="bottom" id="bjR-kn-qQ5"/>
                                     <constraint firstItem="1nh-mZ-Z1E" firstAttribute="top" secondItem="NId-4H-QaA" secondAttribute="top" id="cHC-aN-1m1"/>
                                     <constraint firstItem="1nh-mZ-Z1E" firstAttribute="leading" secondItem="NId-4H-QaA" secondAttribute="leading" id="emY-ja-gGJ"/>
+                                    <constraint firstItem="wfB-qc-0cS" firstAttribute="leading" secondItem="NId-4H-QaA" secondAttribute="leading" constant="5" id="fEP-vK-2zS"/>
+                                    <constraint firstItem="wfB-qc-0cS" firstAttribute="top" secondItem="NId-4H-QaA" secondAttribute="top" id="fQc-hA-cKR"/>
                                     <constraint firstItem="CaD-3v-rD6" firstAttribute="centerY" secondItem="NId-4H-QaA" secondAttribute="centerY" id="mq1-Oc-srU"/>
                                     <constraint firstAttribute="bottom" secondItem="Fui-Wl-c8M" secondAttribute="bottom" constant="5" id="px0-WK-VOH"/>
                                     <constraint firstItem="Sew-t1-iUI" firstAttribute="centerY" secondItem="NId-4H-QaA" secondAttribute="centerY" id="v8K-sw-TAk"/>
@@ -870,6 +878,16 @@
                                     <outlet property="delegate" destination="x16-5X-sQk" id="PhN-QB-kBK"/>
                                 </connections>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ch2-CI-4yN">
+                                <rect key="frame" x="225" y="423" width="60" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Закрыть">
+                                    <color key="titleColor" red="0.21176470589999999" green="0.50196078430000002" blue="0.60784313729999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="closePicker:" destination="x16-5X-sQk" eventType="touchUpInside" id="lcF-Zf-ydN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -878,6 +896,7 @@
                             <constraint firstItem="Zqa-YL-294" firstAttribute="top" secondItem="bif-wE-eA4" secondAttribute="top" id="34J-Ey-ku8"/>
                             <constraint firstItem="357-ag-CRH" firstAttribute="top" secondItem="TAi-7W-b1p" secondAttribute="bottom" constant="5" id="4yu-rI-r6Q"/>
                             <constraint firstItem="eV7-1B-mlo" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="25" id="9h8-xg-W9k"/>
+                            <constraint firstItem="Ch2-CI-4yN" firstAttribute="trailing" secondItem="TAi-7W-b1p" secondAttribute="trailing" constant="-5" id="Adc-1j-ZNj"/>
                             <constraint firstItem="TAi-7W-b1p" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="30" id="BR4-An-RNV"/>
                             <constraint firstItem="NId-4H-QaA" firstAttribute="top" secondItem="o3B-M3-sBV" secondAttribute="bottom" constant="35" id="FHv-b5-B8U"/>
                             <constraint firstItem="RO8-Ie-0FJ" firstAttribute="trailing" secondItem="tWO-gn-ezy" secondAttribute="trailing" constant="25" id="FLx-1g-suu"/>
@@ -890,6 +909,7 @@
                             <constraint firstItem="XGh-q6-02a" firstAttribute="centerY" secondItem="dw7-dB-Sei" secondAttribute="centerY" id="dsA-YU-zuG"/>
                             <constraint firstAttribute="bottom" secondItem="Zqa-YL-294" secondAttribute="bottom" id="fbF-gK-lWh"/>
                             <constraint firstItem="XGh-q6-02a" firstAttribute="centerX" secondItem="bif-wE-eA4" secondAttribute="centerX" id="fea-9Y-nvm"/>
+                            <constraint firstItem="Ch2-CI-4yN" firstAttribute="bottom" secondItem="TAi-7W-b1p" secondAttribute="bottom" id="icX-aI-1HH"/>
                             <constraint firstItem="357-ag-CRH" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="30" id="kO3-Uj-2eq"/>
                             <constraint firstItem="dw7-dB-Sei" firstAttribute="top" secondItem="RO8-Ie-0FJ" secondAttribute="top" constant="10" id="kwA-3J-kKz"/>
                             <constraint firstItem="o3B-M3-sBV" firstAttribute="leading" secondItem="RO8-Ie-0FJ" secondAttribute="leading" constant="25" id="lfO-Oj-8Ld"/>
@@ -912,11 +932,13 @@
                         <outlet property="ageHeader" destination="j9k-1F-N1H" id="HhT-bs-amI"/>
                         <outlet property="ageLabel" destination="MVA-UG-1su" id="LXt-Cf-n36"/>
                         <outlet property="blurView" destination="Cbd-6H-gIr" id="z5Z-kJ-ypS"/>
+                        <outlet property="buttonClose" destination="Ch2-CI-4yN" id="aHl-4x-w3m"/>
                         <outlet property="dataPicker" destination="TAi-7W-b1p" id="bVL-FX-8iE"/>
                         <outlet property="ft" destination="3yR-si-mKL" id="imK-Sv-XdX"/>
                         <outlet property="heightHeader" destination="HQC-s3-eLR" id="a7f-zX-hlJ"/>
                         <outlet property="heightLabel" destination="fkU-rl-gWY" id="KFP-UF-nbU"/>
                         <outlet property="kgImage" destination="MEe-sh-JvX" id="IVn-Rl-dON"/>
+                        <outlet property="levelHeader" destination="wfB-qc-0cS" id="Wtr-tx-jxS"/>
                         <outlet property="levelLabel" destination="CaD-3v-rD6" id="C5x-ss-FBw"/>
                         <outlet property="measureStackView" destination="hbc-xs-UhL" id="ECj-Vy-gU4"/>
                         <outlet property="pounds" destination="P12-Hi-cCI" id="GCZ-UN-KuS"/>
@@ -955,7 +977,7 @@
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits" textContentType="email"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="placeholderColor">
                                                         <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
