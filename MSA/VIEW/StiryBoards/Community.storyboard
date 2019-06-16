@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Q4q-Vk-X9e">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Q4q-Vk-X9e">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -352,7 +352,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="agu-sN-1rq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5026.875" y="315.84507042253523"/>
+            <point key="canvasLocation" x="-5027" y="315"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="kIw-hT-w4d">
@@ -577,7 +577,7 @@
                             <constraint firstItem="uwx-3i-iw4" firstAttribute="leading" secondItem="bKX-6P-RFw" secondAttribute="leading" id="UaY-2p-fiK"/>
                             <constraint firstAttribute="bottom" secondItem="uwx-3i-iw4" secondAttribute="bottom" id="Zcz-V9-NAg"/>
                             <constraint firstItem="GyF-cp-OZO" firstAttribute="leading" secondItem="bKX-6P-RFw" secondAttribute="leading" id="gEu-Z3-fMd"/>
-                            <constraint firstItem="bKX-6P-RFw" firstAttribute="bottom" secondItem="GyF-cp-OZO" secondAttribute="bottom" id="smb-eg-tEy"/>
+                            <constraint firstAttribute="bottom" secondItem="GyF-cp-OZO" secondAttribute="bottom" id="smb-eg-tEy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bKX-6P-RFw"/>
                     </view>
@@ -597,7 +597,7 @@
                     </items>
                 </navigationBar>
             </objects>
-            <point key="canvasLocation" x="-5120.625" y="1213.7323943661972"/>
+            <point key="canvasLocation" x="-5949" y="972"/>
         </scene>
         <!--Мое сообщество-->
         <scene sceneID="Rht-U3-OcF">
@@ -1422,10 +1422,10 @@
         <image name="back_" width="13" height="22"/>
         <image name="background_MSA" width="375" height="665"/>
         <image name="bgProfile" width="375" height="667"/>
-        <image name="bttn-diet" width="328" height="222"/>
-        <image name="bttn-measure" width="328" height="222"/>
-        <image name="bttn-stat" width="328" height="222"/>
-        <image name="bttn-training" width="328" height="222"/>
+        <image name="bttn-diet" width="109.33333587646484" height="74"/>
+        <image name="bttn-measure" width="109.33333587646484" height="74"/>
+        <image name="bttn-stat" width="109.33333587646484" height="74"/>
+        <image name="bttn-training" width="109.33333587646484" height="74"/>
         <image name="coach-icon" width="8" height="8"/>
         <image name="delete_red" width="14" height="14"/>
         <image name="dropdown_navy" width="8" height="4"/>

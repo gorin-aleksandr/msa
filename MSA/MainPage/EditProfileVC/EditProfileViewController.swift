@@ -94,7 +94,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
 
         myPicker.delegate = self
-        
+        emailTextField.delegate = self
         configureNavigationItem()
         presenter.attachView(view: self)
         
@@ -298,15 +298,27 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         guard let trainerId = AuthModule.currUser.trainerId, trainerId != "" else {
             return
         }
-        startLoading()
-        presenter.deleteTrainer(trainerId, deleted: {
-            self.finishLoading()
-            findTrainerView.isHidden = false
-            AlertDialog.showAlert("Удаление прошло успешно!", message: "У вас теперь нет тренера.", viewController: self)
-        }) {
-            self.finishLoading()
-            AlertDialog.showAlert("Ошибка удаления!", message: "Повторите еще раз.", viewController: self)
+        self.showDeleteAlert(trainerId: trainerId)
+        
+    }
+    func showDeleteAlert(trainerId: String) {
+        let alert = UIAlertController(title: nil, message: "Вы действительно хотите удалить тренера?", preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+            guard let self = self else {return}
+            self.startLoading()
+            self.presenter.deleteTrainer(trainerId, deleted: {
+                self.finishLoading()
+                self.findTrainerView.isHidden = false
+                AlertDialog.showAlert("Удаление прошло успешно!", message: "У вас теперь нет тренера.", viewController: self)
+            }) {
+                self.finishLoading()
+                AlertDialog.showAlert("Ошибка удаления!", message: "Повторите еще раз.", viewController: self)
+            }
         }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        alert.addAction(deleteAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
     @IBAction func findTrainer(_ sender: Any) {
         self.tabBarController?.selectedIndex = 2
@@ -534,6 +546,14 @@ extension EditProfileViewController: EditProfileProtocol {
         presenter.setNoUser()
     }
     func purposeSetted() {}
+}
 
-    
+extension EditProfileViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            return false
+        } else {
+            return true
+        }
+    }
 }

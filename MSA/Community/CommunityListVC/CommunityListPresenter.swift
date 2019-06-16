@@ -188,7 +188,9 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
    private func searchBy(string: String?) {
         searchText = string
         guard let text = searchText, !text.isEmpty else {return}
-        communityDataSource = communityDataSource.filter {$0.getFullName().lowercased().contains(text.lowercased())}
+        communityDataSource = communityDataSource
+                                .filter { $0.getFullName().lowercased().contains(text.lowercased()) }
+                                .sorted { $0.getFullName() < $1.getFullName() }
     }
     
     func applyFilters(with searchText: String?) {
@@ -337,17 +339,19 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
             return
         }
         view.setCityFilterTextField(name: cityFilter)
-        communityDataSource = communityDataSource.filter {$0.city == cityFilter}
+        communityDataSource = communityDataSource
+                                    .filter { $0.city == cityFilter }
+                                    .sorted { $0.getFullName() < $1.getFullName() }
     }
     
     private func applyTypeFilter() {
         switch  typeFilterState {
         case .sportsmen:
-            communityDataSource = users.filter {$0.type == typeFilterState.getUserTypeString()}
+            communityDataSource = users.filter {$0.type == typeFilterState.getUserTypeString()}.sorted { $0.getFullName() < $1.getFullName() }
         case .trainers:
-            communityDataSource = users.filter {$0.type == typeFilterState.getUserTypeString()}
+            communityDataSource = users.filter {$0.type == typeFilterState.getUserTypeString()}.sorted { $0.getFullName() < $1.getFullName() }
         default:
-            communityDataSource = users
+            communityDataSource = users.sorted { $0.getFullName() < $1.getFullName() }
         }
     }
     
