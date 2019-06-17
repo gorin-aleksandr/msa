@@ -374,7 +374,7 @@ class MyTranningsViewController: UIViewController {
             setFont(action: secondAction, text: "Добавить день", regular: true)
         } else {
             setFont(action: firstAction, text: "Сохранить как шаблон", regular: true)
-            setFont(action: secondAction, text: "Удалить тренировку", regular: true)
+            setFont(action: secondAction, text: "Удалить все тренировки", regular: true)
         }
         setFont(action: cancel, text: "Отмена", regular: false)
     }

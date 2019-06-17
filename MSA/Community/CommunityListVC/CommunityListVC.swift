@@ -70,8 +70,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         super.viewWillAppear(animated)
         
         // MARK: Uncomment/commemt for IAPs
-//        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
-        accessDeniedView.isHidden = true
+        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
+        //accessDeniedView.isHidden = true
         
         setupNavigationBar()
         configureCityPicker()
@@ -237,11 +237,11 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     private func presentIAPViewController() {
-//        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-//        let navigationController = UINavigationController()
-//        destinationVC.presenter = presenter.createIAPPresenter(for: destinationVC)
-//        navigationController.setViewControllers([destinationVC], animated: false)
-//        self.present(navigationController, animated: true, completion: nil)
+        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+        let navigationController = UINavigationController()
+        destinationVC.presenter = presenter.createIAPPresenter(for: destinationVC)
+        navigationController.setViewControllers([destinationVC], animated: false)
+        self.present(navigationController, animated: true, completion: nil)
     }
 
     
