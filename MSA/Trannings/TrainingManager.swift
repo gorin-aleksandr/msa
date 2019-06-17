@@ -1433,7 +1433,7 @@ class TrainingManager {
                 if secondomerStarted {
                     currentIteration?.workTime = secondomerTime
                 } else {
-                    if currentIteration?.startTimerOnZero == false {
+                    if currentIteration?.startTimerOnZero == false && currentIteration?.workTime == 0 {
                         currentIteration?.workTime = 0
                     } else {
                         currentIteration?.workTime = (currentIteration?.workTime ?? 0) - currentWorkTime
@@ -1443,7 +1443,11 @@ class TrainingManager {
                 if secondomerStarted {
                     currentIteration?.restTime = secondomerTime
                 } else {
-                    currentIteration?.restTime = (currentIteration?.restTime ?? 0) - currentRestTime
+                    if currentIteration?.startTimerOnZero == false && currentIteration?.restTime == 0 {
+                        currentIteration?.restTime = 0
+                    } else {
+                        currentIteration?.restTime = (currentIteration?.restTime ?? 0) - currentRestTime
+                    }
                 }
             }
             currentIteration?.wasSync = false

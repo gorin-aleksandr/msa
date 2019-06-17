@@ -191,6 +191,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         communityDataSource = communityDataSource
                                 .filter { $0.getFullName().lowercased().contains(text.lowercased()) }
                                 .sorted { $0.getFullName() < $1.getFullName() }
+                                .filter({$0.id != nil})
     }
     
     func applyFilters(with searchText: String?) {
@@ -342,16 +343,25 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         communityDataSource = communityDataSource
                                     .filter { $0.city == cityFilter }
                                     .sorted { $0.getFullName() < $1.getFullName() }
+                                    .filter({$0.id != nil})
     }
     
     private func applyTypeFilter() {
         switch  typeFilterState {
         case .sportsmen:
-            communityDataSource = users.filter {$0.type == typeFilterState.getUserTypeString()}.sorted { $0.getFullName() < $1.getFullName() }
+            communityDataSource = users
+                                    .filter {$0.type == typeFilterState.getUserTypeString()}
+                                    .sorted { $0.getFullName() < $1.getFullName() }
+                                    .filter({$0.id != nil})
         case .trainers:
-            communityDataSource = users.filter {$0.type == typeFilterState.getUserTypeString()}.sorted { $0.getFullName() < $1.getFullName() }
+            communityDataSource = users
+                                    .filter {$0.type == typeFilterState.getUserTypeString()}
+                                    .sorted { $0.getFullName() < $1.getFullName() }
+                                    .filter({$0.id != nil})
         default:
-            communityDataSource = users.sorted { $0.getFullName() < $1.getFullName() }
+            communityDataSource = users
+                                    .sorted { $0.getFullName() < $1.getFullName() }
+                                    .filter({$0.id != nil})
         }
     }
     
