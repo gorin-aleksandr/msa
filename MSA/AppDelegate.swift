@@ -39,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         configureProgressHud()
         initialConf()
+        
+        setupIAPObserver()
 
         let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
         start.start()
@@ -174,7 +176,7 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 if success {
                        NotificationCenter.default.post(name: InAppPurchasesService.purchaseSuccessfulNotification, object: nil)
                 } else {
-                    print("Ошибка же")
+                    print("Error appeared")
                 }
              
             }

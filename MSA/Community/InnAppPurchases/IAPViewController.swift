@@ -12,6 +12,7 @@ import SVProgressHUD
 protocol IAPViewProtocol: class {
     func reloadView()
     func setLoaderVisible(_ visible: Bool)
+    func showAlert(error: String)
 }
 
 class IAPViewController: UIViewController, IAPViewProtocol {
@@ -46,6 +47,18 @@ class IAPViewController: UIViewController, IAPViewProtocol {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
     }
+    
+    func showAlert(error: String) {
+        let alertController = UIAlertController(title: "Ошибка при загрузке встроеных покупок", message: error, preferredStyle: .alert)
+        let repeatAction = UIAlertAction(title: "Повторить", style: .default) { (action) in
+            self.presenter.fetchSubscriptions()
+        }
+        let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in }
+        alertController.addAction(repeatAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     
     private func setPromotionText() {
         promotionTextLabel.text = presenter.setPromotionText()

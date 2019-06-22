@@ -17,8 +17,7 @@ protocol IAPPresenterProtocol {
     func presentTermsAndConditions()
 }
 
-class IAPPresenter: IAPPresenterProtocol {
-    
+class IAPPresenter: IAPPresenterProtocol, InAppPurchasesServiceDelegate {
     
     var productsDataSource: [Product] {
         return InAppPurchasesService.shared.options?.sorted(by: { lhs, rhs -> Bool in
@@ -29,6 +28,7 @@ class IAPPresenter: IAPPresenterProtocol {
     
     init(view: IAPViewProtocol) {
         self.view = view
+        InAppPurchasesService.shared.delegate = self
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleOptionsLoaded(notification:)),
                                                name: InAppPurchasesService.optionsLoadedNotification,
@@ -53,6 +53,10 @@ class IAPPresenter: IAPPresenterProtocol {
         } else {
             return "Получите доступ к Сообществу и возможности выбора Тренера, оформив подписку. Выберите один из вариантов."
         }
+    }
+    
+    func subsctiptionOptionsLoadingFailed(with error: Error) {
+        view.showAlert(error: error.localizedDescription)
     }
     
     func presentTermsAndConditions() {

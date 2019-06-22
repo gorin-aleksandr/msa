@@ -56,8 +56,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         communityTableView.delegate = self
         communityTableView.dataSource = self
         errorView.delegate = self
-        tryAgainButtonDidTapped()
-        
+        errorView.isHidden = true
         configureRefresh()
         presenter.start()
     }
@@ -172,7 +171,9 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     func hideAccessDeniedView() {
-//        accessDeniedView.isHidden = true
+        DispatchQueue.main.async { [weak self] in
+            self?.accessDeniedView.isHidden = true
+        }
     }
     
     func showRestoreAlert() {
@@ -180,8 +181,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         
         let restoreAction = UIAlertAction(title: "Restore", style: .default) { [weak self] _ in
             print("Handle restore somehow---------->>>>>>>>")
-            //SubscriptionService.shared.restorePurchases()
-            //self?.showRestoreInProgressAlert()
+//            SubscriptionService.shared.restorePurchases()
+//            self?.showRestoreInProgressAlert()
         }
         
         let backAction = UIAlertAction(title: "Back", style: .cancel) { _ in

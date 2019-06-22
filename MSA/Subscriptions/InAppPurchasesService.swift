@@ -9,6 +9,10 @@
 import Foundation
 import StoreKit
 
+protocol InAppPurchasesServiceDelegate: class {
+    func subsctiptionOptionsLoadingFailed(with error: Error)
+}
+
 class InAppPurchasesService: NSObject {
     
     let sharedSecret = "f89bf31cc7cf4905900af42fda54c46e"
@@ -19,6 +23,8 @@ class InAppPurchasesService: NSObject {
 
     static let shared = InAppPurchasesService()
     
+    weak var delegate: InAppPurchasesServiceDelegate?
+    
     var options: [Product]? {
         didSet {
            NotificationCenter.default.post(name: InAppPurchasesService.optionsLoadedNotification, object: options)
@@ -28,6 +34,7 @@ class InAppPurchasesService: NSObject {
     var paidSubscriptions: [PaidSubscription] = []
     
     var currentSubscription: PaidSubscription? {
+        print(paidSubscriptions)
         let activeSubscriptions = paidSubscriptions.filter { $0.isActive }
         let sortedByMostRecentPurchase = activeSubscriptions.sorted { $0.purchaseDate > $1.purchaseDate }
         return sortedByMostRecentPurchase.first
@@ -71,10 +78,10 @@ class InAppPurchasesService: NSObject {
     
     func uploadReceipt(completion: ((_ success: Bool) -> Void)? = nil) {
         if let receiptData = loadReceipt() {
-            self.validate(receipt: receiptData, url: "https://buy.itunes.apple.com/verifyReceipt") { [weak self] (loaded, error) in
-                if let error = error, error.code == 21007 {
+            self.validate(receipt: receiptData, url: "https://buy.itunes.apple.com/verifyReceipt") { [weak self] (loaded, error, shouldSwitchToSandboxUrl) in
+                if shouldSwitchToSandboxUrl {
                     if let receiptData = self?.loadReceipt() {
-                        self?.validate(receipt: receiptData, url: "https://sandbox.itunes.apple.com/verifyReceipt") { (loaded, error) in
+                        self?.validate(receipt: receiptData, url: "https://sandbox.itunes.apple.com/verifyReceipt") { (loaded, error, _)  in
                                 completion?(loaded)
                                 return
                             }
@@ -83,8 +90,9 @@ class InAppPurchasesService: NSObject {
                             print("Missing receipt data")
                             return
                         }
-                }
+                } else {
                     completion?(loaded)
+                }
             }
         } else {
             completion?(false)
@@ -92,7 +100,7 @@ class InAppPurchasesService: NSObject {
         }
     }
     
-    func validate(receipt data: Data, url: String, completion: @escaping (_ success: Bool, _ error: NSError?) -> ()) {
+    func validate(receipt data: Data, url: String, completion: @escaping (_ success: Bool, _ error: NSError?, _ shouldSwitchSandBoxUrl: Bool) -> ()) {
         let body = [
             "receipt-data": data.base64EncodedString(),
             "password": sharedSecret
@@ -107,11 +115,15 @@ class InAppPurchasesService: NSObject {
         let task = URLSession.shared.dataTask(with: request) { (responseData, response, error) in
             if let error = error {
             let nsError = error as NSError
-               print("Error while loading")
-                completion(false, nsError)
+                print("Error while validating receipt")
+                completion(false, nsError, false)
             } else if let responseData = responseData {
                 let json = try! JSONSerialization.jsonObject(with: responseData, options: []) as! Dictionary<String, Any>
-                print(json["receipt"])
+                print(json)
+                if let sandboxSatus = json["status"] as? Int, sandboxSatus == 21007 {
+                    completion(true, nil, true)
+                    return
+                }
                 if let receipt = json["receipt"] as? [String: Any], let purchases = receipt["in_app"] as? Array<[String: Any]> {
                     var subscriptions = [PaidSubscription]()
                     for purchase in purchases {
@@ -124,7 +136,7 @@ class InAppPurchasesService: NSObject {
                 } else {
                     self.paidSubscriptions = []
                 }
-                completion(true, nil)
+                completion(true, nil, false)
             }
         }
         
@@ -149,6 +161,9 @@ extension InAppPurchasesService: SKProductsRequestDelegate {
     func request(_ request: SKRequest, didFailWithError error: Error) {
         if request is SKProductsRequest {
             print("Subscription Options Failed Loading: \(error.localizedDescription)")
+            delegate?.subsctiptionOptionsLoadingFailed(with: error)
         }
     }
+    
+    
 }
