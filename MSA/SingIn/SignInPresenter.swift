@@ -125,6 +125,8 @@ class UserSignInPresenter {
                         self.view?.notLogged(resp: "Учетная запись пользователя отключена")
                     } else if error.code == 17009 {
                         self.view?.notLogged(resp: "Неверный пароль")
+                    } else if error.code == 17012 {
+                        self.view?.notLogged(resp: "Пользователь с таким e-mail уже зарегестрирован")
                     } else {
                         self.view?.notLogged(resp: "Ошибка авторизации")
                     }

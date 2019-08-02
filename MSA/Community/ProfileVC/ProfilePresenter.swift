@@ -209,11 +209,11 @@ class ProfilePresenter: ProfilePresenterProtocol {
         if personId == currentUser.trainerId {
             return PersonState.userTrainer
         }
-        if let isFriend = currentUser.friends?.contains(personId), isFriend {
-            return PersonState.friend
-        }
         if let isSportsman = currentUser.sportsmen?.contains(personId), isSportsman {
             return PersonState.trainersSportsman
+        }
+        if let isFriend = currentUser.friends?.contains(personId), isFriend {
+            return PersonState.friend
         }
         return PersonState.all
     }
