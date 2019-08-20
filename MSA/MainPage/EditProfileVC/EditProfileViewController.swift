@@ -146,7 +146,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
 //            trainerTypeImage.image = #imageLiteral(resourceName: "selected")
 //        }
         if let age = user.age {
-            ageLabel.text = "\(age), лет"
+            ageLabel.text = "\(age)"
         }
         if let sex = user.sex {
             sexLabel.text = sex + ", пол"
@@ -449,7 +449,7 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            ageLabel.text = "\(presenter.getAges()[row])"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
             sexLabel.text = "\(presenter.getSexes()[row]), пол"
