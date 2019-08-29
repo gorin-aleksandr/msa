@@ -24,4 +24,6 @@ target 'MSA' do
   pod 'SVProgressHUD'
   pod 'FZAccordionTableView'
   pod 'SwipeCellKit', '~> 2.0'
+  pod 'Fabric', '= 1.8.2'
+  pod 'Crashlytics', '= 3.11.1'
 end

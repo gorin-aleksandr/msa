@@ -89,7 +89,6 @@
 		29D2A2BD2269DF920037CA97 /* PasswordRecoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2A2BC2269DF910037CA97 /* PasswordRecoveryViewController.swift */; };
 		29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD6E20A170870073C838 /* StartCoordinator.swift */; };
 		29D2CD7120A175F40073C838 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D2CD7020A175F40073C838 /* StartViewController.swift */; };
-		29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */; };
 		29F56789219AB462003B704B /* MultipleChoicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F56788219AB462003B704B /* MultipleChoicesViewController.swift */; };
 		29F5678C219AB809003B704B /* ReusableMultipleSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F5678A219AB808003B704B /* ReusableMultipleSelectionTableViewCell.swift */; };
 		29F5678D219AB809003B704B /* ReusableMultipleSelectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29F5678B219AB809003B704B /* ReusableMultipleSelectionTableViewCell.xib */; };
@@ -133,6 +132,7 @@
 		29F9F2512147B5B8006EDC6A /* VACalendarMonthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9F2432147B5B8006EDC6A /* VACalendarMonthDelegate.swift */; };
 		29F9F2522147B5B8006EDC6A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29F9F2442147B5B8006EDC6A /* Info.plist */; };
 		29F9F2542147B665006EDC6A /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9F2532147B665006EDC6A /* DatePicker.swift */; };
+		350E3C4A230C547E00DBA0A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 350E3C49230C547E00DBA0A6 /* GoogleService-Info.plist */; };
 		350E865422366D3000955C16 /* PaidSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350E865322366D3000955C16 /* PaidSubscription.swift */; };
 		352355F9212E06080001255E /* UserCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355F8212E06080001255E /* UserCommunityViewController.swift */; };
 		352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355FA212E06220001255E /* UserCommunityPresenter.swift */; };
@@ -257,7 +257,6 @@
 		29D2A2BC2269DF910037CA97 /* PasswordRecoveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewController.swift; sourceTree = "<group>"; };
 		29D2CD6E20A170870073C838 /* StartCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartCoordinator.swift; sourceTree = "<group>"; };
 		29D2CD7020A175F40073C838 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
-		29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		29F56788219AB462003B704B /* MultipleChoicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoicesViewController.swift; sourceTree = "<group>"; };
 		29F5678A219AB808003B704B /* ReusableMultipleSelectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReusableMultipleSelectionTableViewCell.swift; sourceTree = "<group>"; };
 		29F5678B219AB809003B704B /* ReusableMultipleSelectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReusableMultipleSelectionTableViewCell.xib; sourceTree = "<group>"; };
@@ -302,6 +301,7 @@
 		29F9F2432147B5B8006EDC6A /* VACalendarMonthDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VACalendarMonthDelegate.swift; sourceTree = "<group>"; };
 		29F9F2442147B5B8006EDC6A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29F9F2532147B665006EDC6A /* DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
+		350E3C49230C547E00DBA0A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		350E865322366D3000955C16 /* PaidSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidSubscription.swift; sourceTree = "<group>"; };
 		352355F8212E06080001255E /* UserCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityViewController.swift; sourceTree = "<group>"; };
 		352355FA212E06220001255E /* UserCommunityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityPresenter.swift; sourceTree = "<group>"; };
@@ -404,7 +404,7 @@
 				299B547B20A0D38A004E60A2 /* Rubik */,
 				29160B4C2035AA3B00DA7227 /* Assets.xcassets */,
 				29160B512035AA3B00DA7227 /* Info.plist */,
-				29D97EA5204B16C3000E0EFB /* GoogleService-Info.plist */,
+				350E3C49230C547E00DBA0A6 /* GoogleService-Info.plist */,
 			);
 			path = MSA;
 			sourceTree = "<group>";
@@ -818,6 +818,7 @@
 				29160B3E2035AA3B00DA7227 /* Sources */,
 				29160B3F2035AA3B00DA7227 /* Frameworks */,
 				29160B402035AA3B00DA7227 /* Resources */,
+				350E3C48230C4D3600DBA0A6 /* ShellScript */,
 				6D90A83F362A74F18D714161 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -882,7 +883,6 @@
 				299B548720A0D38B004E60A2 /* Rubik-MediumItalic.ttf in Resources */,
 				29A169332048342C006864C2 /* Profile.storyboard in Resources */,
 				2934807020E90AD60039028E /* LoadVideoTableViewCell.xib in Resources */,
-				29D97EA6204B16C3000E0EFB /* GoogleService-Info.plist in Resources */,
 				29F9F2222147AE82006EDC6A /* AddExerciseToDayTableViewCell.xib in Resources */,
 				2934805A20E8F7B80039028E /* ChoosingItemTableViewCell.xib in Resources */,
 				29F9F21C2147AE82006EDC6A /* TrainingDayHeaderView.xib in Resources */,
@@ -917,6 +917,7 @@
 				29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */,
 				29F9F2262147AE82006EDC6A /* ExerciseTableViewCell.xib in Resources */,
 				35314F47218909C100A6E323 /* ErrorView.xib in Resources */,
+				350E3C4A230C547E00DBA0A6 /* GoogleService-Info.plist in Resources */,
 				2940A36020D90C9B00EBAE84 /* PlayVideoTableViewCell.xib in Resources */,
 				29F9F2522147B5B8006EDC6A /* Info.plist in Resources */,
 			);
@@ -925,6 +926,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		350E3C48230C4D3600DBA0A6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+		};
 		4E79C49AA961F61EF3E16BF9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -949,7 +967,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MSA/Pods-MSA-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-MSA/Pods-MSA-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
@@ -994,7 +1012,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MSA/Pods-MSA-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MSA/Pods-MSA-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

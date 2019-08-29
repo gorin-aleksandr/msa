@@ -5,11 +5,14 @@ PODS:
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - Crashlytics (3.11.1):
+    - Fabric (~> 1.8.1)
   - DKImagePickerController (3.8.1):
     - DKImagePickerController/Camera (= 3.8.1)
     - DKImagePickerController/ImageManager (= 3.8.1)
   - DKImagePickerController/Camera (3.8.1)
   - DKImagePickerController/ImageManager (3.8.1)
+  - Fabric (1.8.2)
   - FBSDKCoreKit (4.30.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.30.0):
@@ -89,7 +92,9 @@ PODS:
 
 DEPENDENCIES:
   - Bolts
+  - Crashlytics (= 3.11.1)
   - DKImagePickerController
+  - Fabric (= 1.8.2)
   - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase/Auth
@@ -109,7 +114,9 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
+    - Crashlytics
     - DKImagePickerController
+    - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
@@ -137,7 +144,9 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
+  Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   FBSDKCoreKit: 7c4bba2877781a131ab5d54c0a78c405d4307b62
   FBSDKLoginKit: fe7a7e82373dc5daad92e1623219e86224ab1fb1
   Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
@@ -163,6 +172,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeCellKit: 4eada3884ab1bbae5e8d2fb9030c242aa23d7f42
 
-PODFILE CHECKSUM: 61355403b1b06af552c326bfe661b55aa575dd8a
+PODFILE CHECKSUM: 5b4e31d3e9bfe50aeb56760ce91b11feea033a5e
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.2
