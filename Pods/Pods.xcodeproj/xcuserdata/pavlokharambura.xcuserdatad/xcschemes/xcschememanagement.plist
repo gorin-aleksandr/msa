@@ -11,6 +11,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Crashlytics.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
 		<key>DKImagePickerController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -56,20 +61,40 @@
 			<key>orderHint</key>
 			<integer>18</integer>
 		</dict>
+		<key>Fabric.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>22</integer>
+		</dict>
 		<key>Firebase.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
+		</dict>
+		<key>Firebase.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>23</integer>
 		</dict>
 		<key>FirebaseAnalytics.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>FirebaseAnalytics.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>24</integer>
+		</dict>
 		<key>FirebaseAuth.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>6</integer>
+		</dict>
+		<key>FirebaseAuth.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>25</integer>
 		</dict>
 		<key>FirebaseAuthInterop.xcscheme</key>
 		<dict>
@@ -81,20 +106,40 @@
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
+		<key>FirebaseCore.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>26</integer>
+		</dict>
 		<key>FirebaseDatabase.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>9</integer>
+		</dict>
+		<key>FirebaseDatabase.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>27</integer>
 		</dict>
 		<key>FirebaseInstanceID.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
+		<key>FirebaseInstanceID.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>28</integer>
+		</dict>
 		<key>FirebaseStorage.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>11</integer>
+		</dict>
+		<key>FirebaseStorage.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>29</integer>
 		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>

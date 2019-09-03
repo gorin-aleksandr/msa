@@ -136,6 +136,7 @@ class TrainingManager {
             try realm.performWrite {
                 if let day = dataSource?.currentWeek?.days[at] {
                     let newDay = makeDayCopy(of: day)
+                    newDay.date = ""
                     dataSource?.currentWeek?.wasSync = false
                     dataSource?.currentWeek?.days.insert(newDay, at: at+1)
                 }
@@ -457,18 +458,18 @@ class TrainingManager {
         for day in week.days {
             realm.deleteObject(day)
         }
-//        realm.deleteObject(week)
-//        if let _ = dataSource?.currentTraining?.weeks {
-//            dataSource?.currentWeek = nil
-//        } else {
-//            if let week = dataSource?.currentTraining?.weeks[at-1] {
-//                dataSource?.currentWeek = week
-//            } else if let week_ = dataSource?.currentTraining?.weeks[at+1] {
-//                dataSource?.currentWeek = week_
-//            } else {
-//                dataSource?.currentWeek = nil
-//            }
-//        }
+        realm.deleteObject(week)
+        if let _ = dataSource?.currentTraining?.weeks {
+            dataSource?.currentWeek = nil
+        } else {
+            if let week = dataSource?.currentTraining?.weeks[at-1] {
+                dataSource?.currentWeek = week
+            } else if let week_ = dataSource?.currentTraining?.weeks[at+1] {
+                dataSource?.currentWeek = week_
+            } else {
+                dataSource?.currentWeek = nil
+            }
+        }
         self.editTraining(wiht: trainingId, success: {})
     }
     

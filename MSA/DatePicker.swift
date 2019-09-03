@@ -15,7 +15,7 @@ private extension Selector {
 }
 
 open class DatePickerDialog: UIView {
-    public typealias DatePickerCallback = ( Date? ) -> Void
+    public typealias DatePickerCallback = ( Date?, String? ) -> Void
     
     // MARK: - Constants
     private let kDefaultButtonHeight: CGFloat = 50
@@ -29,7 +29,8 @@ open class DatePickerDialog: UIView {
     open var datePicker: UIDatePicker!
     private var cancelButton: UIButton!
     private var doneButton: UIButton!
-    
+    private var delete: UIButton!
+
     // MARK: - Variables
     private var defaultDate: Date?
     private var datePickerMode: UIDatePickerMode?
@@ -92,12 +93,14 @@ open class DatePickerDialog: UIView {
     open func show(_ title: String,
                    doneButtonTitle: String = "Done",
                    cancelButtonTitle: String = "Cancel",
+                   deleteButtonTitle: String = "Delete",
                    defaultDate: Date = Date(),
                    minimumDate: Date? = nil, maximumDate: Date? = nil,
                    datePickerMode: UIDatePickerMode = .dateAndTime,
                    callback: @escaping DatePickerCallback) {
         self.titleLabel.text = title
         self.doneButton.setTitle(doneButtonTitle, for: .normal)
+        self.delete.setTitle(deleteButtonTitle, for: .normal)
         if showCancelButton {
             self.cancelButton.setTitle(cancelButtonTitle, for: .normal)
         }
@@ -215,6 +218,12 @@ open class DatePickerDialog: UIView {
         self.titleLabel.font = self.font.withSize(17)
         container.addSubview(self.titleLabel)
         
+//        self.clear = UILabel(frame: CGRect(x: 10, y: 10, width: 280, height: 30))
+//        self.titleLabel.textAlignment = .center
+//        self.titleLabel.textColor = self.textColor
+//        self.titleLabel.font = self.font.withSize(17)
+//        container.addSubview(self.titleLabel)
+        
         self.datePicker = configuredDatePicker()
         container.addSubview(self.datePicker)
         
@@ -249,6 +258,12 @@ open class DatePickerDialog: UIView {
             width: buttonWidth,
             height: kDefaultButtonHeight
         )
+        var deleteButtonFrame = CGRect(
+            x: 5,
+            y: 0,
+            width: 60,
+            height: 50
+        )
         if showCancelButton == false {
             buttonWidth = container.bounds.size.width
             leftButtonFrame = CGRect()
@@ -272,6 +287,16 @@ open class DatePickerDialog: UIView {
             self.cancelButton.addTarget(self, action: .buttonTapped, for: .touchUpInside)
             container.addSubview(self.cancelButton)
         }
+        self.delete = UIButton(type: .custom) as UIButton
+        self.delete.frame = deleteButtonFrame
+        self.delete.tag = 2
+        self.delete.setTitleColor(self.buttonColor, for: .normal)
+        self.delete.setTitleColor(self.buttonColor, for: .highlighted)
+        self.delete.titleLabel!.font = self.font.withSize(14)
+        self.delete.layer.cornerRadius = kCornerRadius
+        self.delete.addTarget(self, action: .buttonTapped, for: .touchUpInside)
+        container.addSubview(self.delete)
+        
         self.doneButton = UIButton(type: .custom) as UIButton
         self.doneButton.frame = isLeftToRightDirection ? rightButtonFrame : leftButtonFrame
         self.doneButton.tag = kDoneButtonTag
@@ -285,9 +310,11 @@ open class DatePickerDialog: UIView {
     
     @objc func buttonTapped(sender: UIButton!) {
         if sender.tag == kDoneButtonTag {
-            self.callback?(self.datePicker.date)
+            self.callback?(self.datePicker.date, "1")
+        } else if sender.tag == 2 {
+            self.callback?(Date(), "2")
         } else {
-            self.callback?(nil)
+            self.callback?(nil, "0")
         }
         
         close()

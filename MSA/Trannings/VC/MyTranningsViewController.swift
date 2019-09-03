@@ -18,12 +18,21 @@ class MyTranningsViewController: UIViewController {
     
     @IBOutlet weak var weekHeaderView: UIView!
     @IBOutlet weak var loadingView: UIView!
-    @IBOutlet weak var tableView: FZAccordionTableView!
+    @IBOutlet weak var tableView: FZAccordionTableView! {
+        didSet {
+            tableView.bounces = false
+        }
+    }
     @IBOutlet weak var weekLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var nextWeekButton: UIButton!
     @IBOutlet weak var prevWeekButton: UIButton!
-    @IBOutlet weak var addDayView: UIView! {didSet{addDayView.layer.cornerRadius = 12}}
+    @IBOutlet weak var addDayView: UIView! {
+        didSet {
+            addDayView.isHidden = true
+            addDayView.layer.cornerRadius = 12
+        }
+    }
     
     var rightBarButtonStackView: UIView!
     
@@ -102,7 +111,7 @@ class MyTranningsViewController: UIViewController {
         }
     }
     
-    @objc func headerTapped(sender: UILongPressGestureRecognizer) {
+    @objc func copyDay(sender: UILongPressGestureRecognizer) {
         guard let index = sender.view?.tag else {return}
         if sender.state == .began {
             
@@ -177,11 +186,11 @@ class MyTranningsViewController: UIViewController {
         } else {
             nextWeekButton.alpha = 1
         }
-        if manager.getWeeksCount() == 0 || manager.getDaysCount() == 0 {
-            addDayView.isHidden = false
-        } else {
-            addDayView.isHidden = true
-        }
+//        if manager.getWeeksCount() == 0 || manager.getDaysCount() == 0 {
+//            addDayView.isHidden = false
+//        } else {
+//            addDayView.isHidden = true
+//        }
     }
     
     private func configureTableView() {
@@ -486,12 +495,16 @@ class MyTranningsViewController: UIViewController {
     
     func datePickerTapped() {
         DatePickerDialog(buttonColor: lightBlue_).show("Выберите дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
-            (date) -> Void in
+            (date, int) -> Void in
             if let dt = date {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "dd.MM.yyyy"
                 try! self.manager.realm.performWrite {
-                    self.manager.dataSource?.currentDay?.date = formatter.string(from: dt)
+                    if int == "2" {
+                        self.manager.dataSource?.currentDay?.date = ""
+                    } else if int == "1" {
+                        self.manager.dataSource?.currentDay?.date = formatter.string(from: dt)
+                    }
                     self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
                 }
                 self.tableView.reloadData()
@@ -615,7 +628,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             if let day = manager.dataSource?.currentWeek?.days[section] {
                 headerView.day = day
                 headerView.tag = section
-                let longPressRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(headerTapped))
+                let longPressRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(copyDay))
                 headerView.addGestureRecognizer(longPressRecognizer)
                 
                 headerView.dateLabel.text = day.date == "" ? "______(дата)" : day.date
@@ -703,9 +716,9 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return 0}
+        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return 1}
         if daysCount == 0 {
-            return 0
+            return 1
         } else {
             return daysCount + 1
         }
