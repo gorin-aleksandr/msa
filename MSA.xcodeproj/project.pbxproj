@@ -132,7 +132,6 @@
 		29F9F2512147B5B8006EDC6A /* VACalendarMonthDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9F2432147B5B8006EDC6A /* VACalendarMonthDelegate.swift */; };
 		29F9F2522147B5B8006EDC6A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29F9F2442147B5B8006EDC6A /* Info.plist */; };
 		29F9F2542147B665006EDC6A /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9F2532147B665006EDC6A /* DatePicker.swift */; };
-		350E3C4A230C547E00DBA0A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 350E3C49230C547E00DBA0A6 /* GoogleService-Info.plist */; };
 		350E865422366D3000955C16 /* PaidSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 350E865322366D3000955C16 /* PaidSubscription.swift */; };
 		352355F9212E06080001255E /* UserCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355F8212E06080001255E /* UserCommunityViewController.swift */; };
 		352355FB212E06220001255E /* UserCommunityPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352355FA212E06220001255E /* UserCommunityPresenter.swift */; };
@@ -146,6 +145,7 @@
 		354FBABE22260AE4003451B7 /* IAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FBABD22260AE4003451B7 /* IAPViewController.swift */; };
 		354FBAC022260AFE003451B7 /* IAPPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FBABF22260AFE003451B7 /* IAPPresenter.swift */; };
 		355581CF21C181C0001DCA75 /* NotificationNameExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355581CE21C181C0001DCA75 /* NotificationNameExtended.swift */; };
+		3584E36D231EE168001ECC53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3584E36C231EE167001ECC53 /* GoogleService-Info.plist */; };
 		35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */; };
 		35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */; };
 		35B70340219A3D3A00E83393 /* HeartBeatDevicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033F219A3D3A00E83393 /* HeartBeatDevicePresenter.swift */; };
@@ -301,7 +301,6 @@
 		29F9F2432147B5B8006EDC6A /* VACalendarMonthDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VACalendarMonthDelegate.swift; sourceTree = "<group>"; };
 		29F9F2442147B5B8006EDC6A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29F9F2532147B665006EDC6A /* DatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
-		350E3C49230C547E00DBA0A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		350E865322366D3000955C16 /* PaidSubscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidSubscription.swift; sourceTree = "<group>"; };
 		352355F8212E06080001255E /* UserCommunityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityViewController.swift; sourceTree = "<group>"; };
 		352355FA212E06220001255E /* UserCommunityPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCommunityPresenter.swift; sourceTree = "<group>"; };
@@ -315,6 +314,7 @@
 		354FBABD22260AE4003451B7 /* IAPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPViewController.swift; sourceTree = "<group>"; };
 		354FBABF22260AFE003451B7 /* IAPPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPPresenter.swift; sourceTree = "<group>"; };
 		355581CE21C181C0001DCA75 /* NotificationNameExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtended.swift; sourceTree = "<group>"; };
+		3584E36C231EE167001ECC53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceViewController.swift; sourceTree = "<group>"; };
 		35B7033F219A3D3A00E83393 /* HeartBeatDevicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDevicePresenter.swift; sourceTree = "<group>"; };
@@ -404,7 +404,7 @@
 				299B547B20A0D38A004E60A2 /* Rubik */,
 				29160B4C2035AA3B00DA7227 /* Assets.xcassets */,
 				29160B512035AA3B00DA7227 /* Info.plist */,
-				350E3C49230C547E00DBA0A6 /* GoogleService-Info.plist */,
+				3584E36C231EE167001ECC53 /* GoogleService-Info.plist */,
 			);
 			path = MSA;
 			sourceTree = "<group>";
@@ -917,7 +917,7 @@
 				29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */,
 				29F9F2262147AE82006EDC6A /* ExerciseTableViewCell.xib in Resources */,
 				35314F47218909C100A6E323 /* ErrorView.xib in Resources */,
-				350E3C4A230C547E00DBA0A6 /* GoogleService-Info.plist in Resources */,
+				3584E36D231EE168001ECC53 /* GoogleService-Info.plist in Resources */,
 				2940A36020D90C9B00EBAE84 /* PlayVideoTableViewCell.xib in Resources */,
 				29F9F2522147B5B8006EDC6A /* Info.plist in Resources */,
 			);
