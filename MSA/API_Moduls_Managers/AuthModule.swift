@@ -24,6 +24,7 @@ enum AuthErrors: String {
 
 class AuthModule {
     
+    static var isLastUserCurrent: Bool = true
     static var currUser = UserVO()
     static var userAvatar: UIImage?
     static var pass = String()

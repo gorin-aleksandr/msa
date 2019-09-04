@@ -458,11 +458,14 @@ class TrainingManager {
         for day in week.days {
             realm.deleteObject(day)
         }
+        
         realm.deleteObject(week)
-        if let _ = dataSource?.currentTraining?.weeks {
+        if let w = dataSource?.currentTraining?.weeks, w.count == 0 {
             dataSource?.currentWeek = nil
         } else {
-            if let week = dataSource?.currentTraining?.weeks[at-1] {
+            if at == 0 {
+                dataSource?.currentWeek = dataSource?.currentTraining?.weeks.first
+            } else if let week = dataSource?.currentTraining?.weeks[at-1] {
                 dataSource?.currentWeek = week
             } else if let week_ = dataSource?.currentTraining?.weeks[at+1] {
                 dataSource?.currentWeek = week_
@@ -618,7 +621,6 @@ class TrainingManager {
                                "iterations": newiterations
                             ])
                     }
-                    
                     newdays.append([
                            "id": day.id,
                            "name": day.name.capitalizingFirstLetter(),

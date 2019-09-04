@@ -57,6 +57,7 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
 //        presenter.fetchUser(context: context)
         AuthModule.currUser = UserVO()
+        RealmManager.shared.clearTrainings()
     }
     
     @IBAction func securePasswordViewButton(_ sender: Any) {

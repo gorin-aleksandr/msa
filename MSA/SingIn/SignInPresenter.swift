@@ -40,6 +40,9 @@ class UserSignInPresenter {
                             self.view?.setUser(user: user)
                             self.view?.logged()
                             self.view?.finishLoading()
+                        } else {
+                            self.view?.finishLoading()
+                            self.view?.notLogged(resp: "Ошибка авторизации")
                         }
                     })
                     return

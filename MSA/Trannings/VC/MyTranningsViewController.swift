@@ -18,11 +18,7 @@ class MyTranningsViewController: UIViewController {
     
     @IBOutlet weak var weekHeaderView: UIView!
     @IBOutlet weak var loadingView: UIView!
-    @IBOutlet weak var tableView: FZAccordionTableView! {
-        didSet {
-            tableView.bounces = false
-        }
-    }
+    @IBOutlet weak var tableView: FZAccordionTableView!
     @IBOutlet weak var weekLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var nextWeekButton: UIButton!
@@ -53,6 +49,21 @@ class MyTranningsViewController: UIViewController {
         copyWeekRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(copyWeek))
         self.tableView.addGestureRecognizer(longPressRecognizer)
         self.weekHeaderView.addGestureRecognizer(copyWeekRecognizer)
+        if manager.sportsmanId == AuthModule.currUser.id {
+            AuthModule.isLastUserCurrent = true
+            tableView.bounces = true
+        } else {
+            AuthModule.isLastUserCurrent = false
+            tableView.bounces = false
+        }
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if !AuthModule.isLastUserCurrent {
+            RealmManager.shared.clearTrainings()
+        }
+        
     }
     
     @objc
@@ -213,6 +224,10 @@ class MyTranningsViewController: UIViewController {
         }
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         
+        if manager.dataSource?.currentTraining?.weeks.count == nil {
+            self.refreshControl.beginRefreshing()
+            self.view.isUserInteractionEnabled = false
+        }
     }
     
     @objc private func refreshData(_ sender: Any) {
@@ -545,7 +560,14 @@ class MyTranningsViewController: UIViewController {
     
     func changeWeek() {
         if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
-            manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekNumber]
+            if weeks.count <= weekNumber {
+                manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks.last
+                weekNumber = (manager.dataSource?.currentTraining?.weeks.count ?? 1) - 1
+            } else if let week = manager.dataSource?.currentTraining?.weeks[weekNumber] {
+                manager.dataSource?.currentWeek = week
+            } else {
+                manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks.last
+            }
             
             if let name = manager.dataSource?.currentWeek?.name {
                 weekLabel.text = name
@@ -554,6 +576,9 @@ class MyTranningsViewController: UIViewController {
             }
             nextWeekButton.isHidden = false
             prevWeekButton.isHidden = false
+            if weekNumber == manager.dataSource?.currentTraining?.weeks.count ?? 1 {
+                nextWeekButton.isHidden = true
+            }
         } else {
             weekLabel.text = "Сначала добавьте неделю"
             nextWeekButton.isHidden = true
@@ -618,7 +643,7 @@ class MyTranningsViewController: UIViewController {
 extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let daysCount = manager.dataSource?.currentWeek?.days.count else {return nil}
+        let daysCount = manager.dataSource?.currentWeek?.days.count ?? 0
         if section == daysCount {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "addWeekDayView") as? addWeekDayView else {return nil}
             headerView.butt.addTarget(self, action: #selector(addWeekDayButtonAction(_:)), for: .touchUpInside)
@@ -816,7 +841,8 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     
     func trainingsLoaded() {
         changeWeek()
-//        manager.loadTemplates()
+        self.refreshControl.endRefreshing()
+        self.view.isUserInteractionEnabled = true
     }
     
     func errorOccurred(err: String) {

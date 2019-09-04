@@ -387,7 +387,6 @@ extension ConfigureTranningExersViewController: TrainingsViewDelegate {
     func templatesLoaded() {}
     
     func trainingEdited() {
-        back()
     }
     func errorOccurred(err: String) {}
 }

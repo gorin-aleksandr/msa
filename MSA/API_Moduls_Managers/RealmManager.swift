@@ -80,6 +80,13 @@ extension RealmManager {
     func getResult<T: Object>(ofType type: T.Type, filterWith predicate: NSPredicate) -> Results<T> {
         return realm.objects(type).filter(predicate)
     }
+    
+    func clearTrainings() {
+        try! realm.write {
+            let trainings = self.getResult(ofType: Training.self)
+            realm.delete(trainings)
+        }
+    }
 }
 
 extension RealmManager {
