@@ -69,8 +69,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         super.viewWillAppear(animated)
         
         // MARK: Uncomment/commemt for IAPs
-//        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
-        accessDeniedView.isHidden = true
+        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
+        //accessDeniedView.isHidden = true
         
         setupNavigationBar()
         configureCityPicker()
@@ -248,13 +248,13 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
 // MARK: 1
-//       if InAppPurchasesService.shared.currentSubscription != nil {
+       if InAppPurchasesService.shared.currentSubscription != nil {
             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
             destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
             self.navigationController?.pushViewController(destinationVC, animated: true)
-//        } else {
-//            showNoMyComunityAlert()
-//        }
+        } else {
+            showNoMyComunityAlert()
+        }
     }
 
     private func showNoMyComunityAlert() {
