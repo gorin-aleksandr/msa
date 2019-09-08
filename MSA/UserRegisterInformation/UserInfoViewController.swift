@@ -69,10 +69,10 @@ class UserInfoViewController: BasicViewController {
         heightHeader.isHidden = AuthModule.currUser.height == nil
         levelHeader.isHidden = AuthModule.currUser.level == nil
         
-        sexLabel.text = AuthModule.currUser.sex == nil ? "Пол" : (AuthModule.currUser.sex ?? "") + ", пол"
-        ageLabel.text = AuthModule.currUser.age == nil ? "Возраст" : "\(AuthModule.currUser.age ?? 0)" + ", лет"
-        weightLabel.text = AuthModule.currUser.weight == nil ? "Вес" : "\(AuthModule.currUser.weight ?? 0)" + ", кг"
-        heightLabel.text = AuthModule.currUser.height == nil ? "Рост" : "\(AuthModule.currUser.height ?? 0)" + ", см"
+        sexLabel.text = AuthModule.currUser.sex == nil ? "Пол" : (AuthModule.currUser.sex ?? "")
+        ageLabel.text = AuthModule.currUser.age == nil ? "Возраст" : "\(AuthModule.currUser.age ?? 0)"
+        weightLabel.text = AuthModule.currUser.weight == nil ? "Вес" : "\(AuthModule.currUser.weight ?? 0)"
+        heightLabel.text = AuthModule.currUser.height == nil ? "Рост" : "\(AuthModule.currUser.height ?? 0)"
         levelLabel.text = AuthModule.currUser.level == nil ? "Уровень подготовки" : "\(AuthModule.currUser.level ?? "")"
     }
     
@@ -174,16 +174,16 @@ extension UserInfoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
  
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if dataType == PickerDataType.Age {
-            ageLabel.text = "\(presenter.getAges()[row]), лет"
+            ageLabel.text = "\(presenter.getAges()[row])"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = "\(presenter.getSexes()[row]), пол"
+            sexLabel.text = "\(presenter.getSexes()[row])"
             presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
-            heightLabel.text = "\(presenter.getHeight()[row]), см"
+            heightLabel.text = "\(presenter.getHeight()[row])"
             presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row]), кг"
+            weightLabel.text = "\(presenter.getWeight()[row])"
             presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
             levelLabel.text = presenter.getlevels()[row]

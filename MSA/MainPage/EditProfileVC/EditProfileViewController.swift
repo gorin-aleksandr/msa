@@ -10,6 +10,7 @@
 import UIKit
 import SkyFloatingLabelTextField
 import SDWebImage
+import MessageUI
 
 protocol EditProfileProtocol: class {
     func startLoading()
@@ -21,7 +22,7 @@ protocol EditProfileProtocol: class {
     func purposeSetted()
 }
 
-class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate  {
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate  {
 
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
@@ -149,13 +150,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             ageLabel.text = "\(age)"
         }
         if let sex = user.sex {
-            sexLabel.text = sex + ", пол"
+            sexLabel.text = sex
         }
         if let height = user.height {
-            heightLabel.text = "\(height), см" // hotfix
+            heightLabel.text = "\(height)"
         }
         if let weight = user.weight {
-            weightLabel.text = "\(weight), кг" // hotfix
+            weightLabel.text = "\(weight)"
         }
         if let level = user.level {
             levelLabel.text = "\(level)"
@@ -256,6 +257,18 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         customImageViev.setNeedsLayout()
         customImageViev.contentMode = .scaleAspectFill
         profilePhoto.addSubview(customImageViev)
+    }
+    
+    
+    private func showCantSendEmailAlert() {
+        let alert = UIAlertController(title: "Отказ", message: "Для отправки сообщения настройте почтовый клиент на Вашем устройстве", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
     
     @objc func save() {
@@ -384,6 +397,18 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     @IBAction func rules(_ sender: Any) {
     }
+    @IBAction func sendMailToSupport(_ sender: Any) {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["mysportassistantmain@gmail.com"])
+            mail.setSubject("Сообщение от пользователя MSA")
+            present(mail, animated: true)
+        } else {
+            showCantSendEmailAlert()
+        }
+        
+    }
     @IBAction func logout(_ sender: Any) {
         AlertDialog.showConfirmationAlert("Выход из приложения", message: "Вы действительно хотите выйти из приложения?", viewController: self, confirmAction: logout)
     }
@@ -452,13 +477,13 @@ extension EditProfileViewController: UIPickerViewDelegate, UIPickerViewDataSourc
             ageLabel.text = "\(presenter.getAges()[row])"
             presenter.setAge(age: Int(presenter.getAges()[row]))
         } else if dataType == PickerDataType.Sex {
-            sexLabel.text = "\(presenter.getSexes()[row]), пол"
+            sexLabel.text = "\(presenter.getSexes()[row])"
             presenter.setSex(sex: presenter.getSexes()[row])
         } else if dataType == PickerDataType.Height {
-            heightLabel.text = "\(presenter.getHeight()[row]), см"
+            heightLabel.text = "\(presenter.getHeight()[row])"
             presenter.setHeight(height: Int(presenter.getHeight()[row]))
         } else if dataType == PickerDataType.Weight {
-            weightLabel.text = "\(presenter.getWeight()[row]), кг"
+            weightLabel.text = "\(presenter.getWeight()[row])"
             presenter.setWeight(weight: Int(presenter.getWeight()[row]))
         } else {
             levelLabel.text = "\(presenter.getlevels()[row])"

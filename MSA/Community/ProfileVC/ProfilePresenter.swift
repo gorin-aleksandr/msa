@@ -34,6 +34,7 @@ protocol ProfilePresenterProtocol {
     func deleteAction(for: UserVO)
     func addToFriends(user: UserVO)
     func addAsTrainer(user: UserVO)
+    func prepareMessage()
     
 }
 
@@ -86,6 +87,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
     func start() {
         state = getPersonState(person: user)
         view?.updateProfile(with: user)
+        view?.setMailButton(hidden: user.userType != .trainer )
     }
     
     func addOrRemoveUserAction() {
@@ -172,6 +174,12 @@ class ProfilePresenter: ProfilePresenterProtocol {
                 self?.state = .userTrainer
                 AuthModule.currUser.trainerId = id
             }
+        }
+    }
+    
+    func prepareMessage() {
+        if let email = user.email, userType == .trainer {
+            view?.mailViewController(email: email, subject: "Сообщение от пользователя MSA")
         }
     }
     

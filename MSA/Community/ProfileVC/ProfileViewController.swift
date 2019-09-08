@@ -11,6 +11,7 @@ import AVKit
 import AVFoundation
 import SDWebImage
 import SVProgressHUD
+import MessageUI
 
 protocol ProfileViewProtocol: class {
     func updateProfile(with user: UserVO)
@@ -19,9 +20,11 @@ protocol ProfileViewProtocol: class {
     func showDeleteAlert(for user: UserVO)
     func dismiss()
     func showAddAlertFor(user: UserVO, isTrainerEnabled: Bool)
+    func mailViewController(email: String, subject: String)
+    func setMailButton(hidden: Bool)
 }
 
-class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, UINavigationControllerDelegate, ProfileViewProtocol {
+class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, UINavigationControllerDelegate, ProfileViewProtocol, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var buttViewHeight: NSLayoutConstraint!
@@ -29,6 +32,8 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var sendEmailButton: UIButton!
+    
     
     @IBOutlet weak var viewWithButtons: UIView!
     @IBOutlet weak var scrollView: UIView!
@@ -90,6 +95,10 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     func configureButtonsView() {
         let w = CGFloat(self.view.frame.width - 32.0)
         buttViewHeight.constant = CGFloat(20.0 + (w*111.0/164.0))
+    }
+    
+    func setMailButton(hidden: Bool) {
+        sendEmailButton.isHidden = hidden
     }
     
     func setShadow(outerView: UIView, shadowOpacity: Float) {
@@ -197,6 +206,13 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
     }
     
+    func showCantSendEmailAlert() {
+        let alert = UIAlertController(title: "Отказ", message: "Для отправки сообщения настройте почтовый клиент на Вашем устройстве", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
+    
     func showDeleteAlert(for user: UserVO) {
         let alert = UIAlertController(title: nil, message: profilePresenter.state == .userTrainer ? "Вы действительно хотите удалить тренера?" : "Вы дейсвительно хотите удалить из запросов/друзей/спортсменов?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
@@ -240,6 +256,19 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         //relatedCollectionView.reloadData()
     }
     
+    func mailViewController(email: String, subject: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([email])
+            mail.setSubject(subject)
+            present(mail, animated: true)
+        } else {
+            showCantSendEmailAlert()
+        }
+        
+    }
+    
     @IBAction func rightBarButtonTapped(_ sender: Any) {
         profilePresenter.addOrRemoveUserAction()
     }
@@ -268,6 +297,15 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
         navigationController?.navigationBar.isHidden = false
     }
+    
+    @IBAction func sendEmailButtonTapped(_ sender: Any) {
+        profilePresenter.prepareMessage()
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
+    
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
