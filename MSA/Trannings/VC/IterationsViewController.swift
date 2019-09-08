@@ -226,6 +226,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
 extension IterationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ApproachTableViewCell", for: indexPath) as? ApproachTableViewCell else {return UITableViewCell()}
+        if indexPath.row + 1 > manager.getCurrentExercise()?.iterations.count ?? 0 {
+            return UITableViewCell()
+        }
         if let iteration = manager.getCurrentExercise()?.iterations[indexPath.row] {
             cell.configureCell(iteration: iteration, indexPath: indexPath)
             cell.restButton.addTarget(self, action: #selector(startIteration(_:)), for: .touchUpInside)
