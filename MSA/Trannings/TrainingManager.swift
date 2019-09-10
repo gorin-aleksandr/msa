@@ -114,11 +114,13 @@ class TrainingManager {
                 guard let week = dataSource?.currentWeek else {return}
                 let newWeek = TrainingWeek()
                 newWeek.id = newWeek.incrementID()
-                newWeek.name = week.name
+                newWeek.name = ""
                 let days = List<TrainingDay>()
                 for (index,day) in week.days.enumerated() {
                     let newDay = makeDayCopy(of: day)
-                    newDay.id += index
+                    newDay.id += index + 100
+                    newDay.date = ""
+//                    newDay.exercises.forEach({$0.iterations.forEach({})})
                     days.append(newDay)
                 }
                 newWeek.days = days
