@@ -57,14 +57,7 @@ class MyTranningsViewController: UIViewController {
             tableView.bounces = false
         }
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        if !AuthModule.isLastUserCurrent {
-            RealmManager.shared.clearTrainings()
-        }
-        
-    }
+    
     
     @objc
     private func finishEditMode() {
@@ -144,12 +137,6 @@ class MyTranningsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         initialDataLoading()
         initialViewConfiguration()
-//        weekNumber = manager.getWeekNumber()
-//        if let name = manager.dataSource?.currentWeek?.name {
-//            weekLabel.text = name
-//        } else {
-//            weekLabel.text = "#\(weekNumber+1) Неделя"
-//        }
     }
     
     private func initialDataLoading() {
@@ -197,11 +184,6 @@ class MyTranningsViewController: UIViewController {
         } else {
             nextWeekButton.alpha = 1
         }
-//        if manager.getWeeksCount() == 0 || manager.getDaysCount() == 0 {
-//            addDayView.isHidden = false
-//        } else {
-//            addDayView.isHidden = true
-//        }
     }
     
     private func configureTableView() {
@@ -258,6 +240,7 @@ class MyTranningsViewController: UIViewController {
                 guard let self = self else {return}
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else {return}
+                    RealmManager.shared.clearTrainings()
                     SVProgressHUD.dismiss()
                     self.manager.clearRealm()
                     self.navigationController?.popViewController(animated: true)
@@ -266,6 +249,7 @@ class MyTranningsViewController: UIViewController {
                 guard let self = self else {return}
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else {return}
+                    RealmManager.shared.clearTrainings()
                     SVProgressHUD.dismiss()
                     AlertDialog.showAlert("Error", message: "\(error?.localizedDescription ?? "")", viewController: self)
                 }
