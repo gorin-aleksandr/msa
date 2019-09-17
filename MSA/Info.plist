@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.10</string>
+	<string>2.4.25</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -26,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>35</string>
 	<key>FacebookAppID</key>
 	<string>743953362476572</string>
 	<key>FacebookDisplayName</key>
@@ -50,7 +50,7 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Разрешите приложению доступ к bluetooth</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Разрешите приложению доступ к Вашей камере</string>
+	<string>Доступ необходим для возможности размещения медиа материалов снятых на Вашу камеру</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Разрешите приложению доступ к Вашему микрофону</string>
 	<key>NSPhotoLibraryUsageDescription</key>
