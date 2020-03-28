@@ -141,7 +141,7 @@ class ExercisesForTypeViewController: UIViewController {
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
         }
-        searchController.searchBar.setValue("Отмена", forKey:"_cancelButtonText")
+        searchController.searchBar.setValue("Отмена", forKey:"cancelButtonText")
     }
     
     private func getSortedArray(of array: [Exercise]) -> [Exercise] {

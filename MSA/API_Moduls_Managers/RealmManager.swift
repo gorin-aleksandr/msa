@@ -23,13 +23,13 @@ class RealmManager: NSObject {
     //MARK: Saving objects
     func saveObject(_ object: Object, update: Bool = true) {
         try! self.realm.write {
-            self.realm.add(object, update: update)
+          self.realm.add(object, update: .all)
         }
     }
     
     func saveObjectsArray(_ objectsArray: [Object], update: Bool = true) {
         try! self.realm.write {
-            self.realm.add(objectsArray, update: update)
+          self.realm.add(objectsArray, update: .all)
         }
     }
     

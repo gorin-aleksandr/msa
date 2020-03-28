@@ -138,7 +138,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
             navigationItem.searchController = searchController
         }
         searchController.searchBar.placeholder = "Поиск"
-        searchController.searchBar.setValue("Отмена", forKey:"_cancelButtonText")
+        searchController.searchBar.setValue("Отмена", forKey:"cancelButtonText")
     }
     
     private func getSortedArray(of array: [Exercise]) -> [Exercise] {

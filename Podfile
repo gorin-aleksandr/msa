@@ -20,7 +20,8 @@ target 'MSA' do
   pod 'Bolts'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'NYTPhotoViewer'
-  pod 'RealmSwift'
+  pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
+pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
   pod 'SVProgressHUD'
   pod 'FZAccordionTableView'
   pod 'SwipeCellKit', '~> 2.0'

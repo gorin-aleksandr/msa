@@ -78,11 +78,11 @@ PODS:
     - FLAnimatedImage (~> 1.0.12)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (2.0.0)
-  - Realm (3.1.1):
-    - Realm/Headers (= 3.1.1)
-  - Realm/Headers (3.1.1)
-  - RealmSwift (3.1.1):
-    - Realm (= 3.1.1)
+  - Realm (4.4.0):
+    - Realm/Headers (= 4.4.0)
+  - Realm/Headers (4.4.0)
+  - RealmSwift (4.4.0):
+    - Realm (= 4.4.0)
   - SDWebImage (4.3.0):
     - SDWebImage/Core (= 4.3.0)
   - SDWebImage/Core (4.3.0)
@@ -105,7 +105,8 @@ DEPENDENCIES:
   - IQKeyboardManager
   - IQKeyboardManagerSwift
   - NYTPhotoViewer
-  - RealmSwift
+  - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
+  - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
   - SDWebImage
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
@@ -135,12 +136,30 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - NYTPhotoViewer
-    - Realm
-    - RealmSwift
     - SDWebImage
     - SkyFloatingLabelTextField
     - SVProgressHUD
     - SwipeCellKit
+
+EXTERNAL SOURCES:
+  Realm:
+    :branch: master
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
+  RealmSwift:
+    :branch: master
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
+
+CHECKOUT OPTIONS:
+  Realm:
+    :commit: caa07880d6bd728d1b560332e3e60ff96952539a
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
+  RealmSwift:
+    :commit: caa07880d6bd728d1b560332e3e60ff96952539a
+    :git: https://github.com/realm/realm-cocoa.git
+    :submodules: true
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
@@ -165,13 +184,13 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: 34b8bd6bcc297466adec1668f9a01249d73c90e6
-  Realm: 42d1c38a5b1bbcc828b48a7ce702cb86fc68adf4
-  RealmSwift: d31937ca6a6ee54acde64ec839523c0a3c04924b
+  Realm: e125f464884cda953ebefe70c671b75b03b81b9b
+  RealmSwift: 33656a42bd300959a081fc13347376bc478071af
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
   SkyFloatingLabelTextField: 703aa1420b697392b1e7dba25571180dde018477
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeCellKit: 4eada3884ab1bbae5e8d2fb9030c242aa23d7f42
 
-PODFILE CHECKSUM: 5b4e31d3e9bfe50aeb56760ce91b11feea033a5e
+PODFILE CHECKSUM: b257e73e4e0c27e7fda8a38e4a2fc7e66373bc30
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.5.3
