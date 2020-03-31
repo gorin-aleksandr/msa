@@ -154,55 +154,55 @@ extension AppDelegate: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue,
                       updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            switch transaction.transactionState {
-            case .purchasing:
-                handlePurchasingState(for: transaction, in: queue)
-            case .purchased:
-                handlePurchasedState(for: transaction, in: queue)
-            case .restored:
-                handleRestoredState(for: transaction, in: queue)
-            case .failed:
-                handleFailedState(for: transaction, in: queue)
-            case .deferred:
-                handleDeferredState(for: transaction, in: queue)
-            }
-        }
+//        for transaction in transactions {
+//            switch transaction.transactionState {
+//            case .purchasing:
+//                handlePurchasingState(for: transaction, in: queue)
+//            case .purchased:
+//                handlePurchasedState(for: transaction, in: queue)
+//            case .restored:
+//                handleRestoredState(for: transaction, in: queue)
+//            case .failed:
+//                handleFailedState(for: transaction, in: queue)
+//            case .deferred:
+//                handleDeferredState(for: transaction, in: queue)
+//            }
+//        }
         
     }
     
     func handlePurchasingState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-        print("User is attempting to purchase product id: \(transaction.payment.productIdentifier)")
+     //   print("User is attempting to purchase product id: \(transaction.payment.productIdentifier)")
     }
     
     func handlePurchasedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-        print("User purchased product id: \(transaction.payment.productIdentifier)")
-        queue.finishTransaction(transaction)
-        InAppPurchasesService.shared.uploadReceipt { (success) in
-            DispatchQueue.main.async {
-                if success {
-                       NotificationCenter.default.post(name: InAppPurchasesService.purchaseSuccessfulNotification, object: nil)
-                } else {
-                    print("Error appeared")
-                }
-             
-            }
-        }
+//        print("User purchased product id: \(transaction.payment.productIdentifier)")
+//        queue.finishTransaction(transaction)
+//        InAppPurchasesService.shared.uploadReceipt { (success) in
+//            DispatchQueue.main.async {
+//                if success {
+//                       NotificationCenter.default.post(name: InAppPurchasesService.purchaseSuccessfulNotification, object: nil)
+//                } else {
+//                    print("Error appeared")
+//                }
+//
+//            }
+//        }
     }
     
     func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-        print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
-        NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
-        
+//        print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
+//        NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
+//
     }
     
     func handleFailedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-        print("Purchase failed for product id: \(transaction.payment.productIdentifier)")
-    
+//        print("Purchase failed for product id: \(transaction.payment.productIdentifier)")
+//
     }
     
     func handleDeferredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-        print("Purchase deferred for product id: \(transaction.payment.productIdentifier)")
+//        print("Purchase deferred for product id: \(transaction.payment.productIdentifier)")
     }
 }
 

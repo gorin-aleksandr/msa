@@ -141,7 +141,6 @@ final class ChatViewController: JSQMessagesViewController {
   deinit {}
   
   func readAllMessages() {
-    
     db.collection("UsersChat").document(self.viewModel!.currentUserId!).collection("Chats").document(self.viewModel!.chatId).updateData([
        "newMessages": false
      ])

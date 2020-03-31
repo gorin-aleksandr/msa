@@ -100,14 +100,14 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     func start() {
         // MARK: Uncomment to use IAPs
         view.setLoaderVisible(true)
-        InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
-            if InAppPurchasesService.shared.currentSubscription != nil {
-                self?.fetchData()
-                self?.view.hideAccessDeniedView()
-            } else {
-                self?.view.showIAP()
-            }
-        }
+//        InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
+//            if InAppPurchasesService.shared.currentSubscription != nil {
+                fetchData()
+                view.hideAccessDeniedView()
+//            } else {
+//                self?.view.showIAP()
+//            }
+//        }
     }
     
     func fetchData() {
