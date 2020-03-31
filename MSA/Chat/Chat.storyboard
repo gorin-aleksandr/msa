@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Channel List View Controller-->
+        <scene sceneID="b4S-V1-0B1">
+            <objects>
+                <tableViewController storyboardIdentifier="ChannelListViewController" id="ZWO-uf-LnX" customClass="ChannelListViewController" customModule="m2mMarket" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="XeR-Vj-R6l">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewChannel" id="rie-9J-Rnt" customClass="CreateChannelCell" customModule="m2mMarket" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rie-9J-Rnt" id="Doq-SD-n8X">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Create a New Channel" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="auh-o0-oak">
+                                            <rect key="frame" x="28" y="5" width="312" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                        </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rim-IA-i4r">
+                                            <rect key="frame" x="348" y="7" width="46" height="30"/>
+                                            <state key="normal" title="Create"/>
+                                            <connections>
+                                                <action selector="createChannel:" destination="ZWO-uf-LnX" eventType="touchUpInside" id="tm6-Ql-r6m"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rim-IA-i4r" firstAttribute="leading" secondItem="auh-o0-oak" secondAttribute="trailing" constant="8" id="1T5-Bw-gdo"/>
+                                        <constraint firstItem="rim-IA-i4r" firstAttribute="leading" secondItem="auh-o0-oak" secondAttribute="trailing" constant="8" id="3jY-kM-4e3"/>
+                                        <constraint firstItem="rim-IA-i4r" firstAttribute="centerY" secondItem="Doq-SD-n8X" secondAttribute="centerY" id="4aE-W0-hrA"/>
+                                        <constraint firstItem="rim-IA-i4r" firstAttribute="trailing" secondItem="Doq-SD-n8X" secondAttribute="trailingMargin" id="51k-2y-Kee"/>
+                                        <constraint firstItem="auh-o0-oak" firstAttribute="leading" secondItem="Doq-SD-n8X" secondAttribute="leadingMargin" constant="8" id="F9b-t3-iYc"/>
+                                        <constraint firstItem="auh-o0-oak" firstAttribute="centerY" secondItem="Doq-SD-n8X" secondAttribute="centerY" id="LrO-vT-t4r"/>
+                                        <constraint firstItem="rim-IA-i4r" firstAttribute="leading" secondItem="auh-o0-oak" secondAttribute="trailing" constant="8" id="bre-O6-A7c"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="3jY-kM-4e3"/>
+                                            <exclude reference="1T5-Bw-gdo"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="createChannelButton" destination="rim-IA-i4r" id="1gd-m5-sbc"/>
+                                    <outlet property="newChannelNameField" destination="auh-o0-oak" id="Nrg-Yh-Sfl"/>
+                                    <segue destination="uSM-0u-Twf" kind="show" identifier="ShowChannel" id="188-Ab-8on"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExistingChannel" textLabel="2py-61-abj" style="IBUITableViewCellStyleDefault" id="0jw-xc-ZPf">
+                                <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0jw-xc-ZPf" id="T1K-Nt-Rq0">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2py-61-abj">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ZWO-uf-LnX" id="F6J-F4-qXS"/>
+                            <outlet property="delegate" destination="ZWO-uf-LnX" id="Hvt-Pc-DvZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="3jb-JZ-3zA"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C63-b4-sOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4143" y="1574"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="CzW-g0-Mzh">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" id="uSM-0u-Twf" customClass="ChatViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JlE-Rw-4vX"/>
+                        <viewControllerLayoutGuide type="bottom" id="ER8-g9-cwi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rPg-IN-Vnw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="eGT-Ur-BPz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="iez-ff-W6r"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bbj-wO-uha" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4961" y="1574"/>
+        </scene>
+    </scenes>
+</document>

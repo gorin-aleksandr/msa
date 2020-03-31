@@ -72,14 +72,15 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         relatedWidthConstraint.constant = CGFloat(((profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count) - 1) * 12 + 32)
         configureButtonsView()
         profilePresenter.start()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         configureProfileView()
         setNavigationBarTransparent()
         self.tabBarController?.tabBar.isHidden = false
-        
-        
+        self.profilePresenter.getSelectedUsersChat()
+
         //navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
@@ -299,7 +300,14 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     }
     
     @IBAction func sendEmailButtonTapped(_ sender: Any) {
-        profilePresenter.prepareMessage()
+        //profilePresenter.prepareMessage()// отправить уведомление
+      let chatViewController = chatStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController
+      chatViewController?.viewModel = ChatViewModel(chatId: profilePresenter.chatId!, chatUserId: profilePresenter.user.id!, chatUserName: "\(profilePresenter.user.firstName!) \(profilePresenter.user.lastName!)")
+      chatViewController?.viewModel!.chatUser = profilePresenter.user
+      chatViewController?.senderDisplayName = ""
+      let nc = UINavigationController(rootViewController: chatViewController!)
+      nc.modalPresentationStyle = .fullScreen
+      self.present(nc, animated: true, completion: nil)
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -328,7 +336,6 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.typeImageView.image = profilePresenter.userType == .trainer ?  #imageLiteral(resourceName: "athlet-icon") : #imageLiteral(resourceName: "coach-icon")
             return cell
         }
-        
         
         let cell = galleryCollectionView.dequeueReusableCell(withReuseIdentifier: "galleryPhotoCell", for: indexPath) as! GalleryCollectionViewCell
         let index = indexPath.row

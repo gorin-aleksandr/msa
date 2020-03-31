@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		242CAA4F242F76ED00EE8351 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 242CAA4E242F76ED00EE8351 /* Chat.storyboard */; };
+		244A78EC243359A700D92828 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244A78EB243359A700D92828 /* ChatListCell.swift */; };
+		244B72F5242F5A54000A6F4A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244B72F4242F5A53000A6F4A /* ChatViewController.swift */; };
+		247445632431EDFC00FB6BBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 247445622431EDFC00FB6BBD /* GoogleService-Info.plist */; };
+		24744565243202C600FB6BBD /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24744564243202C600FB6BBD /* ChatViewModel.swift */; };
+		2474456724324A3A00FB6BBD /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2474456624324A3A00FB6BBD /* ChatListViewController.swift */; };
+		24B14B0D2432586E00153CD5 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */; };
+		24B14B0F24325AAE00153CD5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0E24325AAE00153CD5 /* Chat.swift */; };
+		24FEE3E6242F5CCB001670F6 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E5242F5CCB001670F6 /* Channel.swift */; };
+		24FEE3E8242F5DF6001670F6 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E7242F5DF5001670F6 /* Helpers.swift */; };
+		24FEE3EA242F5E5E001670F6 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */; };
 		290CA6D1203AD6100073A8F0 /* AuthModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA6D0203AD6100073A8F0 /* AuthModule.swift */; };
 		29160B462035AA3B00DA7227 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29160B452035AA3B00DA7227 /* AppDelegate.swift */; };
 		29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29160B492035AA3B00DA7227 /* Main.storyboard */; };
@@ -145,7 +156,6 @@
 		354FBABE22260AE4003451B7 /* IAPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FBABD22260AE4003451B7 /* IAPViewController.swift */; };
 		354FBAC022260AFE003451B7 /* IAPPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 354FBABF22260AFE003451B7 /* IAPPresenter.swift */; };
 		355581CF21C181C0001DCA75 /* NotificationNameExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355581CE21C181C0001DCA75 /* NotificationNameExtended.swift */; };
-		3584E36D231EE168001ECC53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3584E36C231EE167001ECC53 /* GoogleService-Info.plist */; };
 		35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */; };
 		35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */; };
 		35B70340219A3D3A00E83393 /* HeartBeatDevicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B7033F219A3D3A00E83393 /* HeartBeatDevicePresenter.swift */; };
@@ -172,6 +182,17 @@
 
 /* Begin PBXFileReference section */
 		17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.release.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.release.xcconfig"; sourceTree = "<group>"; };
+		242CAA4E242F76ED00EE8351 /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		244A78EB243359A700D92828 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
+		244B72F4242F5A53000A6F4A /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		247445622431EDFC00FB6BBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		24744564243202C600FB6BBD /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		2474456624324A3A00FB6BBD /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
+		24B14B0E24325AAE00153CD5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		24FEE3E5242F5CCB001670F6 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		24FEE3E7242F5DF5001670F6 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		290CA6D0203AD6100073A8F0 /* AuthModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModule.swift; sourceTree = "<group>"; };
 		29160B422035AA3B00DA7227 /* MSA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29160B452035AA3B00DA7227 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -314,7 +335,6 @@
 		354FBABD22260AE4003451B7 /* IAPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPViewController.swift; sourceTree = "<group>"; };
 		354FBABF22260AFE003451B7 /* IAPPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPPresenter.swift; sourceTree = "<group>"; };
 		355581CE21C181C0001DCA75 /* NotificationNameExtended.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtended.swift; sourceTree = "<group>"; };
-		3584E36C231EE167001ECC53 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedUserCollectionViewCell.swift; sourceTree = "<group>"; };
 		35B7033D219A3D2200E83393 /* HeartBeatDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDeviceViewController.swift; sourceTree = "<group>"; };
 		35B7033F219A3D3A00E83393 /* HeartBeatDevicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartBeatDevicePresenter.swift; sourceTree = "<group>"; };
@@ -362,6 +382,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		244B72F6242F5A59000A6F4A /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */,
+				24FEE3E5242F5CCB001670F6 /* Channel.swift */,
+				244B72F4242F5A53000A6F4A /* ChatViewController.swift */,
+				24744564243202C600FB6BBD /* ChatViewModel.swift */,
+				242CAA4E242F76ED00EE8351 /* Chat.storyboard */,
+				2474456624324A3A00FB6BBD /* ChatListViewController.swift */,
+				24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */,
+				24B14B0E24325AAE00153CD5 /* Chat.swift */,
+				244A78EB243359A700D92828 /* ChatListCell.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		29160B392035AA3B00DA7227 = {
 			isa = PBXGroup;
 			children = (
@@ -395,16 +431,18 @@
 				29AC912B20CDA80F003F8152 /* Trannings */,
 				2962D47B20D2A3A200870953 /* Exercises */,
 				35CE070920ECC644006892B0 /* Community */,
+				244B72F6242F5A59000A6F4A /* Chat */,
 				298DF65E203C36B300FB0180 /* AlertView.swift */,
 				35DAD0FC21B491F60082D74F /* TapGesture.swift */,
 				29C2D5FA2074F36300E2B958 /* Etentions.swift */,
 				29C7154121A02EC0004CE089 /* InternetRechability.swift */,
 				29F9F2532147B665006EDC6A /* DatePicker.swift */,
 				2920A49721A2FECF009E01C5 /* NotificationTimer.swift */,
+				24FEE3E7242F5DF5001670F6 /* Helpers.swift */,
+				247445622431EDFC00FB6BBD /* GoogleService-Info.plist */,
 				299B547B20A0D38A004E60A2 /* Rubik */,
 				29160B4C2035AA3B00DA7227 /* Assets.xcassets */,
 				29160B512035AA3B00DA7227 /* Info.plist */,
-				3584E36C231EE167001ECC53 /* GoogleService-Info.plist */,
 			);
 			path = MSA;
 			sourceTree = "<group>";
@@ -842,7 +880,7 @@
 				TargetAttributes = {
 					29160B412035AA3B00DA7227 = {
 						CreatedOnToolsVersion = 9.0;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -907,9 +945,11 @@
 				29F9F2212147AE82006EDC6A /* TimeView.xib in Resources */,
 				299B548D20A0D38B004E60A2 /* Rubik-LightItalic.ttf in Resources */,
 				35CE070820EA4065006892B0 /* Community.storyboard in Resources */,
+				247445632431EDFC00FB6BBD /* GoogleService-Info.plist in Resources */,
 				299B548B20A0D38B004E60A2 /* Rubik-Black.ttf in Resources */,
 				29F9F21F2147AE82006EDC6A /* NumberButtonView.xib in Resources */,
 				2934805420E8EECC0039028E /* TextViewViewCounterTableViewCell.xib in Resources */,
+				242CAA4F242F76ED00EE8351 /* Chat.storyboard in Resources */,
 				29F9F2282147AE82006EDC6A /* CircleTrainingExerciseTableViewCell.xib in Resources */,
 				29F9F2252147AE82006EDC6A /* ApproachTableViewCell.xib in Resources */,
 				299B549020A0D38B004E60A2 /* Rubik-Regular.ttf in Resources */,
@@ -917,7 +957,6 @@
 				29160B4B2035AA3B00DA7227 /* Main.storyboard in Resources */,
 				29F9F2262147AE82006EDC6A /* ExerciseTableViewCell.xib in Resources */,
 				35314F47218909C100A6E323 /* ErrorView.xib in Resources */,
-				3584E36D231EE168001ECC53 /* GoogleService-Info.plist in Resources */,
 				2940A36020D90C9B00EBAE84 /* PlayVideoTableViewCell.xib in Resources */,
 				29F9F2522147B5B8006EDC6A /* Info.plist in Resources */,
 			);
@@ -965,6 +1004,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MSA/Pods-MSA-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
@@ -974,19 +1014,29 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
+				"${BUILT_PRODUCTS_DIR}/PhotoSlider/PhotoSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DKImagePickerController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
@@ -996,13 +1046,22 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhotoSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1024,6 +1083,7 @@
 				353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */,
 				35B7034B219AEF3B00E83393 /* ExersisesTypesDataManager.swift in Sources */,
 				2920A49821A2FECF009E01C5 /* NotificationTimer.swift in Sources */,
+				2474456724324A3A00FB6BBD /* ChatListViewController.swift in Sources */,
 				2934806F20E90AD60039028E /* LoadVideoTableViewCell.swift in Sources */,
 				299B58EC208678F600CBE646 /* GalleryCollectionViewCell.swift in Sources */,
 				29F9F21E2147AE82006EDC6A /* ExerciseTableViewCell.swift in Sources */,
@@ -1049,16 +1109,20 @@
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
 				295123742086185E00D9035B /* EditProfilePresenter.swift in Sources */,
 				35DAD0FD21B491F60082D74F /* TapGesture.swift in Sources */,
+				24744565243202C600FB6BBD /* ChatViewModel.swift in Sources */,
 				29C4A3F12038A62200F2A1BB /* SignInViewController.swift in Sources */,
 				29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */,
 				35D09C4C21314B4C00229A83 /* Fonts.swift in Sources */,
+				24B14B0D2432586E00153CD5 /* ChatListViewModel.swift in Sources */,
 				298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */,
 				29F9F21A2147AE82006EDC6A /* TrainingsDataSource.swift in Sources */,
 				29F9F24F2147B5B8006EDC6A /* VADay.swift in Sources */,
+				244A78EC243359A700D92828 /* ChatListCell.swift in Sources */,
 				295A4EE9203EB52600124A07 /* SignUpPresenter.swift in Sources */,
 				35D5C01421372FEB0014D450 /* ProfileViewController.swift in Sources */,
 				29F9F2232147AE82006EDC6A /* AddExerciseToDayTableViewCell.swift in Sources */,
 				29F9F2462147B5B8006EDC6A /* VAMonth.swift in Sources */,
+				24FEE3E6242F5CCB001670F6 /* Channel.swift in Sources */,
 				295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */,
 				29F9F22B2147AE82006EDC6A /* ConfigureTranningExersViewController.swift in Sources */,
 				29C2D5FD2074FA2E00E2B958 /* EditProfileViewController.swift in Sources */,
@@ -1075,10 +1139,12 @@
 				299B58F220868DB600CBE646 /* GalleryDataPresenter.swift in Sources */,
 				29F9F2512147B5B8006EDC6A /* VACalendarMonthDelegate.swift in Sources */,
 				2934806720E8FF290039028E /* AddImagesTableViewCell.swift in Sources */,
+				24B14B0F24325AAE00153CD5 /* Chat.swift in Sources */,
 				29C4A3F32038B68F00F2A1BB /* UserInfoViewController.swift in Sources */,
 				29A7FEA12183DE2200DDBC0F /* addWeekDayView.swift in Sources */,
 				2934806B20E904520039028E /* ImageCollectionViewCell.swift in Sources */,
 				2940A35B20D908E400EBAE84 /* ImagesTableViewCell.swift in Sources */,
+				244B72F5242F5A54000A6F4A /* ChatViewController.swift in Sources */,
 				2934807220E92DF90039028E /* NewExerciseViewController.swift in Sources */,
 				29F9F2192147AE82006EDC6A /* TrainingManager.swift in Sources */,
 				29F9F2202147AE82006EDC6A /* CircleTrainingExerciseTableViewCell.swift in Sources */,
@@ -1094,6 +1160,8 @@
 				2940A35F20D90C9B00EBAE84 /* PlayVideoTableViewCell.swift in Sources */,
 				29F9F22D2147AE82006EDC6A /* CalendarViewController.swift in Sources */,
 				293B06872183608B00E2EEED /* DeleteExerciseTableViewCell.swift in Sources */,
+				24FEE3EA242F5E5E001670F6 /* UIImage+Gif.swift in Sources */,
+				24FEE3E8242F5DF6001670F6 /* Helpers.swift in Sources */,
 				35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */,
 				355581CF21C181C0001DCA75 /* NotificationNameExtended.swift in Sources */,
 				29F9F24E2147B5B8006EDC6A /* VADayView.swift in Sources */,
@@ -1271,17 +1339,17 @@
 			baseConfigurationReference = BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WFQLYW8HYX;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod1;
+				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Msa (development)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1292,17 +1360,17 @@
 			baseConfigurationReference = 17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = WFQLYW8HYX;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Msa (development)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

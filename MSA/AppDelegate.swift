@@ -14,6 +14,9 @@ import CoreData
 import RealmSwift
 import SVProgressHUD
 import StoreKit
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         FirebaseApp.configure()
         IQKeyboardManager.sharedManager().enable = true
-        
+        MSAppCenter.start("aa023993-9184-4c58-8f34-84dfdb1fb199", withServices:[MSAnalytics.self, MSCrashes.self])
         configureProgressHud()
         initialConf()
         

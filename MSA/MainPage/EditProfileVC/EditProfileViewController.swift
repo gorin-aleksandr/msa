@@ -291,7 +291,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         navigationController?.popViewController(animated: true)
     }
     
-    
     @IBAction func changeProfilePhotoButton(_ sender: Any) {
         let alert = UIAlertController(title: "Загрузить из:", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in

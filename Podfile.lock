@@ -1,10 +1,24 @@
 PODS:
+  - AppCenter (2.3.0):
+    - AppCenter/Analytics (= 2.3.0)
+    - AppCenter/Crashes (= 2.3.0)
+  - AppCenter/Analytics (2.3.0):
+    - AppCenter/Core
+  - AppCenter/Core (2.3.0)
+  - AppCenter/Crashes (2.3.0):
+    - AppCenter/Core
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
   - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
+  - BoringSSL-GRPC (0.0.3):
+    - BoringSSL-GRPC/Implementation (= 0.0.3)
+    - BoringSSL-GRPC/Interface (= 0.0.3)
+  - BoringSSL-GRPC/Implementation (0.0.3):
+    - BoringSSL-GRPC/Interface (= 0.0.3)
+  - BoringSSL-GRPC/Interface (0.0.3)
   - Crashlytics (3.11.1):
     - Fabric (~> 1.8.1)
   - DKImagePickerController (3.8.1):
@@ -26,6 +40,9 @@ PODS:
   - Firebase/Database (4.9.0):
     - Firebase/Core
     - FirebaseDatabase (= 4.1.4)
+  - Firebase/Firestore (4.9.0):
+    - Firebase/Core
+    - FirebaseFirestore (= 0.10.1)
   - Firebase/Storage (4.9.0):
     - Firebase/Core
     - FirebaseStorage (= 2.1.2)
@@ -44,6 +61,12 @@ PODS:
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - leveldb-library (~> 1.18)
+  - FirebaseFirestore (0.10.1):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseCore (~> 4.0)
+    - gRPC-ProtoRPC (~> 1.0)
+    - leveldb-library (~> 1.18)
+    - Protobuf (~> 3.1)
   - FirebaseInstanceID (2.0.9):
     - FirebaseCore (~> 4.0)
   - FirebaseStorage (2.1.2):
@@ -62,9 +85,34 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.3)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.1.3)"
+  - gRPC (1.23.0):
+    - gRPC-RxLibrary (= 1.23.0)
+    - gRPC/Main (= 1.23.0)
+  - gRPC-Core (1.23.0):
+    - gRPC-Core/Implementation (= 1.23.0)
+    - gRPC-Core/Interface (= 1.23.0)
+  - gRPC-Core/Implementation (1.23.0):
+    - BoringSSL-GRPC (= 0.0.3)
+    - gRPC-Core/Interface (= 1.23.0)
+    - nanopb (~> 0.3)
+  - gRPC-Core/Interface (1.23.0)
+  - gRPC-ProtoRPC (1.23.0):
+    - gRPC-ProtoRPC/Main (= 1.23.0)
+  - gRPC-ProtoRPC/Main (1.23.0):
+    - gRPC (= 1.23.0)
+    - gRPC-RxLibrary (= 1.23.0)
+    - Protobuf (~> 3.0)
+  - gRPC-RxLibrary (1.23.0)
+  - gRPC/Main (1.23.0):
+    - gRPC-Core (= 1.23.0)
+    - gRPC-RxLibrary (= 1.23.0)
   - GTMSessionFetcher/Core (1.1.13)
   - IQKeyboardManager (5.0.7)
   - IQKeyboardManagerSwift (5.0.7)
+  - JSQMessagesViewController (7.3.5):
+    - JSQSystemSoundPlayer (~> 2.0.1)
+  - JSQSystemSoundPlayer (2.0.1)
+  - Kingfisher (5.7.1)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -78,6 +126,9 @@ PODS:
     - FLAnimatedImage (~> 1.0.12)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (2.0.0)
+  - PhotoSlider (1.1.0):
+    - Kingfisher
+  - Protobuf (3.9.0)
   - Realm (4.4.0):
     - Realm/Headers (= 4.4.0)
   - Realm/Headers (4.4.0)
@@ -91,6 +142,7 @@ PODS:
   - SwipeCellKit (2.5.4)
 
 DEPENDENCIES:
+  - AppCenter
   - Bolts
   - Crashlytics (= 3.11.1)
   - DKImagePickerController
@@ -100,11 +152,14 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Firestore
   - Firebase/Storage
   - FZAccordionTableView
   - IQKeyboardManager
   - IQKeyboardManagerSwift
+  - JSQMessagesViewController
   - NYTPhotoViewer
+  - PhotoSlider
   - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
   - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
   - SDWebImage
@@ -114,7 +169,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AppCenter
     - Bolts
+    - BoringSSL-GRPC
     - Crashlytics
     - DKImagePickerController
     - Fabric
@@ -125,17 +182,27 @@ SPEC REPOS:
     - FirebaseAuth
     - FirebaseCore
     - FirebaseDatabase
+    - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseStorage
     - FLAnimatedImage
     - FZAccordionTableView
     - GoogleToolboxForMac
+    - gRPC
+    - gRPC-Core
+    - gRPC-ProtoRPC
+    - gRPC-RxLibrary
     - GTMSessionFetcher
     - IQKeyboardManager
     - IQKeyboardManagerSwift
+    - JSQMessagesViewController
+    - JSQSystemSoundPlayer
+    - Kingfisher
     - leveldb-library
     - nanopb
     - NYTPhotoViewer
+    - PhotoSlider
+    - Protobuf
     - SDWebImage
     - SkyFloatingLabelTextField
     - SVProgressHUD
@@ -162,7 +229,9 @@ CHECKOUT OPTIONS:
     :submodules: true
 
 SPEC CHECKSUMS:
+  AppCenter: 9784d2fc998c9bd0b8fbaf4fb9ed69526d12ce1a
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
@@ -173,17 +242,27 @@ SPEC CHECKSUMS:
   FirebaseAuth: aaaf68d5064a6c8fec435758f83a43b8db26ccaa
   FirebaseCore: 3bd047463058fa6b5d312c97502c52e45401cdfb
   FirebaseDatabase: de4446507ccd3257fca37d16f40e1540324571fd
+  FirebaseFirestore: a6db7a47c6a47d26069892d7db39f7792f2f7f9a
   FirebaseInstanceID: d2058a35e9bebda1b6dd42486b84917bde552a9d
   FirebaseStorage: 181bb543d39ee3c53e0558de7ba86b1286a0427f
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FZAccordionTableView: e64f49c71c32d750feda14025b088bcd25d1a71f
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  gRPC: 5cb33c61d537df129fb07e49b5358247d2125311
+  gRPC-Core: 7b92f07eda10faeb5aa3c8441c97cd40eaa5dbf3
+  gRPC-ProtoRPC: 6f4f7dafdabd68f5b14ec30a801ec8e820d4f01e
+  gRPC-RxLibrary: 7172f64310c12f6d033f1657f7e5ebf71ae35cb5
   GTMSessionFetcher: 5bb1eae636127de695590f50e7d248483eb891e6
   IQKeyboardManager: 0bfa4607d39924116b5c0c8b55b5d789288b5cba
   IQKeyboardManagerSwift: 30fb3a61de1af53a95e02b80fb54ed0a19d5ede5
+  JSQMessagesViewController: 6587f56aedbcb150a8ba1d968e1ef58b1bc758b7
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: 34b8bd6bcc297466adec1668f9a01249d73c90e6
+  PhotoSlider: be8d6cae5b95b94ea60a744390ebd93c3f0f0551
+  Protobuf: 1097ca58584c8d9be81bfbf2c5ff5975648dd87a
   Realm: e125f464884cda953ebefe70c671b75b03b81b9b
   RealmSwift: 33656a42bd300959a081fc13347376bc478071af
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
@@ -191,6 +270,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeCellKit: 4eada3884ab1bbae5e8d2fb9030c242aa23d7f42
 
-PODFILE CHECKSUM: b257e73e4e0c27e7fda8a38e4a2fc7e66373bc30
+PODFILE CHECKSUM: c86b6216275a9bffb6c71653a692979729078c07
 
 COCOAPODS: 1.5.3

@@ -12,6 +12,8 @@ target 'MSA' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
+  pod 'Firebase/Firestore'
+  pod 'JSQMessagesViewController'
   pod 'SDWebImage'
   pod 'IQKeyboardManager'
   pod 'IQKeyboardManagerSwift'
@@ -21,10 +23,13 @@ target 'MSA' do
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'NYTPhotoViewer'
   pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
-pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
+  pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
   pod 'SVProgressHUD'
   pod 'FZAccordionTableView'
   pod 'SwipeCellKit', '~> 2.0'
   pod 'Fabric', '= 1.8.2'
   pod 'Crashlytics', '= 3.11.1'
+  pod "PhotoSlider"
+  pod 'AppCenter'
+
 end

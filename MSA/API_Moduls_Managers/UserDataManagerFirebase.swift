@@ -16,7 +16,8 @@ class UserDataManager {
     var levelsRef = Database.database().reference().child("Levels")
     let disconnectMessage = Database.database().reference(withPath: "disconnectmessage")
     let connectedRef = Database.database().reference(withPath: ".info/connected")
-    
+    let db = Firestore.firestore()
+
     var isConnectionEnabled: Bool = true //{
 //        didSet {
 //            isConnectionEnabled ? NotificationCenter.default.post(name: .connectionEnabled, object: nil) :
@@ -359,4 +360,22 @@ class UserDataManager {
     deinit {
         print("UserDatDeinited")
     }
+  
+  func getSelectedUsersChat(userId: String,callback: @escaping (_ success:Bool, _ chatId: String, _ error: Error?) -> ()) {
+    let docRef = db.collection("UsersChat").document(userId).collection("Chats")
+
+    docRef.getDocuments { (document, error) in
+      print(document!.documents)
+      for item in document!.documents {
+        print(item)
+        if item["chatUserId"] as? String == AuthModule.currUser.id {
+          let chatId = item["chatId"] as! String
+          callback(true,chatId,error)
+          return
+        }
+      }
+      callback(true,"",error)
+    }
+  }
+  
 }
