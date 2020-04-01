@@ -52,7 +52,7 @@ class ImagesTableViewCell: UITableViewCell, UIScrollViewDelegate {
             } else {
                 image.sd_setImage(with: URL(string: images[i].url), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
             }
-            image.contentMode = UIViewContentMode.scaleAspectFit
+          image.contentMode = UIView.ContentMode.scaleAspectFit
             self.scrolMain.addSubview(image)
         }
     }

@@ -16,7 +16,7 @@ target 'MSA' do
   pod 'JSQMessagesViewController'
   pod 'SDWebImage'
   pod 'IQKeyboardManager'
-  pod 'IQKeyboardManagerSwift'
+  pod 'IQKeyboardManagerSwift', '6.5.0'
   pod 'FBSDKLoginKit'
   pod 'FBSDKCoreKit'
   pod 'Bolts'

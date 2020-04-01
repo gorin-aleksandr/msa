@@ -124,8 +124,8 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func configurateSearchController() {
-        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+      let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                   NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -196,7 +196,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
         }
         let loader = UIActivityIndicatorView()
         loader.center = self.view.center
-        loader.activityIndicatorViewStyle = .whiteLarge
+        loader.style = .whiteLarge
         loader.color = .blue
         self.view.addSubview(loader)
         loader.startAnimating()

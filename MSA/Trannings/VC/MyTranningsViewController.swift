@@ -74,8 +74,8 @@ class MyTranningsViewController: UIViewController {
                 self.navigationItem.rightBarButtonItem = nil
                 let button1 = UIBarButtonItem(image: nil, style: .plain, target: self, action: #selector(finishEditMode))
                 button1.title = "Done"
-                let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                             NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+              let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                           NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
                 button1.setTitleTextAttributes(attrs, for: .normal)
                 self.navigationItem.rightBarButtonItem  = button1
             }
@@ -164,10 +164,10 @@ class MyTranningsViewController: UIViewController {
         segmentControl.layer.borderWidth = 1
         navigationController?.navigationBar.layer.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1).cgColor
         navigationController?.setNavigationBarHidden(false, animated: true)
-        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 14)!]
+        let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                   NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 14)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
-        segmentControl.setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 13)!],for: .normal)
+      segmentControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 13)!],for: .normal)
         refreshControl.attributedTitle = NSAttributedString(string: "Синхронизация тренировки ...", attributes: attrs)
         configureTableView()
         showHideButtons()
@@ -285,7 +285,7 @@ class MyTranningsViewController: UIViewController {
     @IBAction func renameWeek(_ sender: Any) {
         guard let weekCount = manager.getCurrentTraining()?.weeks.count, weekCount != 0 else {return}
 
-        let alert = UIAlertController(title: "Новое название", message: "Введите новое название для недели", preferredStyle: UIAlertControllerStyle.alert)
+      let alert = UIAlertController(title: "Новое название", message: "Введите новое название для недели", preferredStyle: UIAlertController.Style.alert)
         
         let action = UIAlertAction(title: "Подтвердить", style: .default) { (alertAction) in
             let textField = alert.textFields![0] as UITextField
@@ -309,12 +309,12 @@ class MyTranningsViewController: UIViewController {
     }
     
     func showAddDayWeekAlert() {
-        let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertControllerStyle.alert)
+      let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertController.Style.alert)
         
         let myString  = "Редактирование тренировки"
         var myMutableString = NSMutableAttributedString()
-        myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!])
-        myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black, range: NSRange(location:0,length:myString.count))
+      myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!])
+      myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSRange(location:0,length:myString.count))
         alert.setValue(myMutableString, forKey: "attributedTitle")
     }
 
@@ -333,12 +333,12 @@ class MyTranningsViewController: UIViewController {
         showOptionsAlert(addDayWeek: true)
     }
     func showOptionsAlert(addDayWeek: Bool) {
-        let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertControllerStyle.alert)
+      let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertController.Style.alert)
         
         let myString  = "Редактирование тренировки"
         var myMutableString = NSMutableAttributedString()
-        myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!])
-        myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.black, range: NSRange(location:0,length:myString.count))
+      myMutableString = NSMutableAttributedString(string: myString as String, attributes: [NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!])
+      myMutableString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSRange(location:0,length:myString.count))
         alert.setValue(myMutableString, forKey: "attributedTitle")
         
         let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
@@ -396,7 +396,7 @@ class MyTranningsViewController: UIViewController {
         }
         let attributedText = NSMutableAttributedString(string: text)
         let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.addAttribute(kCTFontAttributeName as NSAttributedStringKey, value: UIFont(name: fontName, size: 17.0)!, range: range)
+      attributedText.addAttribute(kCTFontAttributeName as NSAttributedString.Key, value: UIFont(name: fontName, size: 17.0)!, range: range)
         guard let label = (action.value(forKey: "__representer") as AnyObject).value(forKey: "label") as? UILabel else { return }
         label.attributedText = attributedText
     }
@@ -700,8 +700,8 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             return true
         }
     }
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.none
+  func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    return UITableViewCell.EditingStyle.none
     }
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false

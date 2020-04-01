@@ -41,8 +41,8 @@ class ExercisesInfoViewController: UIViewController {
         hideableNavigationBar(false)
         
         execise = RealmManager.shared.getArray(ofType: Exercise.self, filterWith: NSPredicate(format: "id = %@", execise?.id ?? "")).first
-        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+      let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                   NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         if execise?.typeId == 12 {
             navigationItem.rightBarButtonItem = self.editButton
@@ -134,7 +134,7 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
                 } else {
                     return 50
                 }
-            default: return UITableViewAutomaticDimension
+          default: return UITableView.automaticDimension
         }
     }
     

@@ -40,7 +40,7 @@ class GalleryDataManager {
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.setValue("Client-ID f241bc10bf2f4af", forHTTPHeaderField: "Authorization")
         request.httpBody = createBody(boundary: boundary,
-                                      data: UIImageJPEGRepresentation(chosenImage,0.5)!,
+                                      data: chosenImage.jpegData(compressionQuality: 0.5)!,
                                       mimeType: "image/*")
         
         print(request)

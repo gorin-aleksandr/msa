@@ -78,8 +78,8 @@ final class ChatViewController: JSQMessagesViewController {
     actInd.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
     actInd.center = self.view.center
     actInd.hidesWhenStopped = true
-    actInd.activityIndicatorViewStyle =
-      UIActivityIndicatorViewStyle.whiteLarge
+    actInd.style =
+      UIActivityIndicatorView.Style.whiteLarge
     observeMessages()
     title = self.viewModel!.chatUserName
     // No avatars
@@ -87,7 +87,7 @@ final class ChatViewController: JSQMessagesViewController {
     collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
     
     inputToolbar.toggleSendButtonEnabled()
-    let button: UIButton = UIButton(type: UIButtonType.custom)
+    let button: UIButton = UIButton(type: UIButton.ButtonType.custom)
        button.setImage(UIImage(named: "convert_send"), for: .normal)
        button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
        inputToolbar.contentView.rightBarButtonItem = button
@@ -98,8 +98,8 @@ final class ChatViewController: JSQMessagesViewController {
       let button2 = UIBarButtonItem(image: #imageLiteral(resourceName: "back"), style: .plain, target: self, action: #selector(self.back))
       button2.tintColor = darkCyanGreen
       self.navigationItem.leftBarButtonItem = button2
-      let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                   NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+    let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                 NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
       self.navigationController?.navigationBar.titleTextAttributes = attrs
   }
   
@@ -252,7 +252,7 @@ final class ChatViewController: JSQMessagesViewController {
             } else if let id = item["senderId"] as? String, let text = item["text"] as? String {
               self.addMessage(withId: "\(id)", name: "", text: text, date: item["date"] as! String)
               self.finishReceivingMessage()
-            } else if let photoURL = item["photoURL"] as! String! {
+            } else if let photoURL = item["photoURL"] as! String? {
               
               var ids = ""
               if let id = item["senderId"] as? Int {
@@ -422,6 +422,7 @@ final class ChatViewController: JSQMessagesViewController {
       "chatId": self.viewModel!.chatId,
       "chatUserId": viewModel!.chatUserId,
       "chatUserName": viewModel!.chatUserName,
+      "chatUserAvatar": viewModel!.chatUserAvatar ?? viewModel!.chatUser?.avatar ?? "",
       "newMessages": false,
       "lastMessage": "Фотография 🖼",
       "lastAction": nowDateString(),
@@ -433,6 +434,7 @@ final class ChatViewController: JSQMessagesViewController {
       "chatId": self.viewModel!.chatId,
       "chatUserId": self.viewModel!.currentUserId!,
       "chatUserName": viewModel!.currentUserName,
+      "chatUserAvatar": viewModel!.currentUserAvatar,
       "newMessages": true,
       "lastMessage": "Фотография 🖼",
       "lastAction": nowDateString(),
@@ -488,13 +490,13 @@ final class ChatViewController: JSQMessagesViewController {
     let alert = UIAlertController(title: "", message: "Отправить фото", preferredStyle: .actionSheet)
     
     alert.addAction(UIAlertAction(title: "Сделать фото", style: .default , handler:{ (UIAlertAction) in
-      picker.sourceType = UIImagePickerControllerSourceType.camera
+      picker.sourceType = UIImagePickerController.SourceType.camera
       self.present(picker, animated: true, completion:nil)
       
     }))
     
     alert.addAction(UIAlertAction(title: "Открыть галерею", style: .default , handler:{ (UIAlertAction) in
-      picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+      picker.sourceType = UIImagePickerController.SourceType.photoLibrary
       self.present(picker, animated: true, completion:nil)
     }))
     
@@ -543,17 +545,17 @@ final class ChatViewController: JSQMessagesViewController {
 
 // MARK: Image Picker Delegate
 extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-  func imagePickerController(_ picker: UIImagePickerController,
-                             didFinishPickingMediaWithInfo info: [String : Any]) {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
     picker.dismiss(animated: true, completion:nil)
     
     do {
       let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
       let fileURL = try documentsURL[0].appendingPathComponent("fileName.jpg")
       
-      let image = info[UIImagePickerControllerOriginalImage]
+      let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
       
-      try UIImageJPEGRepresentation(image as! UIImage,0.0)?.write(to: fileURL, options: [])
+      try (image as! UIImage).jpegData(compressionQuality: 0.0)?.write(to: fileURL, options: [])
       
       let path : String = "\(String(describing: Auth.auth().currentUser?.uid))/\(Int(Date.timeIntervalSinceReferenceDate * 1000))"
       self.storageRef.child(path).putFile(from: fileURL, metadata: nil) { (metadata, error) in

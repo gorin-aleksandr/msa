@@ -167,7 +167,7 @@ extension UIColor {
 extension String {
     
     var length: Int {
-        return self.characters.count
+        return self.count
     }
 
     var isValidEmail: Bool {
@@ -313,7 +313,7 @@ extension UIImage {
         guard let context = UIGraphicsGetCurrentContext()
             else { return self }
         
-        if ori == UIImageOrientation.right || ori == UIImageOrientation.left {
+      if ori == UIImage.Orientation.right || ori == UIImage.Orientation.left {
             context.scaleBy(x: -scaleRatio, y: scaleRatio)
             context.translateBy(x: -height, y: 0.0)
         } else {
@@ -347,7 +347,7 @@ extension UITextField {
             addTarget(
                 self,
                 action: #selector(limitLength),
-                for: UIControlEvents.editingChanged
+                for: UIControl.Event.editingChanged
             )
         }
     }
@@ -355,7 +355,7 @@ extension UITextField {
     @objc func limitLength(textField: UITextField) {
         // 6
         guard let prospectiveText = textField.text,
-            prospectiveText.characters.count > maxLength
+            prospectiveText.count > maxLength
             else {
                 return
         }

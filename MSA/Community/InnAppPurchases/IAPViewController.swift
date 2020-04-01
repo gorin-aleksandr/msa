@@ -40,8 +40,8 @@ class IAPViewController: UIViewController, IAPViewProtocol {
         let dismissButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ok_blue"), style: .plain, target: self, action: #selector(self.goBack))
         navigationItem.rightBarButtonItem = dismissButton
         self.navigationItem.title = "Покупки"
-        let attrs = [NSAttributedStringKey.foregroundColor: UIColor.white,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        let attrs = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                     NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.isTranslucent = true

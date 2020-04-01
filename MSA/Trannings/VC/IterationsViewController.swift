@@ -65,8 +65,8 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     private func configureUI() {
         loadingView.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: true)
-        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+      let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                   NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         self.traningLabel.text = manager.getCurrentExercise()?.name
         self.addButton.addTarget(self, action: #selector(addIteration), for: .touchUpInside)
@@ -198,7 +198,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
         let kPadding: CGFloat = 20
         let mutable = NSMutableString(string: "")
         let attribute = [kCTFontAttributeName: font]
-        while mutable.size(withAttributes: attribute as [NSAttributedStringKey : Any]).width < width - (2 * kPadding) {
+      while mutable.size(withAttributes: attribute as [NSAttributedString.Key : Any]).width < width - (2 * kPadding) {
             mutable.append(" ")
         }
         return mutable as String

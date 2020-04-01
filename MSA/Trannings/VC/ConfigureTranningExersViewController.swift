@@ -149,8 +149,8 @@ class ConfigureTranningExersViewController: UIViewController {
         button.addTarget(self, action: #selector(back), for: .touchUpInside)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
         self.navigationItem.title = "Настройки"
-        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-            NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                     NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         self.numbersViewHeight.constant = self.view.frame.size.width*308.0/375
         configureWeightButtons()

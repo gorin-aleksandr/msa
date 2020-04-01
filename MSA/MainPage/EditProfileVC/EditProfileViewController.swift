@@ -204,13 +204,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func openGallary() {
         myPicker.allowsEditing = true
-        myPicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+      myPicker.sourceType = UIImagePickerController.SourceType.photoLibrary
         present(myPicker, animated: true, completion: nil)
     }
     
     func openCamera() {
         myPicker.allowsEditing = true
-        myPicker.sourceType = UIImagePickerControllerSourceType.camera
+      myPicker.sourceType = UIImagePickerController.SourceType.camera
         present(myPicker, animated: true, completion: nil)
     }
     
@@ -220,9 +220,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
-        dismiss(animated: true, completion: nil)
-        presenter.updateUserAvatar(chosenImage)
+//        let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
+//        dismiss(animated: true, completion: nil)
+//        presenter.updateUserAvatar(chosenImage)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -237,8 +237,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.navigationItem.leftBarButtonItem = button2
         self.navigationItem.rightBarButtonItem = button1
         self.navigationItem.title = "Настройки"
-        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+        let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                     NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
     }
     

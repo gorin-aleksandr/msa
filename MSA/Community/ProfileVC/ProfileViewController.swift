@@ -170,7 +170,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         let indicator = UIActivityIndicatorView()
         indicator.center = userImage.center
         indicator.startAnimating()
-        indicator.activityIndicatorViewStyle = .white
+        indicator.style = .white
         indicator.color = .blue
         userImage.addSubview(indicator)
         
@@ -389,14 +389,14 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func openGallary() {
         myPicker.allowsEditing = false
-        myPicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        myPicker.sourceType = UIImagePickerController.SourceType.photoLibrary
         myPicker.mediaTypes = ["public.image", "public.movie"]
         present(myPicker, animated: true, completion: nil)
     }
     
     func openCamera() {
         myPicker.allowsEditing = false
-        myPicker.sourceType = UIImagePickerControllerSourceType.camera
+        myPicker.sourceType = UIImagePickerController.SourceType.camera
         myPicker.mediaTypes = ["public.image", "public.movie"]
         present(myPicker, animated: true, completion: nil)
     }

@@ -34,8 +34,8 @@ class ChatListViewController: UIViewController {
     tableView.tableFooterView = UIView()
     tableView.dataSource = self
     tableView.delegate = self
-    let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                    NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+    let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                 NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
     self.navigationController?.navigationBar.titleTextAttributes = attrs
     self.title = "Чаты"
   }
@@ -48,7 +48,7 @@ extension ChatListViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return UITableViewAutomaticDimension
+    return UITableView.automaticDimension
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

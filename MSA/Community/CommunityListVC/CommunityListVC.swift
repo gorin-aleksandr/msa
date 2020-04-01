@@ -222,12 +222,12 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.tintColor = UIColor.darkCyanGreen
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: darkCyanGreen, .font: UIFont(name: "Rubik-Bold", size: 17)!]
+      self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: darkCyanGreen, .font: UIFont(name: "Rubik-Bold", size: 17)!]
     }
     
     private func configureSegmentedControl() {
         filterSegmentedControl.tintColor = UIColor.lightWhiteBlue
-        filterSegmentedControl.setTitleTextAttributes([NSAttributedStringKey.font: Fonts.medium(13)],
+      filterSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.font: Fonts.medium(13)],
                                                      for: .normal)
     }
     

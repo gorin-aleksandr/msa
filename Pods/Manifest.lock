@@ -21,11 +21,51 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.3)
   - Crashlytics (3.11.1):
     - Fabric (~> 1.8.1)
-  - DKImagePickerController (3.8.1):
-    - DKImagePickerController/Camera (= 3.8.1)
-    - DKImagePickerController/ImageManager (= 3.8.1)
-  - DKImagePickerController/Camera (3.8.1)
-  - DKImagePickerController/ImageManager (3.8.1)
+  - CropViewController (2.5.2)
+  - DKCamera (1.6.7)
+  - DKImagePickerController (4.2.2):
+    - DKImagePickerController/Camera (= 4.2.2)
+    - DKImagePickerController/Core (= 4.2.2)
+    - DKImagePickerController/ImageDataManager (= 4.2.2)
+    - DKImagePickerController/InlineCamera (= 4.2.2)
+    - DKImagePickerController/PhotoEditor (= 4.2.2)
+    - DKImagePickerController/PhotoGallery (= 4.2.2)
+    - DKImagePickerController/Resource (= 4.2.2)
+  - DKImagePickerController/Camera (4.2.2):
+    - DKCamera
+    - DKImagePickerController/Core
+  - DKImagePickerController/Core (4.2.2):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.2.2)
+  - DKImagePickerController/InlineCamera (4.2.2):
+    - DKCamera
+    - DKImagePickerController/Core
+  - DKImagePickerController/PhotoEditor (4.2.2):
+    - CropViewController (~> 2.5)
+    - DKImagePickerController/Core
+  - DKImagePickerController/PhotoGallery (4.2.2):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.2.2)
+  - DKPhotoGallery (0.0.12):
+    - DKPhotoGallery/Core (= 0.0.12)
+    - DKPhotoGallery/Model (= 0.0.12)
+    - DKPhotoGallery/Preview (= 0.0.12)
+    - DKPhotoGallery/Resource (= 0.0.12)
+    - SDWebImage/GIF
+  - DKPhotoGallery/Core (0.0.12):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage/GIF
+  - DKPhotoGallery/Model (0.0.12):
+    - SDWebImage/GIF
+  - DKPhotoGallery/Preview (0.0.12):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage/GIF
+  - DKPhotoGallery/Resource (0.0.12):
+    - SDWebImage/GIF
   - Fabric (1.8.2)
   - FBSDKCoreKit (4.30.0):
     - Bolts (~> 1.7)
@@ -108,7 +148,7 @@ PODS:
     - gRPC-RxLibrary (= 1.23.0)
   - GTMSessionFetcher/Core (1.1.13)
   - IQKeyboardManager (5.0.7)
-  - IQKeyboardManagerSwift (5.0.7)
+  - IQKeyboardManagerSwift (6.5.0)
   - JSQMessagesViewController (7.3.5):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
@@ -137,7 +177,10 @@ PODS:
   - SDWebImage (4.3.0):
     - SDWebImage/Core (= 4.3.0)
   - SDWebImage/Core (4.3.0)
-  - SkyFloatingLabelTextField (3.4.0)
+  - SDWebImage/GIF (4.3.0):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
+  - SkyFloatingLabelTextField (3.8.0)
   - SVProgressHUD (2.2.5)
   - SwipeCellKit (2.5.4)
 
@@ -156,7 +199,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FZAccordionTableView
   - IQKeyboardManager
-  - IQKeyboardManagerSwift
+  - IQKeyboardManagerSwift (= 6.5.0)
   - JSQMessagesViewController
   - NYTPhotoViewer
   - PhotoSlider
@@ -173,7 +216,10 @@ SPEC REPOS:
     - Bolts
     - BoringSSL-GRPC
     - Crashlytics
+    - CropViewController
+    - DKCamera
     - DKImagePickerController
+    - DKPhotoGallery
     - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
@@ -233,7 +279,10 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
-  DKImagePickerController: 51ad6ee2ba05414bb741db54a72cd7f4fb178e34
+  CropViewController: 1aac40093c5739e60d992b04724a55d12a689a4c
+  DKCamera: a902b66921fca14b7a75266feb8c7568aa7caa71
+  DKImagePickerController: 4a3e7948a848c4348e600b3fe5ce41478835fa10
+  DKPhotoGallery: 1b4d65d9a485dfdd2002f22daa5b955eafb350ea
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   FBSDKCoreKit: 7c4bba2877781a131ab5d54c0a78c405d4307b62
   FBSDKLoginKit: fe7a7e82373dc5daad92e1623219e86224ab1fb1
@@ -254,7 +303,7 @@ SPEC CHECKSUMS:
   gRPC-RxLibrary: 7172f64310c12f6d033f1657f7e5ebf71ae35cb5
   GTMSessionFetcher: 5bb1eae636127de695590f50e7d248483eb891e6
   IQKeyboardManager: 0bfa4607d39924116b5c0c8b55b5d789288b5cba
-  IQKeyboardManagerSwift: 30fb3a61de1af53a95e02b80fb54ed0a19d5ede5
+  IQKeyboardManagerSwift: 6cd19976c6e871907c4ed9127c2d3affdd4defc2
   JSQMessagesViewController: 6587f56aedbcb150a8ba1d968e1ef58b1bc758b7
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
@@ -266,10 +315,10 @@ SPEC CHECKSUMS:
   Realm: e125f464884cda953ebefe70c671b75b03b81b9b
   RealmSwift: 33656a42bd300959a081fc13347376bc478071af
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
-  SkyFloatingLabelTextField: 703aa1420b697392b1e7dba25571180dde018477
+  SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeCellKit: 4eada3884ab1bbae5e8d2fb9030c242aa23d7f42
 
-PODFILE CHECKSUM: c86b6216275a9bffb6c71653a692979729078c07
+PODFILE CHECKSUM: 52d554c998ab580de911d89cdc4430091b92c9fe
 
 COCOAPODS: 1.5.3

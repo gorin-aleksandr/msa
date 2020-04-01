@@ -129,8 +129,8 @@ class ExercisesForTypeViewController: UIViewController {
     
     private func configurateSearchController() {
         searchController.hidesNavigationBarDuringPresentation = false
-        let attrs = [NSAttributedStringKey.foregroundColor: darkCyanGreen,
-                     NSAttributedStringKey.font: UIFont(name: "Rubik-Medium", size: 17)!]
+      let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
+                   NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Поиск"
@@ -373,7 +373,7 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         }
         let loader = UIActivityIndicatorView()
         loader.center = self.view.center
-        loader.activityIndicatorViewStyle = .whiteLarge
+        loader.style = .whiteLarge
         loader.color = .blue
         self.view.addSubview(loader)
         loader.startAnimating()

@@ -115,7 +115,7 @@ extension HeartBeatDevicePresenter: HeartBeatManagerDelegate {
     }
     
     private func goToSettings() {
-        guard let settingsURL = NSURL(string: UIApplicationOpenSettingsURLString) else { return }
+      guard let settingsURL = NSURL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(settingsURL as URL, options: [:], completionHandler: nil)
         return
     }

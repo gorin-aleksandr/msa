@@ -66,7 +66,7 @@ class CreateTemplateViewController: UIViewController {
         self.tableView.register(UINib(nibName: "ChoosingItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ChoosingItemTableViewCell")
         self.tableView.register(UINib(nibName: "CreateExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "CreateExerciseTableViewCell")
 
-        tableView.rowHeight = UITableViewAutomaticDimension
+      tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorColor = .clear
         tableView.showsVerticalScrollIndicator = false
     }
@@ -246,7 +246,7 @@ extension CreateTemplateViewController: UITableViewDataSource, UITableViewDelega
         case 3:
             return 60
         default:
-            return UITableViewAutomaticDimension
+          return UITableView.automaticDimension
         }
     }
 }

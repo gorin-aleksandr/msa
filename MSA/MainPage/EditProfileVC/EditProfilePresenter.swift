@@ -91,7 +91,7 @@ class EditProfilePresenter {
     func updateUserAvatar(_ image: UIImage) {
         if let id = AuthModule.currUser.id {
             self.view?.startLoading()
-            if let data = UIImageJPEGRepresentation(image, 0.5) {
+          if let data = image.jpegData(compressionQuality: 0.5) {
                 // Create a reference to the file you want to upload
                 let avatarUpdateRef = profile.storageRef.child("\(id)/avatar.jpg")
                 let metadata = StorageMetadata()

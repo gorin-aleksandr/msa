@@ -120,7 +120,7 @@ class MultipleChoicesViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.tableFooterView = UIView()
         self.tableView.estimatedRowHeight = 54.0
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.allowsMultipleSelection = dataSource?.allowsMultipleSelection() ?? false
         self.tableView.register(UINib(nibName: radioTableViewCellID, bundle: nil), forCellReuseIdentifier: radioTableViewCellID)
     }

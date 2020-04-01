@@ -167,7 +167,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         let indicator = UIActivityIndicatorView()
         indicator.center = userImage.center
         indicator.startAnimating()
-        indicator.activityIndicatorViewStyle = .white
+        indicator.style = .white
         indicator.color = .blue
         userImage.addSubview(indicator)
         
@@ -300,14 +300,14 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func openGallary() {
         myPicker.allowsEditing = false
-        myPicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        myPicker.sourceType = UIImagePickerController.SourceType.photoLibrary
         myPicker.mediaTypes = ["public.image", "public.movie"]
         present(myPicker, animated: true, completion: nil)
     }
     
     func openCamera() {
         myPicker.allowsEditing = false
-        myPicker.sourceType = UIImagePickerControllerSourceType.camera
+        myPicker.sourceType = UIImagePickerController.SourceType.camera
         myPicker.mediaTypes = ["public.image", "public.movie"]
         present(myPicker, animated: true, completion: nil)
     }
@@ -326,25 +326,25 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     private func uploadInfo(info: [String : Any]) {
-        if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.galleryUploadInProgress = true
-            presenter.uploadPhoto(image: chosenImage)
-        } else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
-            do {
-                let asset = AVURLAsset(url: videoURL, options: nil)
-                let imgGenerator = AVAssetImageGenerator(asset: asset)
-                imgGenerator.appliesPreferredTrackTransform = true
-                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-                let thumbnail = UIImage(cgImage: cgImage)
-                
-                self.galleryUploadInProgress = true
-                
-                presenter.uploadVideo(videoURL.absoluteString, thumbnail)
-                presenter.setCurrentVideoPath(path: videoURL.absoluteString)
-            } catch let error {
-                print("*** Error generating thumbnail: \(error.localizedDescription)")
-            }
-        }
+//        if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            self.galleryUploadInProgress = true
+//            presenter.uploadPhoto(image: chosenImage)
+//        } else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
+//            do {
+//                let asset = AVURLAsset(url: videoURL, options: nil)
+//                let imgGenerator = AVAssetImageGenerator(asset: asset)
+//                imgGenerator.appliesPreferredTrackTransform = true
+//                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+//                let thumbnail = UIImage(cgImage: cgImage)
+//                
+//                self.galleryUploadInProgress = true
+//                
+//                presenter.uploadVideo(videoURL.absoluteString, thumbnail)
+//                presenter.setCurrentVideoPath(path: videoURL.absoluteString)
+//            } catch let error {
+//                print("*** Error generating thumbnail: \(error.localizedDescription)")
+//            }
+//        }
     }
     
 }
