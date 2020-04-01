@@ -147,7 +147,6 @@ PODS:
     - gRPC-Core (= 1.23.0)
     - gRPC-RxLibrary (= 1.23.0)
   - GTMSessionFetcher/Core (1.1.13)
-  - IQKeyboardManager (5.0.7)
   - IQKeyboardManagerSwift (6.5.0)
   - JSQMessagesViewController (7.3.5):
     - JSQSystemSoundPlayer (~> 2.0.1)
@@ -198,7 +197,6 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - FZAccordionTableView
-  - IQKeyboardManager
   - IQKeyboardManagerSwift (= 6.5.0)
   - JSQMessagesViewController
   - NYTPhotoViewer
@@ -239,7 +237,6 @@ SPEC REPOS:
     - gRPC-ProtoRPC
     - gRPC-RxLibrary
     - GTMSessionFetcher
-    - IQKeyboardManager
     - IQKeyboardManagerSwift
     - JSQMessagesViewController
     - JSQSystemSoundPlayer
@@ -302,7 +299,6 @@ SPEC CHECKSUMS:
   gRPC-ProtoRPC: 6f4f7dafdabd68f5b14ec30a801ec8e820d4f01e
   gRPC-RxLibrary: 7172f64310c12f6d033f1657f7e5ebf71ae35cb5
   GTMSessionFetcher: 5bb1eae636127de695590f50e7d248483eb891e6
-  IQKeyboardManager: 0bfa4607d39924116b5c0c8b55b5d789288b5cba
   IQKeyboardManagerSwift: 6cd19976c6e871907c4ed9127c2d3affdd4defc2
   JSQMessagesViewController: 6587f56aedbcb150a8ba1d968e1ef58b1bc758b7
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
@@ -319,6 +315,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeCellKit: 4eada3884ab1bbae5e8d2fb9030c242aa23d7f42
 
-PODFILE CHECKSUM: 52d554c998ab580de911d89cdc4430091b92c9fe
+PODFILE CHECKSUM: 6d15ad11440763e7b2878d2c684e11c8f4c8b34b
 
 COCOAPODS: 1.5.3
