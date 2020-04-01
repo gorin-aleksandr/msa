@@ -51,6 +51,8 @@
 	<string>Разрешите приложению доступ к Вашей медиа библиотеке</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Разрешите приложению доступ к bluetooth</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Разрешите приложению доступ к bluetooth</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Доступ необходим для возможности размещения медиа материалов снятых на Вашу камеру</string>
 	<key>NSMicrophoneUsageDescription</key>
