@@ -7,7 +7,7 @@ target 'MSA' do
 
   # Pods for MSA
 
-  pod 'DKImagePickerController'
+  pod 'DKImagePickerController', :git => 'https://github.com/zhangao0086/DKImagePickerController.git', :branch => 'develop'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
@@ -25,7 +25,7 @@ target 'MSA' do
   pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
   pod 'SVProgressHUD'
   pod 'FZAccordionTableView'
-  pod 'SwipeCellKit', '~> 2.0'
+  pod 'SwipeCellKit'
   pod 'Fabric', '= 1.8.2'
   pod 'Crashlytics', '= 3.11.1'
   pod "PhotoSlider"

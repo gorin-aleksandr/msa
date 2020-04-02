@@ -19,7 +19,7 @@
 #import "GRPCCall.h"
 #import "GRPCCallOptions.h"
 #import "GRPCInterceptor.h"
-#import "GRPCCall+InternalTests.h"
+#import "internal_testing/GRPCCall+InternalTests.h"
 
 FOUNDATION_EXPORT double GRPCClientVersionNumber;
 FOUNDATION_EXPORT const unsigned char GRPCClientVersionString[];

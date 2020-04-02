@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "05F4DB99210DBB22E3A91CB38412C5C5"
+               BlueprintIdentifier = "6244DB400F69AD751FA848C697E64C56"
                BuildableName = "DKImagePickerController.bundle"
                BlueprintName = "DKImagePickerController-DKImagePickerController"
                ReferencedContainer = "container:Pods.xcodeproj">

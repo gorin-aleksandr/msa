@@ -151,7 +151,9 @@ PODS:
   - JSQMessagesViewController (7.3.5):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
-  - Kingfisher (5.7.1)
+  - Kingfisher (5.13.3):
+    - Kingfisher/Core (= 5.13.3)
+  - Kingfisher/Core (5.13.3)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -181,13 +183,13 @@ PODS:
     - SDWebImage/Core
   - SkyFloatingLabelTextField (3.8.0)
   - SVProgressHUD (2.2.5)
-  - SwipeCellKit (2.5.4)
+  - SwipeCellKit (2.7.1)
 
 DEPENDENCIES:
   - AppCenter
   - Bolts
   - Crashlytics (= 3.11.1)
-  - DKImagePickerController
+  - DKImagePickerController (from `https://github.com/zhangao0086/DKImagePickerController.git`, branch `develop`)
   - Fabric (= 1.8.2)
   - FBSDKCoreKit
   - FBSDKLoginKit
@@ -206,18 +208,14 @@ DEPENDENCIES:
   - SDWebImage
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
-  - SwipeCellKit (~> 2.0)
+  - SwipeCellKit
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - AppCenter
     - Bolts
     - BoringSSL-GRPC
     - Crashlytics
-    - CropViewController
-    - DKCamera
-    - DKImagePickerController
-    - DKPhotoGallery
     - Fabric
     - FBSDKCoreKit
     - FBSDKLoginKit
@@ -250,8 +248,15 @@ SPEC REPOS:
     - SkyFloatingLabelTextField
     - SVProgressHUD
     - SwipeCellKit
+  trunk:
+    - CropViewController
+    - DKCamera
+    - DKPhotoGallery
 
 EXTERNAL SOURCES:
+  DKImagePickerController:
+    :branch: develop
+    :git: https://github.com/zhangao0086/DKImagePickerController.git
   Realm:
     :branch: master
     :git: https://github.com/realm/realm-cocoa.git
@@ -262,6 +267,9 @@ EXTERNAL SOURCES:
     :submodules: true
 
 CHECKOUT OPTIONS:
+  DKImagePickerController:
+    :commit: 661d41401ad9b10fdbc98eabd0103e694c513b49
+    :git: https://github.com/zhangao0086/DKImagePickerController.git
   Realm:
     :commit: caa07880d6bd728d1b560332e3e60ff96952539a
     :git: https://github.com/realm/realm-cocoa.git
@@ -302,7 +310,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 6cd19976c6e871907c4ed9127c2d3affdd4defc2
   JSQMessagesViewController: 6587f56aedbcb150a8ba1d968e1ef58b1bc758b7
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
-  Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
+  Kingfisher: d2b3d6a7200c93b34de9afcdf25c8dd9282ec277
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NYTPhotoViewer: 34b8bd6bcc297466adec1668f9a01249d73c90e6
@@ -313,8 +321,8 @@ SPEC CHECKSUMS:
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwipeCellKit: 4eada3884ab1bbae5e8d2fb9030c242aa23d7f42
+  SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
 
-PODFILE CHECKSUM: 6d15ad11440763e7b2878d2c684e11c8f4c8b34b
+PODFILE CHECKSUM: 01fb8b5df8591a7b416aeabccc25e0c8b06f125c
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.1

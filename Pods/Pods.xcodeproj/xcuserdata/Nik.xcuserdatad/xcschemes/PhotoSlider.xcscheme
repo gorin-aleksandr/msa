@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9ACCD8F286ABE218EAA3C10F11468244"
+               BlueprintIdentifier = "32B385BA5A0DABF4086F7DC97A3737E3"
+               BuildableName = "PhotoSlider.framework"
                BlueprintName = "PhotoSlider"
-               ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "PhotoSlider.framework">
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
