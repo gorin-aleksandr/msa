@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 import Firebase
 import AVFoundation
+import Firebase
 
 @objc protocol TrainingsViewDelegate: class {
     func startLoading()
@@ -1210,6 +1211,7 @@ class TrainingManager {
     }
     
     private func startTimer() {
+        Analytics.logEvent("start_timer", parameters: nil)
         trainingInProgress = true
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
             if !self.isTrainingFinished() {
@@ -1263,6 +1265,7 @@ class TrainingManager {
             self.secondomerTime += 1
             self.eventWithTimer(time: self.secondomerTime)
         }
+        Analytics.logEvent("start_stopwatch", parameters: nil)
     }
     private func pauseSecondomer() {
         secondomer.invalidate()

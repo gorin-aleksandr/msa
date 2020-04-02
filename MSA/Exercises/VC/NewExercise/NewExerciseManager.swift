@@ -110,6 +110,7 @@ class NewExerciseManager {
                 completion(ex)
                 RealmManager.shared.saveObject(ex, update: true)
                 self.view?.exerciseCreated()
+                Analytics.logEvent("created_own_exersise", parameters: nil)
                 self.finish()
             } else {
                 self.view?.errorOccurred(err: error?.localizedDescription ?? "Unknown error")

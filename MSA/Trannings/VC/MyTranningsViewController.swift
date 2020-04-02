@@ -11,6 +11,7 @@ import FZAccordionTableView
 import SDWebImage
 import AudioToolbox
 import SVProgressHUD
+import Firebase
 
 class MyTranningsViewController: UIViewController {
 
@@ -137,6 +138,7 @@ class MyTranningsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         initialDataLoading()
         initialViewConfiguration()
+        Analytics.logEvent("opening_training_screen", parameters: nil)
     }
     
     private func initialDataLoading() {
@@ -345,6 +347,7 @@ class MyTranningsViewController: UIViewController {
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             if addDayWeek {
                 self.addWeek()
+                Analytics.logEvent("creating_training_week", parameters: nil)
             } else {
                 self.saveTemplate()
             }
@@ -353,6 +356,7 @@ class MyTranningsViewController: UIViewController {
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             if addDayWeek {
                 self.addDay()
+                Analytics.logEvent("creating_training_day", parameters: nil)
             } else {
                 self.showDeleteTrainingsAlert()
             }

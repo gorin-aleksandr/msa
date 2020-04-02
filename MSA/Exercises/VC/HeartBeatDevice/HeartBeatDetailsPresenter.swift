@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import Firebase
 
 protocol  HeartBeatDetailsPresenterProtocol {
     func start()
@@ -74,10 +75,10 @@ class HeartBeatDetailsPresenter: HeartBeatDetailsPresenterProtocol {
 extension HeartBeatDetailsPresenter: HeartBeatManagerDelegate {
     
     func deviceDidConnected(peripheral: CBPeripheral) {
+        Analytics.logEvent("heart_rate_connection", parameters: nil)
         device.isConnected = true
         view?.hideLoader()
         updateActionButton()
-        
     }
     
     func handleBluetooth(status: CBManagerState) {}

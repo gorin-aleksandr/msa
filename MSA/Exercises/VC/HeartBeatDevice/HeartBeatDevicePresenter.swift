@@ -9,6 +9,7 @@
 import Foundation
 import CoreBluetooth
 import UIKit
+import Firebase
 
 protocol HeartBeatDevicePresenterProtocol {
     func start()
@@ -85,13 +86,13 @@ extension HeartBeatDevicePresenter: HeartBeatManagerDelegate {
     
     
     func deviceDidConnected(peripheral: CBPeripheral) {
+        Analytics.logEvent("heart_rate_connection", parameters: nil)
         view?.reloadTableView()
     }
     
     func deviceDidDisconnected() {
         view?.showAlert(title: "Отключение!", message: "Устройство отключено", action: nil)
     }
-    
     
     func handleBluetooth(status: CBManagerState) {
         switch status {

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreBluetooth
+import Firebase
 
 class CircleTrainingDayViewController: UIViewController {
 
@@ -36,7 +37,6 @@ class CircleTrainingDayViewController: UIViewController {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.becameActive(_:)), name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: nil)
-
         
         manager.initView(view: self)
         manager.initFlowView(view: self)
@@ -44,6 +44,7 @@ class CircleTrainingDayViewController: UIViewController {
         startTraining()
         heartBeatService.heartBeatDelegate = self
         heartBeatService.delegate = self
+        sendLogEvent()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,6 +79,17 @@ class CircleTrainingDayViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorColor = .clear
         self.tableView.register(UINib(nibName: "CircleTrainingExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "CircleTrainingExerciseTableViewCell")
+    }
+  
+    func sendLogEvent() {
+      switch manager.trainingState {
+        case .round:
+              Analytics.logEvent("start_circle_training", parameters: nil)
+        case .normal:
+              Analytics.logEvent("start_interval_training", parameters: nil)
+        default:
+        return
+      }
     }
    
     @IBAction func backButtonAction(_ sender: Any) {

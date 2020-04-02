@@ -74,7 +74,6 @@ final class ChatViewController: JSQMessagesViewController {
     super.viewDidLoad()
   
     self.senderId = self.viewModel!.currentUserId
-    
     actInd.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
     actInd.center = self.view.center
     actInd.hidesWhenStopped = true

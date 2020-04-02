@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import Firebase
 
 class UserSignInPresenter {
     
@@ -37,6 +38,7 @@ class UserSignInPresenter {
                     self.view?.setUser(user: user)
                     UserDataManager().getUser(callback: { (user, error) in
                         if let user = user {
+                            Analytics.logEvent("log_in", parameters: nil)
                             self.view?.setUser(user: user)
                             self.view?.logged()
                             self.view?.finishLoading()

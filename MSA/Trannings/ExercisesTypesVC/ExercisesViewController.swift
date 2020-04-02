@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import Firebase
 
 class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -172,15 +173,18 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
             if manager.sportsmanId != AuthModule.currUser.id {
                 let newExMan = NewExerciseManager()
                 newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: presenter.selectedExercisesForTraining, completion: {
-                    self.addExercisesToTraining(newExercises: self.presenter.selectedExercisesForTraining, manager: manager)
+                   Analytics.logEvent("add_exersises", parameters: nil)
+                   self.addExercisesToTraining(newExercises: self.presenter.selectedExercisesForTraining, manager: manager)
                 }) { (error) in
                     AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
                 }
             } else {
+                Analytics.logEvent("add_exersises", parameters: nil)
                 self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
             }
         } else {
-            self.performSegue(withIdentifier: "newExercise", sender: nil)
+          Analytics.logEvent("start_creating_own_exersise", parameters: nil)
+          self.performSegue(withIdentifier: "newExercise", sender: nil)
         }
     }
     
