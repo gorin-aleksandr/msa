@@ -81,6 +81,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         presenter.attachView(view: self)
 //        presenter.getGallery(context: context)
         presenter.getGallery(for: AuthModule.currUser.id)
+       PushNotificationManager().updateFirestorePushTokenIfNeeded()
     }
     
     private func downloadExercises() {

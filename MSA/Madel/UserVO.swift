@@ -35,6 +35,7 @@ struct UserVO {
     var sportsmen: [String]?
     var requests: [String]?
     var city: String?
+    var fcmToken: String?
     var userType: UserType {
         switch  type  {
         case "ТРЕНЕР":

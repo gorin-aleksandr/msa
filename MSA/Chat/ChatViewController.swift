@@ -34,12 +34,7 @@ final class ChatViewController: JSQMessagesViewController {
   // MARK: Properties
   var hideView:UIView!
   let actInd: UIActivityIndicatorView = UIActivityIndicatorView()
-  
   var imageURLNotSetKey = "NOTSET"
-  
- // var uploadImage = false
-  //var uploadImageUrl:String?
-  
   let db = Firestore.firestore()
   var ref: DatabaseReference!
   var viewModel: ChatViewModel?
@@ -91,6 +86,7 @@ final class ChatViewController: JSQMessagesViewController {
        button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
        inputToolbar.contentView.rightBarButtonItem = button
     configureNavigationItem()
+    self.viewModel!.fetchFcmToken()
   }
   
   func configureNavigationItem() {
@@ -121,7 +117,6 @@ final class ChatViewController: JSQMessagesViewController {
     
     readAllMessages()
     isAutoResponseShown = false
-    // observeTyping()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -133,7 +128,6 @@ final class ChatViewController: JSQMessagesViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
     self.tabBarController?.tabBar.isTranslucent = false
-    //self.tabBarController?.tabBar.isHidden = true
     self.tabBarController?.tabBar.layer.zPosition = 0
   }
   
@@ -196,8 +190,8 @@ final class ChatViewController: JSQMessagesViewController {
         }
       }
     }
-    
     self.view.endEditing(true)
+
   }
   override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
     return nil
@@ -287,7 +281,6 @@ final class ChatViewController: JSQMessagesViewController {
         }
       }
     
-
   }
   
   private func fetchImageDataAtURL(_ photoURL: String, forMediaItem mediaItem: JSQPhotoMediaItem, clearsPhotoMessageMapOnSuccessForKey key: String?, hasPrefix: Bool) {
@@ -323,33 +316,12 @@ final class ChatViewController: JSQMessagesViewController {
     } else {
       
       SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: photoURL), options: .continueInBackground, progress: { (value, second, url) in
-        
       }, completed: { (image, data, error, value) in
         mediaItem.image = image
         self.collectionView.reloadData()
-        
       })
     }
     
-  }
-  
-  private func observeTyping() {
-    //    let typingIndicatorRef = channelRef!.child("typingIndicator")
-    //    userIsTypingRef = typingIndicatorRef.child(senderId)
-    //    userIsTypingRef.onDisconnectRemoveValue()
-    //    usersTypingQuery = typingIndicatorRef.queryOrderedByValue().queryEqual(toValue: true)
-    //
-    //    usersTypingQuery.observe(.value) { (data: DataSnapshot) in
-    //
-    //      // You're the only typing, don't show the indicator
-    //      if data.childrenCount == 1 && self.isTyping {
-    //        return
-    //      }
-    //
-    //      // Are there others typing?
-    //      self.showTypingIndicator = data.childrenCount > 0
-    //      self.scrollToBottom(animated: true)
-    //    }
   }
   
   override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
@@ -375,7 +347,7 @@ final class ChatViewController: JSQMessagesViewController {
     ])
     
     //for user
-    db.collection("UsersChat").document(viewModel!.chatUserId).collection("Chats").document(self.viewModel!.chatId).setData([
+  db.collection("UsersChat").document(viewModel!.chatUserId).collection("Chats").document(self.viewModel!.chatId).setData([
       "chatId": self.viewModel!.chatId,
       "chatUserId": self.viewModel!.currentUserId!,
       "chatUserName": viewModel!.currentUserName,
@@ -386,17 +358,10 @@ final class ChatViewController: JSQMessagesViewController {
       "timeStamp": FieldValue.serverTimestamp()
     ])
     
-    
-    
-    // 4
     JSQSystemSoundPlayer.jsq_playMessageSentSound()
-    
-    // 5
+    self.viewModel!.sendPush(text: text!)
     finishSendingMessage()
     isTyping = false
-    
-    //    M2mProvider.request(.sendChatMessagePush(title: name,body: text!)) { (result) in
-    //    }
     
   }
   
@@ -414,7 +379,6 @@ final class ChatViewController: JSQMessagesViewController {
 
         
     db.collection("Chats").document(self.viewModel!.chatId).collection("Messages").addDocument(data: messageItem)
-    
     
     //for me
     db.collection("UsersChat").document(self.viewModel!.currentUserId!).collection("Chats").document(self.viewModel!.chatId).setData([
@@ -441,22 +405,12 @@ final class ChatViewController: JSQMessagesViewController {
     ])
     
     JSQSystemSoundPlayer.jsq_playMessageSentSound()
-    //let name  = "\(Defaults[.userLastName] ?? "\("801")") \(Defaults[.userFirstName] ?? "\("801")") " Имя и фамиля отправителя
-    
-//    if !uploadImage  {
-//      //        M2mProvider.request(.sendChatMessagePush(title: name,body: "Отправил(а) Вам фото 🖼️")) { (result) in
-//      //        }
-//    } else {
-//      uploadImage = false
-//    }
+    self.viewModel!.sendPush(text: "Фотография 🖼")
     finishSendingMessage()
     return ""
     
   }
-  
-  //  func setImageURL(_ url: String, forPhotoMessageWithKey key: String) {
-  //  }
-  //
+
   // MARK: UI and User Interaction
   
   private func setupOutgoingBubble() -> JSQMessagesBubbleImage {
@@ -505,8 +459,6 @@ final class ChatViewController: JSQMessagesViewController {
     DispatchQueue.main.async {
       self.present(alert, animated: true, completion: {
         print("completion block")
-        // self.present(picker, animated: true, completion:nil)
-        
       })
     }
   }
@@ -562,8 +514,6 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
           print("Error uploading: \(error)")
           return
         }
-        //    self.setImageURL(self.storageRef.child((metadata?.path)!).description, forPhotoMessageWithKey: self.sendPhotoMessage()!)
-        
         self.imageURLNotSetKey = self.storageRef.child((metadata?.path)!).description
         self.sendPhotoMessage()
         

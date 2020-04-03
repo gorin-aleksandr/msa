@@ -13,7 +13,7 @@ class ChatListViewModel {
   
   let db = Firestore.firestore()
   var chats: [Chat] = []
-  
+
   init() {  }
   
   func getChatList(success: @escaping ()->(),failedBlock: @escaping ()->()) {
@@ -38,5 +38,7 @@ class ChatListViewModel {
       success()
     }
   }
+  
+
 }
 

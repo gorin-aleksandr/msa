@@ -17,6 +17,7 @@ import StoreKit
 import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
+import FirebaseMessaging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let realmVersion: UInt64 = 0
     let defaults = UserDefaults.standard
+    let pushManager = PushNotificationManager()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
@@ -38,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        pushManager.registerForPushNotifications()
+
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
         MSAppCenter.start("aa023993-9184-4c58-8f34-84dfdb1fb199", withServices:[MSAnalytics.self, MSCrashes.self])
@@ -50,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         start.start()
         logSessionEvent()
         logInAppPurhaseRenewalEvent()
+
         return true
     }
     

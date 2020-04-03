@@ -188,7 +188,8 @@ class UserDataManager {
                           trainerId: value["trainer"] as? String,
                           sportsmen: sportsmen,
                           requests: requests,
-                          city: value["city"] as? String)
+                          city: value["city"] as? String,
+                          fcmToken: value["fcmToken"] as? String)
         }
         return user
     }
@@ -208,7 +209,8 @@ class UserDataManager {
                 "weight": user.weight,
                 "weightType": user.weightType,
                 "type": user.type,
-                "city": user.city
+                "city": user.city,
+                "fcmToken": user.fcmToken
                 ] as [String:Any]
             userRef.child(key).updateChildValues(update, withCompletionBlock: { (error, ref) in
                 if error == nil {
@@ -375,6 +377,16 @@ class UserDataManager {
         }
       }
       callback(true,"",error)
+    }
+  }
+  
+  func updateFcmToken(token: String) {
+    if let key = AuthModule.currUser.id {
+        let update = [
+            "fcmToken": token] as [String:Any]
+        userRef.child(key).updateChildValues(update, withCompletionBlock: { (error, ref) in
+          print(error)
+        })
     }
   }
   

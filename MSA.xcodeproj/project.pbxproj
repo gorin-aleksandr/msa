@@ -10,6 +10,8 @@
 		242CAA4F242F76ED00EE8351 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 242CAA4E242F76ED00EE8351 /* Chat.storyboard */; };
 		244A78EC243359A700D92828 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244A78EB243359A700D92828 /* ChatListCell.swift */; };
 		244B72F5242F5A54000A6F4A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244B72F4242F5A53000A6F4A /* ChatViewController.swift */; };
+		2471C0F42437706200189257 /* PushNotificationSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2471C0F22437706100189257 /* PushNotificationSender.swift */; };
+		2471C0F52437706200189257 /* PushNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2471C0F32437706200189257 /* PushNotificationManager.swift */; };
 		247445632431EDFC00FB6BBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 247445622431EDFC00FB6BBD /* GoogleService-Info.plist */; };
 		24744565243202C600FB6BBD /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24744564243202C600FB6BBD /* ChatViewModel.swift */; };
 		2474456724324A3A00FB6BBD /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2474456624324A3A00FB6BBD /* ChatListViewController.swift */; };
@@ -185,6 +187,9 @@
 		242CAA4E242F76ED00EE8351 /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		244A78EB243359A700D92828 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		244B72F4242F5A53000A6F4A /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		2471C0F12437703E00189257 /* MSADebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MSADebug.entitlements; sourceTree = "<group>"; };
+		2471C0F22437706100189257 /* PushNotificationSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationSender.swift; sourceTree = "<group>"; };
+		2471C0F32437706200189257 /* PushNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushNotificationManager.swift; sourceTree = "<group>"; };
 		247445622431EDFC00FB6BBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24744564243202C600FB6BBD /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		2474456624324A3A00FB6BBD /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
@@ -399,6 +404,8 @@
 		29160B392035AA3B00DA7227 = {
 			isa = PBXGroup;
 			children = (
+				2471C0F32437706200189257 /* PushNotificationManager.swift */,
+				2471C0F22437706100189257 /* PushNotificationSender.swift */,
 				29160B442035AA3B00DA7227 /* MSA */,
 				29160B432035AA3B00DA7227 /* Products */,
 				0E2E10DE4BA09BD485BA04EC /* Pods */,
@@ -417,6 +424,7 @@
 		29160B442035AA3B00DA7227 /* MSA */ = {
 			isa = PBXGroup;
 			children = (
+				2471C0F12437703E00189257 /* MSADebug.entitlements */,
 				29160B452035AA3B00DA7227 /* AppDelegate.swift */,
 				35BCB9262210BE680016C58F /* Subscriptions */,
 				35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */,
@@ -1154,6 +1162,7 @@
 				29F9F2192147AE82006EDC6A /* TrainingManager.swift in Sources */,
 				29F9F2202147AE82006EDC6A /* CircleTrainingExerciseTableViewCell.swift in Sources */,
 				299B58F020868D8900CBE646 /* GalleryDataManager.swift in Sources */,
+				2471C0F52437706200189257 /* PushNotificationManager.swift in Sources */,
 				299AA10620E94E7C00BCCA12 /* NewExerciseManager.swift in Sources */,
 				298DF65B203C226800FB0180 /* SignInPresenter.swift in Sources */,
 				29F9F22C2147AE82006EDC6A /* CircleTrainingDayViewController.swift in Sources */,
@@ -1167,6 +1176,7 @@
 				293B06872183608B00E2EEED /* DeleteExerciseTableViewCell.swift in Sources */,
 				24FEE3EA242F5E5E001670F6 /* UIImage+Gif.swift in Sources */,
 				24FEE3E8242F5DF6001670F6 /* Helpers.swift in Sources */,
+				2471C0F42437706200189257 /* PushNotificationSender.swift in Sources */,
 				35FC83F820F37AB800AECFC8 /* UIColor+Ext.swift in Sources */,
 				355581CF21C181C0001DCA75 /* NotificationNameExtended.swift in Sources */,
 				29F9F24E2147B5B8006EDC6A /* VADayView.swift in Sources */,
@@ -1344,6 +1354,7 @@
 			baseConfigurationReference = BB040355B1257A0D405BE8C3 /* Pods-MSA.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MSA/MSADebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
@@ -1354,7 +1365,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Msa (development)";
+				PROVISIONING_PROFILE_SPECIFIER = "MSA (dev push)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
