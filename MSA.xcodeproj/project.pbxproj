@@ -185,6 +185,7 @@
 /* Begin PBXFileReference section */
 		17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MSA.release.xcconfig"; path = "Pods/Target Support Files/Pods-MSA/Pods-MSA.release.xcconfig"; sourceTree = "<group>"; };
 		242CAA4E242F76ED00EE8351 /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		24489324243791D50076C01D /* MSARelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MSARelease.entitlements; sourceTree = "<group>"; };
 		244A78EB243359A700D92828 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		244B72F4242F5A53000A6F4A /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		2471C0F12437703E00189257 /* MSADebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MSADebug.entitlements; sourceTree = "<group>"; };
@@ -387,6 +388,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		2448932324378BCE0076C01D /* Push notifications */ = {
+			isa = PBXGroup;
+			children = (
+				2471C0F32437706200189257 /* PushNotificationManager.swift */,
+				2471C0F22437706100189257 /* PushNotificationSender.swift */,
+			);
+			path = "Push notifications";
+			sourceTree = "<group>";
+		};
 		244B72F6242F5A59000A6F4A /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,8 +414,6 @@
 		29160B392035AA3B00DA7227 = {
 			isa = PBXGroup;
 			children = (
-				2471C0F32437706200189257 /* PushNotificationManager.swift */,
-				2471C0F22437706100189257 /* PushNotificationSender.swift */,
 				29160B442035AA3B00DA7227 /* MSA */,
 				29160B432035AA3B00DA7227 /* Products */,
 				0E2E10DE4BA09BD485BA04EC /* Pods */,
@@ -424,8 +432,10 @@
 		29160B442035AA3B00DA7227 /* MSA */ = {
 			isa = PBXGroup;
 			children = (
+				24489324243791D50076C01D /* MSARelease.entitlements */,
 				2471C0F12437703E00189257 /* MSADebug.entitlements */,
 				29160B452035AA3B00DA7227 /* AppDelegate.swift */,
+				2448932324378BCE0076C01D /* Push notifications */,
 				35BCB9262210BE680016C58F /* Subscriptions */,
 				35FC83F320EFBBCF00AECFC8 /* Extensions+CustomViews */,
 				2923304A203AFD3E00EFA2C5 /* API_Moduls_Managers */,
@@ -1355,7 +1365,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MSA/MSADebug.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = CK33C2G28N;
@@ -1365,7 +1375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "MSA (dev push)";
+				PROVISIONING_PROFILE_SPECIFIER = "MSA AdHoc (Push)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1376,6 +1386,7 @@
 			baseConfigurationReference = 17D235B95E31E000122E6DA1 /* Pods-MSA.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MSA/MSARelease.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
