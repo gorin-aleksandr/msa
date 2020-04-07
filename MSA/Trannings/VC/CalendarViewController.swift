@@ -94,14 +94,6 @@ class CalendarViewController: UIViewController {
                     }
                 }
             }
-//            var currentDays = days.map {$0.date.getDate()!.addingTimeInterval(TimeInterval(exactly: 14400)!)}
-//            for item in currentDays {
-//              print("data: \(item)")
-//            }
-//            var today = Date()
-//            if currentDays.contains(today) {
-//              print("ZBS data est!")
-//            }
             var dates = days.map {$0.date.getDate()!.addingTimeInterval(TimeInterval(exactly: 14400)!)}
             dates.append(Date())
             calendarView.selectDates(days.map {$0.date.getDate()!.addingTimeInterval(TimeInterval(exactly: 14400)!)})
@@ -184,6 +176,8 @@ extension CalendarViewController: VADayViewAppearanceDelegate {
             return UIColor(red: 214 / 255, green: 214 / 255, blue: 219 / 255, alpha: 1.0)
         case .selected:
             return .white
+        case .today:
+            return .white
         case .unavailable:
             return .lightGray
         default:
@@ -209,7 +203,7 @@ extension CalendarViewController: VADayViewAppearanceDelegate {
     
     func dotBottomVerticalOffset(for state: VADayState) -> CGFloat {
         switch state {
-        case .selected:
+          case .selected, .today:
             return 2
         default:
             return -7

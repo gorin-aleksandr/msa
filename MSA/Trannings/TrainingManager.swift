@@ -773,8 +773,8 @@ class TrainingManager {
         dataSource?.currentTraining = items.first
         self.saveTrainingsToRealm(trainings: items)
         self.setSynced()
-        self.view?.trainingsLoaded()
         firstLoad = false
+        self.view?.trainingsLoaded()
         success?()
     }
     

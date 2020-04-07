@@ -46,6 +46,8 @@ extension String {
     func getDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.yyyy"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter.date(from: self)
     }
     

@@ -566,27 +566,36 @@ class MyTranningsViewController: UIViewController {
     for training in manager.dataSource!.trainings {
       for weekq in training.weeks {
         for day in weekq.days {
+          print("DAY: \(day.date)")
           if let getDate = day.date.getDate() {
             dates.append(getDate)
           }
+        }
+        print("Weeks: \(weekq)")
+      }
+      
+      for weekq in training.weeks {
+        for day in weekq.days {
           if day.date == nowDateStringForCalendar(date:Date()) {
             print("Dat = \(day.date) Week id = \(weekq.id)")
-            manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekq.id-1]
-            weekNumber = weekq.id-1
+            let trId = training.weeks.index(of: weekq)!
+            print("ttt: \(training.weeks)")
+            manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[trId]
+            weekNumber = trId
             return
           }
         }
       }
-      if let closestDate = dates.sorted().first(where: {$0.timeIntervalSinceNow < 0}) {
+      
+      if let closestDate = dates.sorted().last(where: {$0.timeIntervalSinceNow < 0}) {
           print(closestDate.description(with: .current))
           for weekq in training.weeks {
             for day in weekq.days {
-              if let getDate = day.date.getDate() {
-                dates.append(getDate)
-              }
               if day.date == nowDateStringForCalendar(date:closestDate) {
-                manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekq.id-1]
-                weekNumber = weekq.id-1
+                let trId = training.weeks.index(of: weekq)!
+                print("ttt: \(training.weeks)")
+                manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[trId]
+                weekNumber = trId
                 return
               }
             }

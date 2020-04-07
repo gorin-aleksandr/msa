@@ -97,7 +97,7 @@ class VADayView: UIView {
     }
     
     private func setState(_ state: VADayState) {
-        if dayViewAppearanceDelegate?.shape?() == .circle && state == .selected {
+        if dayViewAppearanceDelegate?.shape?() == .circle {
             dateLabel.clipsToBounds = true
             dateLabel.layer.cornerRadius = dateLabel.frame.height / 2
         }
@@ -106,11 +106,13 @@ class VADayView: UIView {
         layer.borderColor = dayViewAppearanceDelegate?.borderColor?(for: state).cgColor ?? layer.borderColor
         layer.borderWidth = dayViewAppearanceDelegate?.borderWidth?(for: state) ?? dateLabel.layer.borderWidth
         
-        dateLabel.textColor = dayViewAppearanceDelegate?.textColor?(for: state) ?? dateLabel.textColor
         if Calendar.current.isDateInToday(day.date) {
           dateLabel.backgroundColor = dayViewAppearanceDelegate?.textBackgroundColor?(for: .today)
+          dateLabel.textColor = dayViewAppearanceDelegate?.textColor?(for: .today) ?? dateLabel.textColor
       } else {
           dateLabel.backgroundColor = dayViewAppearanceDelegate?.textBackgroundColor?(for: state) ?? dateLabel.backgroundColor
+          dateLabel.textColor = dayViewAppearanceDelegate?.textColor?(for: state) ?? dateLabel.textColor
+
       }
 
         
