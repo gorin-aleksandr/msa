@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Realm.Configuration.defaultConfiguration = config
         
         
-        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         pushManager.registerForPushNotifications()
 
         FirebaseApp.configure()
@@ -71,9 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
   internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
-        
-        return handled
+      let handled = ApplicationDelegate.shared.application(app, open: url, options: options)
+      return handled
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

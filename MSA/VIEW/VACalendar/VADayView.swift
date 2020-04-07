@@ -82,7 +82,9 @@ class VADayView: UIView {
             height: side
         )
         dateLabel.center = CGPoint(x: frame.width / 2, y: frame.height / 2)
-
+        if day.date == Date() {
+          day.state = .available
+        }
         setState(day.state)
         addSubview(dateLabel)
         updateSupplementaryViews()
@@ -105,7 +107,12 @@ class VADayView: UIView {
         layer.borderWidth = dayViewAppearanceDelegate?.borderWidth?(for: state) ?? dateLabel.layer.borderWidth
         
         dateLabel.textColor = dayViewAppearanceDelegate?.textColor?(for: state) ?? dateLabel.textColor
-        dateLabel.backgroundColor = dayViewAppearanceDelegate?.textBackgroundColor?(for: state) ?? dateLabel.backgroundColor
+        if Calendar.current.isDateInToday(day.date) {
+          dateLabel.backgroundColor = dayViewAppearanceDelegate?.textBackgroundColor?(for: .today)
+      } else {
+          dateLabel.backgroundColor = dayViewAppearanceDelegate?.textBackgroundColor?(for: state) ?? dateLabel.backgroundColor
+      }
+
         
         updateSupplementaryViews()
     }

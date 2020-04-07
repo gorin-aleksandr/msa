@@ -54,7 +54,7 @@ class TrainingManager {
     private weak var flowView: TrainingFlowDelegate?
     
     var trainingType: TrainingType
-    
+    var firstLoad = true
     var sportsmanId: String? {
         switch trainingType {
         case .my:
@@ -537,7 +537,7 @@ class TrainingManager {
         self.view?.trainingsLoaded()
     }
     
-    private func getAllDates() -> [String] {
+    func getAllDates() -> [String] {
         var array = [String]()
         if let weeks = dataSource?.currentTraining?.weeks {
             for week in weeks {
@@ -774,6 +774,7 @@ class TrainingManager {
         self.saveTrainingsToRealm(trainings: items)
         self.setSynced()
         self.view?.trainingsLoaded()
+        firstLoad = false
         success?()
     }
     

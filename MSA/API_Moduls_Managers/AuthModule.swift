@@ -57,11 +57,11 @@ class AuthModule {
     }
     
     func loginFacebook(callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
-        let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
-        fbLoginManager.logIn(withReadPermissions: ["public_profile","email"], from: SignInViewController()) { (result, error) -> Void in
+      let fbLoginManager : LoginManager = LoginManager()
+      fbLoginManager.logIn(permissions: ["public_profile","email"], from: SignInViewController()) { (result, error) -> Void in
             if (error == nil) {
-                let fbloginresult : FBSDKLoginManagerLoginResult = result!
-                guard let accessToken = FBSDKAccessToken.current() else {
+              let fbloginresult : LoginManagerLoginResult = result!
+              guard let accessToken = AccessToken.current else {
                     print("Failed to get access token")
                     callback(nil, error)
                     return
@@ -73,8 +73,8 @@ class AuthModule {
                 }
                 if (fbloginresult.grantedPermissions.contains("email")) {
                     let credential = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
-                    let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name"], tokenString: accessToken.tokenString, version: nil, httpMethod: "GET")
-                    req?.start(completionHandler: { (connection, result, error) in
+                  let req = GraphRequest(graphPath: "me", parameters: ["fields":"email,name"], tokenString: accessToken.tokenString, version: nil, httpMethod: HTTPMethod(rawValue: "GET"))
+                  req.start(completionHandler: { (connection, result, error) in
                         if(error == nil)
                         {
                             do {

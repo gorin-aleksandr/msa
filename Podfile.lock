@@ -67,10 +67,16 @@ PODS:
   - DKPhotoGallery/Resource (0.0.12):
     - SDWebImage/GIF
   - Fabric (1.8.2)
-  - FBSDKCoreKit (4.30.0):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.30.0):
-    - FBSDKCoreKit
+  - FBSDKCoreKit (6.3.0):
+    - FBSDKCoreKit/Basics (= 6.3.0)
+    - FBSDKCoreKit/Core (= 6.3.0)
+  - FBSDKCoreKit/Basics (6.3.0)
+  - FBSDKCoreKit/Core (6.3.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (6.3.0):
+    - FBSDKLoginKit/Login (= 6.3.0)
+  - FBSDKLoginKit/Login (6.3.0):
+    - FBSDKCoreKit (~> 6.3.0)
   - Firebase/Auth (4.9.0):
     - Firebase/Core
     - FirebaseAuth (= 4.4.3)
@@ -229,8 +235,6 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - Crashlytics
     - Fabric
-    - FBSDKCoreKit
-    - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -264,6 +268,8 @@ SPEC REPOS:
     - CropViewController
     - DKCamera
     - DKPhotoGallery
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - FirebaseMessaging
 
 EXTERNAL SOURCES:
@@ -302,8 +308,8 @@ SPEC CHECKSUMS:
   DKImagePickerController: 4a3e7948a848c4348e600b3fe5ce41478835fa10
   DKPhotoGallery: 1b4d65d9a485dfdd2002f22daa5b955eafb350ea
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
-  FBSDKCoreKit: 7c4bba2877781a131ab5d54c0a78c405d4307b62
-  FBSDKLoginKit: fe7a7e82373dc5daad92e1623219e86224ab1fb1
+  FBSDKCoreKit: 5d55c8f3007c9c49b793617b9102e46355fc7e17
+  FBSDKLoginKit: d46aa04d9bb9990a4deb6441736fae24a8c94496
   Firebase: 632216af3ed7f31e3be34776947fdc7546cfb572
   FirebaseAnalytics: 388b630c15713f5dbf364071f5f3d6077fb52f4e
   FirebaseAuth: aaaf68d5064a6c8fec435758f83a43b8db26ccaa

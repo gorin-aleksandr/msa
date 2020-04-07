@@ -497,9 +497,20 @@ class MyTranningsViewController: UIViewController {
     }
     
     func datePickerTapped() {
-        DatePickerDialog(buttonColor: lightBlue_).show("Выберите дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
+
+      DatePickerDialog(buttonColor: lightBlue_).show("Выберите дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
             (date, int) -> Void in
             if let dt = date {
+              let data = nowDateStringForCalendar(date: date!)
+              let allDates =  self.manager.getAllDates()
+              if allDates.contains(data) && int == "1" {
+                  let alert = UIAlertController(title: "Ошибка", message: "Тренировка в указанный день уже существует", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default) { (action) in
+                  self.datePickerTapped()
+                }
+                alert.addAction(okAction)
+                self.present(alert, animated: true)
+              } else {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "dd.MM.yyyy"
                 try! self.manager.realm.performWrite {
@@ -511,6 +522,7 @@ class MyTranningsViewController: UIViewController {
                     self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
                 }
                 self.tableView.reloadData()
+              }
             }
         }
         
@@ -546,16 +558,54 @@ class MyTranningsViewController: UIViewController {
         }
     }
     
+  func setupFirstWeek() {
+    var dates: [Date] = []
+    if let name = manager.dataSource?.currentWeek?.name {
+        weekLabel.text = name
+    }
+    for training in manager.dataSource!.trainings {
+      for weekq in training.weeks {
+        for day in weekq.days {
+          if let getDate = day.date.getDate() {
+            dates.append(getDate)
+          }
+          if day.date == nowDateStringForCalendar(date:Date()) {
+            print("Dat = \(day.date) Week id = \(weekq.id)")
+            manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekq.id-1]
+            weekNumber = weekq.id-1
+            return
+          }
+        }
+      }
+      if let closestDate = dates.sorted().first(where: {$0.timeIntervalSinceNow < 0}) {
+          print(closestDate.description(with: .current))
+          for weekq in training.weeks {
+            for day in weekq.days {
+              if let getDate = day.date.getDate() {
+                dates.append(getDate)
+              }
+              if day.date == nowDateStringForCalendar(date:closestDate) {
+                manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks[weekq.id-1]
+                weekNumber = weekq.id-1
+                return
+              }
+            }
+          }
+      }
+    }
+  }
+    
     func changeWeek() {
         if let weeks = manager.dataSource?.currentTraining?.weeks, !weeks.isEmpty {
             if weeks.count <= weekNumber {
                 manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks.last
                 weekNumber = (manager.dataSource?.currentTraining?.weeks.count ?? 1) - 1
             } else if let week = manager.dataSource?.currentTraining?.weeks[weekNumber] {
-                manager.dataSource?.currentWeek = week
+              manager.dataSource?.currentWeek = week
             } else {
                 manager.dataSource?.currentWeek = manager.dataSource?.currentTraining?.weeks.last
             }
+
             
             if let name = manager.dataSource?.currentWeek?.name {
                 weekLabel.text = name
@@ -828,7 +878,11 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     }
     
     func trainingsLoaded() {
+      if manager.firstLoad {
+        setupFirstWeek()
+      } else {
         changeWeek()
+      }
         self.refreshControl.endRefreshing()
         self.view.isUserInteractionEnabled = true
     }

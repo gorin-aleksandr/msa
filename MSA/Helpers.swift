@@ -17,6 +17,13 @@ func nowDateString() -> String {
     return myString
 }
 
+func nowDateStringForCalendar(date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd.MM.yyyy"
+    let myString = formatter.string(from: date)
+    return myString
+}
+
 func convertDateToString(date: Date) -> String{
     
     let formatter = DateFormatter()
