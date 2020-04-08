@@ -887,11 +887,19 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     }
     
     func trainingsLoaded() {
-      if manager.firstLoad {
-        setupFirstWeek()
+      
+      if manager.sportsmanId == AuthModule.currUser.id {
+        if manager.firstLoad {
+          setupFirstWeek()
+        } else {
+          changeWeek()
+        }
       } else {
+        setupFirstWeek()
         changeWeek()
       }
+      
+      
         self.refreshControl.endRefreshing()
         self.view.isUserInteractionEnabled = true
     }
