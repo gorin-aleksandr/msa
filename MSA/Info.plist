@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -17,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.4.25</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -28,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>35</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>743953362476572</string>
 	<key>FacebookDisplayName</key>
@@ -49,9 +47,9 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Разрешите приложению доступ к Вашей медиа библиотеке</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Разрешите приложению доступ к bluetooth</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Разрешите приложению доступ к bluetooth</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Разрешите приложению доступ к bluetooth</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Доступ необходим для возможности размещения медиа материалов снятых на Вашу камеру</string>
@@ -78,5 +76,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>

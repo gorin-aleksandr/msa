@@ -30,7 +30,7 @@ class MyTranningsViewController: UIViewController {
             addDayView.layer.cornerRadius = 12
         }
     }
-    
+    var mainAddWeekDayView: addWeekDayView!
     var rightBarButtonStackView: UIView!
     
     private var tap: TapGesture!
@@ -105,7 +105,8 @@ class MyTranningsViewController: UIViewController {
             AudioServicesPlaySystemSound(1519)
             let alertController = UIAlertController(title: "Внимание!", message: "Вы хотите скопировать неделю?", preferredStyle: .alert)
             let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
-                self.manager.copyWeek()
+                CopyTrainingsManager.shared.copiedWeek = self.manager.dataSource?.currentWeek
+              self.mainAddWeekDayView.insertButton.backgroundColor = .lightGREEN
                 self.showHideButtons()
             }
             let cancelAction = UIAlertAction(title: "Отменить", style: .default) { _ in }
@@ -124,8 +125,10 @@ class MyTranningsViewController: UIViewController {
             
             let alertController = UIAlertController(title: "Внимание!", message: "Вы хотите скопировать \(index+1) день?", preferredStyle: .alert)
             let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
-                self.manager.copyDay(at: index)
-                self.tableView.reloadData()
+              CopyTrainingsManager.shared.copiedDay = self.manager.dataSource?.currentWeek?.days[index]
+                //self.manager.copyDay(at: index)
+              self.mainAddWeekDayView.insertButton.backgroundColor = .lightGREEN
+              self.tableView.reloadData()
             }
             let cancelAction = UIAlertAction(title: "Отменить", style: .default) { _ in }
             
@@ -333,6 +336,21 @@ class MyTranningsViewController: UIViewController {
     @objc
     func addWeekDayButtonAction(_ sender: UIButton) {
         showOptionsAlert(addDayWeek: true)
+    }
+    @objc
+    func insertDayWeekButtonAction(_ sender: UIButton) {
+      if  CopyTrainingsManager.shared.copiedDay != nil {
+        self.manager.insertNewDay()
+        self.mainAddWeekDayView.insertButton.backgroundColor = .lightGray
+      } else if CopyTrainingsManager.shared.copiedWeek != nil {
+        self.manager.insertNewWeek()
+        self.mainAddWeekDayView.insertButton.backgroundColor = .lightGray
+      } else {
+        showNoInsert()
+      }
+      self.tableView.reloadData()
+      self.changeWeek()
+
     }
     func showOptionsAlert(addDayWeek: Bool) {
       let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertController.Style.alert)
@@ -656,6 +674,12 @@ class MyTranningsViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    private func showNoInsert() {
+        let alert = UIAlertController(title: "Ошибка", message: "Для копирования тренировочного дня/недели нажмите и удерживайте ячейку дня или название недели", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
     
     @objc func showDeleteDayAlert(sender: UIButton) {
         let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить день?", preferredStyle: .alert)
@@ -694,6 +718,15 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         if section == daysCount {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "addWeekDayView") as? addWeekDayView else {return nil}
             headerView.butt.addTarget(self, action: #selector(addWeekDayButtonAction(_:)), for: .touchUpInside)
+            headerView.insertButton.addTarget(self, action: #selector(insertDayWeekButtonAction(_:)), for: .touchUpInside)
+            mainAddWeekDayView = headerView
+            if  CopyTrainingsManager.shared.copiedDay != nil {
+                 self.mainAddWeekDayView.insertButton.backgroundColor = .lightGREEN
+               } else if CopyTrainingsManager.shared.copiedWeek != nil {
+                 self.mainAddWeekDayView.insertButton.backgroundColor = .lightGREEN
+            } else {
+              self.mainAddWeekDayView.insertButton.backgroundColor = .lightGray
+          }
             return headerView
         } else {
             guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainingDayHeaderView") as? TrainingDayHeaderView else {return nil}
@@ -887,7 +920,6 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     }
     
     func trainingsLoaded() {
-      
       if manager.sportsmanId == AuthModule.currUser.id {
         if manager.firstLoad {
           setupFirstWeek()
@@ -898,8 +930,6 @@ extension MyTranningsViewController: TrainingsViewDelegate {
         setupFirstWeek()
         changeWeek()
       }
-      
-      
         self.refreshControl.endRefreshing()
         self.view.isUserInteractionEnabled = true
     }

@@ -15,5 +15,6 @@ class addWeekDayView: TrainingDayHeaderView {
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var labell: UILabel!
     @IBOutlet weak var butt: UIButton!
-    
+    @IBOutlet weak var insertButton: UIButton!{didSet{insertButton.layer.cornerRadius = 12}}
+
 }

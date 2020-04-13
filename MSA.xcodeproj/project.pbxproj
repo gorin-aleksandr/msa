@@ -17,6 +17,7 @@
 		2474456724324A3A00FB6BBD /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2474456624324A3A00FB6BBD /* ChatListViewController.swift */; };
 		24B14B0D2432586E00153CD5 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */; };
 		24B14B0F24325AAE00153CD5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0E24325AAE00153CD5 /* Chat.swift */; };
+		24D8E15C244472D800F1D31A /* CopyTrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */; };
 		24FEE3E6242F5CCB001670F6 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E5242F5CCB001670F6 /* Channel.swift */; };
 		24FEE3E8242F5DF6001670F6 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E7242F5DF5001670F6 /* Helpers.swift */; };
 		24FEE3EA242F5E5E001670F6 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */; };
@@ -196,6 +197,7 @@
 		2474456624324A3A00FB6BBD /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		24B14B0E24325AAE00153CD5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTrainingManager.swift; sourceTree = "<group>"; };
 		24FEE3E5242F5CCB001670F6 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		24FEE3E7242F5DF5001670F6 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				299B547B20A0D38A004E60A2 /* Rubik */,
 				29160B4C2035AA3B00DA7227 /* Assets.xcassets */,
 				29160B512035AA3B00DA7227 /* Info.plist */,
+				24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */,
 			);
 			path = MSA;
 			sourceTree = "<group>";
@@ -1106,6 +1109,7 @@
 				353EB9E8217D1AE00054EDB0 /* HeartBeatManager.swift in Sources */,
 				35B7034B219AEF3B00E83393 /* ExersisesTypesDataManager.swift in Sources */,
 				2920A49821A2FECF009E01C5 /* NotificationTimer.swift in Sources */,
+				24D8E15C244472D800F1D31A /* CopyTrainingManager.swift in Sources */,
 				2474456724324A3A00FB6BBD /* ChatListViewController.swift in Sources */,
 				2934806F20E90AD60039028E /* LoadVideoTableViewCell.swift in Sources */,
 				299B58EC208678F600CBE646 /* GalleryCollectionViewCell.swift in Sources */,
@@ -1368,14 +1372,16 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.4.26;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "MSA AdHoc (Push)";
+				PROVISIONING_PROFILE_SPECIFIER = "MSA (Dev push)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1387,17 +1393,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MSA/MSARelease.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.4.26;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "MSA AdHoc (Push)";
+				PROVISIONING_PROFILE_SPECIFIER = "Msa (development)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

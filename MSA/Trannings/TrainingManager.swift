@@ -108,6 +108,34 @@ class TrainingManager {
     func getExercisesOf(day: Int) -> [ExerciseInTraining] {
         return Array(dataSource?.currentWeek?.days[day].exercises ?? List<ExerciseInTraining>())
     }
+  
+    func insertNewWeek() {
+            do {
+                try realm.performWrite {
+                    guard let week = CopyTrainingsManager.shared.copiedWeek else {return}
+                    let newWeek = TrainingWeek()
+                    newWeek.id = newWeek.incrementID()
+                    newWeek.name = ""
+                    let days = List<TrainingDay>()
+                    for (index,day) in week.days.enumerated() {
+                        let newDay = makeDayCopy(of: day)
+                        newDay.id += index + 100
+                        newDay.date = ""
+                        days.append(newDay)
+                    }
+                    newWeek.days = days
+                    dataSource?.currentTraining?.wasSync = false
+                  if let index = dataSource?.currentTraining?.weeks.index(of: dataSource!.currentWeek!) {
+                    dataSource?.currentTraining?.weeks[index] = newWeek
+                  }
+                    
+                }
+            } catch {
+                print(error)
+            }
+            self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+            CopyTrainingsManager.shared.copiedWeek = nil
+        }
     
     func copyWeek() {
         do {
@@ -121,7 +149,7 @@ class TrainingManager {
                     let newDay = makeDayCopy(of: day)
                     newDay.id += index + 100
                     newDay.date = ""
-//                    newDay.exercises.forEach({$0.iterations.forEach({})})
+//                  newDay.exercises.forEach({$0.iterations.forEach({})})
                     days.append(newDay)
                 }
                 newWeek.days = days
@@ -134,6 +162,22 @@ class TrainingManager {
         self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
     }
     
+  
+    func insertNewDay() {
+        do {
+            try realm.performWrite {
+              let newDay = makeDayCopy(of: CopyTrainingsManager.shared.copiedDay!)
+              newDay.date = ""
+              dataSource?.currentWeek?.wasSync = false
+              dataSource?.currentWeek?.days.insert(newDay, at: (dataSource?.currentWeek?.days.count)!)
+            }
+        } catch {
+            print(error)
+        }
+        self.editTraining(wiht: getCurrentTraining()?.id ?? -1, success: {})
+        CopyTrainingsManager.shared.copiedDay = nil
+    }
+  
     func copyDay(at: Int) {
         do {
             try realm.performWrite {
@@ -431,7 +475,26 @@ class TrainingManager {
         self.editTraining(wiht: trainingId, success: {})
 
     }
-    
+  
+    func addCoppiedDay(week: TrainingWeek) {
+           try! realm.performWrite {
+               let newDay = TrainingDay()
+               newDay.id = newDay.incrementID()
+               week.days.append(newDay)
+           }
+           self.editTraining(wiht: self.dataSource?.currentTraining?.id ?? -1, success: {})
+       }
+  
+    func insertDay(day: TrainingDay, week: TrainingWeek) {
+        try! realm.performWrite {
+            let newDay = TrainingDay()
+            newDay.id = newDay.incrementID()
+            week.days.append(newDay)
+        }
+        self.editTraining(wiht: self.dataSource?.currentTraining?.id ?? -1, success: {})
+      
+    }
+  
     func addDay(week: TrainingWeek) {
         try! realm.performWrite {
             let newDay = TrainingDay()

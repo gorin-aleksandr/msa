@@ -187,42 +187,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           }
         }
   }
-    
-//
-//    private func registerNotification() {
-//        let content = UNMutableNotificationContent()
-//
-//        content.title = "Подход в тренировке подходит к концу!"
-//        content.subtitle = "Продолжите тренировку!"
-//        content.body = "Следующий подход начнеться когда вы зайдете в приложение"
-//        content.badge = 0
-//
-//        if NotificationTimer.timeToShow > 0 {
-//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: NotificationTimer.timeToShow, repeats: false)
-//            let request = UNNotificationRequest(identifier: "SimplifiedIOSNotification", content: content, trigger: trigger)
-//            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-//        }
-//    }
+
 }
 
 extension AppDelegate: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue,
                       updatedTransactions transactions: [SKPaymentTransaction]) {
-//        for transaction in transactions {
-//            switch transaction.transactionState {
-//            case .purchasing:
-//                handlePurchasingState(for: transaction, in: queue)
-//            case .purchased:
-//                handlePurchasedState(for: transaction, in: queue)
-//            case .restored:
-//                handleRestoredState(for: transaction, in: queue)
-//            case .failed:
-//                handleFailedState(for: transaction, in: queue)
-//            case .deferred:
-//                handleDeferredState(for: transaction, in: queue)
-//            }
-//        }
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchasing:
+                handlePurchasingState(for: transaction, in: queue)
+            case .purchased:
+                handlePurchasedState(for: transaction, in: queue)
+            case .restored:
+                handleRestoredState(for: transaction, in: queue)
+            case .failed:
+                handleFailedState(for: transaction, in: queue)
+            case .deferred:
+                handleDeferredState(for: transaction, in: queue)
+            }
+        }
         
     }
     
