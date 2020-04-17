@@ -128,12 +128,15 @@ class ImageManager: NSObject, SelectingImagesManager {
                                 if let _data = data {
                                     let newImage = _data
                                     imageArray.append(newImage)
+                                  if assets.last == asset {
+                                    self.presentingViewController.imagesWasSelecting(images: imageArray)
+
+                                  }
                                 }
                             }
                         })
                     }
                 }
-                self.presentingViewController.imagesWasSelecting(images: imageArray)
             }
             self.presentingViewController.present(selectedPhotoController, animated: true) {}
         }
