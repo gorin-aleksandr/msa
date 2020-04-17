@@ -49,6 +49,7 @@ class NewExerciseManager {
     }
     func deleteVideo() {
         dataSource.videoUrl = ""
+        dataSource.videoPath = ""
     }
     func makeImagesForExersice(urls: [String]) {
         var images = [Image]()

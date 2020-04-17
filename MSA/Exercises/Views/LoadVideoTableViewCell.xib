@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="377" height="139"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="377" height="138.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="377" height="139"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="filevideo-24px" translatesAutoresizingMaskIntoConstraints="NO" id="uJL-Sg-oey">
@@ -41,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Не удалось загрузить файл! Проверьте подключение к сети." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Gv-iN-mb5">
-                        <rect key="frame" x="0.0" y="82.5" width="377" height="36"/>
+                        <rect key="frame" x="0.0" y="83" width="377" height="36"/>
                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="15"/>
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -77,6 +75,7 @@
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="3uM-PH-oML"/>
                     <constraint firstItem="BCV-KL-ZQt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4pC-9a-j37"/>
                     <constraint firstItem="y1i-52-jg4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EPV-Og-QHp"/>
+                    <constraint firstAttribute="bottom" secondItem="WOb-Jr-nXo" secondAttribute="bottom" constant="21" id="Fbm-Le-Mo2"/>
                     <constraint firstItem="wrV-sr-WsS" firstAttribute="centerY" secondItem="uJL-Sg-oey" secondAttribute="centerY" id="JaV-Yz-DAA"/>
                     <constraint firstAttribute="trailing" secondItem="9Gv-iN-mb5" secondAttribute="trailing" id="Ml9-tA-kr7"/>
                     <constraint firstAttribute="bottomMargin" secondItem="WOb-Jr-nXo" secondAttribute="bottom" constant="10" id="N9h-6u-Pop"/>
@@ -84,6 +83,7 @@
                     <constraint firstItem="uJL-Sg-oey" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="VeV-Se-gaI"/>
                     <constraint firstItem="wrV-sr-WsS" firstAttribute="leading" secondItem="uJL-Sg-oey" secondAttribute="trailing" constant="10" id="X1o-M9-ck0"/>
                     <constraint firstItem="uJL-Sg-oey" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="ePy-LU-3qU"/>
+                    <constraint firstItem="WOb-Jr-nXo" firstAttribute="top" secondItem="BCV-KL-ZQt" secondAttribute="bottom" constant="8" id="efo-5n-EBO"/>
                     <constraint firstItem="uRC-HG-Ttc" firstAttribute="top" secondItem="WOb-Jr-nXo" secondAttribute="top" constant="-5" id="gDQ-3B-Z3A"/>
                     <constraint firstItem="BCV-KL-ZQt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="k5y-IV-zPf"/>
                     <constraint firstAttribute="trailing" secondItem="BCV-KL-ZQt" secondAttribute="trailing" id="lDK-ie-G6j"/>

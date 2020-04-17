@@ -130,7 +130,6 @@ class ImageManager: NSObject, SelectingImagesManager {
                                     imageArray.append(newImage)
                                   if assets.last == asset {
                                     self.presentingViewController.imagesWasSelecting(images: imageArray)
-
                                   }
                                 }
                             }
@@ -146,30 +145,30 @@ class ImageManager: NSObject, SelectingImagesManager {
 }
 
 extension ImageManager: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-//        if contentType == .allPhotos {
-//            guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else {return}
-//            let normalImage = image.scaleAndRotateImage()
-//            guard let newImage = UIImagePNGRepresentation(normalImage) else {return}
-//            presentingViewController.imagesWasSelecting(images: [newImage])
-//        } else if contentType == .allVideos {
-//            if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
-//                do {
-//                    let asset = AVURLAsset(url: videoURL, options: nil)
-//                    let imgGenerator = AVAssetImageGenerator(asset: asset)
-//                    imgGenerator.appliesPreferredTrackTransform = true
-//                    let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-//                    let thumbnail = UIImage(cgImage: cgImage)
-//                    presentingViewController.videoSelectenWith(url: videoURL.absoluteString, image: thumbnail)
-//                } catch let error {
-//                    print("*** Error generating thumbnail: \(error.localizedDescription)")
-//                }
-//            }
-//        }
-//        picker.dismiss(animated: true, completion: nil)
-    }
-    
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if contentType == .allPhotos {
+              guard let image = info[.originalImage] as? UIImage else {return}
+                let normalImage = image.scaleAndRotateImage()
+                guard let newImage = normalImage.pngData() else {return}
+                presentingViewController.imagesWasSelecting(images: [newImage])
+            } else if contentType == .allVideos {
+                if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+                    do {
+                        let asset = AVURLAsset(url: videoURL, options: nil)
+                        let imgGenerator = AVAssetImageGenerator(asset: asset)
+                        imgGenerator.appliesPreferredTrackTransform = true
+                        let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+                        let thumbnail = UIImage(cgImage: cgImage)
+                        presentingViewController.videoSelectenWith(url: videoURL.absoluteString, image: thumbnail)
+                    } catch let error {
+                        print("*** Error generating thumbnail: \(error.localizedDescription)")
+                    }
+                }
+            }
+            picker.dismiss(animated: true, completion: nil)
+  }
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
