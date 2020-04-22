@@ -31,5 +31,5 @@ target 'MSA' do
   pod 'Crashlytics', '= 3.11.1'
   pod "PhotoSlider"
   pod 'AppCenter'
-
+  pod 'TagListView'
 end

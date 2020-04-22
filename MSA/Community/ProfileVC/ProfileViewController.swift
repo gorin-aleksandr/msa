@@ -12,6 +12,8 @@ import AVFoundation
 import SDWebImage
 import SVProgressHUD
 import MessageUI
+import FZAccordionTableView
+import Firebase
 
 protocol ProfileViewProtocol: class {
     func updateProfile(with user: UserVO)
@@ -51,10 +53,12 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     @IBOutlet weak var userLevel: UILabel!
     @IBOutlet weak var levelBg: UIImageView!
     @IBOutlet weak var dailyTraining: UILabel!
+    @IBOutlet weak var tableView: FZAccordionTableView!
+
     @IBOutlet weak var dreamInsideView: UIView! {
-        didSet {dreamInsideView.layer.cornerRadius = 12
-            dreamInsideView.layer.borderColor = UIColor.msaBlack.withAlphaComponent(0.1).cgColor
-            dreamInsideView.layer.borderWidth = 2
+        didSet {dreamInsideView.layer.cornerRadius = 0
+            dreamInsideView.layer.borderColor = UIColor.white.withAlphaComponent(1.0).cgColor
+            dreamInsideView.layer.borderWidth = 0
         }
         
     }
@@ -65,6 +69,13 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
     
+    var userRef = Database.database().reference().child("Users")
+
+    var selectedSkills: [String] = []
+    var selectedAchievements:[(id: String, name: String, rank: String, achieve: String, year: String)] = []
+    var selectedEducation:[(id: String, name: String, yearFrom: String, yearTo: String)] = []
+    var selectedCertificates:[(id: String, name: String)] = []
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         relatedCollectionView.dataSource = self
@@ -72,6 +83,36 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         relatedWidthConstraint.constant = CGFloat(((profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count) - 1) * 12 + 32)
         configureButtonsView()
         profilePresenter.start()
+        
+      tableView.register(UINib(nibName: "TrainerSkillsHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "TrainerSkillsHeaderView")
+        tableView.register(UINib(nibName: "ExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "ExerciseTableViewCell")
+        tableView.register(UINib(nibName: "AchievmentCell", bundle: nil), forCellReuseIdentifier: "AchievmentCell")
+        tableView.register(UINib(nibName: "CreateExerciseTableViewCell", bundle: nil), forCellReuseIdentifier: "CreateExerciseTableViewCell")
+
+        tableView.register(UINib(nibName: "EducationCell", bundle: nil), forCellReuseIdentifier: "EducationCell")
+        tableView.register(UINib(nibName: "SkyFloatingView", bundle: nil), forHeaderFooterViewReuseIdentifier: "SkyFloatingView")
+      
+      tableView.tableFooterView = UIView()
+      let group = DispatchGroup()
+      group.enter()
+      fetchSpecialization(completion: { sucess in
+        group.leave()
+      })
+      group.enter()
+      fetchAchievements(completion: { sucess in
+        group.leave()
+      })
+      group.enter()
+      fetchEducation(completion: { sucess in
+        group.leave()
+      })
+      group.enter()
+      fetchCertificate(completion: { sucess in
+        group.leave()
+      })
+      group.notify(queue: .main) {
+        self.tableView.reloadData()
+      }
 
     }
     
@@ -95,7 +136,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     
     func configureButtonsView() {
         let w = CGFloat(self.view.frame.width - 32.0)
-        buttViewHeight.constant = CGFloat(20.0 + (w*111.0/164.0))
+        buttViewHeight.constant = CGFloat(100 + (w*111.0/164.0))
     }
     
     func setMailButton(hidden: Bool) {
@@ -119,9 +160,9 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     func configureViewBasedOnState(state: PersonState) {
         SVProgressHUD.dismiss()
         if state != .trainersSportsman {
-            containerViewHeightConstraint.constant -= viewWithButtons.frame.height
-            buttViewHeight.constant = 0
-            buttonsStackView.isHidden = true
+     //       containerViewHeightConstraint.constant -= viewWithButtons.frame.height
+   //         buttViewHeight.constant = 0
+//            buttonsStackView.isHidden = true
         }
         if state == .all {
             navigationItem.rightBarButtonItem?.tintColor = .lightBlue
@@ -461,4 +502,262 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
 //    }
 //
 //}
+extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+    guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TrainerSkillsHeaderView") as? TrainerSkillsHeaderView else {return nil}
+    headerView.tag = section
+    headerView.titleLabel.font = UIFont(name: "Rubik-Regular", size: 17)
+    headerView.textLabel?.textColor = lightBlue_
+    switch section {
+      case 0:
+        headerView.titleLabel.text = "Специализация"
+        headerView.logoImageView.image = UIImage(named: "noun_personaltrainer")
+      case 1:
+        headerView.titleLabel.text = "Спортивные достижения"
+        headerView.logoImageView.image = UIImage(named: "noun_champion")
+      case 2:
+        headerView.titleLabel.text = "Образование"
+        headerView.logoImageView.image = UIImage(named: "noun_education")
+      case 3:
+        headerView.titleLabel.text = "Сертификация"
+        headerView.logoImageView.image = UIImage(named: "noun_strong")
+      default:
+        headerView.titleLabel.text = "Сертификация"
+      
+    }
+    
+  
+      return headerView
+    
+    print("Section = \(section)")
+    
+    return headerView
+    
+  }
+  
+  func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    if section == 4 || section == 5 || section == 6 {
+      return 50
+    }
+    return 85
+    
+  }
+  
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    switch indexPath.section {
+      case 0:
+        return UITableView.automaticDimension
+      case 1:
+        if indexPath.row != selectedAchievements.count {
+          return 80
+        } else {
+          return 60
+      }
+      case 2:
+        if indexPath.row != selectedEducation.count {
+          return 70
+        } else {
+          return 60
+      }
+      case 3:
+        if indexPath.row != selectedCertificates.count {
+          return 50
+        } else {
+          return 60
+      }
+      default: return UITableView.automaticDimension
+    }
+    
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    if indexPath.section == 0 {
+        return tagCell(indexPath: indexPath)
+    }
+    
+    if indexPath.section == 1 {
+      if selectedAchievements.count > 0 && indexPath.row != selectedAchievements.count {
+        return achievementCell(indexPath: indexPath)
+      } else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
+        cell.icon.image = nil
+        cell.textLabelMess.text = "Добавить свой вариант"
+        return cell
+      }
+    }
+    
+    if indexPath.section == 2 {
+      if selectedEducation.count > 0 && indexPath.row != selectedEducation.count {
+        return educationCell(indexPath: indexPath)
+      } else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
+        cell.icon.image = nil
+        cell.textLabelMess.text = "Добавить свой вариант"
+        return cell
+      }
+    }
+    
+    if indexPath.section == 3 {
+        if selectedCertificates.count > 0 && indexPath.row != selectedCertificates.count {
+          return certificationCell(indexPath: indexPath)
+        } else {
+          let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
+          cell.icon.image = nil
+          cell.textLabelMess.text = "Добавить свой вариант"
+          return cell
+        }
+      }
+    let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
+    cell.icon.image = nil
+    cell.textLabelMess.text = "Добавить свой вариант"
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+    return false
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    switch section {
+      case 0:
+        return selectedSkills.count
+      case 1:
+        return selectedAchievements.count
+      case 2:
+        return selectedEducation.count
+      case 3:
+        return selectedCertificates.count
+      default:
+        return 1
+    }
+  }
+  
+  func numberOfSections(in tableView: UITableView) -> Int {
+    return 4
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
+  }
+  
+  func tagCell(indexPath: IndexPath) -> ProductCategoriesCell{
+    let cell: ProductCategoriesCell! = tableView.dequeueReusableCell(withIdentifier: ProductCategoriesCell.identifier) as? ProductCategoriesCell
+    cell.tagList.removeAllTags()
+    let tag = selectedSkills[indexPath.row]
+    cell.tagList.addTag(tag)
+    cell.tagList.tagViews[0].isSelected = true
+    return cell
+  }
+  
+  func achievementCell(indexPath: IndexPath) -> AchievmentCell{
+    let cell: AchievmentCell! = tableView.dequeueReusableCell(withIdentifier: AchievmentCell.identifier) as? AchievmentCell
+    let achieve = selectedAchievements[indexPath.row]
+    cell.nameLabel.text = achieve.name
+    cell.rankLabel.text = achieve.rank
+    cell.yearLabel.text = achieve.year
+    cell.achieveLabel.text = achieve.achieve != "" ? "\(achieve.achieve) \nместо" : ""
+    cell.removeButton.isHidden = true
+    return cell
+  }
+  
+  func educationCell(indexPath: IndexPath) -> EducationCell{
+    let cell: EducationCell! = tableView.dequeueReusableCell(withIdentifier: EducationCell.identifier) as? EducationCell
+    let education = selectedEducation[indexPath.row]
+    cell.nameLabel.text = education.name
+    cell.yearFromLabel.text = education.yearFrom
+    cell.yearToLabel.text = education.yearTo
+    cell.removeButton.isHidden = true
+    return cell
+  }
+  
+  func certificationCell(indexPath: IndexPath) -> EducationCell{
+    let cell: EducationCell! = tableView.dequeueReusableCell(withIdentifier: EducationCell.identifier) as? EducationCell
+    let certificate = selectedCertificates[indexPath.row]
+    cell.nameLabel.text = certificate.name
+    cell.yearToLabel.isHidden = true
+    cell.yearFromLabel.isHidden = true
+    cell.removeButton.isHidden = true
+    return cell
+  }
+}
+
+extension ProfileViewController: FZAccordionTableViewDelegate {
+  func tableView(_ tableView: FZAccordionTableView, willOpenSection section: Int, withHeader header: UITableViewHeaderFooterView?) {
+    guard let sectionHeader = header as? TrainerSkillsHeaderView else { return }
+    sectionHeader.headerState.toggle()
+    
+  }
+  func tableView(_ tableView: FZAccordionTableView, willCloseSection section: Int, withHeader header: UITableViewHeaderFooterView?) {
+    guard let sectionHeader = header as? TrainerSkillsHeaderView else { return }
+    sectionHeader.headerState.toggle()
+  }
+}
+
+extension ProfileViewController {
+  
+  func fetchSpecialization(completion: @escaping (Bool) -> Void) {
+    if let key = profilePresenter.user.id {
+      userRef.child(key).child("coachDetail").child("specialization").observeSingleEvent(of: .value, with: { snapshot in
+        for child in snapshot.children {
+          let snap = child as! DataSnapshot
+          let specialization = snap.value as! String
+          self.selectedSkills.append(specialization)
+        }
+        completion(true)
+        print(self.selectedSkills)
+      })
+    }
+  }
+  
+ 
+  
+  func fetchAchievements(completion: @escaping (Bool) -> Void) {
+    if let key = profilePresenter.user.id {
+      userRef.child(key).child("coachDetail").child("achievements").observeSingleEvent(of: .value, with: { snapshot in
+        if let dict = snapshot.value as? Dictionary<String, Any> {
+          print(dict)
+          for key in dict.keys {
+            let item = dict[key] as? Dictionary<String, Any>
+            self.selectedAchievements.append((id: key, name: item?["name"] as! String, rank: item?["rank"] as! String, achieve: item?["achievement"] as! String, year: item?["year"] as! String))
+          }
+          completion(true)
+        }
+      })
+    }
+  }
+  
+
+  
+  func fetchEducation(completion: @escaping (Bool) -> Void) {
+    if let key = profilePresenter.user.id {
+      userRef.child(key).child("coachDetail").child("education").observeSingleEvent(of: .value, with: { snapshot in
+        if let dict = snapshot.value as? Dictionary<String, Any> {
+          print(dict)
+          for key in dict.keys {
+            let item = dict[key] as? Dictionary<String, Any>
+            self.selectedEducation.append((id: key, name: item?["name"] as! String, yearFrom: item?["yearFrom"] as! String, yearTo: item?["yearTo"] as! String))
+          }
+          completion(true)
+        }
+      })
+    }
+  }
+  
+  func fetchCertificate(completion: @escaping (Bool) -> Void) {
+    if let key = profilePresenter.user.id {
+      userRef.child(key).child("coachDetail").child("certificates").observeSingleEvent(of: .value, with: { snapshot in
+        if let dict = snapshot.value as? Dictionary<String, Any> {
+          print(dict)
+          for key in dict.keys {
+            let item = dict[key] as? Dictionary<String, Any>
+            self.selectedCertificates.append((id: key, name: item?["name"] as! String))
+          }
+          completion(true)
+        }
+      })
+    }
+  }
+}

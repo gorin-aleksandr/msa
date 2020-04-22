@@ -189,7 +189,10 @@ class UserDataManager {
                           sportsmen: sportsmen,
                           requests: requests,
                           city: value["city"] as? String,
-                          fcmToken: value["fcmToken"] as? String)
+                          fcmToken: value["fcmToken"] as? String,
+                          instagramLink: value["instagramLink"] as? String,
+                          facebookLink: value["facebookLink"] as? String,
+                          vkLink: value["vkLink"] as? String)
         }
         return user
     }

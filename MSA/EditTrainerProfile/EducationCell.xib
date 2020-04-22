@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Rubik-Bold.ttf">
+            <string>Rubik-Bold</string>
+        </array>
+        <array key="Rubik-Regular.ttf">
+            <string>Rubik-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="KpA-EO-iSI" customClass="EducationCell" customModule="MSA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="75"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4DI-VV-NQQ">
+                    <rect key="frame" x="20" y="42" width="47" height="21"/>
+                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
+                    <color key="textColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bh-Y9-eS4">
+                    <rect key="frame" x="352" y="25" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="lfE-VA-6GE"/>
+                        <constraint firstAttribute="width" constant="32" id="wFw-dc-eNn"/>
+                    </constraints>
+                    <state key="normal" image="delete_red_24px"/>
+                    <connections>
+                        <action selector="removAction:" destination="KpA-EO-iSI" eventType="touchUpInside" id="N87-pG-u91"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUf-By-Kib">
+                    <rect key="frame" x="20" y="15" width="219" height="21"/>
+                    <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="15"/>
+                    <color key="textColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZtJ-yy-mIn">
+                    <rect key="frame" x="85" y="42" width="47" height="21"/>
+                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
+                    <color key="textColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="5bh-Y9-eS4" secondAttribute="trailing" constant="10" id="7Bv-PM-5oY"/>
+                <constraint firstItem="5bh-Y9-eS4" firstAttribute="centerY" secondItem="v51-Me-4DW" secondAttribute="centerY" id="XcV-eE-owi"/>
+                <constraint firstItem="ZtJ-yy-mIn" firstAttribute="top" secondItem="4DI-VV-NQQ" secondAttribute="top" id="e2i-K2-Scq"/>
+                <constraint firstItem="4DI-VV-NQQ" firstAttribute="top" secondItem="hUf-By-Kib" secondAttribute="bottom" constant="6" id="kdr-ZQ-4ef"/>
+                <constraint firstItem="4DI-VV-NQQ" firstAttribute="leading" secondItem="hUf-By-Kib" secondAttribute="leading" id="mNd-AZ-U2J"/>
+                <constraint firstItem="ZtJ-yy-mIn" firstAttribute="leading" secondItem="4DI-VV-NQQ" secondAttribute="trailing" constant="18" id="mZm-9J-s8S"/>
+                <constraint firstItem="hUf-By-Kib" firstAttribute="leading" secondItem="KpA-EO-iSI" secondAttribute="leading" constant="15" id="nkJ-SC-Ump"/>
+                <constraint firstItem="hUf-By-Kib" firstAttribute="top" secondItem="KpA-EO-iSI" secondAttribute="top" constant="10" id="sGK-vK-Wqg"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="v51-Me-4DW"/>
+            <connections>
+                <outlet property="nameLabel" destination="hUf-By-Kib" id="2cM-rc-qVm"/>
+                <outlet property="removeButton" destination="5bh-Y9-eS4" id="JBL-7p-GVC"/>
+                <outlet property="yearFromLabel" destination="4DI-VV-NQQ" id="N0L-6B-UMX"/>
+                <outlet property="yearToLabel" destination="ZtJ-yy-mIn" id="Grh-Rk-4Uc"/>
+            </connections>
+            <point key="canvasLocation" x="88.405797101449281" y="-286.94196428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="delete_red_24px" width="14" height="14"/>
+    </resources>
+</document>

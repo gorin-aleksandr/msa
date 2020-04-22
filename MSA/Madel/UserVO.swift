@@ -36,6 +36,9 @@ struct UserVO {
     var requests: [String]?
     var city: String?
     var fcmToken: String?
+    var instagramLink: String?
+    var facebookLink: String?
+    var vkLink: String?
     var userType: UserType {
         switch  type  {
         case "ТРЕНЕР":

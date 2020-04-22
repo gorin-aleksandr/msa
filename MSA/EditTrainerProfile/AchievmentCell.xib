@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Rubik-Bold.ttf">
+            <string>Rubik-Bold</string>
+        </array>
+        <array key="Rubik-Regular.ttf">
+            <string>Rubik-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="mZY-GS-aRP" customClass="AchievmentCell" customModule="MSA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="75"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aef-UB-Xgf">
+                    <rect key="frame" x="20" y="42" width="219" height="21"/>
+                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
+                    <color key="textColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="brl-64-jkX">
+                    <rect key="frame" x="352" y="25" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="ROq-Qv-PIm"/>
+                        <constraint firstAttribute="width" constant="32" id="cqz-hB-krz"/>
+                    </constraints>
+                    <state key="normal" image="delete_red_24px"/>
+                    <connections>
+                        <action selector="removAction:" destination="mZY-GS-aRP" eventType="touchUpInside" id="d4A-UX-hzH"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MhV-5K-DLD">
+                    <rect key="frame" x="247" y="30" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Z3-EQ-Aqd">
+                    <rect key="frame" x="300" y="31" width="42" height="21"/>
+                    <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="15"/>
+                    <color key="textColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8FG-NF-XMa">
+                    <rect key="frame" x="20" y="15" width="219" height="21"/>
+                    <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="15"/>
+                    <color key="textColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="brl-64-jkX" firstAttribute="leading" secondItem="8Z3-EQ-Aqd" secondAttribute="trailing" constant="10" id="1Jc-Rz-yEH"/>
+                <constraint firstItem="brl-64-jkX" firstAttribute="centerY" secondItem="ZBx-In-P2K" secondAttribute="centerY" id="4iQ-Li-o25"/>
+                <constraint firstItem="8FG-NF-XMa" firstAttribute="leading" secondItem="mZY-GS-aRP" secondAttribute="leading" constant="15" id="8kj-a4-eid"/>
+                <constraint firstAttribute="trailing" secondItem="brl-64-jkX" secondAttribute="trailing" constant="10" id="9zC-1b-SF5"/>
+                <constraint firstItem="MhV-5K-DLD" firstAttribute="centerY" secondItem="8Z3-EQ-Aqd" secondAttribute="centerY" id="GwG-kW-cV1"/>
+                <constraint firstItem="8Z3-EQ-Aqd" firstAttribute="centerY" secondItem="ZBx-In-P2K" secondAttribute="centerY" id="MiB-nO-iig"/>
+                <constraint firstItem="MhV-5K-DLD" firstAttribute="firstBaseline" secondItem="8FG-NF-XMa" secondAttribute="baseline" symbolType="layoutAnchor" id="Pd0-QN-z2M"/>
+                <constraint firstItem="8Z3-EQ-Aqd" firstAttribute="leading" secondItem="MhV-5K-DLD" secondAttribute="trailing" constant="11" id="Srj-iB-axR"/>
+                <constraint firstItem="aef-UB-Xgf" firstAttribute="leading" secondItem="8FG-NF-XMa" secondAttribute="leading" id="TXJ-7u-Cnc"/>
+                <constraint firstItem="aef-UB-Xgf" firstAttribute="top" secondItem="8FG-NF-XMa" secondAttribute="bottom" constant="6" id="f71-8m-TFz"/>
+                <constraint firstItem="8FG-NF-XMa" firstAttribute="top" secondItem="mZY-GS-aRP" secondAttribute="top" constant="10" id="rLT-Wm-gqC"/>
+                <constraint firstItem="aef-UB-Xgf" firstAttribute="trailing" secondItem="8FG-NF-XMa" secondAttribute="trailing" id="vTi-QE-aBb"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="ZBx-In-P2K"/>
+            <connections>
+                <outlet property="achieveLabel" destination="MhV-5K-DLD" id="RLX-l8-vGL"/>
+                <outlet property="nameLabel" destination="8FG-NF-XMa" id="iWS-UY-8Sw"/>
+                <outlet property="rankLabel" destination="aef-UB-Xgf" id="HbJ-fF-S7T"/>
+                <outlet property="removeButton" destination="brl-64-jkX" id="9bC-IS-hxW"/>
+                <outlet property="yearLabel" destination="8Z3-EQ-Aqd" id="WcI-ga-ANX"/>
+            </connections>
+            <point key="canvasLocation" x="88.405797101449281" y="-286.94196428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="delete_red_24px" width="14" height="14"/>
+    </resources>
+</document>
