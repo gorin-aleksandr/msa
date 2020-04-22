@@ -592,6 +592,7 @@
                         <outlet property="dailyTraining" destination="ncP-RT-qQO" id="5mt-Bh-YYW"/>
                         <outlet property="dreamView" destination="FmJ-bh-Qxq" id="uVs-Of-Xeg"/>
                         <outlet property="dreamViewButton" destination="0SB-41-LrT" id="bEn-ir-4kZ"/>
+                        <outlet property="editSkillsButton" destination="bXq-ea-UrH" id="MmW-ES-V7f"/>
                         <outlet property="galleryCollectionView" destination="cFU-Hd-4TS" id="R0m-sy-HsS"/>
                         <outlet property="galleryView" destination="bfM-N1-w02" id="HNE-Hy-40Z"/>
                         <outlet property="imagePreviewView" destination="GEC-V5-r1M" id="HBL-VQ-LRz"/>

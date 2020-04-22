@@ -49,6 +49,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   @IBOutlet weak var dreamInsideView: UIView! {didSet {dreamInsideView.layer.cornerRadius = 9}}
   @IBOutlet weak var dreamView: UIView! { didSet{dreamView.layer.cornerRadius = 10 }}
   @IBOutlet weak var dreamViewButton: UIButton!
+  @IBOutlet weak var editSkillsButton: UIButton!
 
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
@@ -72,6 +73,10 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     myPicker.delegate = self
     
     dreamViewButton.addTarget(self, action: #selector(presentInputStatus), for: .touchUpInside)
+    editSkillsButton.isHidden = true
+    if AuthModule.currUser.userType == .trainer {
+      editSkillsButton.isHidden = false
+    }
   }
   
   @objc func presentInputStatus() {
