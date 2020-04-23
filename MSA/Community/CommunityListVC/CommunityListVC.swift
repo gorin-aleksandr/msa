@@ -238,11 +238,13 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     private func presentIAPViewController() {
+      DispatchQueue.main.async {
         let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
         let navigationController = UINavigationController()
-        destinationVC.presenter = presenter.createIAPPresenter(for: destinationVC)
+        destinationVC.presenter = self.presenter.createIAPPresenter(for: destinationVC)
         navigationController.setViewControllers([destinationVC], animated: false)
         self.present(navigationController, animated: true, completion: nil)
+      }
     }
 
     
