@@ -102,12 +102,12 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         // MARK: Uncomment to use IAPs
         view.setLoaderVisible(true)
         InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
-            if InAppPurchasesService.shared.currentSubscription != nil {
+          //  if InAppPurchasesService.shared.currentSubscription != nil {
               self?.fetchData()
               self?.view.hideAccessDeniedView()
-            } else {
-                self?.view.showIAP()
-            }
+//            } else {
+//                self?.view.showIAP()
+//            }
         }
     }
     

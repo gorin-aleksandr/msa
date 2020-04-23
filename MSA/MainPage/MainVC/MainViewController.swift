@@ -154,6 +154,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   func configureProfile() {
     setShadow(outerView: profileView, shadowOpacity: 0.3)
     setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
+    
     setProfileImage(image: nil, url: AuthModule.currUser.avatar)
     
     if let trainerId = AuthModule.currUser.trainerId {
@@ -189,6 +190,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     if let dream = AuthModule.currUser.purpose, dream != "" {
       dailyTraining.text = dream
     }
+  
   }
   
   

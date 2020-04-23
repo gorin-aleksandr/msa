@@ -285,6 +285,9 @@ class EditTrainerProfileViewController: UIViewController {
       self.tableView.reloadData()
       ac.dismiss(animated: true, completion: nil)
     }))
+    ac.addAction(UIAlertAction(title: "Отменить", style: .cancel, handler: { (action) in
+        ac.dismiss(animated: true, completion: nil)
+      }))
     DispatchQueue.main.async {
       self.present(ac, animated: true, completion: nil)
     }
@@ -355,6 +358,9 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     switch indexPath.section {
       case 0:
+        if indexPath.row == 1 {
+          return 60
+        }
         return UITableView.automaticDimension
       case 1:
         if indexPath.row != selectedAchievements.count {
@@ -388,6 +394,7 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
         cell.icon.image = nil
         cell.textLabelMess.text = "Добавить свой вариант"
+        cell.selectionStyle = .none
         return cell
       }
     }
@@ -398,7 +405,8 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
       } else {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
         cell.icon.image = nil
-        cell.textLabelMess.text = "Добавить свой вариант"
+        cell.textLabelMess.text = "Добавить достижение"
+        cell.selectionStyle = .none
         return cell
       }
     }
@@ -409,7 +417,8 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
       } else {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
         cell.icon.image = nil
-        cell.textLabelMess.text = "Добавить свой вариант"
+        cell.textLabelMess.text = "Добавить образование"
+        cell.selectionStyle = .none
         return cell
       }
     }
@@ -420,13 +429,15 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
         } else {
           let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
           cell.icon.image = nil
-          cell.textLabelMess.text = "Добавить свой вариант"
+          cell.textLabelMess.text = "Добавить сертификацию"
+          cell.selectionStyle = .none
           return cell
         }
       }
     let cell = tableView.dequeueReusableCell(withIdentifier: "CreateExerciseTableViewCell", for:  indexPath) as! CreateExerciseTableViewCell
     cell.icon.image = nil
     cell.textLabelMess.text = "Добавить свой вариант"
+    cell.selectionStyle = .none
     return cell
   }
   
@@ -445,7 +456,7 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
       case 3:
         return selectedCertificates.count + 1
       default:
-        return 1
+        return 0
     }
   }
   
@@ -456,13 +467,21 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch indexPath.section {
       case 0:
-        addTagAlert()
+        if indexPath.row == 1 {
+          addTagAlert()
+        }
       case 1:
-        choseAchieveTypeAlert()
+        if indexPath.row == selectedAchievements.count {
+          choseAchieveTypeAlert()
+        }
       case 2:
-        showEducationAlert()
+        if indexPath.row == selectedEducation.count {
+          showEducationAlert()
+        }
       case 3:
+        if indexPath.row == selectedCertificates.count {
         presentCertification()
+        }
       default:
         choseAchieveTypeAlert()
     }
@@ -472,14 +491,6 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
   func tagCell() -> ProductCategoriesCell{
     let cell: ProductCategoriesCell! = tableView.dequeueReusableCell(withIdentifier: ProductCategoriesCell.identifier) as? ProductCategoriesCell
     cell.tagList.removeAllTags()
-    cell.addTag = { (title,added) in
-      if added {
-        self.selectedSkills.append(title)
-      } else {
-        self.selectedSkills.removeAll(title)
-      }
-      self.saveSpecialization()
-    }
     
     for item in skills {
       cell.tagList.addTag(item)
@@ -504,7 +515,17 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
         }
       }
     }
-
+    
+    cell.addTag = { (title,added) in
+        if added {
+          self.selectedSkills.append(title)
+        } else {
+          self.selectedSkills.removeAll(title)
+        }
+        self.saveSpecialization()
+      }
+  
+    cell.selectionStyle = .none
     return cell
   }
   
@@ -518,6 +539,7 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
     cell.removeAchievement = {
       self.removeAchievement(index: indexPath.row, completion: {_ in})
     }
+    cell.selectionStyle = .none
     return cell
   }
   
@@ -528,8 +550,9 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
     cell.yearFromLabel.text = education.yearFrom
     cell.yearToLabel.text = education.yearTo
     cell.removeEducation = {
-      self.removeAchievement(index: indexPath.row, completion: {_ in})
+      self.removeEducation(index: indexPath.row, completion: {_ in})
     }
+    cell.selectionStyle = .none
     return cell
   }
   
@@ -542,6 +565,7 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
     cell.removeEducation = {
       self.removeCertificate(index: indexPath.row, completion: {_ in})
     }
+    cell.selectionStyle = .none
     return cell
   }
 }

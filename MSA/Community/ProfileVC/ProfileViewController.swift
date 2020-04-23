@@ -53,7 +53,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     @IBOutlet weak var userLevel: UILabel!
     @IBOutlet weak var levelBg: UIImageView!
     @IBOutlet weak var dailyTraining: UILabel!
-    @IBOutlet weak var tableView: FZAccordionTableView!
+    @IBOutlet weak var tableView: FZAccordionTableView! {didSet{tableView.layer.cornerRadius = 10}}
 
     @IBOutlet weak var dreamInsideView: UIView! {
         didSet {dreamInsideView.layer.cornerRadius = 0
@@ -63,7 +63,11 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         
     }
     @IBOutlet weak var buttonsStackView: UIStackView!
-    
+ 
+    @IBOutlet weak var vkButton: UIButton!
+    @IBOutlet weak var facebookButton: UIButton!
+    @IBOutlet weak var instagramButton: UIButton!
+
     var profilePresenter: ProfilePresenterProtocol!
     
     var customImageViev = ProfileImageView()
@@ -155,21 +159,54 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     func configureProfileView() {
         setShadow(outerView: profileView, shadowOpacity: 0.3)
         setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
+        vkButton.isHidden = true
+        vkButton.frame = CGRect(x: vkButton.frame.origin.x, y: vkButton.frame.origin.y, width: 0, height: 0)
+        facebookButton.isHidden = true
+        instagramButton.isHidden = true
+        vkButton.addTarget(self, action: #selector(showVkProfile), for: .touchUpInside)
+        facebookButton.addTarget(self, action: #selector(showFacebookProfile), for: .touchUpInside)
+        instagramButton.addTarget(self, action: #selector(showInstagramProfile), for: .touchUpInside)
+
+        if let vkLink = profilePresenter.user.vkLink {
+          if vkLink != "" {
+            vkButton.isHidden = false
+          }
+        }
+        if let facebookLink = profilePresenter.user.facebookLink {
+          if facebookLink != "" {
+            facebookButton.isHidden = false
+          }
+        }
+        if let instagramLink = profilePresenter.user.instagramLink {
+          if instagramLink != "" {
+            instagramButton.isHidden = false
+          }
+        }
     }
     
     func configureViewBasedOnState(state: PersonState) {
         SVProgressHUD.dismiss()
-        if state != .trainersSportsman {
-     //       containerViewHeightConstraint.constant -= viewWithButtons.frame.height
-   //         buttViewHeight.constant = 0
+      //  if state != .trainersSportsman {
+//            containerViewHeightConstraint.constant -= viewWithButtons.frame.height
+//            buttViewHeight.constant = 0
 //            buttonsStackView.isHidden = true
+       // }
+        if profilePresenter.user.userType == .trainer {
+          containerViewHeightConstraint.constant = 1100
         }
+
         if state == .all {
             navigationItem.rightBarButtonItem?.tintColor = .lightBlue
             navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "plus_blue")
         } else {
             navigationItem.rightBarButtonItem?.tintColor = .red
             navigationItem.rightBarButtonItem?.image = #imageLiteral(resourceName: "delete_red")
+        }
+        if profilePresenter.user.userType != .trainer {
+              containerViewHeightConstraint.constant -= viewWithButtons.frame.height
+              buttViewHeight.constant = 0
+        } else {
+          //containerViewHeightConstraint.constant += viewWithButtons.frame.height
         }
         navigationItem.leftBarButtonItem?.image = UIImage(named: "back_")
         navigationItem.leftBarButtonItem?.title = "Назад"
@@ -192,6 +229,11 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
             userLevel.isHidden = true
             levelBg.isHidden = true
         }
+      if user.userType == .trainer {
+        userLevel.isHidden = false
+        levelBg.isHidden = false
+        userLevel.text = "ТРЕНЕР"
+      }
         if let dream = user.purpose {
             dailyTraining.text = dream
         }
@@ -287,6 +329,79 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
         self.present(alert, animated: true)
     }
+  
+  @objc func showVkProfile() {
+      if let vkLink = profilePresenter.user.vkLink {
+          
+           let userName =  vkLink // Your Instagram Username here
+          
+          if let link = userName.detectedFirstLink {
+            if let url = URL(string: link) {
+                UIApplication.shared.open(url)
+            }
+          } else {
+            let appURL = URL(string: "vk://vk.com/\(userName)")!
+            let application = UIApplication.shared
+
+            if application.canOpenURL(appURL) {
+                application.open(appURL)
+            } else {
+                // if Instagram app is not installed, open URL inside Safari
+                let webURL = URL(string: "https://vk.com/\(userName)")!
+                application.open(webURL)
+            }
+          }
+      }
+    }
+  
+  @objc func showInstagramProfile() {
+       if let instagramLink = profilePresenter.user.instagramLink {
+        
+         let userName =  instagramLink // Your Instagram Username here
+        
+        if let link = userName.detectedFirstLink {
+          if let url = URL(string: link) {
+              UIApplication.shared.open(url)
+          }
+        } else {
+          let appURL = URL(string: "instagram://user?username=\(userName)")!
+          let application = UIApplication.shared
+
+          if application.canOpenURL(appURL) {
+              application.open(appURL)
+          } else {
+              // if Instagram app is not installed, open URL inside Safari
+              let webURL = URL(string: "https://instagram.com/\(userName)")!
+              application.open(webURL)
+          }
+        }
+    }
+  }
+    
+  @objc func showFacebookProfile() {
+            if let facebookLink = profilePresenter.user.facebookLink {
+             
+              let userName =  facebookLink // Your Instagram Username here
+             
+             if let link = userName.detectedFirstLink {
+               if let url = URL(string: link) {
+                   UIApplication.shared.open(url)
+               }
+             } else {
+//               let appURL = URL(string: "fb://profile/\(userName)")!
+//               let application = UIApplication.shared
+//
+//               if application.canOpenURL(appURL) {
+//                   application.open(appURL)
+//               } else {
+                   // if Instagram app is not installed, open URL inside Safari
+                   let webURL = URL(string: "https://www.facebook.com/\(userName)")!
+                   UIApplication.shared.open(webURL)
+               
+             //}
+         }
+    }
+  }
     
     func dismiss() {
         SVProgressHUD.dismiss()
@@ -527,14 +642,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.titleLabel.text = "Сертификация"
       
     }
-    
-  
       return headerView
-    
-    print("Section = \(section)")
-    
-    return headerView
-    
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

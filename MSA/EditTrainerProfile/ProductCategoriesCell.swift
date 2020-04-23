@@ -30,19 +30,13 @@ class ProductCategoriesCell: UITableViewCell,TagListViewDelegate {
     }
     
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
-//
-        let index = sender.tagViews.index(of: tagView)!
-        print("Tag pressed: \(tagView.tag), \(sender) TAG = \(index)")
         tagView.isSelected = !tagView.isSelected
         addTag?(title,tagView.isSelected)
     }
     
     func tagInitHighlight(_ title: String, tagView: TagView, sender: TagListView) {
-        
-        let index = sender.tagViews.index(of: tagView)!
         print("Tag pressed: \(tagView.tag), \(sender) TAG = \(index)")
         tagView.isSelected = !tagView.isSelected
-    //    addCategory?(tagView.tag, tagView.isSelected, index, title)
     }
     
     

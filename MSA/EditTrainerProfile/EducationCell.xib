@@ -39,8 +39,8 @@
                         <action selector="removAction:" destination="KpA-EO-iSI" eventType="touchUpInside" id="N87-pG-u91"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUf-By-Kib">
-                    <rect key="frame" x="20" y="15" width="219" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUf-By-Kib">
+                    <rect key="frame" x="20" y="13" width="334" height="21"/>
                     <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="15"/>
                     <color key="textColor" red="0.01176470588" green="0.68627450980000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -55,6 +55,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="5bh-Y9-eS4" secondAttribute="trailing" constant="10" id="7Bv-PM-5oY"/>
+                <constraint firstItem="5bh-Y9-eS4" firstAttribute="leading" secondItem="hUf-By-Kib" secondAttribute="trailing" constant="-2" id="Jzp-4C-6Ul"/>
                 <constraint firstItem="5bh-Y9-eS4" firstAttribute="centerY" secondItem="v51-Me-4DW" secondAttribute="centerY" id="XcV-eE-owi"/>
                 <constraint firstItem="ZtJ-yy-mIn" firstAttribute="top" secondItem="4DI-VV-NQQ" secondAttribute="top" id="e2i-K2-Scq"/>
                 <constraint firstItem="4DI-VV-NQQ" firstAttribute="top" secondItem="hUf-By-Kib" secondAttribute="bottom" constant="6" id="kdr-ZQ-4ef"/>
