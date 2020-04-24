@@ -106,7 +106,12 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         }
     }
     alert.addOneTextField(configuration: config)
-    alert.addAction(title: "Сохранить", style: .cancel)
+    let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
+      if AuthModule.currUser.purpose == "" {
+        self.dailyTraining.text = "Коротко о себе"
+      }
+    }
+    alert.addAction(saveAction)
     alert.show()
   }
   
@@ -189,6 +194,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     }
     if let dream = AuthModule.currUser.purpose, dream != "" {
       dailyTraining.text = dream
+    } else {
+      dailyTraining.text = "Коротко о себе"
     }
   
   }
