@@ -232,9 +232,25 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     private func moveToUserViewController(with user: UserVO) {
-        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-        destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
-        navigationController?.pushViewController(destinationVC, animated: true)
+      let state = presenter.getPersonState(person: user)
+           print("state:\(state)")
+           
+           if user.userType == .trainer && state == .trainersSportsman {
+             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+             destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+             navigationController?.pushViewController(destinationVC, animated: true)
+           } else if user.userType == .trainer {
+             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+                 destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+                 navigationController?.pushViewController(destinationVC, animated: true)
+           } else {
+             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+             destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+             navigationController?.pushViewController(destinationVC, animated: true)
+           }
+//        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+//        destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+//        navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     private func presentIAPViewController() {

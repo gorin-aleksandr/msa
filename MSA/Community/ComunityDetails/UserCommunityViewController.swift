@@ -119,9 +119,23 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol, 
     }
     
     private func moveToUserViewController(user: UserVO) {
-        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+
+      let state = presenter.getPersonState(person: user)
+      print("state:\(state)")
+      
+      if user.userType == .trainer && state == .trainersSportsman {
+        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
         destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
         navigationController?.pushViewController(destinationVC, animated: true)
+      } else if user.userType == .trainer {
+        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+            navigationController?.pushViewController(destinationVC, animated: true)
+      } else {
+        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+        destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+        navigationController?.pushViewController(destinationVC, animated: true)
+      }
     }
 
     @IBAction func segmetedControlDidTapped(_ sender: UISegmentedControl) {

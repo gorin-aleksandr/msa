@@ -79,6 +79,7 @@
 		247445632431EDFC00FB6BBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 247445622431EDFC00FB6BBD /* GoogleService-Info.plist */; };
 		24744565243202C600FB6BBD /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24744564243202C600FB6BBD /* ChatViewModel.swift */; };
 		2474456724324A3A00FB6BBD /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2474456624324A3A00FB6BBD /* ChatListViewController.swift */; };
+		2497F22C245347B30017F723 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497F22B245347B20017F723 /* UserProfileViewController.swift */; };
 		24B14B0D2432586E00153CD5 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */; };
 		24B14B0F24325AAE00153CD5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0E24325AAE00153CD5 /* Chat.swift */; };
 		24D8E15C244472D800F1D31A /* CopyTrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */; };
@@ -323,6 +324,7 @@
 		247445622431EDFC00FB6BBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24744564243202C600FB6BBD /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		2474456624324A3A00FB6BBD /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		2497F22B245347B20017F723 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		24B14B0E24325AAE00153CD5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTrainingManager.swift; sourceTree = "<group>"; };
@@ -1270,6 +1272,7 @@
 		35D5C01221372F6D0014D450 /* ProfileVC */ = {
 			isa = PBXGroup;
 			children = (
+				2497F22B245347B20017F723 /* UserProfileViewController.swift */,
 				35D5C01321372FEB0014D450 /* ProfileViewController.swift */,
 				35D5C017213734510014D450 /* ProfilePresenter.swift */,
 				35A0940D21525AFE0090904F /* RelatedUserCollectionViewCell.swift */,
@@ -1699,6 +1702,7 @@
 				299B58EE208688E600CBE646 /* GalleryItemVO.swift in Sources */,
 				29F9F2342147B537006EDC6A /* CreateExerciseTableViewCell.swift in Sources */,
 				29F9F2452147B5B8006EDC6A /* VAMonthHeaderView.swift in Sources */,
+				2497F22C245347B30017F723 /* UserProfileViewController.swift in Sources */,
 				2406777E2449DF91004DAE05 /* CurrencyCell.swift in Sources */,
 				2406778B2449DF91004DAE05 /* Contacts.swift in Sources */,
 				35BCB92A2210C1CB0016C58F /* Product.swift in Sources */,

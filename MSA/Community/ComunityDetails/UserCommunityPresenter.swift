@@ -17,6 +17,7 @@ protocol UserCommunityPresenterProtocol {
     var isTrainer: Bool { get }
     func start()
     func setDataSource(with searchText: String?, and selectedState: Int)
+    func getPersonState(person: UserVO) -> PersonState
     func acceptRequest(atIndex: Int)
     var state: UserCommunityState { get }
     func deleteButtonTapped(atIndex: Int)
@@ -42,6 +43,10 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
             view.reloadData()
         }
     }
+  
+    var currentUser: UserVO? {
+         return AuthModule.currUser
+     }
     
     let dataLoader = UserDataManager() 
     
@@ -121,6 +126,20 @@ class UserCommunityPresenter: UserCommunityPresenterProtocol {
             }
         }
         userCommunityDataSource = sportsmen.sorted { $0.getFullName() < $1.getFullName() }
+    }
+  
+    func getPersonState(person: UserVO) -> PersonState {
+        guard let personId = person.id else { return PersonState.all}
+        if personId == currentUser?.trainerId {
+            return PersonState.userTrainer
+        }
+        if let isFriend = currentUser?.friends?.contains(personId), isFriend {
+            return PersonState.friend
+        }
+        if let isSportsman = currentUser?.sportsmen?.contains(personId), isSportsman {
+            return PersonState.trainersSportsman
+        }
+        return PersonState.all
     }
     
     func refresh() {
