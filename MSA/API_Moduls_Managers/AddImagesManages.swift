@@ -114,7 +114,12 @@ class ImageManager: NSObject, SelectingImagesManager {
       let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
         self.presentingViewController.videoLinkAdded(url: link)
       }
+      
+      let cancelAction = UIAlertAction(title: "Отменить", style: .cancel) { (action) in
+        alert.dismiss(animated: true, completion: nil)
+      }
       alert.addAction(saveAction)
+      alert.addAction(cancelAction)
       alert.show()
     }
 
