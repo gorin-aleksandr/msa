@@ -95,8 +95,8 @@ class ExercisesInfoViewController: UIViewController {
     vc.exercManager = manager
     vc.presenter = self.presenter
     vc.presentedVC = self.self
-    let navigationController = UINavigationController(rootViewController: vc)
-    self.present(navigationController, animated: true, completion: nil)
+    //let navigationController = UINavigationController(rootViewController: vc)
+    navigationController?.pushViewController(vc, animated: true)
   }
   
   func playVideo(url: String) {
