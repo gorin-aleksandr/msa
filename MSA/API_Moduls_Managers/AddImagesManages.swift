@@ -120,9 +120,11 @@ class ImageManager: NSObject, SelectingImagesManager {
       }
       alert.addAction(saveAction)
       alert.addAction(cancelAction)
-      alert.show()
+      DispatchQueue.main.async {
+        alert.show()
+      }
+      
     }
-
     
     private func getCameraAlertAction() -> UIAlertAction {
         let cameraActionButton = UIAlertAction(title: "Камера", style: .default) { action -> Void in
