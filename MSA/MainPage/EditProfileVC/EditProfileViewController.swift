@@ -419,6 +419,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             if loggedOut {
                 let storyBoard = UIStoryboard(name: "Main", bundle:nil)
                 let nextViewController = storyBoard.instantiateViewController(withIdentifier: "MainNVC") as! UINavigationController
+                nextViewController.modalPresentationStyle = .fullScreen
                 self.navigationController?.show(nextViewController, sender: self)
                 AuthModule.currUser.id = nil
                 

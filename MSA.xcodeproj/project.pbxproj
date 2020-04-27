@@ -83,6 +83,7 @@
 		24B14B0D2432586E00153CD5 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */; };
 		24B14B0F24325AAE00153CD5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0E24325AAE00153CD5 /* Chat.swift */; };
 		24D8E15C244472D800F1D31A /* CopyTrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */; };
+		24E054952456E4BE004CACA7 /* YoutubePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E054942456E4BE004CACA7 /* YoutubePlayerViewController.swift */; };
 		24FEE3E6242F5CCB001670F6 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E5242F5CCB001670F6 /* Channel.swift */; };
 		24FEE3E8242F5DF6001670F6 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E7242F5DF5001670F6 /* Helpers.swift */; };
 		24FEE3EA242F5E5E001670F6 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */; };
@@ -328,6 +329,7 @@
 		24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		24B14B0E24325AAE00153CD5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTrainingManager.swift; sourceTree = "<group>"; };
+		24E054942456E4BE004CACA7 /* YoutubePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerViewController.swift; sourceTree = "<group>"; };
 		24FEE3E5242F5CCB001670F6 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		24FEE3E7242F5DF5001670F6 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
@@ -963,6 +965,7 @@
 				29B0971F20D4D38500CA7219 /* ExercisesForTypeViewController.swift */,
 				2940A35120D9023E00EBAE84 /* ExercisesInfoViewController.swift */,
 				299AA10420E94C1000BCCA12 /* NewExercise */,
+				24E054942456E4BE004CACA7 /* YoutubePlayerViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -1483,6 +1486,7 @@
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework",
+				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
@@ -1518,6 +1522,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TagListView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
@@ -1593,6 +1598,7 @@
 				29B0972020D4D38500CA7219 /* ExercisesForTypeViewController.swift in Sources */,
 				35D09C4C21314B4C00229A83 /* Fonts.swift in Sources */,
 				2406776F2449DF91004DAE05 /* UIImage+Extensions.swift in Sources */,
+				24E054952456E4BE004CACA7 /* YoutubePlayerViewController.swift in Sources */,
 				24B14B0D2432586E00153CD5 /* ChatListViewModel.swift in Sources */,
 				2406776C2449DF91004DAE05 /* String+Extensions.swift in Sources */,
 				298DF659203C1FAC00FB0180 /* UserVO.swift in Sources */,
@@ -1871,7 +1877,7 @@
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.26;
+				MARKETING_VERSION = 2.4.28;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1887,19 +1893,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MSA/MSARelease.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.26;
+				MARKETING_VERSION = 2.4.28;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "MSA AdHoc (Push)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -26,6 +26,7 @@ class NewExerciseDataSource {
             howToDo = newExerciseModel.howToDo
             picturesUrls = Array(newExerciseModel.pictures)
             videoUrl = newExerciseModel.videoUrl
+            youtubeLink = newExerciseModel.link
         }
     }
     
@@ -39,7 +40,8 @@ class NewExerciseDataSource {
     var picturesUrls: [Image] = []
     var videoUrl = ""
     var videoPath = ""
-    
+    var youtubeLink = ""
+
     var curretnTextViewTag = 0
     
     var createButtonTapped = false

@@ -177,6 +177,11 @@ extension NewExerciseViewController: SelectingImagesManagerDelegate {
     tableView.reloadData()
   }
   
+  func videoLinkAdded(url: String) {
+    exercManager.dataSource.youtubeLink = url
+    tableView.reloadData()
+  }
+  
   func maximumImagesCanBePicked() -> Int {
     return (5 - exercManager.dataSource.pictures.count)
   }
@@ -314,6 +319,13 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
       cell.img.isHidden = false
       cell.deleteVideoButt.isHidden = false
     }
+    
+    if exercManager.dataSource.youtubeLink != "" {
+      cell.img.isHidden = true
+      cell.deleteVideoButt.isHidden = true
+      cell.lab.text = exercManager.dataSource.youtubeLink
+    }
+    
     cell.errorLabel.isHidden = true
     //        }
     cell.deleteVideoButt.addTarget(self, action: #selector(self.deleteVideo(_:)), for: .touchUpInside)
@@ -466,6 +478,23 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     } else {
       AlertDialog.showAlert("Ошибка создания", message: "Введите все необходимые данные", viewController: self)
       tableView.reloadData()
+    }
+  }
+  
+  func choseUploadVideoTypeAlert() {
+    let ac = UIAlertController(title: "Выберите тип", message: nil, preferredStyle: .actionSheet)
+    let rankAction = UIAlertAction(title: "Добавить ссылку на видео", style: .default, handler: { (action) in
+    })
+    let competitionAction = UIAlertAction(title: "Выбрать видео из галереи", style: .default, handler: { (action) in
+    })
+    let cancelAction = UIAlertAction(title: "Отменить", style: .cancel, handler: { (action) in
+    })
+    
+    ac.addAction(rankAction)
+    ac.addAction(competitionAction)
+    ac.addAction(cancelAction)
+    DispatchQueue.main.async {
+      self.present(ac, animated: true, completion: nil)
     }
   }
   

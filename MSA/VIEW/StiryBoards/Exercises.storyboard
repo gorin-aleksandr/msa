@@ -566,6 +566,38 @@
             </objects>
             <point key="canvasLocation" x="-5204" y="312"/>
         </scene>
+        <!--Youtube Player View Controller-->
+        <scene sceneID="pmd-ig-KPG">
+            <objects>
+                <viewController storyboardIdentifier="YoutubePlayerViewController" id="ZGY-0y-Ivk" customClass="YoutubePlayerViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VLF-My-cTr">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3tk-xK-ZZk" customClass="WKYTPlayerView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="241" id="cV3-9g-tnW"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="3tk-xK-ZZk" firstAttribute="leading" secondItem="Wbq-lj-OVZ" secondAttribute="leading" id="4Fy-Ec-Lk7"/>
+                            <constraint firstItem="3tk-xK-ZZk" firstAttribute="top" secondItem="Wbq-lj-OVZ" secondAttribute="top" id="N0Z-lW-P93"/>
+                            <constraint firstItem="3tk-xK-ZZk" firstAttribute="trailing" secondItem="Wbq-lj-OVZ" secondAttribute="trailing" id="ohv-fn-yXV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Wbq-lj-OVZ"/>
+                    </view>
+                    <connections>
+                        <outlet property="playerView" destination="3tk-xK-ZZk" id="XlI-Pm-JEq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HgT-GK-hK7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4380" y="314.39280359820094"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Plus" width="18" height="18"/>

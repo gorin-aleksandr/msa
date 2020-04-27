@@ -31,5 +31,6 @@ target 'MSA' do
   pod 'Crashlytics', '= 3.11.1'
   pod "PhotoSlider"
   pod 'AppCenter'
-  pod 'TagListView'
+  pod 'TagListView' 
+  pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
 end

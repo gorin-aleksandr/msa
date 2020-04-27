@@ -192,7 +192,7 @@ class NewExerciseManager {
             "howToDo": self.dataSource.howToDo,
             "filterIDs": filters,
             "id": index,
-//            "link": self.dataSource.newExerciseModel.link,
+            "link": self.dataSource.youtubeLink,
             "name": self.dataSource.name,
             "pictures": pictures,
             "trainerId": id,

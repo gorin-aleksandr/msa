@@ -202,6 +202,7 @@ PODS:
   - SVProgressHUD (2.2.5)
   - SwipeCellKit (2.7.1)
   - TagListView (1.4.0)
+  - YoutubePlayer-in-WKWebView (0.3.4)
 
 DEPENDENCIES:
   - AppCenter
@@ -229,6 +230,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - SwipeCellKit
   - TagListView
+  - YoutubePlayer-in-WKWebView (~> 0.3.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -274,6 +276,7 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FirebaseMessaging
     - TagListView
+    - YoutubePlayer-in-WKWebView
 
 EXTERNAL SOURCES:
   DKImagePickerController:
@@ -346,7 +349,8 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
+  YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 7d2c5c7154c672171562991f0d38a27c96492e10
+PODFILE CHECKSUM: 6378ff8dec0c0a115cb4e99cbaae541f6db5d981
 
 COCOAPODS: 1.9.1

@@ -132,7 +132,7 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if let link = execise?.link, link == "" {
-      return 5
+      return 6
     } else if execise?.typeId == 12 {
       return 5
     }
@@ -155,7 +155,7 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
     switch indexPath.row {
       case 1: return 250
       case 2:
-        if execise?.videoUrl == "" {
+        if execise?.videoUrl == "" && execise?.link == ""{
           return 0
         } else {
           return 50
@@ -166,8 +166,13 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.row == 2 {
-      if let video = execise?.videoUrl {
-        playVideo(url: video)
+      if let video = execise?.link.youtubeID {
+        let storyBoard = UIStoryboard(name: "Exercises", bundle:nil)
+        let vc = storyBoard.instantiateViewController(withIdentifier: "YoutubePlayerViewController") as! YoutubePlayerViewController
+        vc.youtubeID = video
+        self.present(vc, animated: true, completion: nil)
+      } else if let video = execise?.videoUrl {
+            playVideo(url: video)
       }
     }
     tableView.deselectRow(at: indexPath, animated: true)
@@ -193,7 +198,7 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
   }
   func configureVideoCell(indexPath: IndexPath) -> UITableViewCell {
     let videoCell = self.tableView.dequeueReusableCell(withIdentifier: "PlayVideoTableViewCell", for: indexPath) as? PlayVideoTableViewCell
-    if execise?.videoUrl == "" {
+    if execise?.videoUrl == "" && execise?.link == ""{
       videoCell?.icon.isHidden = true
       videoCell?.textLab.isHidden = true
     }

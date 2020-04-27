@@ -21,6 +21,7 @@ protocol SelectingImagesManagerDelegate: AnyObject {
     func maximumImagesCanBePicked() -> Int
     func imagesWasSelecting(images: [Data])
     func videoSelectenWith(url: String, image: UIImage)
+    func videoLinkAdded(url: String)
 }
 
 class ImageManager: NSObject, SelectingImagesManager {
@@ -62,6 +63,9 @@ class ImageManager: NSObject, SelectingImagesManager {
 
         let photoLibraryActionButton = getVideoAlertAction()
         actionSheetController.addAction(photoLibraryActionButton)
+        let linkVideoAction = getVideoLinkAlertAction()
+        actionSheetController.addAction(linkVideoAction)
+
         presentingViewController.present(actionSheetController, animated: true, completion: nil)
     }
     
@@ -75,6 +79,43 @@ class ImageManager: NSObject, SelectingImagesManager {
         }
         
         return getVideo
+    }
+  
+    private func getVideoLinkAlertAction() -> UIAlertAction {
+        let getVideo = UIAlertAction(title: "Добавить ссылку", style: .default) { action -> Void in
+        self.presentLinkFieldAlert()
+      }
+        return getVideo
+    }
+    
+    func presentLinkFieldAlert() {
+      var link = ""
+      let alert = UIAlertController(style: .actionSheet, title: "Вставьте ссылку на Youtube видео")
+      let config: TextField.Config = { textField in
+          textField.becomeFirstResponder()
+          textField.textColor = .black
+          textField.placeholder = "Ссылка"
+          //textField.left(image: image, color: .black)
+          textField.leftViewPadding = 12
+          textField.borderWidth = 1
+          textField.cornerRadius = 8
+          textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
+          textField.backgroundColor = nil
+          textField.keyboardAppearance = .default
+          textField.keyboardType = .default
+          textField.isSecureTextEntry = false
+          textField.returnKeyType = .done
+          textField.action { textField in
+            print(textField.text)
+            link = textField.text ?? ""
+          }
+      }
+      alert.addOneTextField(configuration: config)
+      let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
+        self.presentingViewController.videoLinkAdded(url: link)
+      }
+      alert.addAction(saveAction)
+      alert.show()
     }
 
     

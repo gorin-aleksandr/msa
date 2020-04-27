@@ -56,6 +56,10 @@
 	<string>Разрешите приложению доступ к bluetooth</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Доступ необходим для возможности размещения медиа материалов снятых на Вашу камеру</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Разрешите приложению доступ к контактам</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Разрешите приложению доступ к геолокации</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Разрешите приложению доступ к Вашему микрофону</string>
 	<key>NSPhotoLibraryUsageDescription</key>
