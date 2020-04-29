@@ -57,7 +57,7 @@ class ImageManager: NSObject, SelectingImagesManager {
     
     
     func presentVideoPicker() {
-        let actionSheetController = UIAlertController(title: "", message: "Выбрать видео:", preferredStyle: .actionSheet)
+        let actionSheetController = UIAlertController(title: "", message: "Выберите тип:", preferredStyle: .actionSheet)
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in }
         actionSheetController.addAction(cancelActionButton)
 
@@ -82,7 +82,7 @@ class ImageManager: NSObject, SelectingImagesManager {
     }
   
     private func getVideoLinkAlertAction() -> UIAlertAction {
-        let getVideo = UIAlertAction(title: "Добавить ссылку", style: .default) { action -> Void in
+        let getVideo = UIAlertAction(title: "Добавить ссылку на Youtube", style: .default) { action -> Void in
         self.presentLinkFieldAlert()
       }
         return getVideo

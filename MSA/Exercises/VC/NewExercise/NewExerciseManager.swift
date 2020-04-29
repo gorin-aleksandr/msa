@@ -15,6 +15,7 @@ class NewExerciseManager {
     static let shared = NewExerciseManager()
     var dataSource = NewExerciseDataSource()
     private weak var view: NewExerciseProtocol?
+    let manager = TrainingManager(type: .my)
     let exerciseRef = Database.database().reference().child("Exercise")
     //    let typesRef = Database.database().reference().child("<#T##pathString: String##String#>")
     func setName(name: String) {
@@ -47,6 +48,7 @@ class NewExerciseManager {
     func setVideo(url: String) {
         dataSource.videoUrl = url
     }
+  
     func deleteVideo() {
         dataSource.videoUrl = ""
         dataSource.videoPath = ""
@@ -78,6 +80,7 @@ class NewExerciseManager {
         dataSource.pictures = []
         dataSource.picturesUrls = []
         dataSource.videoUrl = ""
+        dataSource.youtubeLink = ""
         dataSource.videoPath = ""
         dataSource.curretnTextViewTag = 0
         dataSource.createButtonTapped = false
@@ -104,10 +107,12 @@ class NewExerciseManager {
     func sendNewExerciseInfoBlock(id: String, completion: @escaping (_ ex: Exercise)->()) {
         let newInfo = makeExerciseForFirebase(id: id, or: false)
         guard let index = newInfo["id"] as? String else {return}
+        let modelId = newInfo["id"] as? String ?? ""
+
         Database.database().reference().child("ExercisesByTrainers").child(id).child(index).setValue(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
-                let ex = self.makeModel()
+              let ex = self.makeModel(modelId: modelId)
                 completion(ex)
                 RealmManager.shared.saveObject(ex, update: true)
                 self.view?.exerciseCreated()
@@ -233,11 +238,12 @@ class NewExerciseManager {
     func updateExerciseBlock(id: String, completion: ((_ ex: Exercise)->())? = nil) {
         let newInfo = makeExerciseForFirebase(id: id, or: true)
         //        let child = [self.dataSource.newExerciseModel.id:newInfo] as! [Int:Any]
-        Database.database().reference().child("ExercisesByTrainers").child(id).child("\(self.dataSource.newExerciseModel.id)").updateChildValues(newInfo) { (error, databaseFer) in
+        let modelId = newInfo["id"] as? String ?? ""
+    Database.database().reference().child("ExercisesByTrainers").child(id).child("\(self.dataSource.newExerciseModel.id)").updateChildValues(newInfo) { (error, databaseFer) in
             self.view?.finishLoading()
             if error == nil {
                 DispatchQueue.main.async {
-                    let ex = self.makeModel()
+                  let ex = self.makeModel(modelId: modelId)
                     completion?(ex)
                     RealmManager.shared.saveObject(ex, update: true)
                     self.view?.exerciseUpdated()
@@ -249,9 +255,9 @@ class NewExerciseManager {
         }
     }
     
-    func makeModel() -> Exercise {
+  func makeModel(modelId: String) -> Exercise {
         let exercise = Exercise()
-        exercise.id = dataSource.id == "" ? UUID().uuidString : dataSource.id
+        exercise.id = modelId
         exercise.exerciseDescriprion = dataSource.descript
         let filt = Id()
         filt.id = dataSource.filterId
@@ -265,6 +271,8 @@ class NewExerciseManager {
         exercise.trainerId = AuthModule.currUser.id ?? ""
         exercise.typeId = 12
         exercise.videoUrl = dataSource.videoUrl
+        exercise.link = dataSource.youtubeLink
+
         return exercise
     }
     

@@ -201,6 +201,9 @@ extension ExercisesInfoViewController: UITableViewDataSource, UITableViewDelegat
     if execise?.videoUrl == "" && execise?.link == ""{
       videoCell?.icon.isHidden = true
       videoCell?.textLab.isHidden = true
+    } else {
+      videoCell?.icon.isHidden = false
+      videoCell?.textLab.isHidden = false
     }
     return videoCell!
   }

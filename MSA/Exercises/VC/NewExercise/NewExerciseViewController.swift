@@ -87,9 +87,15 @@ class NewExerciseViewController: UIViewController {
     if exercManager.dataSource.editMode {
       id = exercManager.dataSource.newExerciseModel.id
       index = presenter?.getCurrentIndex() ?? 0
+    } else {
+      exercManager.dataSource.newExerciseModel = Exercise()
     }
     imageManager = ImageManager(presentingViewController: self)
     exercManager.attachView(view: self)
+    exercManager.manager.initDataSource(dataSource: TrainingsDataSource.shared)
+    exercManager.manager.loadTrainingsFromRealm()
+    exercManager.manager.syncUnsyncedTrainings()
+    exercManager.manager.setCurrent(training: exercManager.manager.getTrainings()?.first)
     picker.delegate = self
     setShadow(outerView: viewWithPicker, shadowOpacity: 0.5)
     let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
@@ -481,23 +487,6 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     }
   }
   
-  func choseUploadVideoTypeAlert() {
-    let ac = UIAlertController(title: "Выберите тип", message: nil, preferredStyle: .actionSheet)
-    let rankAction = UIAlertAction(title: "Добавить ссылку на видео", style: .default, handler: { (action) in
-    })
-    let competitionAction = UIAlertAction(title: "Выбрать видео из галереи", style: .default, handler: { (action) in
-    })
-    let cancelAction = UIAlertAction(title: "Отменить", style: .cancel, handler: { (action) in
-    })
-    
-    ac.addAction(rankAction)
-    ac.addAction(competitionAction)
-    ac.addAction(cancelAction)
-    DispatchQueue.main.async {
-      self.present(ac, animated: true, completion: nil)
-    }
-  }
-  
 }
 
 extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -542,13 +531,12 @@ extension NewExerciseViewController: NewExerciseProtocol {
   func exerciseDeleted() {
     presenter?.deleteAt(i: index)
     exercManager.dataSource.editMode = false
-    if let vc = presentedVC as? ExercisesInfoViewController {
-      let index = (vc.navigationController?.viewControllers.count)! - 1
-      vc.navigationController?.viewControllers.remove(at: index)
-    }
+      if let viewController = navigationController?.viewControllers.first(where: {$0 is ExercisesForTypeViewController}) {
+            navigationController?.popToViewController(viewController, animated: true)
+      }
+    
     delay(sec: 1) {
       self.finishLoading()
-      self.exerciseUpdated()
     }
   }
   
@@ -572,6 +560,7 @@ extension NewExerciseViewController: NewExerciseProtocol {
   func videoLoaded(url: String) {
     exercManager.setVideo(url: url)
   }
+
   
   func errorOccurred(err: String) {
     activityIndicator.stopAnimating()

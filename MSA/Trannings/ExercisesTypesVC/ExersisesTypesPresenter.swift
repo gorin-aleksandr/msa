@@ -356,7 +356,7 @@ func parseExercises(snapchot: DataSnapshot) -> [Exercise] {
         exercise.videoUrl = s.childSnapshot(forPath: "videoUrl").value as? String ?? ""
         exercise.exerciseDescriprion = s.childSnapshot(forPath: "description").value as? String ?? "No description"
         exercise.howToDo = s.childSnapshot(forPath: "howToDo").value as? String ?? "No info about doing"
-        exercise.link = s.childSnapshot(forPath: "link").value as? String ?? "No attached link"
+        exercise.link = s.childSnapshot(forPath: "link").value as? String ?? "Загрузить видео"
         exercise.filterIDs = filterIds
         items.append(exercise)
     }
