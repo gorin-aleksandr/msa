@@ -80,6 +80,7 @@
 		24744565243202C600FB6BBD /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24744564243202C600FB6BBD /* ChatViewModel.swift */; };
 		2474456724324A3A00FB6BBD /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2474456624324A3A00FB6BBD /* ChatListViewController.swift */; };
 		2497F22C245347B30017F723 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497F22B245347B20017F723 /* UserProfileViewController.swift */; };
+		24A1D73A245ACD2800BF71FC /* MyAuthorizationAppleIdButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A1D739245ACD2700BF71FC /* MyAuthorizationAppleIdButton.swift */; };
 		24B14B0D2432586E00153CD5 /* ChatListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */; };
 		24B14B0F24325AAE00153CD5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B14B0E24325AAE00153CD5 /* Chat.swift */; };
 		24D8E15C244472D800F1D31A /* CopyTrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */; };
@@ -326,6 +327,7 @@
 		24744564243202C600FB6BBD /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		2474456624324A3A00FB6BBD /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		2497F22B245347B20017F723 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		24A1D739245ACD2700BF71FC /* MyAuthorizationAppleIdButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAuthorizationAppleIdButton.swift; sourceTree = "<group>"; };
 		24B14B0C2432586E00153CD5 /* ChatListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewModel.swift; sourceTree = "<group>"; };
 		24B14B0E24325AAE00153CD5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTrainingManager.swift; sourceTree = "<group>"; };
@@ -1012,6 +1014,7 @@
 				29C4A3F02038A62200F2A1BB /* SignInViewController.swift */,
 				298DF65A203C226800FB0180 /* SignInPresenter.swift */,
 				29D2A2BC2269DF910037CA97 /* PasswordRecoveryViewController.swift */,
+				24A1D739245ACD2700BF71FC /* MyAuthorizationAppleIdButton.swift */,
 			);
 			path = SingIn;
 			sourceTree = "<group>";
@@ -1471,14 +1474,15 @@
 				"${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework",
 				"${BUILT_PRODUCTS_DIR}/FZAccordionTableView/FZAccordionTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/NYTPhotoViewer/NYTPhotoViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/PhotoSlider/PhotoSlider.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
@@ -1487,10 +1491,9 @@
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework",
 				"${BUILT_PRODUCTS_DIR}/YoutubePlayer-in-WKWebView/YoutubePlayer_in_WKWebView.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/abseil/absl.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -1507,14 +1510,15 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FLAnimatedImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FZAccordionTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NYTPhotoViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PhotoSlider.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
@@ -1523,10 +1527,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TagListView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YoutubePlayer_in_WKWebView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/absl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -1559,6 +1562,7 @@
 				246B1160244B4AAB008A7540 /* SkyFloatingView.swift in Sources */,
 				240677852449DF91004DAE05 /* LocationPickerViewController.swift in Sources */,
 				240677812449DF91004DAE05 /* OneTextFieldViewController.swift in Sources */,
+				24A1D73A245ACD2800BF71FC /* MyAuthorizationAppleIdButton.swift in Sources */,
 				240677832449DF91004DAE05 /* PhotoLibraryPickerViewController.swift in Sources */,
 				29F9F21E2147AE82006EDC6A /* ExerciseTableViewCell.swift in Sources */,
 				2934805F20E8FCB10039028E /* infoTextTableViewCell.swift in Sources */,

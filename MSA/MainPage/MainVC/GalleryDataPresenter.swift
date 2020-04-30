@@ -9,6 +9,8 @@
 import Foundation
 import CoreData
 import Firebase
+import FirebaseDatabase
+import FirebaseStorage
 import UIKit
 
 class GalleryDataPresenter: ProfileGalleryDataPresenterProtocol {
@@ -50,7 +52,9 @@ class GalleryDataPresenter: ProfileGalleryDataPresenterProtocol {
             Storage.storage().reference().child(id).child(path).putFile(from: URL(string:path)!, metadata: nil, completion: { (metadata, error) in
                 self.view?.finishLoading()
                 if error == nil {
-                    self.view?.videoLoaded(url: (metadata?.downloadURL()?.absoluteString)!, and: img)
+                    if let downloadURL = metadata?.dictionaryRepresentation()["mediaLink"] as? String{
+                      self.view?.videoLoaded(url: downloadURL, and: img)
+                    }
                 } else {
                     print(error?.localizedDescription)
                 }

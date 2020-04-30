@@ -163,7 +163,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vpU-xn-gXN" userLabel="FB&amp;GOOGLEStack View">
-                                <rect key="frame" x="20" y="458" width="280" height="90"/>
+                                <rect key="frame" x="20" y="408" width="280" height="140"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJV-oB-jtX">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
@@ -253,6 +253,41 @@
                                             <constraint firstItem="nZg-ya-aZd" firstAttribute="top" secondItem="MdF-VZ-8c4" secondAttribute="top" id="rt4-Vk-fe0"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N6N-H4-eSj">
+                                        <rect key="frame" x="0.0" y="100" width="280" height="40"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RectangleBorderForButton" translatesAutoresizingMaskIntoConstraints="NO" id="e8i-BO-2Lx">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facebook" translatesAutoresizingMaskIntoConstraints="NO" id="MeL-BF-FXf">
+                                                <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="Lng-su-QUd"/>
+                                                    <constraint firstAttribute="height" constant="20" id="y8S-ge-ie6"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSt-El-SPD" customClass="MyAuthorizationAppleIdButton" customModule="MSA" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
+                                                <connections>
+                                                    <action selector="loginWithFacebook:" destination="bvY-6U-QKY" eventType="touchUpInside" id="UCf-AV-PIS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="fSt-El-SPD" secondAttribute="bottom" id="1m6-jv-0Jc"/>
+                                            <constraint firstItem="fSt-El-SPD" firstAttribute="leading" secondItem="N6N-H4-eSj" secondAttribute="leading" id="DLd-4Q-fxK"/>
+                                            <constraint firstAttribute="height" constant="40" id="L2H-mz-cEf"/>
+                                            <constraint firstItem="MeL-BF-FXf" firstAttribute="leading" secondItem="N6N-H4-eSj" secondAttribute="leading" constant="10" id="OJj-dH-lc2"/>
+                                            <constraint firstItem="MeL-BF-FXf" firstAttribute="centerY" secondItem="N6N-H4-eSj" secondAttribute="centerY" id="VaU-gO-heU"/>
+                                            <constraint firstAttribute="bottom" secondItem="e8i-BO-2Lx" secondAttribute="bottom" id="b3i-fk-Aew"/>
+                                            <constraint firstAttribute="trailing" secondItem="fSt-El-SPD" secondAttribute="trailing" id="m6L-JI-uIC"/>
+                                            <constraint firstAttribute="trailing" secondItem="e8i-BO-2Lx" secondAttribute="trailing" id="oEP-tX-4VQ"/>
+                                            <constraint firstItem="e8i-BO-2Lx" firstAttribute="leading" secondItem="N6N-H4-eSj" secondAttribute="leading" id="tKa-dq-CSb"/>
+                                            <constraint firstItem="fSt-El-SPD" firstAttribute="top" secondItem="N6N-H4-eSj" secondAttribute="top" id="xNd-hi-5JL"/>
+                                            <constraint firstItem="e8i-BO-2Lx" firstAttribute="top" secondItem="N6N-H4-eSj" secondAttribute="top" id="yYp-ve-xHG"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                             </stackView>
@@ -319,6 +354,7 @@
                     <navigationItem key="navigationItem" id="7Of-JT-oVn"/>
                     <connections>
                         <outlet property="activityIndicator" destination="bqg-PE-rL3" id="daS-Rp-K8V"/>
+                        <outlet property="appleButton" destination="fSt-El-SPD" id="XDL-sN-ne0"/>
                         <outlet property="blurView" destination="nyT-ne-dWG" id="hM8-nL-6nq"/>
                         <outlet property="emailTextField" destination="FCh-ac-lbB" id="q56-KC-Ibe"/>
                         <outlet property="fbButton" destination="Y1H-GX-Npg" id="tDY-T8-tHd"/>
@@ -1176,13 +1212,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Регистрация" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VbL-WB-Ri9">
-                                <rect key="frame" x="102.5" y="15" width="115" height="20.5"/>
+                                <rect key="frame" x="109" y="15" width="102" height="20"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AE7-D5-Aem">
-                                <rect key="frame" x="79" y="493" width="162" height="20"/>
+                                <rect key="frame" x="84" y="493" width="152" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="E62-HD-M2c"/>
                                 </constraints>
@@ -1473,7 +1509,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Персональная информация" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsk-eV-Jhr">
-                                <rect key="frame" x="37.5" y="15" width="245.5" height="20.5"/>
+                                <rect key="frame" x="49" y="15" width="222" height="20"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -1708,10 +1744,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYv-Ji-mW8">
-                                <rect key="frame" x="20" y="218.5" width="280" height="50"/>
+                                <rect key="frame" x="20" y="218" width="280" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email*" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4wU-wa-Eg8" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="5" y="0.0" width="250" height="41.5"/>
+                                        <rect key="frame" x="5" y="0.0" width="250" height="41"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="16"/>
@@ -1760,7 +1796,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xPB-pV-yNE" userLabel="FB&amp;GOOGLEStack View">
-                                <rect key="frame" x="20" y="325.5" width="280" height="120"/>
+                                <rect key="frame" x="20" y="325" width="280" height="120"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XIp-p2-eJf">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
@@ -1769,7 +1805,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Сбросить пароль" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hIS-GV-vW3">
-                                                <rect key="frame" x="71" y="15.5" width="138" height="19"/>
+                                                <rect key="frame" x="74.5" y="15.5" width="131.5" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -1803,7 +1839,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Отмена" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jtD-l4-exF">
-                                                <rect key="frame" x="110.5" y="15.5" width="59.5" height="19"/>
+                                                <rect key="frame" x="111.5" y="15.5" width="57" height="19"/>
                                                 <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="16"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
@@ -1834,13 +1870,13 @@
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Забыли пароль?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3i-d0-t4v">
-                                <rect key="frame" x="23" y="178" width="277" height="20.5"/>
+                                <rect key="frame" x="23" y="178" width="277" height="20"/>
                                 <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Q0y-3u-bVw">
-                                <rect key="frame" x="141.5" y="268.5" width="37" height="37"/>
+                                <rect key="frame" x="141.5" y="268" width="37" height="37"/>
                                 <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </activityIndicatorView>
                         </subviews>

@@ -11,6 +11,7 @@ import UIKit
 import SkyFloatingLabelTextField
 import SDWebImage
 import MessageUI
+import FirebaseAuth
 
 protocol EditProfileProtocol: class {
     func startLoading()
@@ -278,13 +279,59 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if let surname = userSurnameTextField.text {
             presenter.setSurname(surname: surname)
         }
-        if let email = AuthModule.currUser.email {
-            presenter.setEmail(email: email)
-        }
         if let city = cityTF.text {
             presenter.setCity(city: city)
         }
-        presenter.updateUserProfile(AuthModule.currUser)
+        if let email = emailTextField.text {
+          if email != AuthModule.currUser.email {
+            presentConfirmationPasswordAlert()
+          } else {
+            presenter.updateUserProfile(AuthModule.currUser){ (updated,error) in}
+          }
+        } else {
+          presenter.updateUserProfile(AuthModule.currUser){ (updated,error) in}
+       }
+        
+    }
+  
+    @objc func presentConfirmationPasswordAlert() {
+      let alert = UIAlertController(style: .actionSheet, title: "Укажите пароль от вашего аккаунта для смены почты")
+      let config: TextField.Config = { textField in
+          textField.becomeFirstResponder()
+          textField.textColor = .black
+          textField.placeholder = "Пароль"
+          //textField.left(image: image, color: .black)
+          textField.leftViewPadding = 12
+          textField.borderWidth = 1
+          textField.cornerRadius = 8
+          textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
+          textField.backgroundColor = nil
+          textField.keyboardAppearance = .default
+          textField.keyboardType = .default
+          textField.isSecureTextEntry = false
+          textField.returnKeyType = .done
+          textField.action { textField in
+            self.presenter.confirmPassword = textField.text!
+          }
+      }
+      alert.addOneTextField(configuration: config)
+      let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
+        if let email = self.emailTextField.text {
+          self.presenter.oldMail = AuthModule.currUser.email ?? ""
+          self.presenter.setEmail(email: email)
+        }
+        self.presenter.updateUserProfile(AuthModule.currUser,self.presenter.confirmPassword) { (updated,error) in
+          if !updated {
+            self.presenter.setEmail(email: self.presenter.oldMail)
+            self.emailTextField.text = self.presenter.oldMail
+          }
+        }
+      }
+      let cancelAction = UIAlertAction(title: "Отменить", style: .cancel) { (action) in
+      }
+      alert.addAction(saveAction)
+      alert.addAction(cancelAction)
+      alert.show()
     }
     
     @objc func back() {
@@ -576,7 +623,7 @@ extension EditProfileViewController: EditProfileProtocol {
 extension EditProfileViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == emailTextField {
-            return false
+          return presenter.provider == "password" ? true :false
         } else {
             return true
         }

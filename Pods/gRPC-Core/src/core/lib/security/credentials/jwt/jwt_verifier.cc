@@ -31,21 +31,9 @@
 #include <grpc/support/sync.h>
 
 extern "C" {
-#if COCOAPODS==1
-  #include <openssl_grpc/bn.h>
-#else
-  #include <openssl/bn.h>
-#endif
-#if COCOAPODS==1
-  #include <openssl_grpc/pem.h>
-#else
-  #include <openssl/pem.h>
-#endif
-#if COCOAPODS==1
-  #include <openssl_grpc/rsa.h>
-#else
-  #include <openssl/rsa.h>
-#endif
+#include <openssl_grpc/bn.h>
+#include <openssl_grpc/pem.h>
+#include <openssl_grpc/rsa.h>
 }
 
 #include "src/core/lib/gpr/string.h"

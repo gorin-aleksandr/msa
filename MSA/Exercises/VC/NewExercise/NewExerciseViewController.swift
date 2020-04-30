@@ -525,7 +525,7 @@ extension NewExerciseViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 
 extension NewExerciseViewController: NewExerciseProtocol {
   func exerciseUpdated() {
-    self.dismiss(animated: true, completion: nil)
+    self.navigationController?.popViewController(animated: true)
   }
   
   func exerciseDeleted() {

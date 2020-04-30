@@ -142,6 +142,26 @@ class UserSignInPresenter {
         }
     }
     
+    func loginWithAppleId(credential: AuthCredential) {
+          self.view?.startLoading()
+          AuthModule.appleAuth = true
+          auth.loginAppleId(credential: credential) { (user, error) in
+            self.view?.finishLoading()
+            if error == nil && user != nil {
+                let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+                self.view?.setUser(user: user)
+                self.view?.loggedWithFacebook()
+                return
+            } else {
+                if let error = error {
+                } else {
+                    self.view?.notLogged(resp: "FBCancel")
+                }
+            }
+          }
+    }
+      
+  
     func saveUser(context: NSManagedObjectContext, user: UserVO) {
         deleteUserBlock(context: context)
         let task = User(context: context)

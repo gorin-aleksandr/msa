@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import FirebaseAuth
-import Firebase
+import FirebaseDatabase
 import FBSDKCoreKit
 import FBSDKLoginKit
 
@@ -29,7 +29,8 @@ class AuthModule {
     static var userAvatar: UIImage?
     static var pass = String()
     static var facebookAuth = false
-    
+    static var appleAuth = false
+
     static func sendRecoverPasswordRequest(email: String, callback: @escaping (_ error: Error?)->()) {
         Auth.auth().sendPasswordReset(withEmail: email, completion: callback)
     }
@@ -37,7 +38,7 @@ class AuthModule {
     func registerUser(email: String, pass: String, callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
         Auth.auth().createUser(withEmail: email, password: pass) { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.uid, email: user?.email, firstName: nil, lastName: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+              let user = UserVO(id: user?.user.uid, email: user?.user.email, firstName: nil, lastName: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
                 callback(user, nil)
             } else {
                 callback(nil, error)
@@ -48,7 +49,7 @@ class AuthModule {
     func loginUser(email: String, pass: String, callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
         Auth.auth().signIn(withEmail: email, password: pass) { (user, error) in
             if error == nil && user != nil {
-                let user = UserVO(id: user?.uid, email: user?.email, firstName: nil, lastName: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+                let user = UserVO(id: user?.user.uid, email: user?.user.email, firstName: nil, lastName: nil, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
                 callback(user, nil)
             } else {
                 callback(nil, error)
@@ -95,7 +96,7 @@ class AuthModule {
                     })
                     Auth.auth().signIn(with: credential, completion: { (user, error) in
                         if error == nil && user != nil {
-                            let user = UserVO(id: user?.uid, email: AuthModule.currUser.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+                            let user = UserVO(id: user?.user.uid, email: AuthModule.currUser.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
                             callback(user, nil)
                         } else {
                             callback(nil, error)
@@ -108,6 +109,20 @@ class AuthModule {
         }
     }
     
+  func loginAppleId(credential: AuthCredential,callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
     
+    Auth.auth().signIn(with: credential, completion: { (user, error) in
+        if error == nil && user != nil {
+            let user = UserVO(id: user?.user.uid, email: AuthModule.currUser.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+            callback(user, nil)
+        } else {
+            callback(nil, error)
+        }
+    })
+  
+  }
+    
+  
+  
     
 }

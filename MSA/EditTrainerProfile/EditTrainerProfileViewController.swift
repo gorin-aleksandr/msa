@@ -8,7 +8,7 @@
 
 import UIKit
 import FZAccordionTableView
-import Firebase
+import FirebaseDatabase
 import SkyFloatingLabelTextField
 
 
@@ -679,7 +679,7 @@ extension EditTrainerProfileViewController {
       if let key = AuthModule.currUser.id {
         userRef.child(key).child("coachDetail").child("achievements").child("\(autoId)").setValue(achieve, andPriority: nil) { (error, ref) in
           var achievement = self.selectedAchievements.last
-          achievement!.id = autoId
+          achievement!.id = autoId ?? ""
           self.selectedAchievements.removeLast()
           self.selectedAchievements.append(achievement!)
           self.tableView.reloadData()
@@ -725,7 +725,7 @@ extension EditTrainerProfileViewController {
       if let key = AuthModule.currUser.id {
         userRef.child(key).child("coachDetail").child("education").child("\(autoId)").setValue(education, andPriority: nil) { (error, ref) in
           var lastEducation = self.selectedEducation.last
-          lastEducation!.id = autoId
+          lastEducation!.id = autoId ?? ""
           self.selectedEducation.removeLast()
           self.selectedEducation.append(lastEducation!)
           self.tableView.reloadData()
@@ -769,7 +769,7 @@ extension EditTrainerProfileViewController {
       if let key = AuthModule.currUser.id {
         userRef.child(key).child("coachDetail").child("certificates").child("\(autoId)").setValue(certificate, andPriority: nil) { (error, ref) in
           var lastCertificate = self.selectedCertificates.last
-          lastCertificate!.id = autoId
+          lastCertificate!.id = autoId ?? ""
           self.selectedCertificates.removeLast()
           self.selectedCertificates.append(lastCertificate!)
           self.tableView.reloadData()

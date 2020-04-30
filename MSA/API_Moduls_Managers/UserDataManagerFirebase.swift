@@ -197,11 +197,11 @@ class UserDataManager {
         return user
     }
     
-    func updateProfile(_ user: UserVO, callback: @escaping (_ created: Bool,_ err: Error?)->()) {
+  func updateProfile(_ user: UserVO,_ password: String? = nil, callback: @escaping (_ created: Bool,_ err: Error?)->()) {
         if let key = AuthModule.currUser.id {
-            let update = [
+          var update: [String:Any] = [
+              "email": user.email ,
                 "id": key,
-                "email": user.email,
                 "name": user.firstName,
                 "surname": user.lastName,
                 "level": user.level,
@@ -215,9 +215,32 @@ class UserDataManager {
                 "city": user.city,
                 "fcmToken": user.fcmToken
                 ] as [String:Any]
+            if password != nil {
+              update.removeValue(forKey: "email")
+            }
             userRef.child(key).updateChildValues(update, withCompletionBlock: { (error, ref) in
                 if error == nil {
+                  if password == nil {
                     callback(true,error)
+                  } else {
+                  if let currentUser = Auth.auth().currentUser {
+                    let eMail = EmailAuthProvider.credential(withEmail: currentUser.email!, password: password!)
+                  Auth.auth().currentUser?.reauthenticate(with: eMail, completion: { (authResult,error) in
+                    if let error = error {
+                      callback(false,error)
+                    } else {
+                        currentUser.updateEmail(to: user.email!) { (error) in
+                          if error == nil {
+                            let update = ["email": user.email] as [String:Any]
+                            self.userRef.child(key).updateChildValues(update, withCompletionBlock: { (error, ref) in
+                              callback(true,error)
+                            })
+                          }
+                        }
+                      }
+                    })
+                  }
+                  }
                 } else {
                     callback(false,error)
                 }

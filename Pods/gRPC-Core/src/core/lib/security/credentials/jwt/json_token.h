@@ -24,17 +24,13 @@
 #include "src/core/tsi/grpc_shadow_boringssl.h"
 
 #include <grpc/slice.h>
-#if COCOAPODS==1
-  #include <openssl_grpc/rsa.h>
-#else
-  #include <openssl/rsa.h>
-#endif
+#include <openssl_grpc/rsa.h>
 
 #include "src/core/lib/json/json.h"
 
 /* --- Constants. --- */
 
-#define GRPC_JWT_OAUTH2_AUDIENCE "https://oauth2.googleapis.com/token"
+#define GRPC_JWT_OAUTH2_AUDIENCE "https://www.googleapis.com/oauth2/v3/token"
 
 /* --- auth_json_key parsing. --- */
 

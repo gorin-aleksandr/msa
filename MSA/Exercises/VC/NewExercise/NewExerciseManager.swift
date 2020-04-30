@@ -8,7 +8,10 @@
 
 import Foundation
 import RealmSwift
-import Firebase
+import FirebaseDatabase
+import FirebaseStorage
+import FirebaseAnalytics
+
 
 class NewExerciseManager {
     
@@ -96,8 +99,10 @@ class NewExerciseManager {
                         self.view?.errorOccurred(err: error?.localizedDescription ?? "")
                         success(false)
                     } else {
-                        self.view?.videoLoaded(url: (metadata?.downloadURL()?.absoluteString)!)
-                        success(true)
+                        if let downloadURL = metadata?.dictionaryRepresentation()["mediaLink"] as? String{
+                              self.view?.videoLoaded(url: downloadURL)
+                              success(true)
+                        }
                     }
                 })
             }

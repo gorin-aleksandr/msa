@@ -10,16 +10,24 @@ import Foundation
 import UIKit
 import CoreData
 import Firebase
+import FirebaseStorage
+import FirebaseDatabase
+import FirebaseAuth
 import RealmSwift
 
 class EditProfilePresenter {
     
     private let profile: UserDataManager
     private weak var view: EditProfileProtocol?
-
+    var confirmPassword = ""
+    var provider = ""
+    var oldMail = ""
 
     init(profile: UserDataManager) {
         self.profile = profile
+        if let providerData = Auth.auth().currentUser?.providerData {
+          provider = providerData.first?.providerID as! String
+        }
     }
     
     func attachView(view: EditProfileProtocol){
@@ -105,12 +113,13 @@ class EditProfilePresenter {
                         }
                         return
                     }
-                    if let downloadURL = metadata.downloadURL()?.absoluteString {
-                        self.profile.userRef.child(id).updateChildValues(["userPhoto": downloadURL], withCompletionBlock: { (error, ref) in
-                            AuthModule.currUser.avatar = downloadURL
-                            self.getImage()
-                        })
-                    }
+                  
+                  if let downloadURL = metadata.dictionaryRepresentation()["mediaLink"] as? String{
+                      self.profile.userRef.child(id).updateChildValues(["userPhoto": downloadURL], withCompletionBlock: { (error, ref) in
+                                           AuthModule.currUser.avatar = downloadURL
+                                           self.getImage()
+                                       })
+                  }
                 }
             }
             
@@ -157,15 +166,17 @@ class EditProfilePresenter {
         }
     }
     
-    func updateUserProfile(_ profile: UserVO) {
+  func updateUserProfile(_ profile: UserVO, _ password: String? = nil,callback: @escaping (_ created: Bool,_ err: Error?)-> ()) {
         view?.startLoading()
-        self.profile.updateProfile(profile) { (updated,error) in
+        self.profile.updateProfile(profile,password) { (updated,error) in
             self.view?.finishLoading()
             if updated {
                 self.view?.setUser(user: AuthModule.currUser)
+                callback(true,nil)
             } else {
                 if let err = error?.localizedDescription {
                     self.view?.errorOcurred(err)
+                    callback(false,error)
                 }
             }
         }
