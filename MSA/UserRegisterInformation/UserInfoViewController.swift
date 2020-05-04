@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 enum PickerDataType {
     case Age
@@ -101,15 +102,13 @@ class UserInfoViewController: BasicViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func confirmButton(_ sender: Any) {
-        if !AuthModule.facebookAuth {
+        if !AuthModule.facebookAuth && !AuthModule.appleAuth{
             if let email = AuthModule.currUser.email {
                 presenter2.registerUser(email: email, password: AuthModule.pass)
             }
         } else {
             presenter.createNewUser(newUser: AuthModule.currUser)
         }
-
-//        presenter.addProfileInfo(user: AuthModule.currUser)
     }
     
     @IBAction func selectSantimeters(_ sender: Any) {

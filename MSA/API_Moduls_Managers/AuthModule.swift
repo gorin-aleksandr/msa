@@ -113,7 +113,7 @@ class AuthModule {
     
     Auth.auth().signIn(with: credential, completion: { (user, error) in
         if error == nil && user != nil {
-            let user = UserVO(id: user?.user.uid, email: AuthModule.currUser.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+          let user = UserVO(id: user?.user.uid, email: user?.user.email, firstName: AuthModule.currUser.firstName, lastName: AuthModule.currUser.lastName, avatar: nil, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
             callback(user, nil)
         } else {
             callback(nil, error)

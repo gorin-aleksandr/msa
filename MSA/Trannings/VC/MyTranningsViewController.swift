@@ -713,6 +713,7 @@ class MyTranningsViewController: UIViewController {
 
 extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource {
     
+  
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let daysCount = manager.dataSource?.currentWeek?.days.count ?? 0
         if section == daysCount {
@@ -751,12 +752,11 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             headerView.startTrainingButton.tag = section
             headerView.changeDateButton.tag = section
             headerView.deleteButton.tag = section
+            headerView.deleteButton.isHidden = false
             headerView.deleteButton.addTarget(self, action: #selector(showDeleteDayAlert(sender:)), for: .touchUpInside)
             headerView.changeDateButton.addTarget(self, action: #selector(changeDate(sender:)), for: .touchUpInside)
             headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
             headerView.sircleTrainingButton.addTarget(self, action: #selector(startRoundTraining(sender:)), for: .touchUpInside)
-
-            
             return headerView
         }
     }
