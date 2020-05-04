@@ -41,6 +41,7 @@ class MyTranningsViewController: UIViewController {
 
     var manager = TrainingManager(type: .my)
     var weekNumber = 0
+    var showDeleteDayButton = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -383,6 +384,12 @@ class MyTranningsViewController: UIViewController {
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
             self.showDeleteWeekAlert()
         })
+      
+        let fourthAction = UIAlertAction(title: showDeleteDayButton ? "Завершить удаление" : "Удалить день", style: .default, handler: { action in
+            self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
+            self.showDeleteDayButton = !self.showDeleteDayButton
+            self.tableView.reloadData()
+        })
         
         let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
             self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
@@ -395,7 +402,9 @@ class MyTranningsViewController: UIViewController {
         }
         if !addDayWeek {
             alert.addAction(thirdAction)
+            alert.addAction(fourthAction)
         }
+      
         alert.addAction(cancel)
         segmentControl.layer.borderColor = UIColor.lightGray.cgColor
         self.present(alert, animated: true, completion: nil)
@@ -752,7 +761,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
             headerView.startTrainingButton.tag = section
             headerView.changeDateButton.tag = section
             headerView.deleteButton.tag = section
-            headerView.deleteButton.isHidden = false
+            headerView.deleteButton.isHidden = !showDeleteDayButton
             headerView.deleteButton.addTarget(self, action: #selector(showDeleteDayAlert(sender:)), for: .touchUpInside)
             headerView.changeDateButton.addTarget(self, action: #selector(changeDate(sender:)), for: .touchUpInside)
             headerView.startTrainingButton.addTarget(self, action: #selector(startTraining(sender:)), for: .touchUpInside)
