@@ -12,6 +12,7 @@ import SkyFloatingLabelTextField
 import SDWebImage
 import MessageUI
 import FirebaseAuth
+import SearchTextField
 
 protocol EditProfileProtocol: class {
     func startLoading()
@@ -62,7 +63,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var weightLabel: UILabel!
     @IBOutlet weak var levelLabel: UILabel!
-    @IBOutlet weak var cityTF: SkyFloatingLabelTextField!
+    @IBOutlet weak var cityTF: SearchTextField!
     
     @IBOutlet weak var pickerView: UIPickerView! {didSet{pickerView.alpha = 0}}
     @IBOutlet weak var measureStackView: UIStackView!
@@ -91,10 +92,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     var myPicker = UIImagePickerController()
     private var dataType: PickerDataType!
-
+    var cities: [String] = []
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
+      
+            
         myPicker.delegate = self
         emailTextField.delegate = self
         configureNavigationItem()
@@ -104,7 +108,29 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         measureStackView.layer.opacity = 0
         
         configureHeaders()
+        setupCities()
     }
+  
+  func setupCities() -> Bool{
+    guard let js = loadJson(filename: "cities") else {
+      return false
+    }
+        
+    cities = js.map { $0.name }
+    cityTF.filterStrings(cities)
+    cityTF.comparisonOptions = [.caseInsensitive]
+    // Set the max number of results. By default it's not limited
+    cityTF.maxNumberOfResults = 5
+    cityTF.direction = .up
+    cityTF.maxResultsListHeight = 150
+    cityTF.theme.font = UIFont(name: "Rubik-Regular", size: 14)!
+    cityTF.theme.fontColor = .darkCyanGreen
+    cityTF.theme.bgColor = .white
+    cityTF.theme.separatorColor = .darkCyanGreen45
+    cityTF.theme.cellHeight = 35
+    cityTF.lineColor = .darkCyanGreen45
+    return true
+  }
 
     func configureHeaders() {
         sexHeader.isHidden = AuthModule.currUser.sex == nil

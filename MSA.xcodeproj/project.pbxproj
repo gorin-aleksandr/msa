@@ -61,6 +61,7 @@
 		240677992449DF91004DAE05 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240677642449DF90004DAE05 /* TextField.swift */; };
 		2406779A2449DF91004DAE05 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240677652449DF90004DAE05 /* Button.swift */; };
 		242CAA4F242F76ED00EE8351 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 242CAA4E242F76ED00EE8351 /* Chat.storyboard */; };
+		242E56AF24617EC100C1602D /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 242E56AE24617EC000C1602D /* cities.json */; };
 		2435E76E244B1360003B6361 /* EditTrainerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435E76D244B1360003B6361 /* EditTrainerProfileViewController.swift */; };
 		2435E771244B25AC003B6361 /* TrainerSkillsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2435E770244B25AC003B6361 /* TrainerSkillsHeaderView.xib */; };
 		2435E773244B282A003B6361 /* TrainerSkillsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435E772244B282A003B6361 /* TrainerSkillsHeaderView.swift */; };
@@ -306,6 +307,7 @@
 		240677642449DF90004DAE05 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		240677652449DF90004DAE05 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		242CAA4E242F76ED00EE8351 /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		242E56AE24617EC000C1602D /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
 		2435E76D244B1360003B6361 /* EditTrainerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainerProfileViewController.swift; sourceTree = "<group>"; };
 		2435E770244B25AC003B6361 /* TrainerSkillsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerSkillsHeaderView.xib; sourceTree = "<group>"; };
 		2435E772244B282A003B6361 /* TrainerSkillsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerSkillsHeaderView.swift; sourceTree = "<group>"; };
@@ -844,6 +846,7 @@
 		29160B392035AA3B00DA7227 = {
 			isa = PBXGroup;
 			children = (
+				242E56AE24617EC000C1602D /* cities.json */,
 				29160B442035AA3B00DA7227 /* MSA */,
 				29160B432035AA3B00DA7227 /* Products */,
 				0E2E10DE4BA09BD485BA04EC /* Pods */,
@@ -1386,6 +1389,7 @@
 				2934806020E8FCB10039028E /* infoTextTableViewCell.xib in Resources */,
 				29F5678D219AB809003B704B /* ReusableMultipleSelectionTableViewCell.xib in Resources */,
 				29A7FE9F2183DE0900DDBC0F /* addWeekDayView.xib in Resources */,
+				242E56AF24617EC100C1602D /* cities.json in Resources */,
 				29F9F2332147B537006EDC6A /* CreateExerciseTableViewCell.xib in Resources */,
 				299B548820A0D38B004E60A2 /* Rubik-Bold.ttf in Resources */,
 				240677792449DF91004DAE05 /* Countries.bundle in Resources */,
@@ -1487,6 +1491,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TagListView/TagListView.framework",
@@ -1523,6 +1528,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TagListView.framework",

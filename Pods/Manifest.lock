@@ -408,6 +408,7 @@ PODS:
   - SDWebImage/GIF (4.3.0):
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
+  - SearchTextField (1.2.4)
   - SkyFloatingLabelTextField (3.8.0)
   - SVProgressHUD (2.2.5)
   - SwipeCellKit (2.7.1)
@@ -436,6 +437,7 @@ DEPENDENCIES:
   - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
   - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
   - SDWebImage
+  - SearchTextField
   - SkyFloatingLabelTextField (~> 3.0)
   - SVProgressHUD
   - SwipeCellKit
@@ -493,6 +495,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - Protobuf
+    - SearchTextField
     - TagListView
     - YoutubePlayer-in-WKWebView
 
@@ -571,12 +574,13 @@ SPEC CHECKSUMS:
   Realm: e125f464884cda953ebefe70c671b75b03b81b9b
   RealmSwift: 33656a42bd300959a081fc13347376bc478071af
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
+  SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwipeCellKit: 3972254a826da74609926daf59b08d6c72e619ea
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 6378ff8dec0c0a115cb4e99cbaae541f6db5d981
+PODFILE CHECKSUM: b8f56c6384c7a407792ddd693a7c98bd30cb2e8e
 
 COCOAPODS: 1.9.1

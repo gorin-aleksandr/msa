@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SearchTextField
 
 enum MSA_User_Type: String {
   case sport = "СПОРТСМЕН"
@@ -20,15 +21,17 @@ class NameSurnameViewController: BasicViewController {
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView! {didSet{activityIndicator.stopAnimating()}}
   @IBOutlet weak var nameTF: UITextField!
   @IBOutlet weak var surnameTF: UITextField!
-  @IBOutlet weak var cityTF: UITextField!
+  @IBOutlet weak var cityTF: SearchTextField!
   @IBOutlet weak var sportsmanImage: UIImageView!
   @IBOutlet weak var trainerImage: UIImageView!
-  
+  @IBOutlet weak var confirmButton: UIButton!
+
   var type = MSA_User_Type.sport
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   private let presenter = UserSignInPresenter(auth: AuthModule())
   private let anotherPresenter = SignUpPresenter(signUp: UserDataManager())
-  
+  var cities: [String] = []
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -37,13 +40,38 @@ class NameSurnameViewController: BasicViewController {
     nameTF.delegate = self
     surnameTF.delegate = self
     cityTF.delegate = self
+    cityTF.placeholder = "Город*"
     if let name = AuthModule.currUser.firstName {
       nameTF.text = name
     }
     if let surname = AuthModule.currUser.lastName {
       surnameTF.text = surname
     }
-    // Do any additional setup after loading the view.
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    setupCities()
+  }
+  
+  func setupCities() -> Bool{
+    guard let js = loadJson(filename: "cities") else {
+      return false
+    }
+    cities = js.map { $0.name }
+    cityTF.filterStrings(cities)
+    cityTF.comparisonOptions = [.caseInsensitive]
+    cityTF.maxNumberOfResults = 5
+    cityTF.direction = .up
+    cityTF.maxResultsListHeight = 150
+    cityTF.theme.font = UIFont(name: "Rubik-Regular", size: 14)!
+    cityTF.theme.fontColor = .darkCyanGreen
+    cityTF.theme.bgColor = .white
+    cityTF.theme.separatorColor = .darkCyanGreen45
+    cityTF.theme.placeholderColor = .white
+    cityTF.theme.separatorColor = .darkCyanGreen45
+    cityTF.theme.cellHeight = 35
+    cityTF.lineColor = .white
+    return true
   }
   
   @IBAction func selectSportsman(_ sender: Any) {

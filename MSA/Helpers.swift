@@ -178,3 +178,50 @@ extension String {
         return hexString
     }
 }
+
+struct ResponseData: Decodable {
+    var city: [City]
+}
+struct City : Decodable {
+    var name: String
+}
+
+func loadJson(filename fileName: String) -> [City]? {
+    if let url = Bundle.main.url(forResource:fileName, withExtension: "json") {
+        do {
+            let data = try Data(contentsOf: url)
+            let decoder = JSONDecoder()
+            let jsonData = try decoder.decode(ResponseData.self, from: data)
+            return jsonData.city
+        } catch {
+            print("error:\(error)")
+        }
+    }
+    return nil
+}
+
+extension UITextField {
+  func setBottomBorder() {
+    self.borderStyle = .none
+    self.layer.backgroundColor = UIColor.clear.cgColor
+    self.layer.masksToBounds = false
+    self.layer.shadowColor = UIColor.red.cgColor
+    self.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+    self.layer.shadowOpacity = 1.0
+    self.layer.shadowRadius = 0.0
+  }
+}
+
+extension UITextField
+{
+  func setBottomBorder(withColor color: UIColor, widthLine: CGFloat)
+    {
+        self.borderStyle = UITextField.BorderStyle.none
+        self.backgroundColor = UIColor.clear
+        let width: CGFloat = 1.0
+
+        let borderLine = UIView(frame: CGRect(x: 0, y: self.frame.height - width, width: widthLine, height: width))
+        borderLine.backgroundColor = color
+        self.addSubview(borderLine)
+    }
+}

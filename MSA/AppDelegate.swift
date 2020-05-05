@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let pushManager = PushNotificationManager()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
+  
         let config = Realm.Configuration(
             schemaVersion: realmVersion,
             migrationBlock: { migration, oldSchemaVersion in
