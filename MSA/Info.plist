@@ -64,6 +64,10 @@
 	<string>Разрешите приложению доступ к Вашему микрофону</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Разрешите приложению доступ к Вашей фото библиотеке</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

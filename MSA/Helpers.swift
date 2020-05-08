@@ -225,3 +225,76 @@ extension UITextField
         self.addSubview(borderLine)
     }
 }
+
+class CustomTitleView: UIView
+{
+
+var title_label = UILabel()
+var left_imageView = UIImageView()
+
+override init(frame: CGRect){
+    super.init(frame: frame)
+    setup()
+}
+
+required init?(coder aDecoder: NSCoder){
+    super.init(coder: aDecoder)
+    setup()
+}
+
+func setup(){
+    self.addSubview(title_label)
+    self.addSubview(left_imageView)
+
+}
+
+func loadWith(title: String, leftImage: UIImage?)
+{
+
+    //self.backgroundColor = .yellow
+
+    // =================== title_label ==================
+    //title_label.backgroundColor = .blue
+    title_label.text = title
+    title_label.font = UIFont.systemFont(ofSize: 14)
+
+
+    // =================== imageView ===================
+    left_imageView.image = leftImage
+
+    setupFrames()
+}
+
+func setupFrames()
+{
+
+    let height: CGFloat = 44
+    let image_size: CGFloat = height * 0.8
+
+    left_imageView.frame = CGRect(x: 0,
+                                  y: (height - image_size) / 2,
+                                  width: (left_imageView.image == nil) ? 0 : image_size,
+                                  height: image_size)
+
+    let titleWidth: CGFloat = title_label.intrinsicContentSize.width + 10
+    title_label.frame = CGRect(x: left_imageView.frame.maxX + 5,
+                               y: 0,
+                               width: titleWidth,
+                               height: height)
+
+
+
+    contentWidth = Int(left_imageView.frame.width)
+    self.frame = CGRect(x: 0, y: 0, width: CGFloat(contentWidth), height: height)
+}
+
+
+var contentWidth: Int = 0 //if its CGFloat, it infinitely calls layoutSubviews(), changing franction of a width
+override func layoutSubviews() {
+    super.layoutSubviews()
+
+    self.frame.size.width = CGFloat(contentWidth)
+
+}
+
+}

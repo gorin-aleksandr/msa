@@ -69,7 +69,8 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     @IBOutlet weak var instagramButton: UIButton!
 
     var profilePresenter: ProfilePresenterProtocol!
-    
+    var isHiddenSendMessageButton = true
+
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
     
@@ -117,7 +118,8 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
       group.notify(queue: .main) {
         self.tableView.reloadData()
       }
-
+      
+      sendEmailButton.isHidden = isHiddenSendMessageButton
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -210,6 +212,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
         navigationItem.leftBarButtonItem?.image = UIImage(named: "back_")
         navigationItem.leftBarButtonItem?.title = "Назад"
+        sendEmailButton.isHidden = isHiddenSendMessageButton
     }
     
     func updateProfile(with user: UserVO) {
@@ -460,6 +463,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
       let chatViewController = chatStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController
       chatViewController?.viewModel = ChatViewModel(chatId: profilePresenter.chatId!, chatUserId: profilePresenter.user.id!, chatUserName: "\(profilePresenter.user.firstName!) \(profilePresenter.user.lastName!)")
       chatViewController?.viewModel!.chatUser = profilePresenter.user
+      chatViewController?.viewModel?.chatUserAvatar = profilePresenter.user.avatar
       chatViewController?.senderDisplayName = ""
       let nc = UINavigationController(rootViewController: chatViewController!)
       nc.modalPresentationStyle = .fullScreen

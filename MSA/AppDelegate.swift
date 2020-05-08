@@ -95,6 +95,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     
     }
+  
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                        didReceive response: UNNotificationResponse,
+                        withCompletionHandler completionHandler: @escaping () -> Void) {
+      print("background!")
+  }
 
     func applicationWillTerminate(_ application: UIApplication) {
         if !AuthModule.isLastUserCurrent {

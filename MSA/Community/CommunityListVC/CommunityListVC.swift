@@ -69,7 +69,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         super.viewWillAppear(animated)
         
         // MARK: Uncomment/commemt for IAPs
-       // accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
+        //accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
         accessDeniedView.isHidden = true
         
         setupNavigationBar()
@@ -248,9 +248,6 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
              destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
              navigationController?.pushViewController(destinationVC, animated: true)
            }
-//        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-//        destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
-//        navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     private func presentIAPViewController() {
@@ -266,7 +263,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
 // MARK: 1
-//       if InAppPurchasesService.shared.currentSubscription != nil {
+   //    if InAppPurchasesService.shared.currentSubscription != nil {
             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
             destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
             self.navigationController?.pushViewController(destinationVC, animated: true)

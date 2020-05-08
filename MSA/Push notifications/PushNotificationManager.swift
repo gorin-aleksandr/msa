@@ -44,10 +44,10 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
           UserDataManager().updateFcmToken(token: token)
         }
     }
-
-    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-        print(remoteMessage.appData) // or do whatever
-    }
+//
+//    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+//        print(remoteMessage.appData) // or do whatever
+//    }
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         updateFirestorePushTokenIfNeeded()
@@ -56,4 +56,28 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         print(response)
     }
+  
+  
+    // Function call when App is in foreground State
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+      willPresent notification: UNNotification,
+      withCompletionHandler completionHandler: @escaping
+     (UNNotificationPresentationOptions) -> Void) {
+      print("Foreg")
+    }
+
+   // Function call when App in Background State
+
+  func application(_ application: UIApplication,
+    didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+    fetchCompletionHandler completionHandler: @escaping
+   (UIBackgroundFetchResult) -> Void) {
+    print("Backgrond")
+    UIApplication.shared.applicationIconBadgeNumber = 777
+
+    
+
+
+   }
 }

@@ -111,6 +111,23 @@ class UserDataManager {
         }
     }
     
+  func getUser(userId: String,callback: @escaping (_ user: UserVO?, _ error: Error?)->()) {
+        guard InternetReachability.isConnectedToNetwork()  else {
+            let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))
+           callback(nil, connectionError)
+            return
+        }
+          userRef.child(userId).observeSingleEvent(of: .value, with: { (snapshot) in
+              // Get user value
+              let value = snapshot.value as? [String : Any]
+              let user = self.makeUser(from: value)
+              callback(user, nil)
+          }) { (error) in
+              print(error.localizedDescription)
+              callback(nil, error)
+          }
+        
+    }
     func loadAllUsers(callback: @escaping (_ community: [UserVO], _ error: Error?) -> ()) {
         guard InternetReachability.isConnectedToNetwork()  else {
             let connectionError = MSAError.customError(error: MSAError.CustomError(code: "NoConnection", message: ""))

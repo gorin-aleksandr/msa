@@ -63,7 +63,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   
   var trainer: UserVO?
   var comunityPresenter: CommunityListPresenterProtocol?
-  
+  var chatViewModel: ChatListViewModel = ChatListViewModel()
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -77,6 +78,24 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     if AuthModule.currUser.userType == .trainer {
       editSkillsButton.isHidden = false
     }
+    fetchChats()
+  }
+  
+  func fetchChats() {
+    chatViewModel.getChatList(success: {
+      self.setBadgeForChatCounter()
+    }) {
+    }
+  }
+  
+  func setBadgeForChatCounter() {
+    var count = 0
+    for chat in chatViewModel.chats {
+      if chat.newMessages == true {
+        count = count + 1
+      }
+    }
+      super.tabBarController?.viewControllers![3].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
   }
   
   @objc func presentInputStatus() {

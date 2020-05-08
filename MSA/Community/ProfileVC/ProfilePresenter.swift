@@ -46,7 +46,6 @@ class ProfilePresenter: ProfilePresenterProtocol {
   
   var user: UserVO
   let dataLoader = UserDataManager()
-  
   var iconsDataSource: [String] = [] {
     didSet {
       view?.reloadIconsCollectionView()
@@ -100,6 +99,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
     }
     if user.userType == .trainer {
       view?.setMailButton(hidden: false )
+      return
     } else {
       view?.setMailButton(hidden: true )
     }

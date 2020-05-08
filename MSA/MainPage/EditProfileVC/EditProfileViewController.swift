@@ -12,6 +12,7 @@ import SkyFloatingLabelTextField
 import SDWebImage
 import MessageUI
 import FirebaseAuth
+import FirebaseAnalytics
 import SearchTextField
 
 protocol EditProfileProtocol: class {
@@ -307,6 +308,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         if let city = cityTF.text {
             presenter.setCity(city: city)
+            Analytics.logEvent("user_city_update_profile", parameters: ["city": city])
         }
         if let email = emailTextField.text {
           if email != AuthModule.currUser.email {

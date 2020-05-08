@@ -94,6 +94,7 @@ class NameSurnameViewController: BasicViewController {
       anotherPresenter.setSurname(surname: surname)
       if let city = cityTF.text {
         anotherPresenter.setCity(city: city)
+        Analytics.logEvent("user_city_registration", parameters: ["city": city])
       }
       anotherPresenter.setType(type: type)
       Analytics.logEvent("sign_up", parameters: nil)

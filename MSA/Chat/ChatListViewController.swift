@@ -18,16 +18,29 @@ class ChatListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+      
+      
     }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
     SVProgressHUD.show()
     viewModel.getChatList(success: {
+      self.setBadgeForChatCounter()
       self.tableView.reloadData()
       SVProgressHUD.dismiss()
     }) {
     }
+  }
+  
+  func setBadgeForChatCounter() {
+    var count = 0
+    for chat in viewModel.chats {
+      if chat.newMessages == true {
+        count = count + 1
+      }
+    }
+      super.tabBarController?.viewControllers![3].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
   }
   
   func setupUI() {
@@ -38,6 +51,7 @@ class ChatListViewController: UIViewController {
                  NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
     self.navigationController?.navigationBar.titleTextAttributes = attrs
     self.title = "Чаты"
+
   }
 
 }

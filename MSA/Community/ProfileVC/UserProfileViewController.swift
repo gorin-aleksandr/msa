@@ -49,9 +49,10 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
         
     }
     @IBOutlet weak var buttonsStackView: UIStackView!
-    
+
     var profilePresenter: ProfilePresenterProtocol!
-    
+    var isHiddenSendMessageButton = true
+
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
     
@@ -62,7 +63,7 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
         relatedWidthConstraint.constant = CGFloat(((profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count) - 1) * 12 + 32)
         configureButtonsView()
         profilePresenter.start()
-
+        sendEmailButton.isHidden = isHiddenSendMessageButton
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -241,6 +242,9 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
     func dismiss() {
         SVProgressHUD.dismiss()
         self.navigationController?.popViewController(animated: true)
+        if self.navigationController?.viewControllers.count == 1 {
+          self.dismiss(animated: true, completion: nil)
+        }
     }
     
     func reloadIconsCollectionView() {
@@ -295,6 +299,7 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
       let chatViewController = chatStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController
       chatViewController?.viewModel = ChatViewModel(chatId: profilePresenter.chatId!, chatUserId: profilePresenter.user.id!, chatUserName: "\(profilePresenter.user.firstName!) \(profilePresenter.user.lastName!)")
       chatViewController?.viewModel!.chatUser = profilePresenter.user
+      chatViewController?.viewModel?.chatUserAvatar = profilePresenter.user.avatar
       chatViewController?.senderDisplayName = ""
       let nc = UINavigationController(rootViewController: chatViewController!)
       nc.modalPresentationStyle = .fullScreen

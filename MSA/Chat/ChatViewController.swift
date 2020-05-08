@@ -45,9 +45,11 @@ final class ChatViewController: JSQMessagesViewController {
   private var photoMessageMap = [String: JSQPhotoMediaItem]()
   
   var firstMessage = ""
+  var imageUrl = ""
   var firstMessageProductId = 0
   var isAutoResponseShown = false
-  
+  var presenter: CommunityListPresenterProtocol!
+
   private var localTyping = false
   var channel: Channel?
   
@@ -62,7 +64,9 @@ final class ChatViewController: JSQMessagesViewController {
   
   lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
   lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
-  
+
+  private var dataLoader = UserDataManager()
+
   // MARK: View Lifecycle
   
   override func viewDidLoad() {
@@ -85,8 +89,93 @@ final class ChatViewController: JSQMessagesViewController {
        button.setImage(UIImage(named: "convert_send"), for: .normal)
        button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
        inputToolbar.contentView.rightBarButtonItem = button
-    configureNavigationItem()
     self.viewModel!.fetchFcmToken()
+    configureNavigationItem()
+    self.navigationItem.titleView = navTitleWithImageAndText(titleText: self.viewModel!.chatUserName, imageName: "dot")
+    let tapGestureRecognizer = UITapGestureRecognizer(target:self, action: #selector(self.somethingWasTapped(_:)))
+    self.navigationController?.navigationBar.addGestureRecognizer(tapGestureRecognizer)
+    presenter = CommunityListPresenter(view: self)
+    dataLoader.getUser(userId: self.viewModel!.chatUserId) { (user, error) in
+      self.viewModel?.chatUser = user
+    }
+  }
+
+  @objc func somethingWasTapped(_ sth: AnyObject){
+    moveToUserViewController(with: self.viewModel!.chatUser!)
+  }
+  
+  private func moveToUserViewController(with user: UserVO) {
+    let state = presenter.getPersonState(person: user)
+         print("state:\(state)")
+         
+         if user.userType == .trainer && state == .trainersSportsman {
+           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+          //setMailButton
+          destinationVC.isHiddenSendMessageButton = false
+           destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+            let nc = UINavigationController(rootViewController: destinationVC)
+            self.present(nc, animated: true, completion: nil)
+         } else if user.userType == .trainer {
+           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+          destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+          destinationVC.isHiddenSendMessageButton = false
+
+          let nc = UINavigationController(rootViewController: destinationVC)
+          self.present(nc, animated: true, completion: nil)
+
+         } else {
+           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+           destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+          destinationVC.isHiddenSendMessageButton = false
+          let nc = UINavigationController(rootViewController: destinationVC)
+          self.present(nc, animated: true, completion: nil)
+
+         }
+  }
+  
+  func navTitleWithImageAndText(titleText: String, imageName: String) -> UIView {
+
+      // Creates a new UIView
+      let titleView = UIView()
+
+      // Creates a new text label
+      let label = UILabel()
+      label.text = titleText
+      label.sizeToFit()
+      label.center = titleView.center
+      label.textAlignment = NSTextAlignment.center
+      label.font = UIFont(name: "Rubik-Medium", size: 15)!
+      label.textColor = darkCyanGreen
+      // Creates the image view
+      if viewModel!.chatUserAvatar != "" && viewModel!.chatUserAvatar != nil{
+      let image = UIImageView()
+           image.sd_setImage(with: URL(string: viewModel!.chatUserAvatar!), completed: nil)
+           //image.image = UIImage(named: imageName)
+           // Maintains the image's aspect ratio:
+           let imageAspect = image.image!.size.width / image.image!.size.height
+
+           // Sets the image frame so that it's immediately before the text:
+           let imageX = label.frame.origin.x - label.frame.size.height * imageAspect
+           let imageY = label.frame.origin.y
+
+           let imageWidth = label.frame.size.height * imageAspect
+           let imageHeight = label.frame.size.height
+
+           image.frame = CGRect(x: imageX, y: imageY-1, width: imageWidth, height: imageHeight)
+
+           image.contentMode = UIView.ContentMode.scaleAspectFit
+           image.roundCorners(.allCorners, radius: 10)
+           // Adds both the label and image view to the titleView
+           titleView.addSubview(image)
+    }
+     
+      titleView.addSubview(label)
+
+      // Sets the titleView frame to fit within the UINavigation Title
+      titleView.sizeToFit()
+
+      return titleView
+
   }
   
   func configureNavigationItem() {
@@ -381,7 +470,7 @@ final class ChatViewController: JSQMessagesViewController {
     db.collection("Chats").document(self.viewModel!.chatId).collection("Messages").addDocument(data: messageItem)
     
     //for me
-    db.collection("UsersChat").document(self.viewModel!.currentUserId!).collection("Chats").document(self.viewModel!.chatId).setData([
+  db.collection("UsersChat").document(self.viewModel!.currentUserId!).collection("Chats").document(self.viewModel!.chatId).setData([
       "chatId": self.viewModel!.chatId,
       "chatUserId": viewModel!.chatUserId,
       "chatUserName": viewModel!.chatUserName,
@@ -527,4 +616,52 @@ extension ChatViewController: UIImagePickerControllerDelegate, UINavigationContr
   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
     picker.dismiss(animated: true, completion:nil)
   }
+}
+
+extension ChatViewController: CommunityListViewProtocol {
+  func updateTableView() {
+    
+  }
+  
+  func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
+    
+  }
+  
+  func setCityFilterTextField(name: String?) {
+    
+  }
+  
+  func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
+    
+  }
+  
+  func setErrorViewHidden(_ isHidden: Bool) {
+    
+  }
+  
+  func setLoaderVisible(_ visible: Bool) {
+    
+  }
+  
+  func stopLoadingViewState() {
+    
+  }
+  
+  func showGeneralAlert() {
+    
+  }
+  
+  func showRestoreAlert() {
+    
+  }
+  
+  func showIAP() {
+    
+  }
+  
+  func hideAccessDeniedView() {
+    
+  }
+  
+  
 }
