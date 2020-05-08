@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         start.start()
         logSessionEvent()
         logInAppPurhaseRenewalEvent()
-
+        UIApplication.shared.applicationIconBadgeNumber = 0
         return true
     }
     
@@ -92,15 +92,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
 
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
-//        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-    
+        UIApplication.shared.applicationIconBadgeNumber = 0
+
     }
-  
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                        didReceive response: UNNotificationResponse,
-                        withCompletionHandler completionHandler: @escaping () -> Void) {
-      print("background!")
-  }
 
     func applicationWillTerminate(_ application: UIApplication) {
         if !AuthModule.isLastUserCurrent {

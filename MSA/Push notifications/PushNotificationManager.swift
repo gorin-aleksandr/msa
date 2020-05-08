@@ -74,10 +74,5 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
     fetchCompletionHandler completionHandler: @escaping
    (UIBackgroundFetchResult) -> Void) {
     print("Backgrond")
-    UIApplication.shared.applicationIconBadgeNumber = 777
-
-    
-
-
    }
 }

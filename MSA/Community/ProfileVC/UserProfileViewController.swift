@@ -51,7 +51,6 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
     @IBOutlet weak var buttonsStackView: UIStackView!
 
     var profilePresenter: ProfilePresenterProtocol!
-    var isHiddenSendMessageButton = true
 
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
@@ -63,7 +62,6 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
         relatedWidthConstraint.constant = CGFloat(((profilePresenter.iconsDataSource.count > 5 ? 5 : profilePresenter.iconsDataSource.count) - 1) * 12 + 32)
         configureButtonsView()
         profilePresenter.start()
-        sendEmailButton.isHidden = isHiddenSendMessageButton
     }
     
     override func viewWillAppear(_ animated: Bool) {

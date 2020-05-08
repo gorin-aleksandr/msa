@@ -111,24 +111,27 @@ final class ChatViewController: JSQMessagesViewController {
          if user.userType == .trainer && state == .trainersSportsman {
            let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
           //setMailButton
-          destinationVC.isHiddenSendMessageButton = false
+          
            destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
             let nc = UINavigationController(rootViewController: destinationVC)
-            self.present(nc, animated: true, completion: nil)
+            self.present(nc, animated: true, completion: {
+              destinationVC.setMailButton(hidden: true)
+            })
          } else if user.userType == .trainer {
            let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
           destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
-          destinationVC.isHiddenSendMessageButton = false
-
           let nc = UINavigationController(rootViewController: destinationVC)
-          self.present(nc, animated: true, completion: nil)
+          self.present(nc, animated: true, completion: {
+            destinationVC.setMailButton(hidden: true)
+          })
 
          } else {
            let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
            destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
-          destinationVC.isHiddenSendMessageButton = false
           let nc = UINavigationController(rootViewController: destinationVC)
-          self.present(nc, animated: true, completion: nil)
+          self.present(nc, animated: true, completion: {
+            destinationVC.setMailButton(hidden: true)
+          })
 
          }
   }

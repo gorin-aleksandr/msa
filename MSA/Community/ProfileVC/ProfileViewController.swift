@@ -69,7 +69,6 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     @IBOutlet weak var instagramButton: UIButton!
 
     var profilePresenter: ProfilePresenterProtocol!
-    var isHiddenSendMessageButton = true
 
     var customImageViev = ProfileImageView()
     var myPicker = UIImagePickerController()
@@ -119,7 +118,6 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         self.tableView.reloadData()
       }
       
-      sendEmailButton.isHidden = isHiddenSendMessageButton
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -212,7 +210,6 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         }
         navigationItem.leftBarButtonItem?.image = UIImage(named: "back_")
         navigationItem.leftBarButtonItem?.title = "Назад"
-        sendEmailButton.isHidden = isHiddenSendMessageButton
     }
     
     func updateProfile(with user: UserVO) {
@@ -409,6 +406,9 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
     func dismiss() {
         SVProgressHUD.dismiss()
         self.navigationController?.popViewController(animated: true)
+        if self.navigationController?.viewControllers.count == 1 {
+          self.dismiss(animated: true, completion: nil)
+        }
     }
     
     func reloadIconsCollectionView() {

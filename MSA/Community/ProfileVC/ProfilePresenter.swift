@@ -97,12 +97,19 @@ class ProfilePresenter: ProfilePresenterProtocol {
     } else {
       view?.setMailButton(hidden: true)
     }
+    if state == .trainersSportsman {
+       view?.setMailButton(hidden: false )
+       return
+    } else {
+        view?.setMailButton(hidden: true )
+    }
     if user.userType == .trainer {
       view?.setMailButton(hidden: false )
       return
     } else {
       view?.setMailButton(hidden: true )
     }
+    
   }
   
   func addOrRemoveUserAction() {
