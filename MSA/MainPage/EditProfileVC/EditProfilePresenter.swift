@@ -106,20 +106,20 @@ class EditProfilePresenter {
                 metadata.contentType = "image/jpeg"
                 // Upload the file to the path "images/rivers.jpg"
                 avatarUpdateRef.putData(data, metadata: metadata) { (metadata, error) in
-                    guard let metadata = metadata else {
+                  guard metadata != nil else {
                         self.view?.finishLoading()
                         if let error = error?.localizedDescription {
                             self.view?.errorOcurred(error)
                         }
                         return
                     }
-                  
-                  if let downloadURL = metadata.dictionaryRepresentation()["mediaLink"] as? String{
-                      self.profile.userRef.child(id).updateChildValues(["userPhoto": downloadURL], withCompletionBlock: { (error, ref) in
-                                           AuthModule.currUser.avatar = downloadURL
+
+                  avatarUpdateRef.downloadURL(completion: { (url, error) in
+                      self.profile.userRef.child(id).updateChildValues(["userPhoto": url!.absoluteString], withCompletionBlock: { (error, ref) in
+                                           AuthModule.currUser.avatar = url!.absoluteString
                                            self.getImage()
                                        })
-                  }
+                  })
                 }
             }
             

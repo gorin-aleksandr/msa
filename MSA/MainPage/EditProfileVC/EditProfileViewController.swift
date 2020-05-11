@@ -246,12 +246,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         finishLoading()
         dismiss(animated: true, completion: nil)
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        let chosenImage = info[UIImagePickerControllerEditedImage] as! UIImage
-//        dismiss(animated: true, completion: nil)
-//        presenter.updateUserAvatar(chosenImage)
-    }
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+      guard let chosenImage = info[.editedImage] as? UIImage else {
+        return
+      }
+      dismiss(animated: true, completion: nil)
+      presenter.updateUserAvatar(chosenImage)
+  }
     
     override func viewWillAppear(_ animated: Bool) {
         configereProfile()
