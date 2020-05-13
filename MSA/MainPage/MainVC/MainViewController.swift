@@ -10,6 +10,8 @@ import UIKit
 import AVKit
 import AVFoundation
 import SDWebImage
+import SPPermissions
+
 
 protocol GalleryDataProtocol: class {
   func startLoading()
@@ -54,7 +56,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
   private let editProfilePresenter = EditProfilePresenter(profile: UserDataManager())
-  
+  let pushManager = PushNotificationManager() 
   var customImageViev = ProfileImageView()
   var myPicker = UIImagePickerController()
   
@@ -79,6 +81,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
       editSkillsButton.isHidden = false
     }
     fetchChats()
+    setupPermissionAlert()
   }
   
   func fetchChats() {
@@ -86,6 +89,22 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
       self.setBadgeForChatCounter()
     }) {
     }
+  }
+  
+  func setupPermissionAlert() {
+    let defaults = UserDefaults.standard
+    let mainPermission = defaults.bool(forKey: "allowedMainNotificationPermission")
+    let controller = SPPermissions.dialog([.notification])
+       controller.titleText = "Нужно разрешение"
+       controller.headerText = ""
+       controller.footerText = ""
+       controller.dataSource = self
+       controller.delegate = self
+       let state = SPPermission.notification.isAuthorized
+    if !state && !mainPermission {
+       defaults.set(true, forKey: "allowedMainNotificationPermission")
+          controller.present(on: self)
+        }
   }
   
   func setBadgeForChatCounter() {
@@ -494,4 +513,38 @@ extension MainViewController: CommunityListViewProtocol {
   func showRestoreAlert() {}
   func showIAP() {}
   func hideAccessDeniedView() {}
+}
+
+extension MainViewController: SPPermissionsDataSource, SPPermissionsDelegate{
+  func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
+    cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
+    cell.permissionTitleLabel.text = "Уведомления"
+    cell.button.setTitle("Включить", for: .normal)
+    return cell
+  }
+  
+  func didAllow(permission: SPPermission) {
+    pushManager.registerForPushNotifications()
+  }
+  
+  func didDenied(permission: SPPermission) {
+  }
+  
+  func didHide(permissions ids: [Int]) {
+    
+  }
+  
+//  func deniedData(for permission: SPPermission) -> SPPermissionDeniedAlertData? {
+////    if permission == .notification {
+////        let data = SPPermissionDeniedAlertData()
+////        data.alertOpenSettingsDeniedPermissionTitle = "Нет разрешения"
+////        data.alertOpenSettingsDeniedPermissionDescription = "Пожалуйста, перейдите в настройки и разрешите уведомления."
+////        data.alertOpenSettingsDeniedPermissionButtonTitle = "Настройки"
+////        data.alertOpenSettingsDeniedPermissionCancelTitle = "Отмена"
+////        return data
+////    } else {
+//        // If returned nil, alert will not show.
+//        return nil
+//    //}
+//  }
 }

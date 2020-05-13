@@ -13,6 +13,7 @@ class ChatListViewModel {
   
   let db = Firestore.firestore()
   var chats: [Chat] = []
+  let pushManager = PushNotificationManager()
 
   init() {  }
   

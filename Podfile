@@ -34,4 +34,5 @@ target 'MSA' do
   pod 'TagListView' 
   pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
   pod "SearchTextField"
+  pod 'SPPermissions/Notification'
 end

@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import SVProgressHUD
+import SPPermissions
 
 class ChatListViewController: UIViewController {
 
@@ -18,8 +19,7 @@ class ChatListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-      
-      
+        setupPermissionAlert()
     }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -31,6 +31,22 @@ class ChatListViewController: UIViewController {
       SVProgressHUD.dismiss()
     }) {
     }
+  }
+  
+  func setupPermissionAlert() {
+    let defaults = UserDefaults.standard
+    let mainPermission = defaults.bool(forKey: "allowedChatNotificationPermission")
+    let controller = SPPermissions.dialog([.notification])
+       controller.titleText = "Нужно разрешение"
+       controller.headerText = ""
+       controller.footerText = ""
+       controller.dataSource = self
+       controller.delegate = self
+       let state = SPPermission.notification.isAuthorized
+    if !state && !mainPermission {
+       defaults.set(true, forKey: "allowedChatNotificationPermission")
+          controller.present(on: self)
+        }
   }
   
   func setBadgeForChatCounter() {
@@ -99,4 +115,39 @@ extension ChatListViewController: UITableViewDelegate {
     nc.modalPresentationStyle = .fullScreen
     self.present(nc, animated: true, completion: nil)
   }
+}
+
+extension ChatListViewController: SPPermissionsDataSource, SPPermissionsDelegate{
+  func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
+    cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
+    cell.permissionTitleLabel.text = "Уведомления"
+    cell.button.setTitle("Включить", for: .normal)
+    return cell
+  }
+  
+  func didAllow(permission: SPPermission) {
+    viewModel.pushManager.registerForPushNotifications()
+  }
+  
+  func didDenied(permission: SPPermission) {
+    
+  }
+  
+  func didHide(permissions ids: [Int]) {
+    
+  }
+  
+//  func deniedData(for permission: SPPermission) -> SPPermissionDeniedAlertData? {
+//    if permission == .notification {
+//        let data = SPPermissionDeniedAlertData()
+//        data.alertOpenSettingsDeniedPermissionTitle = "Нет разрешения"
+//        data.alertOpenSettingsDeniedPermissionDescription = "Пожалуйста, перейдите в настройки и разрешите уведомления."
+//        data.alertOpenSettingsDeniedPermissionButtonTitle = "Настройки"
+//        data.alertOpenSettingsDeniedPermissionCancelTitle = "Отмена"
+//        return data
+//    } else {
+//        // If returned nil, alert will not show.
+//        return nil
+//    }
+//  }
 }

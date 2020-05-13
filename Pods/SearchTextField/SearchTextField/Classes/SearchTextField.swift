@@ -355,7 +355,7 @@ open class SearchTextField: UITextField {
     @objc open func keyboardWillHide(_ notification: Notification) {
         if keyboardIsShowing {
             keyboardIsShowing = false
-            direction = .up
+            //direction = .up
             redrawSearchTableView()
         }
     }
@@ -543,17 +543,17 @@ open class SearchTextField: UITextField {
             newFrame.size.height += theme.cellHeight
             
             if keyboardFrame.intersects(newFrame) {
-                direction = .up
+              //  direction = .up
             } else {
-                direction = .up
+                //direction = .up
             }
             
             redrawSearchTableView()
         } else {
             if self.center.y + theme.cellHeight > UIApplication.shared.keyWindow!.frame.size.height {
-                direction = .up
+               // direction = .up
             } else {
-                direction = .up
+                //direction = .up
             }
         }
     }

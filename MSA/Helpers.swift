@@ -292,9 +292,7 @@ func setupFrames()
 var contentWidth: Int = 0 //if its CGFloat, it infinitely calls layoutSubviews(), changing franction of a width
 override func layoutSubviews() {
     super.layoutSubviews()
-
     self.frame.size.width = CGFloat(contentWidth)
-
 }
 
 }

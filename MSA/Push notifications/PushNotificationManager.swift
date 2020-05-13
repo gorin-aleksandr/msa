@@ -44,10 +44,6 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
           UserDataManager().updateFcmToken(token: token)
         }
     }
-//
-//    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
-//        print(remoteMessage.appData) // or do whatever
-//    }
 
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         updateFirestorePushTokenIfNeeded()

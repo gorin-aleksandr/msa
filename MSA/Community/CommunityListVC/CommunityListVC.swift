@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SearchTextField
 
 protocol CommunityListViewProtocol: class {
     func updateTableView()
@@ -28,7 +29,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     @IBOutlet weak var communityTableView: UITableView!
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var filterScrollView: UIScrollView!
-    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var cityTextField: SearchTextField!
     @IBOutlet weak var myCommunityButton: UIBarButtonItem!
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     @IBOutlet weak var errorView: ErrorView!
@@ -73,7 +74,6 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         accessDeniedView.isHidden = true
         
         setupNavigationBar()
-        configureCityPicker()
         updateTableView()
         configureSegmentedControl()
     }
@@ -112,6 +112,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     func stopLoadingViewState() {
+        configureCityPicker()
         refreshControl.endRefreshing()
         setLoaderVisible(false)
     }
@@ -201,10 +202,30 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     private func configureCityPicker() {
-        cityPicker.delegate = self
-        cityPicker.dataSource = self
-        cityTextField.inputView = cityPicker
-        cityTextField.tintColor = .clear
+        //cityPicker.delegate = self
+        //cityPicker.dataSource = self
+        //cityTextField.inputView = cityPicker
+      
+      cityTextField.placeholder = "Фильтровать по городу"
+      cityTextField.filterStrings(presenter.getCities())
+      cityTextField.comparisonOptions = [.caseInsensitive]
+      cityTextField.maxNumberOfResults = 5
+      cityTextField.direction = .down
+      cityTextField.maxResultsListHeight = 150
+      cityTextField.theme.font = UIFont(name: "Rubik-Regular", size: 14)!
+      cityTextField.theme.fontColor = .darkCyanGreen
+      cityTextField.theme.bgColor = .white
+      cityTextField.theme.separatorColor = .darkCyanGreen45
+      cityTextField.theme.placeholderColor = .lightGray
+      cityTextField.theme.cellHeight = 35
+      cityTextField.lineColor = .white
+      cityTextField.tintColor = .clear
+      cityTextField.itemSelectionHandler = {item, itemPosition in
+        self.cityTextField.text = item[itemPosition].title
+        let cities = self.presenter.getCities()
+        let cityIndex = cities.indexes(of: item[itemPosition].title).first
+        self.presenter.selectCityAt(index: cityIndex ?? 0)
+      }
     }
     
     private func configureRefresh() {
@@ -263,7 +284,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
 // MARK: 1
-   //    if InAppPurchasesService.shared.currentSubscription != nil {
+     //  if InAppPurchasesService.shared.currentSubscription != nil {
             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
             destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
             self.navigationController?.pushViewController(destinationVC, animated: true)

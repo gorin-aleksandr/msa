@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let realmVersion: UInt64 = 0
     let defaults = UserDefaults.standard
-    let pushManager = PushNotificationManager()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
   
@@ -40,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
     ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-        pushManager.registerForPushNotifications()
 
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
