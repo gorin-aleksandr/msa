@@ -18,7 +18,7 @@ class ChatListViewModel {
   init() {  }
   
   func getChatList(success: @escaping ()->(),failedBlock: @escaping ()->()) {
-    let docRef = db.collection("UsersChat").document(AuthModule.currUser.id!).collection("Chats")
+    let docRef = db.collection("UsersChat").document(AuthModule.currUser.id!).collection("Chats").order(by: "timeStamp", descending: true)
     
     docRef.addSnapshotListener { querySnapshot, error in
         guard let documents = querySnapshot?.documents else {
@@ -35,10 +35,10 @@ class ChatListViewModel {
                let userAvatar = item["chatUserAvatar"] as! String
                let lastAction = item["lastAction"] as! String
                let newMessages = item["newMessages"] as! Bool
-               let chat = Chat(id: chatId, chatUserId: chatUserId, chatUserName: chatUserName, lastMessage: lastMessage, userAvatar: userAvatar, lastAction: lastAction, newMessages: newMessages)
+              let chat = Chat(id: chatId, chatUserId: chatUserId, chatUserName: chatUserName, lastMessage: lastMessage, userAvatar: userAvatar, lastAction: lastAction, newMessages: newMessages)
                chatsNew.append(chat)
              }
-             self.chats = chatsNew
+              self.chats = chatsNew
              success()
     }
 

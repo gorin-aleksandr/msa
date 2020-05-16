@@ -141,7 +141,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
                     self?.view.stopLoadingViewState()
                 })
             } else {
-                self?.users = users.filter { $0.id != self?.currentUser?.id }
+                self?.users = users.filter { $0.id != self?.currentUser?.id && $0.firstName != "" && $0.lastName != "" }
                 self?.setCitiesDataSource(from: users)
                 self?.view.setErrorViewHidden(true)
                 self?.selectFilter()

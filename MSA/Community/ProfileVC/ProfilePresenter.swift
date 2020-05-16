@@ -80,6 +80,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
     return false
   }
   
+  var pushSender: PushNotificationSender = PushNotificationSender()
   
   private weak var view: ProfileViewProtocol?
   
@@ -181,6 +182,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
         }
         self?.state = .friend
         AuthModule.currUser.friends?.append(id)
+        self?.pushSender.sendPushNotification(to: user.fcmToken ?? "", title: "Запрос на добавление в друзья", body: "\(self?.currentUser.firstName ?? "") \(self?.currentUser.lastName ?? "") хочет добавить вас в друзья 👥")
       }
     }
   }
