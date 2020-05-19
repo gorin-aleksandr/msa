@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 import SDWebImage
 import SPPermissions
-
+import FBSDKLoginKit
 
 protocol GalleryDataProtocol: class {
   func startLoading()
@@ -69,7 +69,6 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     downloadData()

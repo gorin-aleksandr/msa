@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
-import FBSDKCoreKit
 import FBSDKLoginKit
 
 enum AuthErrors: String {

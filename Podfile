@@ -17,8 +17,6 @@ target 'MSA' do
   pod 'JSQMessagesViewController'
   pod 'SDWebImage'
   pod 'IQKeyboardManagerSwift', '6.5.0'
-  pod 'FBSDKLoginKit'
-  pod 'FBSDKCoreKit'
   pod 'Bolts'
   pod 'SkyFloatingLabelTextField', '~> 3.0'
   pod 'NYTPhotoViewer'
@@ -35,4 +33,5 @@ target 'MSA' do
   pod "YoutubePlayer-in-WKWebView", "~> 0.3.0"
   pod "SearchTextField"
   pod 'SPPermissions/Notification'
+  pod 'FBSDKLoginKit'
 end

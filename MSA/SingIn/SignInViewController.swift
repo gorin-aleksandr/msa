@@ -8,8 +8,6 @@
 
 import UIKit
 import Firebase
-import FBSDKCoreKit
-import FBSDKLoginKit
 import AuthenticationServices
 import CryptoKit
 

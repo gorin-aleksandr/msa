@@ -20,46 +20,46 @@
 
 #if !TARGET_OS_TV
 
-#import "FBSDKAddressFilterManager.h"
+#import "FBSDKIntegrityManager.h"
 
-#import "FBSDKAddressInferencer.h"
 #import "FBSDKBasicUtility.h"
 #import "FBSDKGateKeeperManager.h"
+#import "FBSDKModelManager.h"
 #import "FBSDKSettings.h"
 #import "FBSDKTypeUtility.h"
 
-static BOOL isAddressFilterEnabled = NO;
+static BOOL isIntegrityEnabled = NO;
 static BOOL isSampleEnabled = NO;
 
-@implementation FBSDKAddressFilterManager
+@implementation FBSDKIntegrityManager
 
 + (void)enable
 {
-  isAddressFilterEnabled = YES;
-  isSampleEnabled = [FBSDKGateKeeperManager boolForKey:@"FBSDKFeatureAddressDetectionSample" defaultValue:false];
+  isIntegrityEnabled = YES;
+  isSampleEnabled = [FBSDKGateKeeperManager boolForKey:@"FBSDKFeatureIntegritySample" defaultValue:false];
 }
 
 + (nullable NSDictionary<NSString *, id> *)processParameters:(nullable NSDictionary<NSString *, id> *)parameters
 {
-  if (!isAddressFilterEnabled || parameters.count == 0) {
+  if (!isIntegrityEnabled || parameters.count == 0) {
     return parameters;
   }
   NSMutableDictionary<NSString *, id> *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
-  NSMutableDictionary<NSString *, id> *addressParams = [NSMutableDictionary dictionary];
+  NSMutableDictionary<NSString *, id> *restrictiveParams = [NSMutableDictionary dictionary];
 
   for (NSString *key in [parameters keyEnumerator]) {
     NSString *valueString =[FBSDKTypeUtility stringValue:parameters[key]];
-    BOOL shouldFilter = [FBSDKAddressInferencer shouldFilterParam:valueString];
+    BOOL shouldFilter = [FBSDKModelManager processIntegrity:key] || [FBSDKModelManager processIntegrity:valueString];
     if (shouldFilter) {
-      [addressParams setObject:isSampleEnabled ? valueString : @"" forKey:key];
+      [restrictiveParams setObject:isSampleEnabled ? valueString : @"" forKey:key];
       [params removeObjectForKey:key];
     }
   }
-  if ([addressParams count] > 0) {
-    NSString *addressParamsJSONString = [FBSDKBasicUtility JSONStringForObject:addressParams
-                                                                            error:NULL
-                                                             invalidObjectHandler:NULL];
-    [FBSDKBasicUtility dictionary:params setObject:addressParamsJSONString forKey:@"_onDeviceParams"];
+  if ([restrictiveParams count] > 0) {
+    NSString *restrictiveParamsJSONString = [FBSDKBasicUtility JSONStringForObject:restrictiveParams
+                                                                             error:NULL
+                                                              invalidObjectHandler:NULL];
+    [FBSDKBasicUtility dictionary:params setObject:restrictiveParamsJSONString forKey:@"_onDeviceParams"];
   }
   return [params copy];
 }

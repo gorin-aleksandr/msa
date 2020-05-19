@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import IQKeyboardManagerSwift
-import FBSDKCoreKit
 import CoreData
 import RealmSwift
 import SVProgressHUD
@@ -18,6 +17,9 @@ import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
 import FirebaseMessaging
+import FBSDKLoginKit
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -38,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Realm.Configuration.defaultConfiguration = config
         
         
-    ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
 
         FirebaseApp.configure()
         IQKeyboardManager.shared.enable = true
@@ -66,11 +68,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func migrationToNewVersion(migration: Migration) {
 
     }
-    
-    
-  internal func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-      let handled = ApplicationDelegate.shared.application(app, open: url, options: options)
-      return handled
+
+
+   func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+     ApplicationDelegate.shared.application( app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation] )
+    return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

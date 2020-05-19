@@ -226,16 +226,16 @@ PODS:
   - DKPhotoGallery/Resource (0.0.12):
     - SDWebImage/GIF
   - Fabric (1.8.2)
-  - FBSDKCoreKit (6.3.0):
-    - FBSDKCoreKit/Basics (= 6.3.0)
-    - FBSDKCoreKit/Core (= 6.3.0)
-  - FBSDKCoreKit/Basics (6.3.0)
-  - FBSDKCoreKit/Core (6.3.0):
+  - FBSDKCoreKit (6.5.2):
+    - FBSDKCoreKit/Basics (= 6.5.2)
+    - FBSDKCoreKit/Core (= 6.5.2)
+  - FBSDKCoreKit/Basics (6.5.2)
+  - FBSDKCoreKit/Core (6.5.2):
     - FBSDKCoreKit/Basics
-  - FBSDKLoginKit (6.3.0):
-    - FBSDKLoginKit/Login (= 6.3.0)
-  - FBSDKLoginKit/Login (6.3.0):
-    - FBSDKCoreKit (~> 6.3.0)
+  - FBSDKLoginKit (6.5.2):
+    - FBSDKLoginKit/Login (= 6.5.2)
+  - FBSDKLoginKit/Login (6.5.2):
+    - FBSDKCoreKit (~> 6.5.2)
   - Firebase/Auth (6.23.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.5.2)
@@ -424,7 +424,6 @@ DEPENDENCIES:
   - Crashlytics (= 3.11.1)
   - DKImagePickerController (from `https://github.com/zhangao0086/DKImagePickerController.git`, branch `develop`)
   - Fabric (= 1.8.2)
-  - FBSDKCoreKit
   - FBSDKLoginKit
   - Firebase/Auth
   - Firebase/Core
@@ -541,8 +540,8 @@ SPEC CHECKSUMS:
   DKImagePickerController: 4a3e7948a848c4348e600b3fe5ce41478835fa10
   DKPhotoGallery: 1b4d65d9a485dfdd2002f22daa5b955eafb350ea
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
-  FBSDKCoreKit: 5d55c8f3007c9c49b793617b9102e46355fc7e17
-  FBSDKLoginKit: d46aa04d9bb9990a4deb6441736fae24a8c94496
+  FBSDKCoreKit: ada5c8a05188daefc9addb985c52b8a1b26da519
+  FBSDKLoginKit: caa165495afa29a12324cb2307fe6e5b33783142
   Firebase: 585ae467b3edda6a5444e788fda6888f024d8d6f
   FirebaseAnalytics: 558f7a03d19de451093032c806f39d5f9dff096e
   FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
@@ -587,6 +586,6 @@ SPEC CHECKSUMS:
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 21acd32b23b52d263d12ce9d570ef702e6a77b20
+PODFILE CHECKSUM: eb61da9ececc8baf084f254dd857a49885f9361a
 
 COCOAPODS: 1.9.1
