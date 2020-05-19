@@ -47,6 +47,11 @@ class PersonTableViewCell: UITableViewCell {
         acceptButton.layer.cornerRadius = 6
         selectionStyle = .none
     }
+  
+    override func prepareForReuse() {
+      super.prepareForReuse()
+      avatarImageView.sd_cancelCurrentImageLoad()
+    }
 
     func configure(with person: UserVO, userCommunityState: UserCommunityState) {
         guard var fullName = person.firstName else {
