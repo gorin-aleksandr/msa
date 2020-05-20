@@ -69,6 +69,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     downloadData()
@@ -194,6 +195,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   }
   
   func configureProfile() {
+    editProfilePresenter.setupSubscriptionsFunctions()
     setShadow(outerView: profileView, shadowOpacity: 0.3)
     setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
     
@@ -236,7 +238,6 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     }
   
   }
-  
   
   @IBAction func goToTrainer(_ sender: Any) {
     if let trainer = trainer {
