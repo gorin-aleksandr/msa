@@ -359,7 +359,10 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         
          let userName =  instagramLink // Your Instagram Username here
         
-        if let link = userName.detectedFirstLink {
+        if var link = userName.detectedFirstLink {
+          if !link.contains("https://") {
+              link = "https://\(link)"
+          }
           if let url = URL(string: link) {
               UIApplication.shared.open(url)
           }
@@ -370,7 +373,6 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
           if application.canOpenURL(appURL) {
               application.open(appURL)
           } else {
-              // if Instagram app is not installed, open URL inside Safari
               let webURL = URL(string: "https://instagram.com/\(userName)")!
               application.open(webURL)
           }
@@ -379,27 +381,16 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
   }
     
   @objc func showFacebookProfile() {
-            if let facebookLink = profilePresenter.user.facebookLink {
-             
-              let userName =  facebookLink // Your Instagram Username here
-             
-             if let link = userName.detectedFirstLink {
-               if let url = URL(string: link) {
-                   UIApplication.shared.open(url)
-               }
-             } else {
-//               let appURL = URL(string: "fb://profile/\(userName)")!
-//               let application = UIApplication.shared
-//
-//               if application.canOpenURL(appURL) {
-//                   application.open(appURL)
-//               } else {
-                   // if Instagram app is not installed, open URL inside Safari
-                   let webURL = URL(string: "https://www.facebook.com/\(userName)")!
-                   UIApplication.shared.open(webURL)
-               
-             //}
-         }
+    if let facebookLink = profilePresenter.user.facebookLink {
+      let userName =  facebookLink.trimmingCharacters(in: .whitespaces)
+      if let link = userName.detectedFirstLink {
+        if let url = URL(string: link) {
+          UIApplication.shared.open(url)
+        }
+      } else {
+        let webURL = URL(string: "https://www.facebook.com/\(userName)")!
+        UIApplication.shared.open(webURL)
+      }
     }
   }
     

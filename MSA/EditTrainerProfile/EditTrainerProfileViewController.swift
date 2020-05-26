@@ -324,16 +324,16 @@ extension EditTrainerProfileViewController: UITableViewDelegate, UITableViewData
       guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "SkyFloatingView") as? SkyFloatingView else {return nil}
       switch section {
         case 4:
-          headerView.floatingTextField.placeholder = "Instagram (ник или ссылка)"
+          headerView.floatingTextField.placeholder = "Instagram (никнейм или ссылка)"
           headerView.floatingTextField.text = AuthModule.currUser.instagramLink
           instaTextField = headerView.floatingTextField
           
         case 5:
-          headerView.floatingTextField.placeholder = "Facebook (ник или ссылка)"
+          headerView.floatingTextField.placeholder = "Facebook (никнейм или ссылка)"
           headerView.floatingTextField.text = AuthModule.currUser.facebookLink
           facebookTextField = headerView.floatingTextField
         case 6:
-          headerView.floatingTextField.placeholder = "ВКонтакте (ник или ссылка)"
+          headerView.floatingTextField.placeholder = "ВКонтакте (никнейм или ссылка)"
           headerView.floatingTextField.text = AuthModule.currUser.vkLink
           vkTextField = headerView.floatingTextField
         default:

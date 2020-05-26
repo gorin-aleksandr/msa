@@ -34,7 +34,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   @IBOutlet weak var buttViewHeight: NSLayoutConstraint!
   @IBOutlet weak var imagePreviewView: UIView!
   @IBOutlet weak var previewImage: UIImageView!
-  
+  @IBOutlet weak var goalImageView: UIImageView!
   @IBOutlet weak var viewWithButtons: UIView!
   
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!{didSet{activityIndicator.stopAnimating()}}
@@ -52,6 +52,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   @IBOutlet weak var dreamView: UIView! { didSet{dreamView.layer.cornerRadius = 10 }}
   @IBOutlet weak var dreamViewButton: UIButton!
   @IBOutlet weak var editSkillsButton: UIButton!
+  @IBOutlet weak var dailyTrainingLeading: NSLayoutConstraint!
 
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
@@ -79,6 +80,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     editSkillsButton.isHidden = true
     if AuthModule.currUser.userType == .trainer {
       editSkillsButton.isHidden = false
+      goalImageView.isHidden = true
+      dailyTrainingLeading.constant = -27
     }
     fetchChats()
     setupPermissionAlert()
