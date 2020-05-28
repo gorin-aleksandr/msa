@@ -160,9 +160,9 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         setShadow(outerView: profileView, shadowOpacity: 0.3)
         setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
         vkButton.isHidden = true
-        vkButton.frame = CGRect(x: vkButton.frame.origin.x, y: vkButton.frame.origin.y, width: 0, height: 0)
         facebookButton.isHidden = true
         instagramButton.isHidden = true
+        vkButton.frame = CGRect(x: vkButton.frame.origin.x, y: vkButton.frame.origin.y, width: 0, height: 0)
         vkButton.addTarget(self, action: #selector(showVkProfile), for: .touchUpInside)
         facebookButton.addTarget(self, action: #selector(showFacebookProfile), for: .touchUpInside)
         instagramButton.addTarget(self, action: #selector(showInstagramProfile), for: .touchUpInside)
@@ -827,6 +827,8 @@ extension ProfileViewController {
             self.selectedAchievements.append((id: key, name: item?["name"] as! String, rank: item?["rank"] as! String, achieve: item?["achievement"] as! String, year: item?["year"] as! String))
           }
           completion(true)
+        }else {
+          completion(false)
         }
       })
     }
@@ -844,6 +846,8 @@ extension ProfileViewController {
             self.selectedEducation.append((id: key, name: item?["name"] as! String, yearFrom: item?["yearFrom"] as! String, yearTo: item?["yearTo"] as! String))
           }
           completion(true)
+        } else {
+          completion(false)
         }
       })
     }
@@ -859,6 +863,8 @@ extension ProfileViewController {
             self.selectedCertificates.append((id: key, name: item?["name"] as! String))
           }
           completion(true)
+        }else {
+          completion(false)
         }
       })
     }

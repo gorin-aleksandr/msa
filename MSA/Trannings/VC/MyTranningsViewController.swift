@@ -746,7 +746,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
                 let longPressRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(copyDay))
                 headerView.addGestureRecognizer(longPressRecognizer)
                 
-                headerView.dateLabel.text = day.date == "" ? "______(дата)" : day.date
+                headerView.dateLabel.text = day.date == "" ? "Укажите дату" : day.date
                 headerView.dayLabel.text = "День \(section + 1)"
                 headerView.nameTextField.text = day.name
                 headerView.nameTextField.tag = section

@@ -52,7 +52,7 @@ class Training: Object {
 
 class TrainingWeek: Object {
     @objc dynamic var id: Int = -1
-    @objc dynamic var name: String = "Неделя"
+    @objc dynamic var name: String = "Укажите название недели"
     var days = List<TrainingDay>()
 
     @objc dynamic var wasSync: Bool = false

@@ -54,6 +54,11 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   @IBOutlet weak var editSkillsButton: UIButton!
   @IBOutlet weak var dailyTrainingLeading: NSLayoutConstraint!
 
+  @IBOutlet weak var buttonsStackView: UIStackView!
+  @IBOutlet weak var vkButton: UIButton!
+  @IBOutlet weak var facebookButton: UIButton!
+  @IBOutlet weak var instagramButton: UIButton!
+
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
   private let editProfilePresenter = EditProfilePresenter(profile: UserDataManager())
@@ -62,7 +67,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   var myPicker = UIImagePickerController()
   
   var galleryUploadInProgress: Bool = false
-  var pendingForUpload: [[String : Any]] = []
+  var pendingForUpload: [[UIImagePickerController.InfoKey : Any]] = []
   
   var trainer: UserVO?
   var comunityPresenter: CommunityListPresenterProtocol?
@@ -239,7 +244,91 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     } else {
       dailyTraining.text = "Коротко о себе"
     }
+    
+    vkButton.isHidden = true
+    facebookButton.isHidden = true
+    instagramButton.isHidden = true
+    vkButton.frame = CGRect(x: vkButton.frame.origin.x, y: vkButton.frame.origin.y, width: 0, height: 0)
+    vkButton.addTarget(self, action: #selector(showVkProfile), for: .touchUpInside)
+    facebookButton.addTarget(self, action: #selector(showFacebookProfile), for: .touchUpInside)
+    instagramButton.addTarget(self, action: #selector(showInstagramProfile), for: .touchUpInside)
+
+    if let vkLink = AuthModule.currUser.vkLink {
+      if vkLink != "" {
+        vkButton.isHidden = false
+      }
+    }
+    if let facebookLink = AuthModule.currUser.facebookLink {
+      if facebookLink != "" {
+        facebookButton.isHidden = false
+      }
+    }
+    if let instagramLink = AuthModule.currUser.instagramLink {
+      if instagramLink != "" {
+        instagramButton.isHidden = false
+      }
+    }
+  }
   
+  @objc func showVkProfile() {
+      if let vkLink = AuthModule.currUser.vkLink {
+           let userName =  vkLink
+          if let link = userName.detectedFirstLink {
+            if let url = URL(string: link) {
+                UIApplication.shared.open(url)
+            }
+          } else {
+            let appURL = URL(string: "vk://vk.com/\(userName)")!
+            let application = UIApplication.shared
+
+            if application.canOpenURL(appURL) {
+                application.open(appURL)
+            } else {
+                let webURL = URL(string: "https://vk.com/\(userName)")!
+                application.open(webURL)
+            }
+          }
+      }
+    }
+  
+  @objc func showInstagramProfile() {
+       if let instagramLink = AuthModule.currUser.instagramLink {
+        
+         let userName =  instagramLink // Your Instagram Username here
+        
+        if var link = userName.detectedFirstLink {
+          if !link.contains("https://") {
+              link = "https://\(link)"
+          }
+          if let url = URL(string: link) {
+              UIApplication.shared.open(url)
+          }
+        } else {
+          let appURL = URL(string: "instagram://user?username=\(userName)")!
+          let application = UIApplication.shared
+
+          if application.canOpenURL(appURL) {
+              application.open(appURL)
+          } else {
+              let webURL = URL(string: "https://instagram.com/\(userName)")!
+              application.open(webURL)
+          }
+        }
+    }
+  }
+    
+  @objc func showFacebookProfile() {
+    if let facebookLink = AuthModule.currUser.facebookLink {
+      let userName =  facebookLink.trimmingCharacters(in: .whitespaces)
+      if let link = userName.detectedFirstLink {
+        if let url = URL(string: link) {
+          UIApplication.shared.open(url)
+        }
+      } else {
+        let webURL = URL(string: "https://www.facebook.com/\(userName)")!
+        UIApplication.shared.open(webURL)
+      }
+    }
   }
   
   @IBAction func goToTrainer(_ sender: Any) {
@@ -411,35 +500,39 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     dismiss(animated: true, completion: nil)
   }
   
-  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-    if galleryUploadInProgress {
-      self.pendingForUpload.append(info)
-    } else {
-      self.uploadInfo(info: info)
-    }
-    dismiss(animated: true, completion: nil)
+//  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//  }
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+         if galleryUploadInProgress {
+        self.pendingForUpload.append(info)
+      } else {
+        self.uploadInfo(info: info)
+      }
+      dismiss(animated: true, completion: nil)
   }
   
-  private func uploadInfo(info: [String : Any]) {
-    //        if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-    //            self.galleryUploadInProgress = true
-    //            presenter.uploadPhoto(image: chosenImage)
-    //        } else if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
-    //            do {
-    //                let asset = AVURLAsset(url: videoURL, options: nil)
-    //                let imgGenerator = AVAssetImageGenerator(asset: asset)
-    //                imgGenerator.appliesPreferredTrackTransform = true
-    //                let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
-    //                let thumbnail = UIImage(cgImage: cgImage)
-    //
-    //                self.galleryUploadInProgress = true
-    //
-    //                presenter.uploadVideo(videoURL.absoluteString, thumbnail)
-    //                presenter.setCurrentVideoPath(path: videoURL.absoluteString)
-    //            } catch let error {
-    //                print("*** Error generating thumbnail: \(error.localizedDescription)")
-    //            }
-    //        }
+  private func uploadInfo(info: [UIImagePickerController.InfoKey : Any]) {
+
+            if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                self.galleryUploadInProgress = true
+                presenter.uploadPhoto(image: chosenImage)
+            } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+                do {
+                    let asset = AVURLAsset(url: videoURL, options: nil)
+                    let imgGenerator = AVAssetImageGenerator(asset: asset)
+                    imgGenerator.appliesPreferredTrackTransform = true
+                    let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+                    let thumbnail = UIImage(cgImage: cgImage)
+    
+                    self.galleryUploadInProgress = true
+    
+                    presenter.uploadVideo(videoURL.absoluteString, thumbnail)
+                    presenter.setCurrentVideoPath(path: videoURL.absoluteString)
+                } catch let error {
+                    print("*** Error generating thumbnail: \(error.localizedDescription)")
+                }
+            }
   }
   
 }
