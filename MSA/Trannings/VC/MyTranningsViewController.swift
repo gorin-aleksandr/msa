@@ -58,8 +58,25 @@ class MyTranningsViewController: UIViewController {
             AuthModule.isLastUserCurrent = false
             tableView.bounces = false
         }
+        weekLabel.addObserver(self, forKeyPath: "text", options: [.old, .new], context: nil)
     }
     
+
+
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if keyPath == "text" {
+      if let value = change?[.newKey] as? String {
+        if value == "Укажите название недели" || weekLabel.text == "" {
+          weekLabel.textColor = .placeholderLightGrey
+        } else {
+          weekLabel.textColor = .darkCyanGreen
+        }
+        if weekLabel.text == "" {
+          weekLabel.text = "Укажите название недели"
+        }
+      }
+    }
+  }
     
     @objc
     private func finishEditMode() {
@@ -747,6 +764,7 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
                 headerView.addGestureRecognizer(longPressRecognizer)
                 
                 headerView.dateLabel.text = day.date == "" ? "Укажите дату" : day.date
+                headerView.dateLabel.textColor = day.date == "" ? .placeholderLightGrey : .darkCyanGreen
                 headerView.dayLabel.text = "День \(section + 1)"
                 headerView.nameTextField.text = day.name
                 headerView.nameTextField.tag = section
