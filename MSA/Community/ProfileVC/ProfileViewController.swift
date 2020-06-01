@@ -235,7 +235,7 @@ class ProfileViewController: BasicViewController, UIPopoverControllerDelegate, U
         userLevel.text = "ТРЕНЕР"
       }
         if let dream = user.purpose {
-            dailyTraining.text = dream
+          dailyTraining.text = dream.take(60)
         }
         setProfileImage(image: nil, url: user.avatar)
         if  user.userType == .trainer {

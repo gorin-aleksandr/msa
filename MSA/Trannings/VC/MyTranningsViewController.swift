@@ -66,7 +66,7 @@ class MyTranningsViewController: UIViewController {
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == "text" {
       if let value = change?[.newKey] as? String {
-        if value == "Укажите название недели" || weekLabel.text == "" {
+        if value == "Укажите название недели" || value == "" {
           weekLabel.textColor = .placeholderLightGrey
         } else {
           weekLabel.textColor = .darkCyanGreen

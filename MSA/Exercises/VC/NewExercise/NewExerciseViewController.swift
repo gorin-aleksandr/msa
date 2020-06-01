@@ -162,6 +162,22 @@ extension NewExerciseViewController: UITextViewDelegate {
     textView.becomeFirstResponder()
   }
   
+  func textViewDidBeginEditing(_ textView: UITextView) {
+      if textView.textColor == UIColor.placeholderLightGrey {
+          textView.text = nil
+        textView.textColor = .darkCyanGreen
+      }
+  }
+  
+  func textViewDidEndEditing(_ textView: UITextView) {
+    if textView.text.isEmpty {
+      if textView.tag == 2 || textView.tag == 3 {
+        textView.text = "не обязательно"
+        textView.textColor = .placeholderLightGrey
+      }
+    }
+  }
+  
   func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
     let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
     let numberOfChars = newText.count
@@ -256,7 +272,8 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     //        }
     cell.infoTextView.delegate = self
     cell.infoTextView.tag = 2
-    cell.infoTextView.text = "\(exercManager.dataSource.descript)"
+    cell.infoTextView.text = exercManager.dataSource.descript == "" ? "не обязательно" : exercManager.dataSource.descript
+    cell.infoTextView.textColor = exercManager.dataSource.descript == "" ? .placeholderLightGrey : .darkCyanGreen
     cell.maxLenght.text = "600"
     let c = exercManager.dataSource.descript.count
     if c == 0 {
@@ -276,7 +293,9 @@ extension NewExerciseViewController: UITableViewDelegate, UITableViewDataSource 
     //        }
     cell.infoTextView.delegate = self
     cell.infoTextView.tag = 3
-    cell.infoTextView.text = "\(exercManager.dataSource.howToDo)"
+    cell.infoTextView.text = exercManager.dataSource.howToDo == "" ? "не обязательно" : exercManager.dataSource.howToDo
+    cell.infoTextView.textColor = exercManager.dataSource.howToDo == "" ? .placeholderLightGrey : .darkCyanGreen
+
     cell.maxLenght.text = "1200"
     let c = exercManager.dataSource.howToDo.count
     if c == 0 {

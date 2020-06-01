@@ -126,7 +126,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   }
   
   @objc func presentInputStatus() {
-    let alert = UIAlertController(style: .actionSheet, title: "Укажите статус")
+    let alert = UIAlertController(style: .actionSheet, title: "Укажите статус (60 символов)")
     let config: TextField.Config = { textField in
         textField.becomeFirstResponder()
         textField.textColor = .black
@@ -145,9 +145,13 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         textField.isSecureTextEntry = false
         textField.returnKeyType = .done
         textField.action { textField in
-          if let purpose = textField.text, purpose != AuthModule.currUser.purpose {
+          if let purpose = textField.text, purpose != AuthModule.currUser.purpose, textField.text!.count <= 60  {
             self.editProfilePresenter.setPurpose(purpose: purpose)
             self.dailyTraining.text = purpose
+          } else {
+            self.editProfilePresenter.setPurpose(purpose: textField.text!.take(60))
+            self.dailyTraining.text = textField.text!.take(60)
+            textField.text! = textField.text!.take(60)
           }
         }
     }
@@ -203,7 +207,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   }
   
   func configureProfile() {
-    editProfilePresenter.setupSubscriptionsFunctions()
+    //editProfilePresenter.setupSubscriptionsFunctions()
     setShadow(outerView: profileView, shadowOpacity: 0.3)
     setShadow(outerView: viewWithButtons, shadowOpacity: 0.2)
     

@@ -116,6 +116,14 @@ extension String {
 
           return (self as NSString).substring(with: result.range)
       }
+
+    func take(_ n: Int) -> String {
+          guard n >= 0 else {
+              fatalError("n should never negative")
+          }
+          let index = self.index(self.startIndex, offsetBy: min(n, self.count))
+          return String(self[..<index])
+      }
   
 }
 
