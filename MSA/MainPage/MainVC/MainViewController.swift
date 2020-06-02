@@ -65,7 +65,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   let pushManager = PushNotificationManager() 
   var customImageViev = ProfileImageView()
   var myPicker = UIImagePickerController()
-  
+  var permissionController: SPPermissionsDialogController?
   var galleryUploadInProgress: Bool = false
   var pendingForUpload: [[UIImagePickerController.InfoKey : Any]] = []
   
@@ -102,16 +102,16 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   func setupPermissionAlert() {
     let defaults = UserDefaults.standard
     let mainPermission = defaults.bool(forKey: "allowedMainNotificationPermission")
-    let controller = SPPermissions.dialog([.notification])
-       controller.titleText = "Нужно разрешение"
-       controller.headerText = ""
-       controller.footerText = ""
-       controller.dataSource = self
-       controller.delegate = self
+       permissionController = SPPermissions.dialog([.notification])
+       permissionController!.titleText = "Нужно разрешение"
+       permissionController!.headerText = ""
+       permissionController!.footerText = ""
+       permissionController!.dataSource = self
+       permissionController!.delegate = self
        let state = SPPermission.notification.isAuthorized
     if !state && !mainPermission {
        defaults.set(true, forKey: "allowedMainNotificationPermission")
-          controller.present(on: self)
+          permissionController!.present(on: self)
         }
   }
   
@@ -619,7 +619,12 @@ extension MainViewController: SPPermissionsDataSource, SPPermissionsDelegate{
   func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
     cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
     cell.permissionTitleLabel.text = "Уведомления"
-    cell.button.setTitle("Включить", for: .normal)
+    cell.button.allowTitle = "Разрешить"
+    cell.button.allowedTitle = "Разрешены"
+    cell.iconView.color = .darkCyanGreen
+    cell.button.allowTitleColor = .darkCyanGreen
+    cell.button.allowedBackgroundColor = .darkCyanGreen
+
     return cell
   }
   
@@ -634,17 +639,8 @@ extension MainViewController: SPPermissionsDataSource, SPPermissionsDelegate{
     
   }
   
-//  func deniedData(for permission: SPPermission) -> SPPermissionDeniedAlertData? {
-////    if permission == .notification {
-////        let data = SPPermissionDeniedAlertData()
-////        data.alertOpenSettingsDeniedPermissionTitle = "Нет разрешения"
-////        data.alertOpenSettingsDeniedPermissionDescription = "Пожалуйста, перейдите в настройки и разрешите уведомления."
-////        data.alertOpenSettingsDeniedPermissionButtonTitle = "Настройки"
-////        data.alertOpenSettingsDeniedPermissionCancelTitle = "Отмена"
-////        return data
-////    } else {
-//        // If returned nil, alert will not show.
-//        return nil
-//    //}
-//  }
+  func deniedData(for permission: SPPermission) -> SPPermissionDeniedAlertData? {
+    permissionController!.dismiss(animated: true, completion: nil)
+    return nil
+  }
 }

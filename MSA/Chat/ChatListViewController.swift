@@ -15,7 +15,8 @@ class ChatListViewController: UIViewController {
 
   @IBOutlet weak var tableView: UITableView!
   var viewModel: ChatListViewModel = ChatListViewModel()
-  
+  var permissionController: SPPermissionsDialogController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -36,16 +37,16 @@ class ChatListViewController: UIViewController {
   func setupPermissionAlert() {
     let defaults = UserDefaults.standard
     let mainPermission = defaults.bool(forKey: "allowedChatNotificationPermission")
-    let controller = SPPermissions.dialog([.notification])
-       controller.titleText = "Нужно разрешение"
-       controller.headerText = ""
-       controller.footerText = ""
-       controller.dataSource = self
-       controller.delegate = self
+    permissionController = SPPermissions.dialog([.notification])
+       permissionController!.titleText = "Нужно разрешение"
+       permissionController!.headerText = ""
+       permissionController!.footerText = ""
+       permissionController!.dataSource = self
+       permissionController!.delegate = self
        let state = SPPermission.notification.isAuthorized
     if !state && !mainPermission {
        defaults.set(true, forKey: "allowedChatNotificationPermission")
-          controller.present(on: self)
+          permissionController!.present(on: self)
         }
   }
   
@@ -120,34 +121,30 @@ extension ChatListViewController: UITableViewDelegate {
 extension ChatListViewController: SPPermissionsDataSource, SPPermissionsDelegate{
   func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
     cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
-    cell.permissionTitleLabel.text = "Уведомления"
-    cell.button.setTitle("Включить", for: .normal)
+    cell.permissionTitleLabel.text = "Включите пуш - уведомления в настройках приложения"
+    cell.button.allowTitle = "В настройки"
+    //cell.button.allowedTitle = "Разрешены"
+    cell.iconView.color = .darkCyanGreen
+    cell.button.allowTitleColor = .darkCyanGreen
+    cell.button.allowedBackgroundColor = .darkCyanGreen
+
     return cell
   }
   
   func didAllow(permission: SPPermission) {
-    viewModel.pushManager.registerForPushNotifications()
   }
   
   func didDenied(permission: SPPermission) {
-    
+  if let bundleIdentifier = Bundle.main.bundleIdentifier, let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier) {
+    if UIApplication.shared.canOpenURL(appSettings) {
+      UIApplication.shared.open(appSettings)
+      permissionController?.dismiss(animated: true, completion: nil)
+    }
+  }
   }
   
   func didHide(permissions ids: [Int]) {
     
   }
   
-//  func deniedData(for permission: SPPermission) -> SPPermissionDeniedAlertData? {
-//    if permission == .notification {
-//        let data = SPPermissionDeniedAlertData()
-//        data.alertOpenSettingsDeniedPermissionTitle = "Нет разрешения"
-//        data.alertOpenSettingsDeniedPermissionDescription = "Пожалуйста, перейдите в настройки и разрешите уведомления."
-//        data.alertOpenSettingsDeniedPermissionButtonTitle = "Настройки"
-//        data.alertOpenSettingsDeniedPermissionCancelTitle = "Отмена"
-//        return data
-//    } else {
-//        // If returned nil, alert will not show.
-//        return nil
-//    }
-//  }
 }

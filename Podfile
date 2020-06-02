@@ -34,4 +34,5 @@ target 'MSA' do
   pod "SearchTextField"
   pod 'SPPermissions/Notification'
   pod 'FBSDKLoginKit'
+  pod 'Siren'
 end

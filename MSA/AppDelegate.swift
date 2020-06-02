@@ -18,7 +18,7 @@ import AppCenterAnalytics
 import AppCenterCrashes
 import FirebaseMessaging
 import FBSDKLoginKit
-
+import Siren
 
 
 @UIApplicationMain
@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let realmVersion: UInt64 = 0
     let defaults = UserDefaults.standard
+    let pushManager = PushNotificationManager()
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
   
@@ -55,6 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         logSessionEvent()
         logInAppPurhaseRenewalEvent()
         UIApplication.shared.applicationIconBadgeNumber = 0
+        Siren.shared.presentationManager = PresentationManager(forceLanguageLocalization: .russian)
+        Siren.shared.wail()
         return true
     }
     
@@ -93,6 +96,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
         UIApplication.shared.applicationIconBadgeNumber = 0
+        let current = UNUserNotificationCenter.current()
+
+      current.getNotificationSettings(completionHandler: { (settings) in
+        if settings.authorizationStatus == .authorized {
+          self.pushManager.registerForPushNotifications()
+        }
+      })
 
     }
 

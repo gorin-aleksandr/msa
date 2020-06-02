@@ -409,6 +409,7 @@ PODS:
     - FLAnimatedImage (~> 1.0)
     - SDWebImage/Core
   - SearchTextField (1.2.4)
+  - Siren (5.4.0)
   - SkyFloatingLabelTextField (3.8.0)
   - SPPermissions/Core (5.3.2)
   - SPPermissions/Notification (5.3.2):
@@ -440,6 +441,7 @@ DEPENDENCIES:
   - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
   - SDWebImage
   - SearchTextField
+  - Siren
   - SkyFloatingLabelTextField (~> 3.0)
   - SPPermissions/Notification
   - SVProgressHUD
@@ -499,6 +501,7 @@ SPEC REPOS:
     - PromisesObjC
     - Protobuf
     - SearchTextField
+    - Siren
     - SPPermissions
     - TagListView
     - YoutubePlayer-in-WKWebView
@@ -579,6 +582,7 @@ SPEC CHECKSUMS:
   RealmSwift: 33656a42bd300959a081fc13347376bc478071af
   SDWebImage: 6da6c8bca115addc4de8613362e1b15f66333825
   SearchTextField: 40dc3cc57def5a211f263cac263622c163bbc25a
+  Siren: 9df16ed5278cfaad7ea034f3d2206e4f6983e9b8
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   SPPermissions: f1f82ba07d1a07e1d73521b19e7c3550b0bc0ddb
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
@@ -586,6 +590,6 @@ SPEC CHECKSUMS:
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: eb61da9ececc8baf084f254dd857a49885f9361a
+PODFILE CHECKSUM: e8400f6375deb4e6818a97f995346f02daf9dbc7
 
 COCOAPODS: 1.9.1
