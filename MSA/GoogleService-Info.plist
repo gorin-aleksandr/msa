@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>317876705372-2g7mu43rk548cqft2dbph9hci136n3m4.apps.googleusercontent.com</string>
+	<string>317876705372-nfslbva3e9s79aj5nqnh30v3nd971es5.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.317876705372-2g7mu43rk548cqft2dbph9hci136n3m4</string>
+	<string>com.googleusercontent.apps.317876705372-nfslbva3e9s79aj5nqnh30v3nd971es5</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA7OKby-lKHWPb3E9ErfbvmVWTfDJ9Advc</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,23 +13,23 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>easyapps.MSA.Prod</string>
+	<string>easyapps.MSA.Admin</string>
 	<key>PROJECT_ID</key>
 	<string>msa-progect</string>
 	<key>STORAGE_BUCKET</key>
 	<string>msa-progect.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:317876705372:ios:66afc6b3dda3c911</string>
+	<string>1:317876705372:ios:e7db0c5bccc4125ea66e99</string>
 	<key>DATABASE_URL</key>
 	<string>https://msa-progect.firebaseio.com</string>
 </dict>

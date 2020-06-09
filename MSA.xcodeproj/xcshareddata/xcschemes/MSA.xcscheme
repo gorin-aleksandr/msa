@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "29160B412035AA3B00DA7227"
-               BuildableName = "MSA.app"
+               BuildableName = "MSA Admin.app"
                BlueprintName = "MSA"
                ReferencedContainer = "container:MSA.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "29160B412035AA3B00DA7227"
-            BuildableName = "MSA.app"
+            BuildableName = "MSA Admin.app"
             BlueprintName = "MSA"
             ReferencedContainer = "container:MSA.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "29160B412035AA3B00DA7227"
-            BuildableName = "MSA.app"
+            BuildableName = "MSA Admin.app"
             BlueprintName = "MSA"
             ReferencedContainer = "container:MSA.xcodeproj">
          </BuildableReference>
