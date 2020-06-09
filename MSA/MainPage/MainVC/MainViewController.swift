@@ -80,7 +80,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     downloadData()
     myPicker.delegate = self
-    
+    setupPermissionAlert()
     dreamViewButton.addTarget(self, action: #selector(presentInputStatus), for: .touchUpInside)
     editSkillsButton.isHidden = true
     if AuthModule.currUser.userType == .trainer {
@@ -89,7 +89,8 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
       dailyTrainingLeading.constant = -27
     }
     fetchChats()
-    setupPermissionAlert()
+    PushNotificationManager().updateFirestorePushTokenIfNeeded()
+
   }
   
   func fetchChats() {

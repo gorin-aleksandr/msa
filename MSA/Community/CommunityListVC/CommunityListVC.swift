@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import SearchTextField
+import SPPermissions
 
 protocol CommunityListViewProtocol: class {
     func updateTableView()
@@ -37,20 +38,22 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     @IBOutlet weak var accessDeniedView: UIView!
     @IBOutlet weak var goToProductsButton: UIButton!
     @IBOutlet weak var restoreButton: UIButton!
-    
+    var permissionController: SPPermissionsDialogController?
+
     private let refreshControl = UIRefreshControl()
     
     let cityPicker = UIPickerView()
     
     var presenter: CommunityListPresenterProtocol!
     var chatViewModel: ChatListViewModel = ChatListViewModel()
+    let pushManager = PushNotificationManager()
 
     let button = UIButton()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupPermissionAlert()
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         searchBar.delegate = self
@@ -62,7 +65,25 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         configureRefresh()
         presenter.start()
         fetchChats()
+        PushNotificationManager().updateFirestorePushTokenIfNeeded()
+
     }
+  
+  func setupPermissionAlert() {
+    let defaults = UserDefaults.standard
+    let mainPermission = defaults.bool(forKey: "allowedMainNotificationPermission")
+       permissionController = SPPermissions.dialog([.notification])
+       permissionController!.titleText = "Нужно разрешение"
+       permissionController!.headerText = ""
+       permissionController!.footerText = ""
+       permissionController!.dataSource = self
+       permissionController!.delegate = self
+       let state = SPPermission.notification.isAuthorized
+    if !state && !mainPermission {
+       defaults.set(true, forKey: "allowedMainNotificationPermission")
+          permissionController!.present(on: self)
+        }
+  }
   
   func fetchChats() {
     chatViewModel.getChatList(success: {
@@ -417,4 +438,34 @@ extension CommunityListViewController {
           presenter.applyFilters(with: searchBar.text)
     }
     
+}
+
+extension CommunityListViewController: SPPermissionsDataSource, SPPermissionsDelegate{
+  func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
+    cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
+    cell.permissionTitleLabel.text = "Уведомления"
+    cell.button.allowTitle = "Разрешить"
+    cell.button.allowedTitle = "Разрешены"
+    cell.iconView.color = .darkCyanGreen
+    cell.button.allowTitleColor = .darkCyanGreen
+    cell.button.allowedBackgroundColor = .darkCyanGreen
+
+    return cell
+  }
+  
+  func didAllow(permission: SPPermission) {
+    pushManager.registerForPushNotifications()
+  }
+  
+  func didDenied(permission: SPPermission) {
+  }
+  
+  func didHide(permissions ids: [Int]) {
+    
+  }
+  
+  func deniedData(for permission: SPPermission) -> SPPermissionDeniedAlertData? {
+    permissionController!.dismiss(animated: true, completion: nil)
+    return nil
+  }
 }
