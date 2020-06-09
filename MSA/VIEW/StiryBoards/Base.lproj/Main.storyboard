@@ -355,6 +355,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="bqg-PE-rL3" id="daS-Rp-K8V"/>
                         <outlet property="appleButton" destination="fSt-El-SPD" id="XDL-sN-ne0"/>
+                        <outlet property="appleButtonView" destination="N6N-H4-eSj" id="9Gf-UR-2sK"/>
                         <outlet property="blurView" destination="nyT-ne-dWG" id="hM8-nL-6nq"/>
                         <outlet property="emailTextField" destination="FCh-ac-lbB" id="q56-KC-Ibe"/>
                         <outlet property="fbButton" destination="Y1H-GX-Npg" id="tDY-T8-tHd"/>

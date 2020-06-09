@@ -32,6 +32,7 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate, AS
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var fbButton: UIButton!
+    @IBOutlet weak var appleButtonView: UIView!
     @available(iOS 13.0, *)
     @IBOutlet lazy var appleButton: MyAuthorizationAppleIdButton? = { return nil }()
     @IBOutlet weak var logInButton: UIButton! { didSet { logInButton.layer.cornerRadius = 10 } }
@@ -55,6 +56,7 @@ class SignInViewController: BasicViewController, UIGestureRecognizerDelegate, AS
       if #available(iOS 13.0, *) {
         appleButton?.authorizationButton.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
       } else {
+        appleButtonView.isHidden = true
         // Fallback on earlier versions
       }
     

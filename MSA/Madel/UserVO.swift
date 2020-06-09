@@ -39,6 +39,7 @@ struct UserVO {
     var instagramLink: String?
     var facebookLink: String?
     var vkLink: String?
+    var createdDate: Int?
     var userType: UserType {
         switch  type  {
         case "ТРЕНЕР":

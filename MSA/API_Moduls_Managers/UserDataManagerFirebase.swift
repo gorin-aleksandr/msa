@@ -74,7 +74,8 @@ class UserDataManager {
                 "weight": user.weight,
                 "weightType": user.weightType,
                 "type": user.type,
-                "city": user.city
+                "city": user.city,
+                "createdDate": ServerValue.timestamp()
                 ] as [String:Any]
             userRef.child(key).setValue(newUser) { (error, ref) in
                 if error == nil {
