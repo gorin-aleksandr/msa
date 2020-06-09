@@ -30,8 +30,6 @@
                         <color key="selectedImageTintColor" red="0.0" green="0.49411764705882355" blue="0.72549019607843135" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="HaX-XS-2DW" kind="relationship" relationship="viewControllers" id="rjk-rl-bbG"/>
-                        <segue destination="KdQ-nb-0dM" kind="relationship" relationship="viewControllers" id="Tj1-Ed-Hh7"/>
                         <segue destination="SG2-du-uNo" kind="relationship" relationship="viewControllers" id="Dj1-iG-6wH"/>
                         <segue destination="LCG-rv-yoB" kind="relationship" relationship="viewControllers" id="rht-l8-af0"/>
                     </connections>
@@ -668,19 +666,17 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProductCategoriesCell" rowHeight="117" id="lae-sp-iut" customClass="ProductCategoriesCell" customModule="MSA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="117"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lae-sp-iut" id="LYk-qK-B9a">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="117"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfY-vM-ifk">
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfY-vM-ifk">
                                                     <rect key="frame" x="15" y="11" width="290" height="0.0"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LAD-yk-Jmt" customClass="TagListView" customModule="TagListView">
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LAD-yk-Jmt" customClass="TagListView" customModule="TagListView">
                                                     <rect key="frame" x="15" y="19" width="290" height="87.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
@@ -2411,64 +2407,10 @@
             </objects>
             <point key="canvasLocation" x="790" y="-1563"/>
         </scene>
-        <!--Главная-->
-        <scene sceneID="vEo-Zm-u2S">
-            <objects>
-                <navigationController storyboardIdentifier="NVC2" automaticallyAdjustsScrollViewInsets="NO" id="HaX-XS-2DW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Главная" image="MainTab" id="4rP-pd-Dzs"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="O7z-c6-jsa">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.96461421250000001" green="0.96477204559999996" blue="0.96458059549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9IR-Rq-7dp" kind="relationship" relationship="rootViewController" id="BoE-Ze-8jW"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="I5G-lD-hdA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="59" y="-891"/>
-        </scene>
-        <!--Упражнения-->
-        <scene sceneID="qO1-ot-AeQ">
-            <objects>
-                <navigationController id="KdQ-nb-0dM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Упражнения" image="Exercises" id="uVs-hb-F3m"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="iaS-IJ-fm2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.96461421250000001" green="0.96477204559999996" blue="0.96458059549999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                        <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="e22-7W-RS5" kind="relationship" relationship="rootViewController" id="H7d-jq-Ccn"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kOe-aD-PYS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="58" y="-1562"/>
-        </scene>
     </scenes>
     <resources>
         <image name=" videoplay_white_48px" width="48" height="48"/>
-        <image name="Exercises" width="60" height="21"/>
         <image name="FaceTime Icon" width="18" height="14"/>
-        <image name="MainTab" width="40" height="24"/>
         <image name="Triangle_black" width="8" height="4"/>
         <image name="amonestation" width="24" height="22"/>
         <image name="avatar-placeholder" width="500" height="500"/>

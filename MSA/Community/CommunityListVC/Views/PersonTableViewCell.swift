@@ -45,6 +45,7 @@ class PersonTableViewCell: UITableViewCell {
         userTypeView.layer.cornerRadius = userTypeView.frame.width/2
         addButton.setImage(  #imageLiteral(resourceName: "accept_disabled"), for: .disabled)
         acceptButton.layer.cornerRadius = 6
+        addButton.setImage(UIImage(named: "convert_send"), for: .normal)
         selectionStyle = .none
     }
   
@@ -62,7 +63,12 @@ class PersonTableViewCell: UITableViewCell {
         }
         
         fullNameLabel.text = fullName
-        cityLabel.text = person.city
+        let date = Date(timeIntervalSince1970: Double(person.createdDate!/1000))
+        let format = DateFormatter()
+        format.timeZone = .current
+        format.dateFormat = "dd.MM HH:mm"
+        let dateString = format.string(from: date)
+        cityLabel.text = "\(person.city ?? "") - \(dateString)"
         locationIcon.isHidden = person.city == nil
         if let stringUrl = person.avatar, !stringUrl.isEmpty, let url = URL(string: stringUrl) {
             avatarImageView.sd_setImage(with: url, completed: nil)

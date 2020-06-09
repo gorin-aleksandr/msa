@@ -14,6 +14,8 @@ protocol CommunityListPresenterProtocol {
     func start()
     func fetchData() -> ()
     var communityDataSource: [UserVO] { get }
+    var adminChats: [String] { get }
+    var adminChatusers: [String] { get }
     var isTrainerEnabled: Bool { get }
     func setFilterForState(index: Int)
     func selectCityAt(index: Int)
@@ -66,7 +68,9 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
             communityDataSource = users
         }
     }
-    
+    var adminChats: [String] = []
+    var adminChatusers: [String] = []
+
     var currentUser: UserVO? {
         return AuthModule.currUser
     }
@@ -84,7 +88,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     private var cities = [String]()
     private var selectedCity: String?
     private var searchText: String?
-    
+
     var communityDataSource = [UserVO]()
     
     init(view: CommunityListViewProtocol) {
@@ -101,14 +105,14 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     func start() {
         // MARK: Uncomment to use IAPs
         view.setLoaderVisible(true)
-        InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
-            if InAppPurchasesService.shared.currentSubscription != nil {
-              self?.fetchData()
-              self?.view.hideAccessDeniedView()
-            } else {
-                self?.view.showIAP()
-            }
-        }
+//        InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
+//            if InAppPurchasesService.shared.currentSubscription != nil {
+              self.fetchData()
+              self.view.hideAccessDeniedView()
+//            } else {
+//                self?.view.showIAP()
+//            }
+//        }
     }
     
     func fetchData() {
@@ -200,7 +204,15 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
         applyTypeFilter()
         applyCityFilter()
         searchBy(string: searchText)
-        view.updateTableView()
+        fetchAdminChats()
+    }
+  
+    func fetchAdminChats() {
+      dataLoader.getAdminChats { (success, users, chats, error) in
+        self.adminChatusers = users
+        self.adminChats = chats
+        self.view.updateTableView()
+      }
     }
     
     func getPersonState(person: UserVO) -> PersonState {
@@ -293,16 +305,20 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
     }
     
     func addButtonTapped(at index: Int) {
-        guard communityDataSource[index].userType == .trainer else {
-             view.showAlertFor(user: communityDataSource[index], isTrainerEnabled: false)
-            return
-        }
-        guard let trainerExists = currentUser?.trainerId?.isEmpty else {
-            print(communityDataSource[index].userType)
-            view.showAlertFor(user: communityDataSource[index], isTrainerEnabled: true)
-            return
-        }
-        view.showAlertFor(user: communityDataSource[index], isTrainerEnabled: trainerExists)
+
+      view.showAlertFor(user: communityDataSource[index], isTrainerEnabled: false)
+
+      
+//        guard communityDataSource[index].userType == .trainer else {
+//             view.showAlertFor(user: communityDataSource[index], isTrainerEnabled: false)
+//            return
+//        }
+//        guard let trainerExists = currentUser?.trainerId?.isEmpty else {
+//            print(communityDataSource[index].userType)
+//            view.showAlertFor(user: communityDataSource[index], isTrainerEnabled: true)
+//            return
+//        }
+//        view.showAlertFor(user: communityDataSource[index], isTrainerEnabled: trainerExists)
     }
     
     func createNextPresenter(for view: UserCommunityViewProtocol) -> UserCommunityPresenterProtocol {

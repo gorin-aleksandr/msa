@@ -74,7 +74,8 @@ class UserDataManager {
                 "weight": user.weight,
                 "weightType": user.weightType,
                 "type": user.type,
-                "city": user.city
+                "city": user.city,
+                "createdDate": ServerValue.timestamp()
                 ] as [String:Any]
             userRef.child(key).setValue(newUser) { (error, ref) in
                 if error == nil {
@@ -134,7 +135,7 @@ class UserDataManager {
             callback([], connectionError)
             return
         }
-        userRef.observeSingleEvent(of: .value, with: { (snapshot) in
+      userRef.queryOrdered(byChild: "createdDate").observeSingleEvent(of: .value, with: { (snapshot) in
             guard let data = snapshot.value as? [String : [String : Any]] else {
                 print("Error occured while parsing community for key from database")
                 return
@@ -145,7 +146,9 @@ class UserDataManager {
             var community: [UserVO] = []
             for value in values {
                 if let user = self.makeUser(from: value) {
+                  if user.createdDate != nil {
                     community.append(user)
+                  }
                 }
             }
             callback(community, nil)
@@ -209,7 +212,8 @@ class UserDataManager {
                           fcmToken: value["fcmToken"] as? String,
                           instagramLink: value["instagramLink"] as? String,
                           facebookLink: value["facebookLink"] as? String,
-                          vkLink: value["vkLink"] as? String)
+                          vkLink: value["vkLink"] as? String,
+                          createdDate: value["createdDate"] as? Int)
         }
         return user
     }
@@ -420,6 +424,25 @@ class UserDataManager {
         }
       }
       callback(true,"",error)
+    }
+  }
+  
+  func getAdminChats(callback: @escaping (_ success:Bool, _ users: [String], _ chats: [String], _ error: Error?) -> ()) {
+    var users: [String] = []
+    var chats: [String] = []
+    let docRef = db.collection("UsersChat").document(AuthModule.currUser.id!).collection("Chats")
+    
+    docRef.getDocuments { (document, error) in
+      print(document!.documents)
+      for item in document!.documents {
+        print(item)
+          let chatUserId = item["chatUserId"] as! String
+          users.append(chatUserId)
+          let chatId = item["chatId"] as! String
+          chats.append(chatId)
+
+      }
+      callback(true,users,chats,error)
     }
   }
   

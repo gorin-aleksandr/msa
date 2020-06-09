@@ -338,7 +338,7 @@
 		24FEE3E7242F5DF5001670F6 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		290CA6D0203AD6100073A8F0 /* AuthModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModule.swift; sourceTree = "<group>"; };
-		29160B422035AA3B00DA7227 /* MSA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MSA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29160B422035AA3B00DA7227 /* MSA Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MSA Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		29160B452035AA3B00DA7227 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29160B4A2035AA3B00DA7227 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		29160B4C2035AA3B00DA7227 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -857,7 +857,7 @@
 		29160B432035AA3B00DA7227 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				29160B422035AA3B00DA7227 /* MSA.app */,
+				29160B422035AA3B00DA7227 /* MSA Admin.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1322,7 +1322,7 @@
 			);
 			name = MSA;
 			productName = MSA;
-			productReference = 29160B422035AA3B00DA7227 /* MSA.app */;
+			productReference = 29160B422035AA3B00DA7227 /* MSA Admin.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1892,8 +1892,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.4.34;
-				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Admin;
+				PRODUCT_NAME = "MSA Admin";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1916,8 +1916,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.4.34;
-				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod1;
+				PRODUCT_NAME = "MSA Admin";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

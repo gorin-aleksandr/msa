@@ -43,7 +43,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     let cityPicker = UIPickerView()
     
     var presenter: CommunityListPresenterProtocol!
-    
+    var chatViewModel: ChatListViewModel = ChatListViewModel()
+
     let button = UIButton()
     
 
@@ -60,8 +61,26 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         errorView.isHidden = true
         configureRefresh()
         presenter.start()
+        fetchChats()
     }
+  
+  func fetchChats() {
+    chatViewModel.getChatList(success: {
+      self.setBadgeForChatCounter()
+    }) {
+    }
+  }
     
+  func setBadgeForChatCounter() {
+    var count = 0
+    for chat in chatViewModel.chats {
+      if chat.newMessages == true {
+        count = count + 1
+      }
+    }
+      super.tabBarController?.viewControllers![1].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
+  }
+  
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
@@ -70,8 +89,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         super.viewWillAppear(animated)
         
         // MARK: Uncomment/commemt for IAPs
-        accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
-        //accessDeniedView.isHidden = true
+        //accessDeniedView.isHidden = InAppPurchasesService.shared.currentSubscription != nil
+        accessDeniedView.isHidden = true
         
         setupNavigationBar()
         updateTableView()
@@ -116,7 +135,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
         refreshControl.endRefreshing()
         setLoaderVisible(false)
     }
-    
+      
     func setLoaderVisible(_ visible: Bool) {
         visible ? SVProgressHUD.show() : SVProgressHUD.dismiss()
     }
@@ -146,29 +165,42 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
-        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Вы можете перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
-        let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
-            print("Cancel")
-        }
-        if presenter.getPersonState(person: user) != .friend {
-            let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
-                SVProgressHUD.show()
-                self?.presenter.addToFriends(user: user)
-                
-            })
-             alert.addAction(addFriendAction)
-        }
-        
-        alert.addAction(cancelActionButton)
-       
-        if isTrainerEnabled {
-            let addTrainerAction = UIAlertAction(title: "Добавить в тренеры", style: .default, handler: { [weak self] _ in
-                SVProgressHUD.show()
-                self?.presenter.addAsTrainer(user: user)
-            })
-        alert.addAction(addTrainerAction)
-        }
-        self.present(alert, animated: true)
+      let chatViewController = chatStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController
+      var chatId = ""
+      let index = presenter.adminChatusers.firstIndex(of: user.id!)
+      if index != nil {
+        chatId = presenter.adminChats[index!]
+      }
+      chatViewController?.viewModel = ChatViewModel(chatId: chatId, chatUserId: user.id!, chatUserName: "\(user.firstName!) \(user.lastName!)")
+      chatViewController?.viewModel!.chatUser = user
+      chatViewController?.viewModel?.chatUserAvatar = user.avatar
+      chatViewController?.senderDisplayName = ""
+      let nc = UINavigationController(rootViewController: chatViewController!)
+      nc.modalPresentationStyle = .fullScreen
+      self.present(nc, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Вы можете перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
+//        let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
+//            print("Cancel")
+//        }
+//        if presenter.getPersonState(person: user) != .friend {
+//            let addFriendAction = UIAlertAction(title: "Добавить в список друзей", style: .default, handler: { [weak self] action -> Void in
+//                SVProgressHUD.show()
+//                self?.presenter.addToFriends(user: user)
+//
+//            })
+//             alert.addAction(addFriendAction)
+//        }
+//
+//        alert.addAction(cancelActionButton)
+//
+//        if isTrainerEnabled {
+//            let addTrainerAction = UIAlertAction(title: "Добавить в тренеры", style: .default, handler: { [weak self] _ in
+//                SVProgressHUD.show()
+//                self?.presenter.addAsTrainer(user: user)
+//            })
+//        alert.addAction(addTrainerAction)
+//        }
+//        self.present(alert, animated: true)
     }
     
     func hideAccessDeniedView() {
@@ -284,13 +316,13 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
 // MARK: 1
-       if InAppPurchasesService.shared.currentSubscription != nil {
+       //if InAppPurchasesService.shared.currentSubscription != nil {
             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
             destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
             self.navigationController?.pushViewController(destinationVC, animated: true)
-          } else {
-              showNoMyComunityAlert()
-          }
+//          } else {
+//              showNoMyComunityAlert()
+//          }
     }
 
     private func showNoMyComunityAlert() {
@@ -333,11 +365,24 @@ extension CommunityListViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "PersonTableViewCell", for: indexPath) as! PersonTableViewCell
         let person = presenter.communityDataSource[indexPath.row]
         let personState =  presenter.getPersonState(person: person)
+        for item in presenter.adminChats {
+          if item == person.id {
+            cell.addButton.setImage(UIImage(named: "convert_send"), for: .normal)
+          }
+        }
         cell.configure(with: person, userCommunityState: .friends)
         cell.addButtonHandler = { [weak self] in
             self?.presenter?.addButtonTapped(at: indexPath.row)
         }
         cell.setupCell(basedOn: personState, isTrainerEnabled: presenter.isTrainerEnabled)
+        for item in presenter.adminChatusers {
+          if item == person.id {
+            cell.addButton.setImage(UIImage(named: "messageSend"), for: .normal)
+            break
+          } else {
+            cell.addButton.setImage(UIImage(named: "convert_send"), for: .normal)
+          }
+        }
         return cell
     }
     

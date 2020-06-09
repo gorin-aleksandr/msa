@@ -57,7 +57,7 @@ class ChatListViewController: UIViewController {
         count = count + 1
       }
     }
-      super.tabBarController?.viewControllers![3].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
+      super.tabBarController?.viewControllers![1].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
   }
   
   func setupUI() {
