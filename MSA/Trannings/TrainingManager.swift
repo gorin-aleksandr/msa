@@ -558,7 +558,7 @@ class TrainingManager {
     
     func loadTrainings(success: (() -> Void)? = nil, failture: (([NSError]) -> Void)? = nil) {
         if let id = sportsmanId {
-            Database.database().reference().child("Trainings").child(id).observeSingleEvent(of: .value) { (snapchot) in
+          Database.database().reference().child("Trainings").child(id).observe(.value) { (snapchot) in
                 self.observeTrainings(snapchot: snapchot, success: {
                     success?()
                 })
@@ -568,7 +568,7 @@ class TrainingManager {
     
     func getMyExercises(success: (() -> Void)?, failture: (([NSError]) -> Void)? = nil) {
         if let id = sportsmanId {
-            Database.database().reference().child("ExercisesByTrainers").child(id).observeSingleEvent(of: .value) { (data) in
+          Database.database().reference().child("ExercisesByTrainers").child(id).observe(.value) { (data) in
                 let items = parseExercises(snapchot: data)
                 let myExerc = MyExercises()
                 myExerc.id = AuthModule.currUser.id ?? ""
