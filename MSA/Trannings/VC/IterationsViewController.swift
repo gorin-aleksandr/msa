@@ -51,6 +51,10 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
         manager.setState(state: .iterationsOnly)
         heartBeatService.heartBeatDelegate = self
         heartBeatService.delegate = self
+        manager.loadTrainings(success: {
+              self.tableView.reloadData()
+        }) { (error) in
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
