@@ -400,8 +400,8 @@
                                                 <constraint firstAttribute="trailing" secondItem="vPc-hH-ZoP" secondAttribute="trailing" constant="12" id="r0t-J9-oul"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="14 ДНЕЙ БЕСПЛАТНО*" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdL-ob-BOK">
-                                            <rect key="frame" x="70.5" y="262" width="179.5" height="19"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 ДНЯ БЕСПЛАТНО*" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdL-ob-BOK">
+                                            <rect key="frame" x="80" y="262" width="160" height="19"/>
                                             <fontDescription key="fontDescription" name="Rubik-Bold" family="Rubik" pointSize="16"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
