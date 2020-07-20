@@ -948,9 +948,9 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     
     func trainingsLoaded() {
       //if manager.sportsmanId == AuthModule.currUser.id {
-        if manager.firstLoad {
-          setupFirstWeek()
-        } else {
+        setupFirstWeek()
+
+        if !manager.firstLoad {
           changeWeek()
         }
 //      } else {

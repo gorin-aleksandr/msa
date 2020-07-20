@@ -231,7 +231,7 @@ extension AppDelegate: SKPaymentTransactionObserver {
         InAppPurchasesService.shared.uploadReceipt { (success) in
             DispatchQueue.main.async {
                 if success {
-                  Analytics.logEvent("in_app_purchase", parameters: nil)
+                  //Analytics.logEvent("in_app_purchase", parameters: nil)
                   switch AuthModule.currUser.userType {
                     case .sportsman:
                       Analytics.logEvent("in_app_p_sportsman", parameters: nil)
