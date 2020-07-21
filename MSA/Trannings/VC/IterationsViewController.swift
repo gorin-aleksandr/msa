@@ -405,7 +405,9 @@ extension IterationsViewController: SwipeTableViewCellDelegate {
             guard let object = self.manager.getCurrentExercise()?.iterations[indexPath.row] else {return}
             self.manager.realm.deleteObject(object)
             self.manager.editTraining(wiht: self.manager.getCurrentTraining()?.id ?? -1, success: {})
-            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: { self.tableView.reloadData() })
+            UIView.transition(with: self.tableView, duration: 0.35, options: .transitionCrossDissolve, animations: {
+           //   self.tableView.reloadData()
+            })
         }
         deleteAction.image = UIImage(named: "cancel-24px")
         deleteAction.title = nil
