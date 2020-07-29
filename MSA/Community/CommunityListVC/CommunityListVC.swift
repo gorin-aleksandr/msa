@@ -284,7 +284,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     
     @IBAction func myCommunityButtonTapped(_ sender: Any) {
 // MARK: 1
-  //     if InAppPurchasesService.shared.currentSubscription != nil {
+//       if InAppPurchasesService.shared.currentSubscription != nil {
             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserCommunityViewController") as! UserCommunityViewController
             destinationVC.presenter = presenter.createNextPresenter(for: destinationVC)
             self.navigationController?.pushViewController(destinationVC, animated: true)
