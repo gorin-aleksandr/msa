@@ -33,6 +33,7 @@ private let dateFormatter: DateFormatter = {
 public struct PaidSubscription {
     
     public let productId: String
+    public let isTrialPeriod: String
     public let purchaseDate: Date
     public let expiresDate: Date
     public let type: SubType
@@ -45,6 +46,7 @@ public struct PaidSubscription {
     init?(json: [String: Any]) {
         guard
             let productId = json["product_id"] as? String,
+            let isTrialPeriod = json["is_trial_period"] as? String,
             let purchaseDateString = json["purchase_date"] as? String,
             let purchaseDate = dateFormatter.date(from: purchaseDateString),
             let expiresDateString = json["expires_date"] as? String,
@@ -54,6 +56,7 @@ public struct PaidSubscription {
         }
         
         self.productId = productId
+        self.isTrialPeriod = isTrialPeriod
         self.purchaseDate = purchaseDate
         self.expiresDate = expiresDate
         self.type = SubType(productId: productId) ?? .sportsman

@@ -45,11 +45,10 @@ class InAppPurchasesService: NSObject {
     }
     
     func loadProductOptions() {
-        let productIds = Set(["s_one_month", "s_three_month", "s_six_month", "s_twelve_month", "t_one_month", "t_three_month", "t_six_month", "t_twelve_month"])
+        let productIds = Set(["s_one_month", "s_twelve_month", "t_one_month", "t_twelve_month"])
         let request = SKProductsRequest(productIdentifiers: productIds)
         request.delegate = self
         request.start()
-        
     }
     
     func purchase(subscription: Product) {

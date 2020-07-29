@@ -12,6 +12,7 @@ import AVFoundation
 import SDWebImage
 import SPPermissions
 import FBSDKLoginKit
+import Firebase
 
 protocol GalleryDataProtocol: class {
   func startLoading()
@@ -53,12 +54,12 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   @IBOutlet weak var dreamViewButton: UIButton!
   @IBOutlet weak var editSkillsButton: UIButton!
   @IBOutlet weak var dailyTrainingLeading: NSLayoutConstraint!
-
+  
   @IBOutlet weak var buttonsStackView: UIStackView!
   @IBOutlet weak var vkButton: UIButton!
   @IBOutlet weak var facebookButton: UIButton!
   @IBOutlet weak var instagramButton: UIButton!
-
+  
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
   private let editProfilePresenter = EditProfilePresenter(profile: UserDataManager())
@@ -72,7 +73,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   var trainer: UserVO?
   var comunityPresenter: CommunityListPresenterProtocol?
   var chatViewModel: ChatListViewModel = ChatListViewModel()
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -90,6 +91,10 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     }
     fetchChats()
     setupPermissionAlert()
+    logInAppPurhaseRenewalEvent()
+    InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
+      self!.logInAppPurhaseRenewalEvent()
+    }
   }
   
   func fetchChats() {
@@ -99,20 +104,67 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     }
   }
   
+  func logInAppPurhaseRenewalEvent() {
+    let defaults = UserDefaults.standard
+    if let lastExpireDate = defaults.object(forKey: "inAppPurchaseExpireDate") as? Date, let lastPurchaseisTrial = defaults.object(forKey: "inAppPurchaseIsTrial") as? String {
+      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate, let isTrial =  InAppPurchasesService.shared.currentSubscription?.isTrialPeriod, let purchaseName =  InAppPurchasesService.shared.currentSubscription?.productId {
+        
+        if lastPurchaseisTrial == "true" && isTrial == "false" {
+          defaults.set("false", forKey: "inAppPurchaseIsTrial")
+          defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+          switch purchaseName {
+            case "s_one_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+            case "s_twelve_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+            case "t_one_month":
+              Analytics.logEvent("app_store_subscription_convert_coach_1m", parameters: nil)
+            case "t_twelve_month":
+              Analytics.logEvent("app_store_subscription_convert_coach_1y", parameters: nil)
+            default:
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+          }
+          return
+        }
+        
+        if lastExpireDate < expireDate {
+          defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+          switch purchaseName {
+            case "s_one_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+            case "s_twelve_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+            case "t_one_month":
+              Analytics.logEvent("app_store_subscription_renew_coach_1m", parameters: nil)
+            case "t_twelve_month":
+              Analytics.logEvent("app_store_subscription_renew_coach_1y", parameters: nil)
+            default:
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+          }
+        }
+      }
+    } else {
+      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate {
+        defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+        defaults.set(InAppPurchasesService.shared.currentSubscription!.isTrialPeriod, forKey: "inAppPurchaseIsTrial")
+      }
+    }
+  }
+  
   func setupPermissionAlert() {
     let defaults = UserDefaults.standard
     let mainPermission = defaults.bool(forKey: "allowedMainNotificationPermission")
-       permissionController = SPPermissions.dialog([.notification])
-       permissionController!.titleText = "Нужно разрешение"
-       permissionController!.headerText = ""
-       permissionController!.footerText = ""
-       permissionController!.dataSource = self
-       permissionController!.delegate = self
-       let state = SPPermission.notification.isAuthorized
+    permissionController = SPPermissions.dialog([.notification])
+    permissionController!.titleText = "Нужно разрешение"
+    permissionController!.headerText = ""
+    permissionController!.footerText = ""
+    permissionController!.dataSource = self
+    permissionController!.delegate = self
+    let state = SPPermission.notification.isAuthorized
     if !state && !mainPermission {
-       defaults.set(true, forKey: "allowedMainNotificationPermission")
-          permissionController!.present(on: self)
-        }
+      defaults.set(true, forKey: "allowedMainNotificationPermission")
+      permissionController!.present(on: self)
+    }
   }
   
   func setBadgeForChatCounter() {
@@ -122,38 +174,38 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
         count = count + 1
       }
     }
-      super.tabBarController?.viewControllers![3].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
+    super.tabBarController?.viewControllers![3].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
   }
   
   @objc func presentInputStatus() {
     let alert = UIAlertController(style: .actionSheet, title: "Укажите статус (60 символов)")
     let config: TextField.Config = { textField in
-        textField.becomeFirstResponder()
-        textField.textColor = .black
-        if let dream = AuthModule.currUser.purpose, dream != "" {
-           textField.text = dream
+      textField.becomeFirstResponder()
+      textField.textColor = .black
+      if let dream = AuthModule.currUser.purpose, dream != "" {
+        textField.text = dream
+      }
+      textField.placeholder = "Type something"
+      //textField.left(image: image, color: .black)
+      textField.leftViewPadding = 12
+      textField.borderWidth = 1
+      textField.cornerRadius = 8
+      textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
+      textField.backgroundColor = nil
+      textField.keyboardAppearance = .default
+      textField.keyboardType = .default
+      textField.isSecureTextEntry = false
+      textField.returnKeyType = .done
+      textField.action { textField in
+        if let purpose = textField.text, purpose != AuthModule.currUser.purpose, textField.text!.count <= 60  {
+          self.editProfilePresenter.setPurpose(purpose: purpose)
+          self.dailyTraining.text = purpose
+        } else {
+          self.editProfilePresenter.setPurpose(purpose: textField.text!.take(60))
+          self.dailyTraining.text = textField.text!.take(60)
+          textField.text! = textField.text!.take(60)
         }
-        textField.placeholder = "Type something"
-        //textField.left(image: image, color: .black)
-        textField.leftViewPadding = 12
-        textField.borderWidth = 1
-        textField.cornerRadius = 8
-        textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
-        textField.backgroundColor = nil
-        textField.keyboardAppearance = .default
-        textField.keyboardType = .default
-        textField.isSecureTextEntry = false
-        textField.returnKeyType = .done
-        textField.action { textField in
-          if let purpose = textField.text, purpose != AuthModule.currUser.purpose, textField.text!.count <= 60  {
-            self.editProfilePresenter.setPurpose(purpose: purpose)
-            self.dailyTraining.text = purpose
-          } else {
-            self.editProfilePresenter.setPurpose(purpose: textField.text!.take(60))
-            self.dailyTraining.text = textField.text!.take(60)
-            textField.text! = textField.text!.take(60)
-          }
-        }
+      }
     }
     alert.addOneTextField(configuration: config)
     let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
@@ -256,7 +308,7 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
     vkButton.addTarget(self, action: #selector(showVkProfile), for: .touchUpInside)
     facebookButton.addTarget(self, action: #selector(showFacebookProfile), for: .touchUpInside)
     instagramButton.addTarget(self, action: #selector(showInstagramProfile), for: .touchUpInside)
-
+    
     if let vkLink = AuthModule.currUser.vkLink {
       if vkLink != "" {
         vkButton.isHidden = false
@@ -275,52 +327,52 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
   }
   
   @objc func showVkProfile() {
-      if let vkLink = AuthModule.currUser.vkLink {
-           let userName =  vkLink
-          if let link = userName.detectedFirstLink {
-            if let url = URL(string: link) {
-                UIApplication.shared.open(url)
-            }
-          } else {
-            let appURL = URL(string: "vk://vk.com/\(userName)")!
-            let application = UIApplication.shared
-
-            if application.canOpenURL(appURL) {
-                application.open(appURL)
-            } else {
-                let webURL = URL(string: "https://vk.com/\(userName)")!
-                application.open(webURL)
-            }
-          }
+    if let vkLink = AuthModule.currUser.vkLink {
+      let userName =  vkLink
+      if let link = userName.detectedFirstLink {
+        if let url = URL(string: link) {
+          UIApplication.shared.open(url)
+        }
+      } else {
+        let appURL = URL(string: "vk://vk.com/\(userName)")!
+        let application = UIApplication.shared
+        
+        if application.canOpenURL(appURL) {
+          application.open(appURL)
+        } else {
+          let webURL = URL(string: "https://vk.com/\(userName)")!
+          application.open(webURL)
+        }
       }
     }
+  }
   
   @objc func showInstagramProfile() {
-       if let instagramLink = AuthModule.currUser.instagramLink {
-        
-         let userName =  instagramLink // Your Instagram Username here
-        
-        if var link = userName.detectedFirstLink {
-          if !link.contains("https://") {
-              link = "https://\(link)"
-          }
-          if let url = URL(string: link) {
-              UIApplication.shared.open(url)
-          }
-        } else {
-          let appURL = URL(string: "instagram://user?username=\(userName)")!
-          let application = UIApplication.shared
-
-          if application.canOpenURL(appURL) {
-              application.open(appURL)
-          } else {
-              let webURL = URL(string: "https://instagram.com/\(userName)")!
-              application.open(webURL)
-          }
+    if let instagramLink = AuthModule.currUser.instagramLink {
+      
+      let userName =  instagramLink // Your Instagram Username here
+      
+      if var link = userName.detectedFirstLink {
+        if !link.contains("https://") {
+          link = "https://\(link)"
         }
+        if let url = URL(string: link) {
+          UIApplication.shared.open(url)
+        }
+      } else {
+        let appURL = URL(string: "instagram://user?username=\(userName)")!
+        let application = UIApplication.shared
+        
+        if application.canOpenURL(appURL) {
+          application.open(appURL)
+        } else {
+          let webURL = URL(string: "https://instagram.com/\(userName)")!
+          application.open(webURL)
+        }
+      }
     }
   }
-    
+  
   @objc func showFacebookProfile() {
     if let facebookLink = AuthModule.currUser.facebookLink {
       let userName =  facebookLink.trimmingCharacters(in: .whitespaces)
@@ -504,39 +556,39 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     dismiss(animated: true, completion: nil)
   }
   
-//  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//  }
+  //  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+  //  }
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-         if galleryUploadInProgress {
-        self.pendingForUpload.append(info)
-      } else {
-        self.uploadInfo(info: info)
-      }
-      dismiss(animated: true, completion: nil)
+    if galleryUploadInProgress {
+      self.pendingForUpload.append(info)
+    } else {
+      self.uploadInfo(info: info)
+    }
+    dismiss(animated: true, completion: nil)
   }
   
   private func uploadInfo(info: [UIImagePickerController.InfoKey : Any]) {
-
-            if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                self.galleryUploadInProgress = true
-                presenter.uploadPhoto(image: chosenImage)
-            } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
-                do {
-                    let asset = AVURLAsset(url: videoURL, options: nil)
-                    let imgGenerator = AVAssetImageGenerator(asset: asset)
-                    imgGenerator.appliesPreferredTrackTransform = true
-                    let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
-                    let thumbnail = UIImage(cgImage: cgImage)
     
-                    self.galleryUploadInProgress = true
-    
-                    presenter.uploadVideo(videoURL.absoluteString, thumbnail)
-                    presenter.setCurrentVideoPath(path: videoURL.absoluteString)
-                } catch let error {
-                    print("*** Error generating thumbnail: \(error.localizedDescription)")
-                }
-            }
+    if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+      self.galleryUploadInProgress = true
+      presenter.uploadPhoto(image: chosenImage)
+    } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+      do {
+        let asset = AVURLAsset(url: videoURL, options: nil)
+        let imgGenerator = AVAssetImageGenerator(asset: asset)
+        imgGenerator.appliesPreferredTrackTransform = true
+        let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+        let thumbnail = UIImage(cgImage: cgImage)
+        
+        self.galleryUploadInProgress = true
+        
+        presenter.uploadVideo(videoURL.absoluteString, thumbnail)
+        presenter.setCurrentVideoPath(path: videoURL.absoluteString)
+      } catch let error {
+        print("*** Error generating thumbnail: \(error.localizedDescription)")
+      }
+    }
   }
   
 }
@@ -624,7 +676,7 @@ extension MainViewController: SPPermissionsDataSource, SPPermissionsDelegate{
     cell.iconView.color = .darkCyanGreen
     cell.button.allowTitleColor = .darkCyanGreen
     cell.button.allowedBackgroundColor = .darkCyanGreen
-
+    
     return cell
   }
   
