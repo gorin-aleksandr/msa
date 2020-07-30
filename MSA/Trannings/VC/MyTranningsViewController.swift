@@ -951,10 +951,14 @@ extension MyTranningsViewController: TrainingsViewDelegate {
     if manager.sportsmanId == AuthModule.currUser.id {
       if !trainingsShown {
         if !manager.firstLoad {
+           setupFirstWeek()
+           changeWeek()
         } else {
           changeWeek()
           setupFirstWeek()
-          trainingsShown = true
+          if manager.dataSource!.trainings.count != 0 {
+            trainingsShown = true
+          }
         }
       } else {
         self.tableView.reloadData()
