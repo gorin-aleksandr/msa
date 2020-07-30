@@ -264,9 +264,9 @@ class MyTranningsViewController: UIViewController {
         guard let self = self else {return}
         DispatchQueue.main.async { [weak self] in
           guard let self = self else {return}
-          RealmManager.shared.clearTrainings()
+          //RealmManager.shared.clearTrainings()
+          //self.manager.clearRealm()
           SVProgressHUD.dismiss()
-          self.manager.clearRealm()
           self.navigationController?.popViewController(animated: true)
         }
       }) { [weak self] (error) in
