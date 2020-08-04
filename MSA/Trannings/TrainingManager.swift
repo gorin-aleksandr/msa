@@ -417,12 +417,12 @@ class TrainingManager {
         self.view?.finishLoading()
         self.view?.trainingEdited()
         if error == nil {
-          if self.sportsmanId == AuthModule.currUser.id {
+         // if self.sportsmanId == AuthModule.currUser.id {
             self.setSynced()
             if let object = self.dataSource?.currentTraining {
               self.realm.saveObject(object)
             }
-          }
+          //}
           success()
         } else {
           failure?(error)
@@ -836,10 +836,10 @@ class TrainingManager {
     }
     dataSource?.set(trainings: items)
     dataSource?.currentTraining = items.first
-    if sportsmanId == AuthModule.currUser.id {
-      self.saveTrainingsToRealm(trainings: items)
-      self.setSynced()
-    }
+
+//hz
+    self.saveTrainingsToRealm(trainings: items)
+    self.setSynced()
     firstLoad = false
     self.view?.trainingsLoaded()
     success?()

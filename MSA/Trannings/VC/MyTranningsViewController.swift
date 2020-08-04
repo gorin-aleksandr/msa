@@ -264,8 +264,8 @@ class MyTranningsViewController: UIViewController {
         guard let self = self else {return}
         DispatchQueue.main.async { [weak self] in
           guard let self = self else {return}
-          //RealmManager.shared.clearTrainings()
-          //self.manager.clearRealm()
+          RealmManager.shared.clearTrainings()
+          self.manager.clearRealm()
           SVProgressHUD.dismiss()
           self.navigationController?.popViewController(animated: true)
         }
@@ -949,20 +949,19 @@ extension MyTranningsViewController: TrainingsViewDelegate {
   
   func trainingsLoaded() {
     if manager.sportsmanId == AuthModule.currUser.id {
-      if !trainingsShown {
         if !manager.firstLoad {
-           setupFirstWeek()
-           changeWeek()
+          if !trainingsShown {
+            setupFirstWeek()
+            changeWeek()
+            if manager.dataSource!.trainings.count != 0 { trainingsShown = true }
+          } else {
+            self.tableView.reloadData()
+          }
         } else {
           changeWeek()
           setupFirstWeek()
-          if manager.dataSource!.trainings.count != 0 {
-            trainingsShown = true
-          }
         }
-      } else {
-        self.tableView.reloadData()
-      }
+    
     } else {
       if !trainingsShown {
         setupFirstWeek()
