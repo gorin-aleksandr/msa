@@ -25,6 +25,12 @@ extension UIColor {
     static let darkGreenColor = UIColor(red: 1/255, green: 76/255, blue: 102/255, alpha: 1.0)
     static let startGradientColor = UIColor(red: 173/255, green: 202/255, blue: 214/255, alpha: 1.0)
     static let endGradientColor = UIColor(red: 125/255, green: 142/255, blue: 147/255, alpha: 1.0)
-    
-}
+    static let newBlack = UIColor(red: 0.12, green: 0.12, blue: 0.12, alpha: 1.00)
+    static let backgroundLightGrey = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00)
+    static let textGrey = UIColor(red: 0.59, green: 0.59, blue: 0.59, alpha: 1.00)
+    static let diasbledGrey = UIColor(red: 0.64, green: 0.64, blue: 0.64, alpha: 1.00)
+    static let newBlue = UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00)
+    static let textFieldBackgroundGrey = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00)
+    static let emailPasswordTextFieldGrey = UIColor(red: 0.96, green: 0.96, blue: 0.99, alpha: 0.45)
+  }
 

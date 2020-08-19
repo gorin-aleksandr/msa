@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
     start.start()
     logSessionEvent()
+    logInAppPurhaseRenewalEvent()
     UIApplication.shared.applicationIconBadgeNumber = 0
     Siren.shared.presentationManager = PresentationManager(forceLanguageLocalization: .russian)
     Siren.shared.wail()
@@ -166,6 +167,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     defaults.set(Date(), forKey: "latestSession")
   }
   
+  private func logInAppPurhaseRenewalEvent() {
+    let defaults = UserDefaults.standard
+    if let lastExpireDate = defaults.object(forKey: "inAppPurchaseExpireDate") as? Date {
+      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate {
+        if lastExpireDate < expireDate {
+          Analytics.logEvent("subscription_renewal", parameters: nil)
+          switch AuthModule.currUser.userType {
+            case .sportsman:
+              Analytics.logEvent("subscription_renewal_sportsman", parameters: nil)
+            case .trainer:
+              Analytics.logEvent("subscription_renewal_coach", parameters: nil)
+          }
+          defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+        }
+      } else {
+        Analytics.logEvent("unsubscribe", parameters: nil)
+        switch AuthModule.currUser.userType {
+          case .sportsman:
+            Analytics.logEvent("unsubscribe_sportsman", parameters: nil)
+          case .trainer:
+            Analytics.logEvent("unsubscribe_coach", parameters: nil)
+        }
+        defaults.set(nil, forKey: "inAppPurchaseExpireDate")
+      }
+    } else {
+      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate {
+        defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+      }
+    }
+  }
+  
 }
 
 extension AppDelegate: SKPaymentTransactionObserver {
@@ -201,19 +233,17 @@ extension AppDelegate: SKPaymentTransactionObserver {
         if success {
           switch AuthModule.currUser.userType {
             case .sportsman:
+              Analytics.logEvent("in_app_p_sportsman", parameters: nil)
               if transaction.payment.productIdentifier == "s_one_month" {
-                Analytics.logEvent("in_app_p_sportsman", parameters: nil)
                 Analytics.logEvent("in_app_p_sportsman_1m", parameters: nil)
               } else if transaction.payment.productIdentifier == "s_twelve_month" {
-                Analytics.logEvent("in_app_p_sportsman", parameters: nil)
                 Analytics.logEvent("in_app_p_sportsman_1y", parameters: nil)
             }
             case .trainer:
+              Analytics.logEvent("in_app_p_coach", parameters: nil)
             if transaction.payment.productIdentifier == "t_one_month" {
-                Analytics.logEvent("in_app_p_coach", parameters: nil)
                 Analytics.logEvent("in_app_p_coach_1m", parameters: nil)
               } else if transaction.payment.productIdentifier == "t_twelve_month" {
-                Analytics.logEvent("in_app_p_coach", parameters: nil)
                 Analytics.logEvent("in_app_p_coach_1y", parameters: nil)
             }
           }
@@ -227,20 +257,17 @@ extension AppDelegate: SKPaymentTransactionObserver {
   }
   
   func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-    queue.finishTransaction(transaction)
     print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
     NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
     Analytics.logEvent("in_app_p_restored", parameters: ["subscription": transaction.payment.productIdentifier])
   }
   
   func handleFailedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-    queue.finishTransaction(transaction)
     print("Purchase failed for product id: \(transaction.payment.productIdentifier)")
     
   }
   
   func handleDeferredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
-    queue.finishTransaction(transaction)
     print("Purchase deferred for product id: \(transaction.payment.productIdentifier)")
   }
 }

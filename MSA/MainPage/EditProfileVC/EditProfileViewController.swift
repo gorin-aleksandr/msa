@@ -499,7 +499,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 nextViewController.modalPresentationStyle = .fullScreen
                 self.navigationController?.show(nextViewController, sender: self)
                 AuthModule.currUser.id = nil
-                
+                Analytics.logEvent("logout", parameters: nil)
             } else {
                 AlertDialog.showAlert("Ошибка", message: "Ошибка при выходе из приложения", viewController: self)
             }

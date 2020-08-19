@@ -11,129 +11,132 @@ import CryptoKit
 import CommonCrypto
 
 let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
+let signInStoryboard = UIStoryboard(name: "SignIn", bundle:nil)
+let profileStoryboard = UIStoryboard(name: "Profile", bundle:nil)
+
 
 func nowDateString() -> String {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-    let myString = formatter.string(from: Date())
-    return myString
+  let formatter = DateFormatter()
+  formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+  let myString = formatter.string(from: Date())
+  return myString
 }
 
 func nowDateStringForCalendar(date: Date) -> String {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "dd.MM.yyyy"
-    let myString = formatter.string(from: date)
-    return myString
+  let formatter = DateFormatter()
+  formatter.dateFormat = "dd.MM.yyyy"
+  let myString = formatter.string(from: date)
+  return myString
 }
 
 func convertDateToString(date: Date) -> String{
-    
-    let formatter = DateFormatter()
-    formatter.dateFormat = "dd/MM/yy HH:mm"
-    let myString = formatter.string(from: date) // string purpose I add here
-    return myString
+  
+  let formatter = DateFormatter()
+  formatter.dateFormat = "dd/MM/yy HH:mm"
+  let myString = formatter.string(from: date) // string purpose I add here
+  return myString
 }
 
 extension String
 {
-    func toDateTime() -> Date?
-    {
-        //Create Date Formatter
-        let dateFormatter = DateFormatter()
-        
-        //Specify Format of String to Parse
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        //Parse into NSDate
-        if let dateFromString = dateFormatter.date(from: self) {
-            //Return Parsed Date
-            return dateFromString
-        } else {
-            return nil
-        }
-        
+  func toDateTime() -> Date?
+  {
+    //Create Date Formatter
+    let dateFormatter = DateFormatter()
+    
+    //Specify Format of String to Parse
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    
+    //Parse into NSDate
+    if let dateFromString = dateFormatter.date(from: self) {
+      //Return Parsed Date
+      return dateFromString
+    } else {
+      return nil
     }
-
+    
+  }
+  
 }
 
 
 class DataDetector {
-
-    private class func _find(all type: NSTextCheckingResult.CheckingType,
-                             in string: String, iterationClosure: (String) -> Bool) {
-        guard let detector = try? NSDataDetector(types: type.rawValue) else { return }
-        let range = NSRange(string.startIndex ..< string.endIndex, in: string)
-        let matches = detector.matches(in: string, options: [], range: range)
-        loop: for match in matches {
-            for i in 0 ..< match.numberOfRanges {
-                let nsrange = match.range(at: i)
-                let startIndex = string.index(string.startIndex, offsetBy: nsrange.lowerBound)
-                let endIndex = string.index(string.startIndex, offsetBy: nsrange.upperBound)
-                let range = startIndex..<endIndex
-                guard iterationClosure(String(string[range])) else { break loop }
-            }
-        }
+  
+  private class func _find(all type: NSTextCheckingResult.CheckingType,
+                           in string: String, iterationClosure: (String) -> Bool) {
+    guard let detector = try? NSDataDetector(types: type.rawValue) else { return }
+    let range = NSRange(string.startIndex ..< string.endIndex, in: string)
+    let matches = detector.matches(in: string, options: [], range: range)
+    loop: for match in matches {
+      for i in 0 ..< match.numberOfRanges {
+        let nsrange = match.range(at: i)
+        let startIndex = string.index(string.startIndex, offsetBy: nsrange.lowerBound)
+        let endIndex = string.index(string.startIndex, offsetBy: nsrange.upperBound)
+        let range = startIndex..<endIndex
+        guard iterationClosure(String(string[range])) else { break loop }
+      }
     }
-
-    class func find(all type: NSTextCheckingResult.CheckingType, in string: String) -> [String] {
-        var results = [String]()
-        _find(all: type, in: string) {
-            results.append($0)
-            return true
-        }
-        return results
+  }
+  
+  class func find(all type: NSTextCheckingResult.CheckingType, in string: String) -> [String] {
+    var results = [String]()
+    _find(all: type, in: string) {
+      results.append($0)
+      return true
     }
-
-    class func first(type: NSTextCheckingResult.CheckingType, in string: String) -> String? {
-        var result: String?
-        _find(all: type, in: string) {
-            result = $0
-            return false
-        }
-        return result
+    return results
+  }
+  
+  class func first(type: NSTextCheckingResult.CheckingType, in string: String) -> String? {
+    var result: String?
+    _find(all: type, in: string) {
+      result = $0
+      return false
     }
+    return result
+  }
 }
 
 // MARK: String extension
 
 extension String {
-    var detectedLinks: [String] { DataDetector.find(all: .link, in: self) }
-    var detectedFirstLink: String? { DataDetector.first(type: .link, in: self) }
-    var detectedURLs: [URL] { detectedLinks.compactMap { URL(string: $0) } }
-    var detectedFirstURL: URL? {
-        guard let urlString = detectedFirstLink else { return nil }
-        return URL(string: urlString)
+  var detectedLinks: [String] { DataDetector.find(all: .link, in: self) }
+  var detectedFirstLink: String? { DataDetector.first(type: .link, in: self) }
+  var detectedURLs: [URL] { detectedLinks.compactMap { URL(string: $0) } }
+  var detectedFirstURL: URL? {
+    guard let urlString = detectedFirstLink else { return nil }
+    return URL(string: urlString)
+  }
+  var youtubeID: String? {
+    let pattern = "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)"
+    
+    let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+    let range = NSRange(location: 0, length: count)
+    
+    guard let result = regex?.firstMatch(in: self, range: range) else {
+      return nil
     }
-      var youtubeID: String? {
-          let pattern = "((?<=(v|V)/)|(?<=be/)|(?<=(\\?|\\&)v=)|(?<=embed/))([\\w-]++)"
-
-          let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-          let range = NSRange(location: 0, length: count)
-
-          guard let result = regex?.firstMatch(in: self, range: range) else {
-              return nil
-          }
-
-          return (self as NSString).substring(with: result.range)
-      }
-
-    func take(_ n: Int) -> String {
-          guard n >= 0 else {
-              fatalError("n should never negative")
-          }
-          let index = self.index(self.startIndex, offsetBy: min(n, self.count))
-          return String(self[..<index])
-      }
+    
+    return (self as NSString).substring(with: result.range)
+  }
+  
+  func take(_ n: Int) -> String {
+    guard n >= 0 else {
+      fatalError("n should never negative")
+    }
+    let index = self.index(self.startIndex, offsetBy: min(n, self.count))
+    return String(self[..<index])
+  }
   
 }
 
- func randomNonceString(length: Int = 32) -> String {
+func randomNonceString(length: Int = 32) -> String {
   precondition(length > 0)
   let charset: Array<Character> =
-      Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+    Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
   var result = ""
   var remainingLength = length
-
+  
   while remainingLength > 0 {
     let randoms: [UInt8] = (0 ..< 16).map { _ in
       var random: UInt8 = 0
@@ -143,69 +146,69 @@ extension String {
       }
       return random
     }
-
+    
     randoms.forEach { random in
       if remainingLength == 0 {
         return
       }
-
+      
       if random < charset.count {
         result.append(charset[Int(random)])
         remainingLength -= 1
       }
     }
   }
-
+  
   return result
 }
 
 
 extension String {
-
-    func sha256() -> String{
-        if let stringData = self.data(using: String.Encoding.utf8) {
-            return hexStringFromData(input: digest(input: stringData as NSData))
-        }
-        return ""
+  
+  func sha256() -> String{
+    if let stringData = self.data(using: String.Encoding.utf8) {
+      return hexStringFromData(input: digest(input: stringData as NSData))
     }
-
-    private func digest(input : NSData) -> NSData {
-        let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
-        var hash = [UInt8](repeating: 0, count: digestLength)
-        CC_SHA256(input.bytes, UInt32(input.length), &hash)
-        return NSData(bytes: hash, length: digestLength)
+    return ""
+  }
+  
+  private func digest(input : NSData) -> NSData {
+    let digestLength = Int(CC_SHA256_DIGEST_LENGTH)
+    var hash = [UInt8](repeating: 0, count: digestLength)
+    CC_SHA256(input.bytes, UInt32(input.length), &hash)
+    return NSData(bytes: hash, length: digestLength)
+  }
+  
+  private  func hexStringFromData(input: NSData) -> String {
+    var bytes = [UInt8](repeating: 0, count: input.length)
+    input.getBytes(&bytes, length: input.length)
+    var hexString = ""
+    for byte in bytes {
+      hexString += String(format:"%02x", UInt8(byte))
     }
-
-    private  func hexStringFromData(input: NSData) -> String {
-        var bytes = [UInt8](repeating: 0, count: input.length)
-        input.getBytes(&bytes, length: input.length)
-        var hexString = ""
-        for byte in bytes {
-            hexString += String(format:"%02x", UInt8(byte))
-        }
-        return hexString
-    }
+    return hexString
+  }
 }
 
 struct ResponseData: Decodable {
-    var city: [City]
+  var city: [City]
 }
 struct City : Decodable {
-    var name: String
+  var name: String
 }
 
 func loadJson(filename fileName: String) -> [City]? {
-    if let url = Bundle.main.url(forResource:fileName, withExtension: "json") {
-        do {
-            let data = try Data(contentsOf: url)
-            let decoder = JSONDecoder()
-            let jsonData = try decoder.decode(ResponseData.self, from: data)
-            return jsonData.city
-        } catch {
-            print("error:\(error)")
-        }
+  if let url = Bundle.main.url(forResource:fileName, withExtension: "json") {
+    do {
+      let data = try Data(contentsOf: url)
+      let decoder = JSONDecoder()
+      let jsonData = try decoder.decode(ResponseData.self, from: data)
+      return jsonData.city
+    } catch {
+      print("error:\(error)")
     }
-    return nil
+  }
+  return nil
 }
 
 extension UITextField {
@@ -223,84 +226,130 @@ extension UITextField {
 extension UITextField
 {
   func setBottomBorder(withColor color: UIColor, widthLine: CGFloat)
-    {
-        self.borderStyle = UITextField.BorderStyle.none
-        self.backgroundColor = UIColor.clear
-        let width: CGFloat = 1.0
-
-        let borderLine = UIView(frame: CGRect(x: 0, y: self.frame.height - width, width: widthLine, height: width))
-        borderLine.backgroundColor = color
-        self.addSubview(borderLine)
-    }
+  {
+    self.borderStyle = UITextField.BorderStyle.none
+    self.backgroundColor = UIColor.clear
+    let width: CGFloat = 1.0
+    
+    let borderLine = UIView(frame: CGRect(x: 0, y: self.frame.height - width, width: widthLine, height: width))
+    borderLine.backgroundColor = color
+    self.addSubview(borderLine)
+  }
 }
 
 class CustomTitleView: UIView
 {
-
-var title_label = UILabel()
-var left_imageView = UIImageView()
-
-override init(frame: CGRect){
+  
+  var title_label = UILabel()
+  var left_imageView = UIImageView()
+  
+  override init(frame: CGRect){
     super.init(frame: frame)
     setup()
-}
-
-required init?(coder aDecoder: NSCoder){
+  }
+  
+  required init?(coder aDecoder: NSCoder){
     super.init(coder: aDecoder)
     setup()
-}
-
-func setup(){
+  }
+  
+  func setup(){
     self.addSubview(title_label)
     self.addSubview(left_imageView)
-
-}
-
-func loadWith(title: String, leftImage: UIImage?)
-{
-
+    
+  }
+  
+  func loadWith(title: String, leftImage: UIImage?)
+  {
+    
     //self.backgroundColor = .yellow
-
+    
     // =================== title_label ==================
     //title_label.backgroundColor = .blue
     title_label.text = title
     title_label.font = UIFont.systemFont(ofSize: 14)
-
-
+    
+    
     // =================== imageView ===================
     left_imageView.image = leftImage
-
+    
     setupFrames()
-}
-
-func setupFrames()
-{
-
+  }
+  
+  func setupFrames()
+  {
+    
     let height: CGFloat = 44
     let image_size: CGFloat = height * 0.8
-
+    
     left_imageView.frame = CGRect(x: 0,
                                   y: (height - image_size) / 2,
                                   width: (left_imageView.image == nil) ? 0 : image_size,
                                   height: image_size)
-
+    
     let titleWidth: CGFloat = title_label.intrinsicContentSize.width + 10
     title_label.frame = CGRect(x: left_imageView.frame.maxX + 5,
                                y: 0,
                                width: titleWidth,
                                height: height)
-
-
-
+    
+    
+    
     contentWidth = Int(left_imageView.frame.width)
     self.frame = CGRect(x: 0, y: 0, width: CGFloat(contentWidth), height: height)
-}
-
-
-var contentWidth: Int = 0 //if its CGFloat, it infinitely calls layoutSubviews(), changing franction of a width
-override func layoutSubviews() {
+  }
+  
+  
+  var contentWidth: Int = 0 //if its CGFloat, it infinitely calls layoutSubviews(), changing franction of a width
+  override func layoutSubviews() {
     super.layoutSubviews()
     self.frame.size.width = CGFloat(contentWidth)
+  }
+  
+}
+
+extension UITextField {
+
+enum Direction {
+    case Left
+    case Right
+}
+
+// add image to textfield
+func withImage(direction: Direction, image: UIImage, colorSeparator: UIColor, colorBorder: UIColor){
+    let mainView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
+    mainView.layer.cornerRadius = 5
+
+    let view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
+    view.backgroundColor = .clear
+    view.clipsToBounds = true
+    view.layer.cornerRadius = 5
+    view.layer.borderWidth = CGFloat(0.5)
+    view.layer.borderColor = colorBorder.cgColor
+    mainView.addSubview(view)
+
+    let imageView = UIImageView(image: image)
+    imageView.contentMode = .scaleAspectFit
+    imageView.frame = CGRect(x: 12.0, y: 10.0, width: 24.0, height: 24.0)
+    view.addSubview(imageView)
+
+    let seperatorView = UIView()
+    seperatorView.backgroundColor = colorSeparator
+    //mainView.addSubview(seperatorView)
+
+    if(Direction.Left == direction){ // image left
+       // seperatorView.frame = CGRect(x: 45, y: 0, width: 5, height: 45)
+        self.leftViewMode = .always
+        self.leftView = mainView
+    } else { // image right
+        //seperatorView.frame = CGRect(x: 0, y: 0, width: 5, height: 45)
+        self.rightViewMode = .always
+        self.rightView = mainView
+    }
+
+    self.layer.borderColor = colorBorder.cgColor
+    self.layer.borderWidth = CGFloat(0.5)
+    self.layer.cornerRadius = 5
 }
 
 }

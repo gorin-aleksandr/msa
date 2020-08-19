@@ -18,4 +18,9 @@ struct Fonts {
         return font
     }
 
+    static let SFProDisplayBold = "SFProDisplay-Bold"
+    static let SFProDisplayRegular = "SFProDisplay-Regular"
+
+  
 }
+
