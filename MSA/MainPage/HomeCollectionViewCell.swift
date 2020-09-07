@@ -12,7 +12,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var logoImageView: UIImageView!
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var descriptionLabel: UILabel!
-  @IBOutlet weak var mainView: UIView!
 
   static let identifier = "HomeCollectionViewCell"
   
@@ -22,11 +21,25 @@ class HomeCollectionViewCell: UICollectionViewCell {
   }
   
   func setupUI() {
-    titleLabel.font = UIFont(name: Fonts.SFProDisplayBold, size: 14)
+    titleLabel.font = NewFonts.SFProDisplayBold14
     titleLabel.textColor = UIColor.newBlack
 
-    descriptionLabel.font = UIFont(name: Fonts.SFProDisplayRegular, size: 10)
+    descriptionLabel.font = NewFonts.SFProDisplayRegular12
     descriptionLabel.textColor = UIColor.newBlack
+    
+    logoImageView.snp.makeConstraints { (make) in
+      make.left.equalTo(self.contentView.snp.left).offset(screenSize.height * (16/iPhoneXHeight))
+      make.top.equalTo(self.contentView.snp.top).offset(screenSize.height * (16/iPhoneXHeight))
+      make.height.width.equalTo(screenSize.height * (40/iPhoneXHeight))
+    }
+    titleLabel.snp.makeConstraints { (make) in
+         make.left.equalTo(logoImageView.snp.left)
+         make.top.equalTo(logoImageView.snp.bottom).offset(screenSize.height * (16/iPhoneXHeight))
+       }
+    descriptionLabel.snp.makeConstraints { (make) in
+      make.left.equalTo(titleLabel.snp.left)
+      make.top.equalTo(titleLabel.snp.bottom).offset(screenSize.height * (4/iPhoneXHeight))
+    }
   }
 
 }

@@ -35,4 +35,7 @@ target 'MSA' do
   pod 'SPPermissions/Notification'
   pod 'FBSDKLoginKit'
   pod 'Siren'
+  pod 'BetterSegmentedControl', '~> 1.3'
+  pod 'Charts'
+  pod 'SnapKit', '~> 5.0.0'
 end

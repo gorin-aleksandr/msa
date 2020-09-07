@@ -7,74 +7,186 @@
 //
 
 import UIKit
-
+import SearchTextField
 class OnboardingNameViewController: UIViewController {
   
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var descriptionLabel: UILabel!
-  @IBOutlet weak var nameTextField: UITextField!
+  @IBOutlet weak var nameTextField: SearchTextField!
   @IBOutlet weak var lastNameTextField: UITextField!
   @IBOutlet weak var startButton: UIButton!
+  @IBOutlet weak var logoImageView: UIImageView!
 
+  var viewModel: SignInViewModel?
+  
   override func viewDidLoad() {
-      super.viewDidLoad()
+    super.viewDidLoad()
     setupUI()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
     navigationController?.setNavigationBarHidden(false, animated: false)
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.isTranslucent = true
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    navigationController?.setNavigationBarHidden(true, animated: false)
+    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    navigationController?.navigationBar.shadowImage = nil
+    navigationItem.leftBarButtonItem?.tintColor = .newBlack
   }
   
   func setupUI() {
-    titleLabel.font = UIFont(name: Fonts.SFProDisplayBold, size: 24)
+    setupConstraints()
+    let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
+    self.navigationItem.leftBarButtonItem = backButton
+    self.navigationController?.navigationBar.tintColor = .newBlack
+
+    titleLabel.font = NewFonts.SFProDisplayBold24
     titleLabel.textColor = UIColor.newBlack
-    titleLabel.text = "Давайте познакомимся"
-
-    descriptionLabel.font = UIFont(name: Fonts.SFProDisplayRegular, size: 16)
-    descriptionLabel.textColor = UIColor.newBlack
-    descriptionLabel.text = "Введите ваше имя"
+    titleLabel.text = viewModel!.signInDataControllerType == .name ?  "Давайте познакомимся" : "Откуда вы ?"
     
-    nameTextField.placeholder = "Имя"
+    descriptionLabel.font = NewFonts.SFProDisplayRegular16
+    descriptionLabel.textColor = UIColor.newBlack
+    descriptionLabel.text = viewModel!.signInDataControllerType == .name ? "Введите ваше имя" : "Укажите ваш город"
+    
+    nameTextField.placeholder = viewModel!.signInDataControllerType == .name ? "Имя" : "Город"
     nameTextField.backgroundColor = UIColor.textFieldBackgroundGrey
-    nameTextField.roundCorners(.allCorners, radius: 16)
-    nameTextField.font = UIFont(name: Fonts.SFProDisplayRegular, size: 16)
+    nameTextField.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
+    nameTextField.font = NewFonts.SFProDisplayRegular16
     nameTextField.delegate = self
+    nameTextField.lineColor = .clear
 
+    if viewModel!.signInDataControllerType == .city {
+      setupCitiesTextField()
+    }
+    
     lastNameTextField.placeholder = "Фамилия"
     lastNameTextField.backgroundColor = UIColor.textFieldBackgroundGrey
-    lastNameTextField.roundCorners(.allCorners, radius: 16)
-    lastNameTextField.font = UIFont(name: Fonts.SFProDisplayRegular, size: 16)
+    lastNameTextField.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
+    lastNameTextField.font = NewFonts.SFProDisplayRegular16
     lastNameTextField.delegate = self
-
-    startButton.titleLabel?.font = UIFont(name: Fonts.SFProDisplayRegular, size: 14)
+    lastNameTextField.isHidden = viewModel!.signInDataControllerType == .name ? false : true
+    
+    startButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
     startButton.setTitleColor(UIColor.diasbledGrey, for: .normal)
     startButton.setTitleColor(.white, for: .selected)
     startButton.setBackgroundColor(color: UIColor.backgroundLightGrey, forState: .normal)
     startButton.setBackgroundColor(color: UIColor.newBlue, forState: .selected)
     startButton.setImage(nil, for: .normal)
     startButton.setImage(UIImage(named: "doubleChevron"), for: .selected)
-    startButton.roundCorners(.allCorners, radius: 12)
+    startButton.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
+    startButton.layer.masksToBounds = true
     startButton.addTarget(self, action: #selector(startButtonAction(_:)), for: .touchUpInside)
-
+  }
+  
+  func setupConstraints() {
+    logoImageView.snp.makeConstraints { (make) in
+      make.top.equalTo(screenSize.height * (176/iPhoneXHeight))
+      make.right.equalTo(screenSize.height * (-141/iPhoneXHeight))
+      make.left.equalTo(screenSize.height * (141/iPhoneXHeight))
+    }
+    
+    titleLabel.textAlignment = .center
+    titleLabel.snp.makeConstraints { (make) in
+      make.top.equalTo(logoImageView.snp.bottom).offset(screenSize.height * (48/iPhoneXHeight))
+      make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-20/iPhoneXHeight))
+      make.left.equalTo(self.view.snp.left).offset(screenSize.height * (20/iPhoneXHeight))
+    }
+    
+    descriptionLabel.textAlignment = .center
+    descriptionLabel.snp.makeConstraints { (make) in
+      make.top.equalTo(titleLabel.snp.bottom).offset(screenSize.height * (11/iPhoneXHeight))
+      make.right.equalTo(titleLabel.snp.right)
+      make.left.equalTo(titleLabel.snp.left)
+    }
+    
+    nameTextField.snp.makeConstraints { (make) in
+      make.top.equalTo(descriptionLabel.snp.bottom).offset(screenSize.height * (76/iPhoneXHeight))
+      make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-20/iPhoneXHeight))
+      make.left.equalTo(self.view.snp.left).offset(screenSize.height * (20/iPhoneXHeight))
+      make.height.equalTo(screenSize.height * (56/iPhoneXHeight))
+    }
+    
+    lastNameTextField.snp.makeConstraints { (make) in
+      make.top.equalTo(nameTextField.snp.bottom).offset(screenSize.height * (8/iPhoneXHeight))
+      make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-20/iPhoneXHeight))
+      make.left.equalTo(self.view.snp.left).offset(screenSize.height * (20/iPhoneXHeight))
+      make.height.equalTo(screenSize.height * (56/iPhoneXHeight))
+    }
+    
+    startButton.snp.makeConstraints { (make) in
+      make.bottom.equalTo(self.view.snp.bottom).offset(screenSize.height * (-50/iPhoneXHeight))
+      make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-20/iPhoneXHeight))
+      make.left.equalTo(self.view.snp.left).offset(screenSize.height * (20/iPhoneXHeight))
+      make.height.equalTo(screenSize.height * (66/iPhoneXHeight))
+    }
+    
+  }
+  
+  @objc func backAction() {
+    self.navigationController?.popViewController(animated: true)
   }
   
   @objc func startButtonAction(_ sender: UIButton) {
     if sender.isSelected {
-      let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "MainSignInViewController") as! MainSignInViewController
-      self.navigationController?.pushViewController(nextViewController, animated: true)
+      if viewModel!.signInDataControllerType == .name {
+        let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "OnboardingNameViewController") as! OnboardingNameViewController
+        nextViewController.viewModel = viewModel
+        nextViewController.viewModel!.signInDataControllerType = .city
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+      } else {
+        let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "MainSignInViewController") as! MainSignInViewController
+        nextViewController.viewModel = viewModel
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+      }
     }
   }
-    
+  
+  func setupCitiesTextField() {
+    nameTextField.filterStrings(viewModel!.cities)
+    nameTextField.comparisonOptions = [.caseInsensitive]
+    nameTextField.maxNumberOfResults = 5
+    nameTextField.direction = .up
+    nameTextField.maxResultsListHeight = 150
+    nameTextField.theme.font = NewFonts.SFProDisplayBold14
+    nameTextField.theme.fontColor = .newBlack
+    nameTextField.theme.bgColor = .white
+    nameTextField.theme.separatorColor = .newBlack
+    nameTextField.theme.placeholderColor = .diasbledGrey
+    nameTextField.theme.cellHeight = 35
+    nameTextField.lineColor = .white
+    nameTextField.itemSelectionHandler = { filteredResults, itemPosition in
+      let item = filteredResults[itemPosition]
+      print("Item at position \(itemPosition): \(item.title)")
+      self.nameTextField.text = item.title
+      self.startButton.isSelected = true
+    }
+  }
+  
 }
 
 extension OnboardingNameViewController: UITextFieldDelegate {
   func textFieldDidChangeSelection(_ textField: UITextField) {
+    if textField == nameTextField {
+      if viewModel!.signInDataControllerType == .name {
+        viewModel!.updateName(value: textField.text ?? "")
+      } else {
+        viewModel!.updateCity(value: textField.text ?? "")
+      }
+    } else if textField == lastNameTextField {
+      viewModel!.updateLastName(value: textField.text ?? "")
+    }
+    
     if !nameTextField.text!.isEmpty && !lastNameTextField.text!.isEmpty {
       startButton.isSelected = true
     } else {
       startButton.isSelected = false
-
+      
     }
   }
 }

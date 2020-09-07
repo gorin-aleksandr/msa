@@ -66,13 +66,7 @@ class UserDataManager {
                 "email": user.email,
                 "name": user.firstName,
                 "surname": user.lastName,
-                "level": user.level,
                 "age": user.age,
-                "sex": user.sex,
-                "height": user.height,
-                "heightType": user.heightType,
-                "weight": user.weight,
-                "weightType": user.weightType,
                 "type": user.type,
                 "city": user.city,
                 "createdDate": ServerValue.timestamp()

@@ -50,10 +50,11 @@ class NameSurnameViewController: BasicViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
     setupCities()
   }
   
-  func setupCities() -> Bool{
+  func setupCities() -> Bool {
     guard let js = loadJson(filename: "cities") else {
       return false
     }

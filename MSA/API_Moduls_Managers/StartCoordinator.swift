@@ -55,16 +55,27 @@ class StratCoordinator {
         let storyBoard = UIStoryboard(name: "Profile", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
         navContr?.show(nextViewController, sender: nil)
+        //For sign in testing
+//        let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
+//              navContr?.show(nextViewController, sender: nil)
       } else {
         //                let storyBoard = UIStoryboard(name: "Main", bundle:nil)
         //                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "signInVC") as! UIViewController
         //                navContr?.show(nextViewController, sender: nil)
         
         
-        //                              let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
-        //                              navContr?.show(nextViewController, sender: nil)
-        let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
         navContr?.show(nextViewController, sender: nil)
+        
+        //for dashboard
+        //let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        
+        //for profile settings
+//        let nextViewController = newProfileStoryboard.instantiateViewController(withIdentifier: "ProfileSettingsViewController") as! ProfileSettingsViewController
+//        navContr?.show(nextViewController, sender: nil)
+        
+//           let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "MeasurementsViewController") as! MeasurementsViewController
+//           navContr?.show(nextViewController, sender: nil)
       }
     } catch {
       print("Fetching Failed")

@@ -40,6 +40,7 @@ class MyAuthorizationAppleIdButton: UIButton {
           authorizationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0),
           authorizationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0),
       ])
+   
     } else {
       // Fallback on earlier versions
     }

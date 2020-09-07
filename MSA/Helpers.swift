@@ -13,6 +13,14 @@ import CommonCrypto
 let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
 let signInStoryboard = UIStoryboard(name: "SignIn", bundle:nil)
 let profileStoryboard = UIStoryboard(name: "Profile", bundle:nil)
+let newProfileStoryboard = UIStoryboard(name: "New Profile", bundle:nil)
+let measurementsStoryboard = UIStoryboard(name: "Measurements", bundle:nil)
+let trainingStoryboard = UIStoryboard(name: "Trannings", bundle:nil)
+let communityStoryboard = UIStoryboard(name: "Community", bundle:nil)
+
+let iPhoneXHeight: CGFloat = 812.0
+let iPhoneXWidth: CGFloat = 375.0
+let screenSize: CGRect = UIScreen.main.bounds
 
 
 func nowDateString() -> String {
@@ -59,6 +67,16 @@ extension String
   
 }
 
+extension UIView {
+  func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+    let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+    let mask = CAShapeLayer()
+    let rect = self.bounds
+    mask.frame = rect
+    mask.path = path.cgPath
+    self.layer.mask = mask
+  }
+}
 
 class DataDetector {
   

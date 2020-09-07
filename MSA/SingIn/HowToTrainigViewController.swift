@@ -22,7 +22,7 @@ class HowToTrainigViewController: UIViewController {
   }
   
   func setupUI() {
-    trainerButton.titleLabel?.font = UIFont(name: Fonts.SFProDisplayRegular, size: 14)
+    trainerButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
     trainerButton.setTitleColor(UIColor.newBlack, for: .normal)
     trainerButton.setTitleColor(.white, for: .selected)
     trainerButton.setBackgroundColor(color: UIColor.backgroundLightGrey, forState: .normal)
@@ -32,7 +32,7 @@ class HowToTrainigViewController: UIViewController {
     trainerButton.setTitle("Самостоятельно", for: .normal)
     //trainerButton.addTarget(self, action: #selector(trainerButtonAction(_:)), for: .touchUpInside)
     
-    sportsmanButton.titleLabel?.font = UIFont(name: Fonts.SFProDisplayRegular, size: 14)
+    sportsmanButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
     sportsmanButton.setTitleColor(UIColor.newBlack, for: .normal)
     sportsmanButton.setTitleColor(.white, for: .selected)
     sportsmanButton.setBackgroundColor(color: UIColor.backgroundLightGrey, forState: .normal)
@@ -42,16 +42,16 @@ class HowToTrainigViewController: UIViewController {
     sportsmanButton.setTitle("С тренером", for: .normal)
     //sportsmanButton.addTarget(self, action: #selector(sportsmanButtonAction(_:)), for: .touchUpInside)
     
-    titleLabel.font = UIFont(name: Fonts.SFProDisplayBold, size: 24)
+    titleLabel.font = NewFonts.SFProDisplayBold24
     titleLabel.textColor = UIColor.newBlack
     titleLabel.text = "Как будем тренироваться?"
     
-    descriptionLabel.font = UIFont(name: Fonts.SFProDisplayRegular, size: 16)
+    descriptionLabel.font = NewFonts.SFProDisplayRegular16
     descriptionLabel.textColor = UIColor.newBlack
     descriptionLabel.text = "Вы тренируетесь самостоятельно или хотите найти тренера?"
     
     startButton.setTitle("Продолжить", for: .normal)
-    startButton.titleLabel?.font = UIFont(name: Fonts.SFProDisplayRegular, size: 14)
+    startButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
     startButton.setTitleColor(UIColor.diasbledGrey, for: .normal)
     startButton.setTitleColor(.white, for: .selected)
     startButton.setBackgroundColor(color: UIColor.backgroundLightGrey, forState: .normal)

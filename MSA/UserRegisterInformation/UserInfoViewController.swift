@@ -104,10 +104,10 @@ class UserInfoViewController: BasicViewController {
     @IBAction func confirmButton(_ sender: Any) {
         if !AuthModule.facebookAuth && !AuthModule.appleAuth{
             if let email = AuthModule.currUser.email {
-                presenter2.registerUser(email: email, password: AuthModule.pass)
+                //presenter2.registerUser(email: email, password: AuthModule.pass)
             }
         } else {
-            presenter.createNewUser(newUser: AuthModule.currUser)
+            //]presenter.createNewUser(newUser: AuthModule.currUser)
         }
     }
     
@@ -300,6 +300,6 @@ extension UserInfoViewController: SignInViewProtocol {
         
     }
     func registrated() {
-        presenter.createNewUser(newUser: AuthModule.currUser)
+       // presenter.createNewUser(newUser: AuthModule.currUser)
     }
 }
