@@ -11,11 +11,21 @@ import UIKit
 class CommunityViewModel {
   private var dataLoader = UserDataManager()
   var users: [UserVO] = []
+  var sortedUsers: [UserVO] = []
   var currentUser: UserVO? {
     return AuthModule.currUser
   }
   
   init() {}
+  
+  
+  func sortUser(value: String) {
+    if value != "" {
+      sortedUsers = users.filter{ $0.firstName!.contains(value) || $0.lastName!.contains(value)}
+    } else {
+      sortedUsers = users
+    }
+  }
   
   func fetchMySportsmans(success: @escaping ()->(),failure: @escaping (String)->()) {
     dataLoader.loadAllUsers { [weak self] (users, error) in
@@ -34,6 +44,7 @@ class CommunityViewModel {
         })
       } else {
         self!.users = users.filter { $0.trainerId == self!.currentUser!.id }
+        self!.sortedUsers = self!.users
         success()
       }
     }
@@ -41,7 +52,7 @@ class CommunityViewModel {
   
   func mySportsmanCell(_ tableView: UITableView, _ indexPath: IndexPath) -> SportsmanTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: SportsmanTableViewCell.identifier) as! SportsmanTableViewCell
-    let user = users[indexPath.row]
+    let user = sortedUsers[indexPath.row]
     cell.nameLabel.text = "\(user.firstName ?? "") \(user.lastName ?? "")"
     cell.descriptionLabel.text = user.purpose
     if let url = user.avatar {
@@ -49,6 +60,7 @@ class CommunityViewModel {
     } else {
       cell.logoImageView.image = UIImage(named: "avatar-placeholder")
     }
+    cell.selectionStyle = .none
     return cell
   }
   

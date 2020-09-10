@@ -48,10 +48,10 @@ class ProfileMenuCell: UITableViewCell {
                make.left.equalTo(self.logoImageVIew.snp.right).offset(screenSize.height * (20/iPhoneXHeight))
       }
       
-      rightDirectionImageVIew.snp.makeConstraints { (make) in
-                 make.centerY.equalTo(mainView.snp.centerY)
-                 make.right.equalTo(self.mainView.snp.right).offset(screenSize.height * (-27/iPhoneXHeight))
-      }
+//      rightDirectionImageVIew.snp.makeConstraints { (make) in
+//                 make.centerY.equalTo(mainView.snp.centerY)
+//                 make.right.equalTo(self.mainView.snp.right).offset(screenSize.height * (-27/iPhoneXHeight))
+//      }
     }
 }
 

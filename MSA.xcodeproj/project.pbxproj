@@ -129,6 +129,13 @@
 		24B72F022502E6AF0028BA43 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 24B72EF02502E6AF0028BA43 /* SF-Pro-Text-Bold.otf */; };
 		24BDFD7C24EAD1BA00C56BF5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BDFD7B24EAD1BA00C56BF5 /* HomeViewController.swift */; };
 		24BDFD7E24EAD50200C56BF5 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BDFD7D24EAD50200C56BF5 /* HomeCollectionViewCell.swift */; };
+		24C60A902507CB3F0082A9CF /* DateMeasurementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C60A8F2507CB3F0082A9CF /* DateMeasurementsTableViewCell.swift */; };
+		24C60A922507D3570082A9CF /* ChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C60A912507D3570082A9CF /* ChartTableViewCell.swift */; };
+		24C60A942507D41F0082A9CF /* MeasurementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C60A932507D41F0082A9CF /* MeasurementViewModel.swift */; };
+		24C60A962507DEDF0082A9CF /* MeasureTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C60A952507DEDF0082A9CF /* MeasureTitleCell.swift */; };
+		24C60A982507E0EE0082A9CF /* MeasureTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C60A972507E0EE0082A9CF /* MeasureTypeCell.swift */; };
+		24C60A9A250826340082A9CF /* AddMeasurementTypeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C60A99250826340082A9CF /* AddMeasurementTypeController.swift */; };
+		24C60A9C250830E70082A9CF /* NewMeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C60A9B250830E70082A9CF /* NewMeasurementViewController.swift */; };
 		24CA83FE24F6788700DD378A /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA83FD24F6788700DD378A /* ProfileSettingsViewController.swift */; };
 		24CA840024F67A0F00DD378A /* ProfileMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA83FF24F67A0F00DD378A /* ProfileMenuCell.swift */; };
 		24CA840224F682E700DD378A /* UserDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA840124F682E700DD378A /* UserDataCell.swift */; };
@@ -426,6 +433,13 @@
 		24B72EF02502E6AF0028BA43 /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro-Text-Bold.otf"; path = "../../../../../../../Library/Fonts/SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		24BDFD7B24EAD1BA00C56BF5 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		24BDFD7D24EAD50200C56BF5 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
+		24C60A8F2507CB3F0082A9CF /* DateMeasurementsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateMeasurementsTableViewCell.swift; sourceTree = "<group>"; };
+		24C60A912507D3570082A9CF /* ChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTableViewCell.swift; sourceTree = "<group>"; };
+		24C60A932507D41F0082A9CF /* MeasurementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementViewModel.swift; sourceTree = "<group>"; };
+		24C60A952507DEDF0082A9CF /* MeasureTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTitleCell.swift; sourceTree = "<group>"; };
+		24C60A972507E0EE0082A9CF /* MeasureTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTypeCell.swift; sourceTree = "<group>"; };
+		24C60A99250826340082A9CF /* AddMeasurementTypeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMeasurementTypeController.swift; sourceTree = "<group>"; };
+		24C60A9B250830E70082A9CF /* NewMeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMeasurementViewController.swift; sourceTree = "<group>"; };
 		24CA83FD24F6788700DD378A /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
 		24CA83FF24F67A0F00DD378A /* ProfileMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMenuCell.swift; sourceTree = "<group>"; };
 		24CA840124F682E700DD378A /* UserDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataCell.swift; sourceTree = "<group>"; };
@@ -1012,6 +1026,21 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
+		24C60A8E2507CAFD0082A9CF /* Measurements */ = {
+			isa = PBXGroup;
+			children = (
+				24C60A9B250830E70082A9CF /* NewMeasurementViewController.swift */,
+				24C60A99250826340082A9CF /* AddMeasurementTypeController.swift */,
+				24C60A932507D41F0082A9CF /* MeasurementViewModel.swift */,
+				24AEF47124FD613C00F2BC92 /* MeasurementsViewController.swift */,
+				24C60A8F2507CB3F0082A9CF /* DateMeasurementsTableViewCell.swift */,
+				24C60A912507D3570082A9CF /* ChartTableViewCell.swift */,
+				24C60A952507DEDF0082A9CF /* MeasureTitleCell.swift */,
+				24C60A972507E0EE0082A9CF /* MeasureTypeCell.swift */,
+			);
+			path = Measurements;
+			sourceTree = "<group>";
+		};
 		29160B392035AA3B00DA7227 = {
 			isa = PBXGroup;
 			children = (
@@ -1236,7 +1265,7 @@
 		299B58EA2086724500CBE646 /* MainPage */ = {
 			isa = PBXGroup;
 			children = (
-				24AEF47124FD613C00F2BC92 /* MeasurementsViewController.swift */,
+				24C60A8E2507CAFD0082A9CF /* Measurements */,
 				240E628124FD3BF5006A6808 /* New profile */,
 				24CA840124F682E700DD378A /* UserDataCell.swift */,
 				24CA83FF24F67A0F00DD378A /* ProfileMenuCell.swift */,
@@ -1797,6 +1826,7 @@
 				2487B58324DC27D4000617F5 /* PromoView.swift in Sources */,
 				240677832449DF91004DAE05 /* PhotoLibraryPickerViewController.swift in Sources */,
 				29F9F21E2147AE82006EDC6A /* ExerciseTableViewCell.swift in Sources */,
+				24C60A982507E0EE0082A9CF /* MeasureTypeCell.swift in Sources */,
 				2487B58724DC567F000617F5 /* MainSignInViewController.swift in Sources */,
 				2934805F20E8FCB10039028E /* infoTextTableViewCell.swift in Sources */,
 				29F9F24A2147B5B8006EDC6A /* VACalendarView.swift in Sources */,
@@ -1814,6 +1844,7 @@
 				35A0940E21525AFE0090904F /* RelatedUserCollectionViewCell.swift in Sources */,
 				2934805920E8F7B80039028E /* ChoosingItemTableViewCell.swift in Sources */,
 				35B7033E219A3D2200E83393 /* HeartBeatDeviceViewController.swift in Sources */,
+				24C60A942507D41F0082A9CF /* MeasurementViewModel.swift in Sources */,
 				354FBAC022260AFE003451B7 /* IAPPresenter.swift in Sources */,
 				240677722449DF91004DAE05 /* UIAlertController+Extensions.swift in Sources */,
 				29C2D5F42074B99900E2B958 /* SetPurposeViewController.swift in Sources */,
@@ -1883,6 +1914,7 @@
 				240677872449DF91004DAE05 /* Location.swift in Sources */,
 				240677712449DF91004DAE05 /* UIApplication+Extensions.swift in Sources */,
 				29C4A3F32038B68F00F2A1BB /* UserInfoViewController.swift in Sources */,
+				24C60A902507CB3F0082A9CF /* DateMeasurementsTableViewCell.swift in Sources */,
 				29A7FEA12183DE2200DDBC0F /* addWeekDayView.swift in Sources */,
 				2934806B20E904520039028E /* ImageCollectionViewCell.swift in Sources */,
 				2940A35B20D908E400EBAE84 /* ImagesTableViewCell.swift in Sources */,
@@ -1946,6 +1978,7 @@
 				35314F49218914A100A6E323 /* ErrorView.swift in Sources */,
 				29C2D5F22074231900E2B958 /* ProfileImageView.swift in Sources */,
 				24CA83FE24F6788700DD378A /* ProfileSettingsViewController.swift in Sources */,
+				24C60A9A250826340082A9CF /* AddMeasurementTypeController.swift in Sources */,
 				2406778A2449DF91004DAE05 /* ContactsPickerViewController.swift in Sources */,
 				29D2A2BD2269DF920037CA97 /* PasswordRecoveryViewController.swift in Sources */,
 				240677702449DF91004DAE05 /* UISearchBar+Extensions.swift in Sources */,
@@ -1962,10 +1995,12 @@
 				29F9F2272147AE82006EDC6A /* TimeView.swift in Sources */,
 				299B58EE208688E600CBE646 /* GalleryItemVO.swift in Sources */,
 				29F9F2342147B537006EDC6A /* CreateExerciseTableViewCell.swift in Sources */,
+				24C60A962507DEDF0082A9CF /* MeasureTitleCell.swift in Sources */,
 				29F9F2452147B5B8006EDC6A /* VAMonthHeaderView.swift in Sources */,
 				2497F22C245347B30017F723 /* UserProfileViewController.swift in Sources */,
 				2406777E2449DF91004DAE05 /* CurrencyCell.swift in Sources */,
 				24B72ED925011A310028BA43 /* ProfileViewModel.swift in Sources */,
+				24C60A922507D3570082A9CF /* ChartTableViewCell.swift in Sources */,
 				2406778B2449DF91004DAE05 /* Contacts.swift in Sources */,
 				35BCB92A2210C1CB0016C58F /* Product.swift in Sources */,
 				29A16935204836C8006864C2 /* BasicViewController.swift in Sources */,
@@ -1974,6 +2009,7 @@
 				240677972449DF91004DAE05 /* SegmentedControl.swift in Sources */,
 				246B1162244B586F008A7540 /* ThreeTextFieldsViewController.swift in Sources */,
 				240677982449DF91004DAE05 /* GradientSlider.swift in Sources */,
+				24C60A9C250830E70082A9CF /* NewMeasurementViewController.swift in Sources */,
 				240677762449DF91004DAE05 /* UITextField+Extensions.swift in Sources */,
 				354CE70A219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift in Sources */,
 				29C7154221A02EC0004CE089 /* InternetRechability.swift in Sources */,
@@ -2133,7 +2169,7 @@
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.42;
+				MARKETING_VERSION = 2.4.44;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2157,7 +2193,7 @@
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.42;
+				MARKETING_VERSION = 2.4.44;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

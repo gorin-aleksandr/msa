@@ -38,6 +38,7 @@ struct NewFonts {
   static let SFProDisplayBold12 = UIFont.systemFont(ofSize: screenSize.height * (12/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold14 = UIFont.systemFont(ofSize: screenSize.height * (14/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold16 = UIFont.systemFont(ofSize: screenSize.height * (16/iPhoneXHeight), weight: .bold)
+  static let SFProDisplayBold17 = UIFont.systemFont(ofSize: screenSize.height * (17/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold20 = UIFont.systemFont(ofSize: screenSize.height * (20/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold24 = UIFont.systemFont(ofSize: screenSize.height * (24/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold32 = UIFont.systemFont(ofSize: screenSize.height * (32/iPhoneXHeight), weight: .bold)

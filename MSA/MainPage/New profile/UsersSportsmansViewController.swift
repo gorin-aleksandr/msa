@@ -10,6 +10,7 @@ import UIKit
 import SVProgressHUD
 
 class UsersSportsmansViewController: UIViewController {
+  @IBOutlet weak var searchBar: UISearchBar!
   @IBOutlet weak var tableView: UITableView!
   var viewModel: CommunityViewModel = CommunityViewModel()
   
@@ -33,6 +34,20 @@ class UsersSportsmansViewController: UIViewController {
     tableView.dataSource = self
     tableView.delegate = self
     tableView.separatorStyle = .none
+    searchBar.delegate = self
+    searchBar.snp.makeConstraints { (make) in
+      make.top.equalTo(self.view.snp.top)
+      make.right.equalTo(self.view.snp.right)
+      make.left.equalTo(self.view.snp.left)
+      make.height.equalTo(screenSize.height * (50/iPhoneXHeight))
+
+    }
+    tableView.snp.makeConstraints { (make) in
+      make.top.equalTo(searchBar.snp.bottom)
+      make.bottom.equalTo(self.view.snp.bottom)
+      make.right.equalTo(self.view.snp.right)
+      make.left.equalTo(self.view.snp.left)
+    }
   }
   
   
@@ -50,7 +65,7 @@ extension UsersSportsmansViewController: UITableViewDataSource, UITableViewDeleg
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel.users.count //viewModel!.numberOfRowsInSectionForMenuOrder(section)
+    return viewModel.sortedUsers.count 
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -58,6 +73,21 @@ extension UsersSportsmansViewController: UITableViewDataSource, UITableViewDeleg
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //viewModel!.selectMenu(indexPath)
+    let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+    nextViewController.viewModel.selectedUser = viewModel.sortedUsers[indexPath.row]
+    self.navigationController?.pushViewController(nextViewController, animated: true)
+
+  }
+}
+
+extension UsersSportsmansViewController: UISearchBarDelegate {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+      print("searchText \(searchText)")
+    viewModel.sortUser(value: searchText)
+    self.tableView.reloadData()
+  }
+
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+      print("searchText \(searchBar.text)")
   }
 }

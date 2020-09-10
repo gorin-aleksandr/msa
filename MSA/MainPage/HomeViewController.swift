@@ -23,11 +23,14 @@ class HomeViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
     navigationController?.setNavigationBarHidden(true, animated: false)
-    SVProgressHUD.show()
-    self.viewModel.getUser(success: {
-      SVProgressHUD.dismiss()
-      self.collectionView.reloadData()
-    })
+    if viewModel.selectedUser == nil {
+      SVProgressHUD.show()
+      self.viewModel.getUser(success: {
+         SVProgressHUD.dismiss()
+         self.collectionView.reloadData()
+       })
+    }
+ 
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -132,14 +135,26 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     if indexPath.section == 0 {
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeProfileCollectionViewCell", for: indexPath as IndexPath) as! HomeProfileCollectionViewCell
-      if let url = AuthModule.currUser.avatar {
-        myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
+      if viewModel.selectedUser == nil {
+        if let url = AuthModule.currUser.avatar {
+          myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
+        } else {
+          myCell.logoImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
+        }
       } else {
-        myCell.logoImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
+        if let url = viewModel.selectedUser?.avatar {
+          myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
+        } else {
+          myCell.logoImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
+        }
       }
-      
+    
       myCell.logoImageView.cornerRadius = myCell.logoImageView.frame.width/2
-      myCell.titleLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
+      if let selectedUser = viewModel.selectedUser  {
+        myCell.titleLabel.text = "\(selectedUser.firstName ?? "") \(selectedUser.lastName ?? "")"
+      } else {
+        myCell.titleLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
+      }
       myCell.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
       myCell.layer.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00).cgColor
       myCell.layer.masksToBounds = false
@@ -147,11 +162,21 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       
     } else if indexPath.section == 1 {
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeTargetCollectionViewCell", for: indexPath as IndexPath) as! HomeTargetCollectionViewCell
-      if let purpose = AuthModule.currUser.purpose {
-        myCell.titleLabel.text = purpose
+      if let selectedUser = viewModel.selectedUser  {
+        if let purpose = selectedUser.purpose {
+          myCell.titleLabel.text = purpose
+        } else {
+          myCell.titleLabel.text = ""
+        }
+        
       } else {
-        myCell.titleLabel.text = "Укажите цель"
+        if let purpose = AuthModule.currUser.purpose {
+          myCell.titleLabel.text = purpose
+        } else {
+          myCell.titleLabel.text = "Укажите цель"
+        }
       }
+    
       myCell.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
       myCell.layer.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00).cgColor
       myCell.layer.masksToBounds = false
@@ -192,11 +217,27 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       
       switch indexPath.row {
         case 0:
-          let vc = trainingStoryboard.instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
-          self.navigationController?.pushViewController(vc, animated: true)
-        case 4:
+          DispatchQueue.main.async {
+            if let selectedUser = self.viewModel.selectedUser  {
+            let destinationVC = UIStoryboard(name: "Trannings", bundle: nil).instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
+              destinationVC.manager.trainingType = .notMine(userId: selectedUser.id)
+                   self.navigationController?.pushViewController(destinationVC, animated: true)
+            } else {
+              let vc = trainingStoryboard.instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
+              self.navigationController?.pushViewController(vc, animated: true)
+
+            }
+        }
+        case 3:
+          DispatchQueue.main.async {
+         let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "MeasurementsViewController") as! MeasurementsViewController
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+            }
+         case 4:
+          DispatchQueue.main.async {
           let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "UsersSportsmansViewController") as! UsersSportsmansViewController
           self.navigationController?.pushViewController(vc, animated: true)
+        }
         default:
           return
       }

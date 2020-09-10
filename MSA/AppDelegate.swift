@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     })
     Realm.Configuration.defaultConfiguration = config
     
-    
     ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     
     FirebaseApp.configure()

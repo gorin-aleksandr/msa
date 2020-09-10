@@ -10,26 +10,30 @@ import UIKit
 
 class ProfileGalleryViewController: UIViewController {
   @IBOutlet weak var galleryCollectionView: UICollectionView!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-      setupUI()
-    }
-    
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupUI()
+  }
+  
   func setupUI() {
     galleryCollectionView.dataSource = self
     galleryCollectionView.delegate = self
+    galleryCollectionView.snp.makeConstraints { (make) in
+      make.top.equalTo(self.view.snp.top)
+      make.bottom.equalTo(self.view.snp.bottom)
+      make.right.equalTo(self.view.snp.right)
+      make.left.equalTo(self.view.snp.left)
+    }
   }
   
   func getItems() -> [GalleryItemVO] {
     return AuthModule.currUser.gallery ?? []
   }
-
+  
 }
 
-extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return self.getItems().count
@@ -54,79 +58,84 @@ extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionVi
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: galleryCollectionView.frame.width/3-10, height: (galleryCollectionView.frame.width/3-3)*140/110);
+    return CGSize(width: screenSize.width * (50/iPhoneXWidth), height: screenSize.height * (50/iPhoneXHeight))
+
   }
+  
+//  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//    return UIEdgeInsets(top: 2, left: screenSize.width * (2.5/iPhoneXWidth), bottom: 2, right: screenSize.width * (2.5/iPhoneXWidth))
+//  }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//    let index = indexPath.row
-//    if let url = presenter.getItems()[index].video_url  {
-//      playVideo(url: url)
-//    } else {
-//      if let url = presenter.getItems()[index].imageUrl {
-//        UIView.animate(withDuration: 0.5) {
-//          self.imagePreviewView.alpha = 1
-//          self.tabBarController?.tabBar.isHidden = true
-//          if let imgUrl = URL(string: url) {
-//            self.previewImage.sd_setImage(with: imgUrl, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
-//          }
-//        }
-//      }
-//      
-//    }
+    //    let index = indexPath.row
+    //    if let url = presenter.getItems()[index].video_url  {
+    //      playVideo(url: url)
+    //    } else {
+    //      if let url = presenter.getItems()[index].imageUrl {
+    //        UIView.animate(withDuration: 0.5) {
+    //          self.imagePreviewView.alpha = 1
+    //          self.tabBarController?.tabBar.isHidden = true
+    //          if let imgUrl = URL(string: url) {
+    //            self.previewImage.sd_setImage(with: imgUrl, placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: nil)
+    //          }
+    //        }
+    //      }
+    //
+    //    }
   }
   
   
-//  func openGallary() {
-//    myPicker.allowsEditing = false
-//    myPicker.sourceType = UIImagePickerController.SourceType.photoLibrary
-//    myPicker.mediaTypes = ["public.image", "public.movie"]
-//    present(myPicker, animated: true, completion: nil)
-//  }
-//  
-//  func openCamera() {
-//    myPicker.allowsEditing = false
-//    myPicker.sourceType = UIImagePickerController.SourceType.camera
-//    myPicker.mediaTypes = ["public.image", "public.movie"]
-//    present(myPicker, animated: true, completion: nil)
-//  }
-//  
-//  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//    dismiss(animated: true, completion: nil)
-//  }
-//  
-//  //  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//  //  }
-//  
-//  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//    if galleryUploadInProgress {
-//      self.pendingForUpload.append(info)
-//    } else {
-//      self.uploadInfo(info: info)
-//    }
-//    dismiss(animated: true, completion: nil)
-//  }
-//  
-//  private func uploadInfo(info: [UIImagePickerController.InfoKey : Any]) {
-//    
-//    if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//      self.galleryUploadInProgress = true
-//      presenter.uploadPhoto(image: chosenImage)
-//    } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
-//      do {
-//        let asset = AVURLAsset(url: videoURL, options: nil)
-//        let imgGenerator = AVAssetImageGenerator(asset: asset)
-//        imgGenerator.appliesPreferredTrackTransform = true
-//        let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
-//        let thumbnail = UIImage(cgImage: cgImage)
-//        
-//        self.galleryUploadInProgress = true
-//        
-//        presenter.uploadVideo(videoURL.absoluteString, thumbnail)
-//        presenter.setCurrentVideoPath(path: videoURL.absoluteString)
-//      } catch let error {
-//        print("*** Error generating thumbnail: \(error.localizedDescription)")
-//      }
-//    }
-//  }
+  //  func openGallary() {
+  //    myPicker.allowsEditing = false
+  //    myPicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+  //    myPicker.mediaTypes = ["public.image", "public.movie"]
+  //    present(myPicker, animated: true, completion: nil)
+  //  }
+  //
+  //  func openCamera() {
+  //    myPicker.allowsEditing = false
+  //    myPicker.sourceType = UIImagePickerController.SourceType.camera
+  //    myPicker.mediaTypes = ["public.image", "public.movie"]
+  //    present(myPicker, animated: true, completion: nil)
+  //  }
+  //
+  //  func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+  //    dismiss(animated: true, completion: nil)
+  //  }
+  //
+  //  //  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+  //  //  }
+  //
+  //  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+  //    if galleryUploadInProgress {
+  //      self.pendingForUpload.append(info)
+  //    } else {
+  //      self.uploadInfo(info: info)
+  //    }
+  //    dismiss(animated: true, completion: nil)
+  //  }
+  //
+  //  private func uploadInfo(info: [UIImagePickerController.InfoKey : Any]) {
+  //
+  //    if let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+  //      self.galleryUploadInProgress = true
+  //      presenter.uploadPhoto(image: chosenImage)
+  //    } else if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
+  //      do {
+  //        let asset = AVURLAsset(url: videoURL, options: nil)
+  //        let imgGenerator = AVAssetImageGenerator(asset: asset)
+  //        imgGenerator.appliesPreferredTrackTransform = true
+  //        let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+  //        let thumbnail = UIImage(cgImage: cgImage)
+  //
+  //        self.galleryUploadInProgress = true
+  //
+  //        presenter.uploadVideo(videoURL.absoluteString, thumbnail)
+  //        presenter.setCurrentVideoPath(path: videoURL.absoluteString)
+  //      } catch let error {
+  //        print("*** Error generating thumbnail: \(error.localizedDescription)")
+  //      }
+  //    }
+  //  }
   
 }

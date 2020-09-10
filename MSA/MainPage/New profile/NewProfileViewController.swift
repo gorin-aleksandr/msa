@@ -28,6 +28,18 @@ class NewProfileViewController: UIViewController {
         setupUI()
     }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    viewModel!.fetchSpecialization { (value) in
+      if value {
+        self.tagList.removeAllTags()
+        self.tagList.addTag("+")
+        self.tagList.addTags(self.viewModel!.userSkills)
+
+      }
+    }
+  }
+  
   func setupUI() {
     if let url = AuthModule.currUser.avatar {
       photoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
@@ -36,13 +48,13 @@ class NewProfileViewController: UIViewController {
     cityLabel.text = "\(AuthModule.currUser.city ?? "")"
 
     photoImageView.cornerRadius = 32
-    tagList.addTags(["+","Вит","Функциональный трейнинг","Фитнес","Бокс","Футбол","Аеробика"])//,"Отмененные"
+    //tagList.addTags(["+","Вит","Функциональный трейнинг","Фитнес","Бокс","Футбол","Аеробика"])//,"Отмененные"
     tagList.textFont = UIFont.systemFont(ofSize: 14)
     tagList.alignment = .center
     tagList.delegate = self
-    let first =  LabelSegment.init(text: "Галерея", numberOfLines: 1, normalBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00), normalFont: NewFonts.SFProDisplayRegular10, normalTextColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedBackgroundColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedFont: NewFonts.SFProDisplayRegular10, selectedTextColor: UIColor(red: 0.97, green: 0.97, blue: 1.00, alpha: 1.00), accessibilityIdentifier: "")
-    let second =  LabelSegment.init(text: "Информация", numberOfLines: 1, normalBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00), normalFont: NewFonts.SFProDisplayRegular10, normalTextColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedBackgroundColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedFont: NewFonts.SFProDisplayRegular10, selectedTextColor: UIColor(red: 0.97, green: 0.97, blue: 1.00, alpha: 1.00), accessibilityIdentifier: "")
-    let third =  LabelSegment.init(text: "Спортсмены", numberOfLines: 1, normalBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00), normalFont: NewFonts.SFProDisplayRegular10, normalTextColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedBackgroundColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedFont: NewFonts.SFProDisplayRegular10, selectedTextColor: UIColor(red: 0.97, green: 0.97, blue: 1.00, alpha: 1.00), accessibilityIdentifier: "")
+    let first =  LabelSegment.init(text: "ГАЛЕРЕЯ", numberOfLines: 1, normalBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00), normalFont: NewFonts.SFProDisplayRegular12, normalTextColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedBackgroundColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedFont: NewFonts.SFProDisplayRegular12, selectedTextColor: UIColor(red: 0.97, green: 0.97, blue: 1.00, alpha: 1.00), accessibilityIdentifier: "")
+    let second =  LabelSegment.init(text: "ИНФОРМАЦИЯ", numberOfLines: 1, normalBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00), normalFont: NewFonts.SFProDisplayRegular12, normalTextColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedBackgroundColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedFont: NewFonts.SFProDisplayRegular12, selectedTextColor: UIColor(red: 0.97, green: 0.97, blue: 1.00, alpha: 1.00), accessibilityIdentifier: "")
+    let third =  LabelSegment.init(text: "СПОРТСМЕНЫ", numberOfLines: 1, normalBackgroundColor: UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00), normalFont: NewFonts.SFProDisplayRegular12, normalTextColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedBackgroundColor: UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00), selectedFont: NewFonts.SFProDisplayRegular12, selectedTextColor: UIColor(red: 0.97, green: 0.97, blue: 1.00, alpha: 1.00), accessibilityIdentifier: "")
     segmentedControl.segments = [first,second,third]
     segmentedControl.addTarget(self, action: #selector(photoControl(_:)), for: .valueChanged)
     //tagList.tagViews[0].isSelected = true

@@ -32,5 +32,6 @@ extension UIColor {
     static let newBlue = UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00)
     static let textFieldBackgroundGrey = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00)
     static let emailPasswordTextFieldGrey = UIColor(red: 0.96, green: 0.96, blue: 0.99, alpha: 0.45)
+    static let separatorGray = UIColor(red: 0.91, green: 0.91, blue: 0.92, alpha: 1.00)
   }
 

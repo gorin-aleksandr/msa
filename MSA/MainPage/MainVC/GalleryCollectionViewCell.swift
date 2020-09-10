@@ -12,7 +12,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var photoImageView: UIImageView! {
         didSet{
-            photoImageView.layer.cornerRadius = 10
+           // photoImageView.layer.cornerRadius = 10
         }
     }
     @IBOutlet weak var video: UIImageView!
