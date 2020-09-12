@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   var viewModel: MeasurementViewModel?
@@ -33,6 +34,12 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
+    self.viewModel!.currentTypeId = self.viewModel!.newMeasurementId
+    SVProgressHUD.show()
+    self.viewModel?.fetchMeasurements(success: { (value) in
+      SVProgressHUD.dismiss()
+      self.setupUI()
+    })
   }
   
   func setupUI() {
@@ -85,14 +92,26 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
       make.height.width.equalTo(screenSize.height * (48/iPhoneXHeight))
     }
     
-    lastValueLabel.text = ""
+    for mes in self.viewModel!.selectedMeasurements {
+      print(mes.createdDate)
+    }
+    
+    if let lastMeasurement = self.viewModel!.selectedMeasurements.last {
+      lastValueLabel.text = "\(lastMeasurement.value) \(self.viewModel!.measureUnits[self.viewModel!.currentTypeId])"
+    } else {
+      lastValueLabel.text = ""
+    }
     lastValueLabel.font = NewFonts.SFProDisplayBold16
     lastValueLabel.snp.makeConstraints { (make) in
-      make.top.equalTo(separatorView.snp.bottom).offset(screenSize.height * (22/iPhoneXHeight))
+      make.top.equalTo(measureTypeTitle.snp.top).offset(screenSize.height * (22/iPhoneXHeight))
       make.right.equalTo(self.mainView.snp.right).offset(screenSize.height * (-16/iPhoneXHeight))
     }
     
-    lastDateLabel.text = ""
+    if let lastMeasurement = self.viewModel!.selectedMeasurements.last {
+      lastDateLabel.text = "Предыдущий замер \(DateFormatter.sharedDateFormatter.string(from: lastMeasurement.createdDate))"
+    } else {
+      lastDateLabel.text = ""
+    }
     lastDateLabel.font = NewFonts.SFProDisplayRegular10
     lastDateLabel.snp.makeConstraints { (make) in
       make.top.equalTo(lastValueLabel.snp.bottom).offset(screenSize.height * (2/iPhoneXHeight))
@@ -116,7 +135,7 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
       make.left.equalTo(self.mainView.snp.left).offset(screenSize.height * (16/iPhoneXHeight))
     }
     
-    dateValueButton.setTitle("Выберите дату", for: .normal)
+    dateValueButton.setTitle(DateFormatter.sharedDateFormatter.string(from: viewModel!.newMeasurementDate), for: .normal)
     dateValueButton.titleLabel?.font = NewFonts.SFProDisplayBold16
     dateValueButton.snp.makeConstraints { (make) in
       make.top.equalTo(separatorViewSecond.snp.bottom).offset(screenSize.height * (20/iPhoneXHeight))
@@ -171,7 +190,7 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
     }
     
     unitView.addSubview(unitsLabel)
-    unitsLabel.text = "кг"
+    unitsLabel.text = viewModel!.measureUnits[viewModel!.newMeasurementId]
     unitsLabel.font = NewFonts.SFProDisplayRegular16
     unitsLabel.snp.makeConstraints { (make) in
       make.centerX.equalTo(unitView.snp.centerX)
@@ -200,8 +219,11 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   
   
   @objc func saveAction(_ sender: UIButton) {
-    viewModel!.saveMeasure(value: valueTextField.text!.toDouble()!, date: self.viewModel!.newMeasurementDate!)
-    self.dismiss(animated: true, completion: nil)
+    if let value = valueTextField.text!.toDouble() {
+      viewModel!.saveMeasure(value: value, date: self.viewModel!.newMeasurementDate)
+         self.dismiss(animated: true, completion: nil)
+    }
+   
   }
   
   @objc func closeButtonAction(_ sender: UIButton) {
@@ -211,12 +233,27 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   func textFieldDidChangeSelection(_ textField: UITextField) {
   }
   
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+     guard CharacterSet(charactersIn: "1234567890.").isSuperset(of: CharacterSet(charactersIn: string)) else {
+        return false
+    }
+    if string == "." && textField.text!.contains(".") {
+      return false
+    }
+    if string == "." && textField.text!.isEmpty {
+         return false
+       }
+    return true
+  }
+  
   @objc func showPicker() {
     
     DatePickerDialog(buttonColor: lightBlue_).show("Выберите дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
       (date, int) -> Void in
-      self.dateValueButton.setTitle(date?.dateString(), for: .normal)
-      self.viewModel!.newMeasurementDate = date
+      if date != nil {
+        self.dateValueButton.setTitle(date?.dateString(), for: .normal)
+        self.viewModel!.newMeasurementDate = date!
+      }
     }
   }
   

@@ -147,7 +147,7 @@ final class ChatViewController: JSQMessagesViewController {
       label.sizeToFit()
       label.center = titleView.center
       label.textAlignment = NSTextAlignment.center
-      label.font = UIFont(name: "Rubik-Medium", size: 15)!
+      label.font = NewFonts.SFProDisplayBold16
       label.textColor = darkCyanGreen
       // Creates the image view
       if viewModel!.chatUserAvatar != "" && viewModel!.chatUserAvatar != nil{
@@ -186,7 +186,7 @@ final class ChatViewController: JSQMessagesViewController {
       button2.tintColor = darkCyanGreen
       self.navigationItem.leftBarButtonItem = button2
     let attrs = [NSAttributedString.Key.foregroundColor: darkCyanGreen,
-                 NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
+                 NSAttributedString.Key.font: NewFonts.SFProDisplayBold17]
       self.navigationController?.navigationBar.titleTextAttributes = attrs
   }
   

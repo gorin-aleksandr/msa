@@ -18,17 +18,21 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(true)
-    navigationController?.setNavigationBarHidden(true, animated: false)
     if viewModel.selectedUser == nil {
       SVProgressHUD.show()
       self.viewModel.getUser(success: {
          SVProgressHUD.dismiss()
          self.collectionView.reloadData()
        })
+    }
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    if viewModel.selectedUser != nil {
+      navigationController?.setNavigationBarHidden(false, animated: false)
+    } else {
+      navigationController?.setNavigationBarHidden(true, animated: false)
     }
  
   }
@@ -208,9 +212,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     if indexPath.section == 0 {
-      let nextViewController = newProfileStoryboard.instantiateViewController(withIdentifier: "ProfileSettingsViewController") as! ProfileSettingsViewController
-      nextViewController.viewModel = viewModel
-      self.navigationController?.pushViewController(nextViewController, animated: true)
+//      let nextViewController = newProfileStoryboard.instantiateViewController(withIdentifier: "ProfileSettingsViewController") as! ProfileSettingsViewController
+//      nextViewController.viewModel = viewModel
+//      self.navigationController?.pushViewController(nextViewController, animated: true)
+      DispatchQueue.main.async {
+         let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+         //let navigationController = UINavigationController()
+         //navigationController.setViewControllers([destinationVC], animated: false)
+         self.present(destinationVC, animated: true, completion: nil)
+       }
     }
     
     if indexPath.section == 2 {
@@ -231,6 +241,12 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         case 3:
           DispatchQueue.main.async {
          let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "MeasurementsViewController") as! MeasurementsViewController
+            nextViewController.viewModel = MeasurementViewModel()
+            if let selectedUser = self.viewModel.selectedUser  {
+              nextViewController.viewModel!.selectedUserId = selectedUser.id!
+            } else {
+              nextViewController.viewModel!.selectedUserId = AuthModule.currUser.id!
+            }
         self.navigationController?.pushViewController(nextViewController, animated: true)
             }
          case 4:

@@ -15,8 +15,6 @@ class MainSignInViewController: UIViewController {
   
   @IBOutlet weak var mailButton: UIButton!
   @IBOutlet weak var facebookButton: UIButton!
-  @available(iOS 13.0, *)
-  @IBOutlet lazy var appleButton: MyAuthorizationAppleIdButton? = { return nil }()
   @IBOutlet weak var nextButton: UIButton!
   @IBOutlet weak var privacyLabel: UILabel!
   @IBOutlet weak var haveAccountLabel: UILabel!
@@ -24,9 +22,12 @@ class MainSignInViewController: UIViewController {
   @IBOutlet weak var logoImageView: UIImageView!
   @IBOutlet weak var facebookImageView: UIImageView!
   @IBOutlet weak var mainBackgroundImageView: UIImageView!
+  @available(iOS 13.0, *)
+  @IBOutlet lazy var appleButton: MyAuthorizationAppleIdButton? = { return nil }()
 
+  
   fileprivate var currentNonce: String?
-
+  
   var viewModel: SignInViewModel?
   
   override func viewDidLoad() {
@@ -97,38 +98,38 @@ class MainSignInViewController: UIViewController {
     
     mailButton.snp.makeConstraints { (make) in
       make.top.equalTo(logoImageView.snp.bottom).offset(screenSize.height * (65/iPhoneXHeight))
-      make.right.equalTo(screenSize.height * (-20/iPhoneXHeight))
-      make.left.equalTo(screenSize.height * (20/iPhoneXHeight))
+      make.centerX.equalTo(self.view.snp.centerX)
       make.height.equalTo(screenSize.height * (48/iPhoneXHeight))
+      make.width.equalTo(screenSize.width * (335/iPhoneXWidth))
     }
     
     facebookButton.snp.makeConstraints { (make) in
       make.top.equalTo(mailButton.snp.bottom).offset(screenSize.height * (8/iPhoneXHeight))
-      make.right.equalTo(screenSize.height * (-20/iPhoneXHeight))
-      make.left.equalTo(screenSize.height * (20/iPhoneXHeight))
+      make.centerX.equalTo(self.view.snp.centerX)
       make.height.equalTo(screenSize.height * (48/iPhoneXHeight))
+      make.width.equalTo(screenSize.width * (335/iPhoneXWidth))
     }
     
     if #available(iOS 13.0, *) {
       appleButton?.snp.makeConstraints { (make) in
         make.top.equalTo(facebookButton.snp.bottom).offset(screenSize.height * (8/iPhoneXHeight))
-        make.right.equalTo(screenSize.height * (-20/iPhoneXHeight))
-        make.left.equalTo(screenSize.height * (20/iPhoneXHeight))
+        make.centerX.equalTo(self.view.snp.centerX)
         make.height.equalTo(screenSize.height * (48/iPhoneXHeight))
+        make.width.equalTo(screenSize.width * (335/iPhoneXWidth))
       }
       
-      let imgView = UIImageView(image: UIImage(named: "AppleBlack"))
-      let tap = UITapGestureRecognizer(target: self, action:  #selector(handleAppleSignInSelector))
-           imgView.addGestureRecognizer(tap)
-      imgView.isUserInteractionEnabled = true
-      self.view.addSubview(imgView)
-
-      imgView.snp.makeConstraints { (make) in
-        make.top.equalTo(self.appleButton!.snp.top)
-        make.right.equalTo(self.appleButton!.snp.right)
-        make.left.equalTo(self.appleButton!.snp.left)
-        make.bottom.equalTo(self.appleButton!.snp.bottom)
-      }
+//      let imgView = UIImageView(image: UIImage(named: "AppleBlack"))
+//      let tap = UITapGestureRecognizer(target: self, action:  #selector(handleAppleSignInSelector))
+//      imgView.addGestureRecognizer(tap)
+//      imgView.isUserInteractionEnabled = true
+//      //self.view.addSubview(imgView)
+//      
+//      imgView.snp.makeConstraints { (make) in
+//        make.top.equalTo(self.appleButton!.snp.top)
+//        make.right.equalTo(self.appleButton!.snp.right)
+//        make.left.equalTo(self.appleButton!.snp.left)
+//        make.bottom.equalTo(self.appleButton!.snp.bottom)
+//      }
     } else {
       // Fallback on earlier versions
     }
@@ -164,14 +165,14 @@ class MainSignInViewController: UIViewController {
   }
   
   @objc private func handleAppleSignInSelector() {
-      print("Pressed image selector")
+    print("Pressed image selector")
     if #available(iOS 13, *) {
       startSignInWithAppleFlow()
     } else {
       // Fallback on earlier versions
     }
   }
-
+  
   
   @objc func mailButtonAction(_ sender: UIButton) {
     let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "EmailPasswordViewController") as! EmailPasswordViewController
@@ -211,7 +212,7 @@ class MainSignInViewController: UIViewController {
     let request = appleIDProvider.createRequest()
     request.requestedScopes = [.fullName, .email]
     request.nonce = nonce.sha256()
-
+    
     let authorizationController = ASAuthorizationController(authorizationRequests: [request])
     authorizationController.delegate = self
     authorizationController.presentationContextProvider = self
@@ -223,10 +224,10 @@ class MainSignInViewController: UIViewController {
 extension MainSignInViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
   
   @available(iOS 13.0, *)
-   func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-     return self.view.window!
-   }
-
+  func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    return self.view.window!
+  }
+  
   func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
     if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
       guard let nonce = currentNonce else {
@@ -244,25 +245,25 @@ extension MainSignInViewController: ASAuthorizationControllerDelegate, ASAuthori
       
       let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce, accessToken: nil)
       viewModel!.loginWithAppleId(credential: credential, success: {
-//        let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-//        nextViewController.viewModel = ProfileViewModel()
+        //        let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        //        nextViewController.viewModel = ProfileViewModel()
         //self.navigationController?.pushViewController(nextViewController, animated: true)
-      
-      let storyBoard = UIStoryboard(name: "Profile", bundle:nil)
-      let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
+        
+        let storyBoard = UIStoryboard(name: "Profile", bundle:nil)
+        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
         self.navigationController?.pushViewController(nextViewController, animated: true)
-      
-      
+        
+        
       }) { (error) in
         AlertDialog.showAlert("Ошибка", message: error, viewController: self)
       }
     }
   }
-
+  
   func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
     // Handle error.
     print("Sign in with Apple errored: \(error)")
     AlertDialog.showAlert("Ошибка", message: error.localizedDescription, viewController: self)
   }
-
+  
 }

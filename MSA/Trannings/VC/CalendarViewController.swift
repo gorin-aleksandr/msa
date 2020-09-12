@@ -78,7 +78,7 @@ class CalendarViewController: UIViewController {
     private func configureUI() {
         navigationController?.setNavigationBarHidden(false, animated: true)
         let attrs = [NSAttributedString.Key.foregroundColor: UIColor.darkCyanGreen,
-                     NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
+                     NSAttributedString.Key.font: NewFonts.SFProDisplayBold17]
         self.navigationController?.navigationBar.titleTextAttributes = attrs
         
         setCalendarVieW()
@@ -123,7 +123,7 @@ class CalendarViewController: UIViewController {
         formatter.dateFormat = "dd.MM.yyy"
         
         let startDate = formatter.date(from: "01.01.2015")!
-        let endDate = formatter.date(from: "01.01.2021")!
+        let endDate = formatter.date(from: "01.01.2022")!
         
         let calendar = VACalendar(
             startDate: startDate,
@@ -154,7 +154,7 @@ extension CalendarViewController: VAMonthViewAppearanceDelegate {
     }
     
     func verticalMonthTitleFont() -> UIFont {
-        return UIFont.init(name: "Rubik-Medium", size: 15)!
+      return NewFonts.SFProDisplayBold16
     }
     
     func verticalMonthTitleColor() -> UIColor {

@@ -64,6 +64,8 @@
 		24189F6A24CDE402005F226C /* StartOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189F6924CDE402005F226C /* StartOnboardingViewController.swift */; };
 		242CAA4F242F76ED00EE8351 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 242CAA4E242F76ED00EE8351 /* Chat.storyboard */; };
 		242E56AF24617EC100C1602D /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 242E56AE24617EC000C1602D /* cities.json */; };
+		2434A488250BA54D00763770 /* DateMeasurementsCalendarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2434A487250BA54D00763770 /* DateMeasurementsCalendarController.swift */; };
+		2434A48A250D05FC00763770 /* PaySubscriptionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2434A489250D05FB00763770 /* PaySubscriptionController.swift */; };
 		2435E76E244B1360003B6361 /* EditTrainerProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435E76D244B1360003B6361 /* EditTrainerProfileViewController.swift */; };
 		2435E771244B25AC003B6361 /* TrainerSkillsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2435E770244B25AC003B6361 /* TrainerSkillsHeaderView.xib */; };
 		2435E773244B282A003B6361 /* TrainerSkillsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435E772244B282A003B6361 /* TrainerSkillsHeaderView.swift */; };
@@ -366,6 +368,8 @@
 		24189F6924CDE402005F226C /* StartOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartOnboardingViewController.swift; sourceTree = "<group>"; };
 		242CAA4E242F76ED00EE8351 /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		242E56AE24617EC000C1602D /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
+		2434A487250BA54D00763770 /* DateMeasurementsCalendarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateMeasurementsCalendarController.swift; sourceTree = "<group>"; };
+		2434A489250D05FB00763770 /* PaySubscriptionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaySubscriptionController.swift; sourceTree = "<group>"; };
 		2435E76D244B1360003B6361 /* EditTrainerProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrainerProfileViewController.swift; sourceTree = "<group>"; };
 		2435E770244B25AC003B6361 /* TrainerSkillsHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrainerSkillsHeaderView.xib; sourceTree = "<group>"; };
 		2435E772244B282A003B6361 /* TrainerSkillsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainerSkillsHeaderView.swift; sourceTree = "<group>"; };
@@ -1029,6 +1033,7 @@
 		24C60A8E2507CAFD0082A9CF /* Measurements */ = {
 			isa = PBXGroup;
 			children = (
+				2434A487250BA54D00763770 /* DateMeasurementsCalendarController.swift */,
 				24C60A9B250830E70082A9CF /* NewMeasurementViewController.swift */,
 				24C60A99250826340082A9CF /* AddMeasurementTypeController.swift */,
 				24C60A932507D41F0082A9CF /* MeasurementViewModel.swift */,
@@ -1037,6 +1042,7 @@
 				24C60A912507D3570082A9CF /* ChartTableViewCell.swift */,
 				24C60A952507DEDF0082A9CF /* MeasureTitleCell.swift */,
 				24C60A972507E0EE0082A9CF /* MeasureTypeCell.swift */,
+				2434A489250D05FB00763770 /* PaySubscriptionController.swift */,
 			);
 			path = Measurements;
 			sourceTree = "<group>";
@@ -1887,7 +1893,9 @@
 				24FEE3E6242F5CCB001670F6 /* Channel.swift in Sources */,
 				295A4EE5203DF78300124A07 /* UserDataManagerFirebase.swift in Sources */,
 				29F9F22B2147AE82006EDC6A /* ConfigureTranningExersViewController.swift in Sources */,
+				2434A48A250D05FC00763770 /* PaySubscriptionController.swift in Sources */,
 				2487B58524DC4824000617F5 /* OnboardingNameViewController.swift in Sources */,
+				2434A488250BA54D00763770 /* DateMeasurementsCalendarController.swift in Sources */,
 				240677942449DF91004DAE05 /* ItemWithPhoto.swift in Sources */,
 				240677962449DF91004DAE05 /* Label.swift in Sources */,
 				2406776B2449DF91004DAE05 /* Date+Extension.swift in Sources */,
@@ -2169,7 +2177,7 @@
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.44;
+				MARKETING_VERSION = 2.4.45;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2193,7 +2201,7 @@
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.44;
+				MARKETING_VERSION = 2.4.45;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

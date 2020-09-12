@@ -8,34 +8,41 @@
 
 import UIKit
 import Charts
+import SVProgressHUD
 
 class MeasurementsViewController: UIViewController, ChartViewDelegate {
   @IBOutlet var tableView: UITableView!
-  let viewModel = MeasurementViewModel()
+  
+  var viewModel: MeasurementViewModel? {
+    didSet {
+      self.viewModel!.reloadChart = {
+        self.fetchMeasurements()
+      }
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
   }
   
-   override func viewWillAppear(_ animated: Bool) {
-     super.viewWillAppear(true)
-     self.tabBarController?.tabBar.isHidden = true
-      viewModel.fetchMeasurements()
-      self.tableView.reloadData()
-   }
-   
-   override func viewWillDisappear(_ animated: Bool) {
-     super.viewWillDisappear(true)
-     self.tabBarController?.tabBar.isHidden = false
-   }
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    self.tabBarController?.tabBar.isHidden = true
+    fetchMeasurements()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    self.tabBarController?.tabBar.isHidden = false
+  }
   
   func setupUI() {
     self.title = "Замеры"
     let backButton = UIBarButtonItem(image: UIImage(named: "arrow-left 1"), style: .plain, target: self, action: #selector(self.backAction))
     self.navigationItem.leftBarButtonItem = backButton
     self.navigationController?.navigationBar.tintColor = .newBlack
-
+    
     tableView.dataSource = self
     tableView.delegate = self
     tableView.snp.makeConstraints { (make) in
@@ -55,7 +62,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     }
     
     btn.addTarget(self, action: #selector(addMeasure), for: .touchUpInside)
-
+    
   }
   
   @objc func backAction() {
@@ -64,13 +71,38 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   
   @objc func addMeasure(_ sender: UIButton) {
     DispatchQueue.main.async {
-    let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "AddMeasurementTypeController") as! AddMeasurementTypeController
-    nextViewController.viewModel = self.viewModel
-    let nc = UINavigationController(rootViewController: nextViewController)
+      let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "AddMeasurementTypeController") as! AddMeasurementTypeController
+      nextViewController.viewModel = self.viewModel
+      let nc = UINavigationController(rootViewController: nextViewController)
       self.present(nc, animated: true, completion: nil)
     }
   }
-    
+  
+  @objc func selectTimeFrame(_ sender: UIButton) {
+    let vc = measurementsStoryboard.instantiateViewController(withIdentifier: "DateMeasurementsCalendarController") as! DateMeasurementsCalendarController
+    vc.datesDelegate = self
+    let nc = UINavigationController(rootViewController: vc)
+    self.present(nc, animated: true, completion: nil)
+  }
+  
+  @objc func previousWeekAction(_ sender: UIButton) {
+    viewModel!.setupCurrentWeekTimeFrame(previous: true, next: false)
+    self.tableView.reloadData()
+  }
+  
+  @objc func nextWeekAction(_ sender: UIButton) {
+    viewModel!.setupCurrentWeekTimeFrame(previous: false, next: true)
+    self.tableView.reloadData()
+  }
+  
+  func fetchMeasurements() {
+    SVProgressHUD.show()
+    viewModel!.fetchMeasurements(success: { value in
+      SVProgressHUD.dismiss()
+      self.tableView.reloadData()
+    })
+  }
+  
   func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
     print("Chart value selected!")
   }
@@ -85,11 +117,11 @@ extension MeasurementsViewController: UITableViewDataSource, UITableViewDelegate
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return viewModel.heightForRow(indexPath: indexPath)
+    return viewModel!.heightForRow(indexPath: indexPath)
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel.numberOfRowInSectionForDataController(section: section)
+    return viewModel!.numberOfRowInSectionForDataController(section: section)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -97,31 +129,45 @@ extension MeasurementsViewController: UITableViewDataSource, UITableViewDelegate
     if indexPath.section == 0 {
       switch indexPath.row {
         case 0:
-          return viewModel.headerCell(tableView: tableView, indexPath: indexPath)
+          let cell = viewModel!.headerCell(tableView: tableView, indexPath: indexPath)
+          cell.calendarButton.addTarget(self, action: #selector(selectTimeFrame), for: .touchUpInside)
+          cell.leftButton.addTarget(self, action: #selector(previousWeekAction), for: .touchUpInside)
+          cell.rightButton.addTarget(self, action: #selector(nextWeekAction), for: .touchUpInside)
+          return cell
         case 1:
-          return viewModel.chartCell(tableView: tableView, indexPath: indexPath)
+          return viewModel!.chartCell(tableView: tableView, indexPath: indexPath)
         case 2:
-          return viewModel.measureTitleCell(tableView: tableView, indexPath: indexPath)
+          return viewModel!.measureTitleCell(tableView: tableView, indexPath: indexPath)
         default:
-          return viewModel.headerCell(tableView: tableView, indexPath: indexPath)
+          return viewModel!.headerCell(tableView: tableView, indexPath: indexPath)
       }
     }
     
     if indexPath.section == 1 {
-    return viewModel.measureTypeCell(tableView: tableView, indexPath: indexPath)
+      return viewModel!.measureTypeCell(tableView: tableView, indexPath: indexPath, canSelectButton: true)
     }
-
-    return viewModel.headerCell(tableView: tableView, indexPath: indexPath)
-
+    
+    return viewModel!.headerCell(tableView: tableView, indexPath: indexPath)
+    
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.section == 1 {
-      viewModel.currentTypeId = indexPath.row
-      viewModel.currentTypeTitle = viewModel.titles[indexPath.row]
-      viewModel.fetchMeasurements()
-      self.tableView.reloadData()
+      viewModel!.currentTypeId = indexPath.row
+      viewModel!.currentTypeTitle = viewModel!.titles[indexPath.row]
+      fetchMeasurements()
     }
-   
+    
   }
 }
+
+
+extension MeasurementsViewController: MeasurementsCalendarDelegate {
+  func selectedDates(dates: [Date]) {
+    self.viewModel!.isHiddenLeftRightButton = true
+    self.viewModel!.selectedDatesRange = dates
+    self.tableView.reloadData()
+    print("Chizas! \(dates)")
+  }
+}
+

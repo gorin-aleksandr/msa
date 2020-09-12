@@ -68,8 +68,7 @@ extension AddMeasurementTypeController: UITableViewDataSource, UITableViewDelega
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = viewModel!.measureTypeCell(tableView: tableView, indexPath: indexPath)
-    cell.selectedIconImageView.isHidden = true
+    let cell = viewModel!.measureTypeCell(tableView: tableView, indexPath: indexPath, canSelectButton: false)
     return cell
   }
   
