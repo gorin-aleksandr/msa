@@ -46,7 +46,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
   var toolTipImageView = UIImageView()
   var subscribeButton = UIButton()
   var subscribeLabel = UILabel()
-
+  
   var presenter: IAPPresenterProtocol!
   
   override func viewDidLoad() {
@@ -86,13 +86,13 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.height.width.equalTo(screenSize.height * (58/iPhoneXHeight))
     }
     
-    titleLabel.text = "Получи доступ к полному функционалу для тренеров"
+    titleLabel.text = "Получи доступ к полному функционалу для спортсмена"
     titleLabel.font = NewFonts.SFProDisplayBold14
     titleLabel.textAlignment = .center
     titleLabel.textColor = .white
     titleLabel.numberOfLines = 0
     titleLabel.snp.makeConstraints { (make) in
-      make.top.equalTo(self.iconImageView.snp.top).offset(screenSize.height * (12/iPhoneXHeight))
+      make.top.equalTo(self.iconImageView.snp.bottom).offset(screenSize.height * (12/iPhoneXHeight))
       make.right.equalTo(self.backgroundImageView.snp.right).offset(screenSize.height * (-64/iPhoneXHeight))
       make.left.equalTo(self.backgroundImageView.snp.left).offset(screenSize.height * (64/iPhoneXHeight))
     }
@@ -117,11 +117,11 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     firstAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     firstAdvantageLabel.numberOfLines = 0
     firstAdvantageLabel.snp.makeConstraints { (make) in
-         make.top.equalTo(self.firstAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
-         make.top.equalTo(self.firstAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
-         make.left.equalTo(self.firstAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
-        make.right.equalTo(self.firstAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
-
+      make.top.equalTo(self.firstAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
+      make.top.equalTo(self.firstAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
+      make.left.equalTo(self.firstAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
+      make.right.equalTo(self.firstAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
+      
     }
     
     secondAdvantageView.backgroundColor = UIColor(red: 0.365, green: 0.62, blue: 0.965, alpha: 0.76)
@@ -144,11 +144,11 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     secondAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     secondAdvantageLabel.numberOfLines = 0
     secondAdvantageLabel.snp.makeConstraints { (make) in
-         make.top.equalTo(self.secondAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
-         make.top.equalTo(self.secondAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
-         make.left.equalTo(self.secondAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
-         make.right.equalTo(self.fourthAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
-
+      make.top.equalTo(self.secondAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
+      make.top.equalTo(self.secondAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
+      make.left.equalTo(self.secondAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
+      make.right.equalTo(self.fourthAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
+      
     }
     
     thirdAdvantageView.backgroundColor = UIColor(red: 0.365, green: 0.62, blue: 0.965, alpha: 0.76)
@@ -171,10 +171,10 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     thirdAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     thirdAdvantageLabel.numberOfLines = 0
     thirdAdvantageLabel.snp.makeConstraints { (make) in
-         make.top.equalTo(self.thirdAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
-         make.top.equalTo(self.thirdAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
-         make.left.equalTo(self.thirdAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
-        make.right.equalTo(self.thirdAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
+      make.top.equalTo(self.thirdAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
+      make.top.equalTo(self.thirdAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
+      make.left.equalTo(self.thirdAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
+      make.right.equalTo(self.thirdAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
     }
     
     fourthAdvantageView.backgroundColor = UIColor(red: 0.365, green: 0.62, blue: 0.965, alpha: 0.76)
@@ -197,67 +197,82 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     fourthAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     fourthAdvantageLabel.numberOfLines = 0
     fourthAdvantageLabel.snp.makeConstraints { (make) in
-         make.top.equalTo(self.fourthAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
-         make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
-         make.left.equalTo(self.fourthAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
-        make.right.equalTo(self.fourthAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
+      make.top.equalTo(self.fourthAdvantageView.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
+      make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
+      make.left.equalTo(self.fourthAdvantageImageView.snp.right).offset(screenSize.height * (12/iPhoneXHeight))
+      make.right.equalTo(self.fourthAdvantageView.snp.right).offset(screenSize.height * (-13/iPhoneXHeight))
     }
     
- 
+    
     self.view.addSubview(twelveMonthSubscriptionButton)
-    twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthNormal"), for: .normal)
-    twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthSelected"), for: .selected)
+    if AuthModule.currUser.userType == .trainer {
+      twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthTrainer"), for: .normal)
+      twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthTrainerSelected"), for: .selected)
+    } else {
+      twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthSportsman"), for: .normal)
+      twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthSportsmanSelected"), for: .selected)
+    }
     twelveMonthSubscriptionButton.addTarget(self, action: #selector(twelveMonthSelected), for: .touchUpInside)
     twelveMonthSubscriptionButton.snp.makeConstraints { (make) in
-         make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (76/iPhoneXHeight))
-         make.centerX.equalTo(self.view.snp.centerX)
-         make.height.equalTo(screenSize.height * (140/iPhoneXHeight))
-         make.width.equalTo(screenSize.height * (115/iPhoneXHeight))
+      make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (76/iPhoneXHeight))
+      make.centerX.equalTo(self.view.snp.centerX)
+      make.height.equalTo(screenSize.height * (140/iPhoneXHeight))
+      make.width.equalTo(screenSize.height * (115/iPhoneXHeight))
     }
     
     self.view.addSubview(oneMonthSubscriptionButton)
-     oneMonthSubscriptionButton.setImage(UIImage(named:"oneMonthNormal"), for: .normal)
-     oneMonthSubscriptionButton.setImage(UIImage(named:"oneMonthSelected"), for: .selected)
-     oneMonthSubscriptionButton.addTarget(self, action: #selector(oneMonthSelected), for: .touchUpInside)
-     oneMonthSubscriptionButton.snp.makeConstraints { (make) in
-          make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (88/iPhoneXHeight))
-          make.right.equalTo(self.twelveMonthSubscriptionButton.snp.left).offset(screenSize.height * (-10/iPhoneXHeight))
-          make.height.equalTo(screenSize.height * (117/iPhoneXHeight))
-          make.width.equalTo(screenSize.height * (96/iPhoneXHeight))
-     }
-     
-    
-    self.view.addSubview(fullSubscriptionButton)
-    fullSubscriptionButton.setImage(UIImage(named:"fullSubscriptionNormal"), for: .normal)
-    fullSubscriptionButton.setImage(UIImage(named:"fullSubscriptionMonthSelected"), for: .selected)
-    fullSubscriptionButton.addTarget(self, action: #selector(fullSubscriptionSelected), for: .touchUpInside)
-    fullSubscriptionButton.snp.makeConstraints { (make) in
-         make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (88/iPhoneXHeight))
-         make.left.equalTo(self.twelveMonthSubscriptionButton.snp.right).offset(screenSize.height * (10/iPhoneXHeight))
-         make.height.equalTo(screenSize.height * (117/iPhoneXHeight))
-         make.width.equalTo(screenSize.height * (96/iPhoneXHeight))
+    if AuthModule.currUser.userType == .trainer {
+      oneMonthSubscriptionButton.setImage(UIImage(named:"oneMonthTrainer"), for: .normal)
+      oneMonthSubscriptionButton.setImage(UIImage(named:"oneMonthTrainerSelected"), for: .selected)
+    } else {
+      oneMonthSubscriptionButton.setImage(UIImage(named:"oneMonthSportsman"), for: .normal)
+      oneMonthSubscriptionButton.setImage(UIImage(named:"oneMonthSportsmanSelected"), for: .selected)
+    }
+    oneMonthSubscriptionButton.addTarget(self, action: #selector(oneMonthSelected), for: .touchUpInside)
+    oneMonthSubscriptionButton.snp.makeConstraints { (make) in
+      make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (88/iPhoneXHeight))
+      make.right.equalTo(self.twelveMonthSubscriptionButton.snp.left).offset(screenSize.height * (-10/iPhoneXHeight))
+      make.height.equalTo(screenSize.height * (117/iPhoneXHeight))
+      make.width.equalTo(screenSize.height * (96/iPhoneXHeight))
     }
     
-       self.view.addSubview(toolTipImageView)
-       toolTipImageView.image = UIImage(named:"Tooltip")
-       toolTipImageView.contentMode = .scaleAspectFill
-       toolTipImageView.snp.makeConstraints { (make) in
-            make.bottom.equalTo(self.twelveMonthSubscriptionButton.snp.top)
-            make.centerX.equalTo(self.twelveMonthSubscriptionButton.snp.centerX)
-            make.height.equalTo(screenSize.height * (51/iPhoneXHeight))
-            make.width.equalTo(screenSize.height * (241/iPhoneXHeight))
-       }
+    
+    self.view.addSubview(fullSubscriptionButton)
+    if AuthModule.currUser.userType == .trainer {
+      fullSubscriptionButton.setImage(UIImage(named:"fullAcessTrainer"), for: .normal)
+      fullSubscriptionButton.setImage(UIImage(named:"fullAcessTrainerSelected"), for: .selected)
+    } else {
+      fullSubscriptionButton.setImage(UIImage(named:"fullAcessSportsman"), for: .normal)
+      fullSubscriptionButton.setImage(UIImage(named:"fullAcessSportsmanSelected"), for: .selected)
+    }
+    fullSubscriptionButton.addTarget(self, action: #selector(fullSubscriptionSelected), for: .touchUpInside)
+    fullSubscriptionButton.snp.makeConstraints { (make) in
+      make.top.equalTo(self.fourthAdvantageView.snp.bottom).offset(screenSize.height * (88/iPhoneXHeight))
+      make.left.equalTo(self.twelveMonthSubscriptionButton.snp.right).offset(screenSize.height * (10/iPhoneXHeight))
+      make.height.equalTo(screenSize.height * (117/iPhoneXHeight))
+      make.width.equalTo(screenSize.height * (96/iPhoneXHeight))
+    }
+    
+    self.view.addSubview(toolTipImageView)
+    toolTipImageView.image = UIImage(named:"Tooltip")
+    toolTipImageView.contentMode = .scaleAspectFill
+    toolTipImageView.snp.makeConstraints { (make) in
+      make.bottom.equalTo(self.twelveMonthSubscriptionButton.snp.top)
+      make.centerX.equalTo(self.twelveMonthSubscriptionButton.snp.centerX)
+      make.height.equalTo(screenSize.height * (51/iPhoneXHeight))
+      make.width.equalTo(screenSize.height * (241/iPhoneXHeight))
+    }
     
     self.view.addSubview(subscribeButton)
     subscribeButton.setBackgroundColor(color: UIColor(red: 0.341, green: 0.6, blue: 0.361, alpha: 1), forState: .normal)
     subscribeButton.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
     subscribeButton.maskToBounds = true
     subscribeButton.snp.makeConstraints { (make) in
-          make.top.equalTo(self.fullSubscriptionButton.snp.bottom).offset(screenSize.height * (35/iPhoneXHeight))
-          make.centerX.equalTo(self.twelveMonthSubscriptionButton.snp.centerX)
-          make.height.equalTo(screenSize.height * (66/iPhoneXHeight))
-          make.width.equalTo(screenSize.width * (335/iPhoneXWidth))
-     }
+      make.top.equalTo(self.fullSubscriptionButton.snp.bottom).offset(screenSize.height * (35/iPhoneXHeight))
+      make.centerX.equalTo(self.twelveMonthSubscriptionButton.snp.centerX)
+      make.height.equalTo(screenSize.height * (66/iPhoneXHeight))
+      make.width.equalTo(screenSize.width * (335/iPhoneXWidth))
+    }
     
     subscribeButton.addSubview(subscribeLabel)
     subscribeLabel.text = "Начать пробный период на 3 дня затем 5.99$ в месяц"
@@ -266,24 +281,55 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     subscribeLabel.textAlignment = .center
     subscribeLabel.textColor = .white
     subscribeLabel.snp.makeConstraints { (make) in
-           make.top.equalTo(self.subscribeButton.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
-           make.bottom.equalTo(self.subscribeButton.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
-           make.left.equalTo(self.subscribeButton.snp.left).offset(screenSize.height * (10/iPhoneXHeight))
-           make.right.equalTo(self.subscribeButton.snp.right).offset(screenSize.height * (-10/iPhoneXHeight))
+      make.top.equalTo(self.subscribeButton.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
+      make.bottom.equalTo(self.subscribeButton.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
+      make.left.equalTo(self.subscribeButton.snp.left).offset(screenSize.height * (10/iPhoneXHeight))
+      make.right.equalTo(self.subscribeButton.snp.right).offset(screenSize.height * (-10/iPhoneXHeight))
     }
     
-    var rightDirectionImageView = UIImageView()
+    let rightDirectionImageView = UIImageView()
     rightDirectionImageView.image = UIImage(named:"doubleChevron")
     subscribeButton.addSubview(rightDirectionImageView)
     rightDirectionImageView.snp.makeConstraints { (make) in
       make.centerY.equalTo(self.subscribeButton.snp.centerY)
       make.right.equalTo(self.subscribeButton.snp.right).offset(screenSize.height * (-6/iPhoneXHeight))
       make.width.equalTo(screenSize.width * (36/iPhoneXWidth))
-      make.height.equalTo(screenSize.width * (28/iPhoneXHeight))
+      make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
     }
     
+    let freeAccessLabel = UILabel()
+    self.view.addSubview(freeAccessLabel)
     
+    freeAccessLabel.text = "Попробуйте 3 дня бесплатно*"
+    freeAccessLabel.font = NewFonts.SFProDisplayRegular10
+    freeAccessLabel.numberOfLines = 0
+    freeAccessLabel.textAlignment = .center
+    freeAccessLabel.textColor = UIColor(red: 0.592, green: 0.592, blue: 0.592, alpha: 1)
+    freeAccessLabel.snp.makeConstraints { (make) in
+      make.top.equalTo(self.subscribeButton.snp.bottom).offset(screenSize.height * (8/iPhoneXHeight))
+      make.centerX.equalTo(self.view.snp.centerX)
+    }
     
+    let detailAboutSubscription = UIButton()
+       self.view.addSubview(detailAboutSubscription)
+       detailAboutSubscription.setTitle("Детальнее про подписку    ", for: .normal)
+       detailAboutSubscription.titleLabel?.font = NewFonts.SFProDisplayRegular13
+       detailAboutSubscription.setTitleColor(UIColor(red: 0.592, green: 0.592, blue: 0.592, alpha: 1), for: .normal)
+       detailAboutSubscription.addTarget(self, action: #selector(showDetailedSubscriptionInfo), for: .touchUpInside)
+       detailAboutSubscription.snp.makeConstraints { (make) in
+         make.top.equalTo(freeAccessLabel.snp.bottom).offset(screenSize.height * (40/iPhoneXHeight))
+         make.centerX.equalTo(self.view.snp.centerX)
+       }
+    
+    let detailRightDirectionImageView = UIImageView()
+      detailAboutSubscription.addSubview(detailRightDirectionImageView)
+       detailRightDirectionImageView.image = UIImage(named:"Vector-1")
+       detailRightDirectionImageView.snp.makeConstraints { (make) in
+         make.centerY.equalTo(detailAboutSubscription.snp.centerY)
+         make.right.equalTo(detailAboutSubscription.snp.right)
+//         make.width.equalTo(screenSize.width * (8/iPhoneXWidth))
+//         make.height.equalTo(screenSize.height * (13/iPhoneXHeight))
+       }
   }
   
   private func configureTableView() {
@@ -329,6 +375,13 @@ class IAPViewController: UIViewController, IAPViewProtocol {
   
   @objc func fullSubscriptionSelected() {
     fullSubscriptionButton.isSelected = !fullSubscriptionButton.isSelected
+  }
+  
+  @objc func showDetailedSubscriptionInfo() {
+    let alert = UIAlertController(title: "Информация о подписке", message: "В течении пробного трёх дневного периода плата не снимается. Отменить подписку можно в любое время .  Оплата будет снята с вашей учетной записи iTunes по истечению пробного периода. Подписка продлевается автоматически, если автоматическое продление не отключено по крайней мере за 24 часа до окончания текущего периода.  С вашей учетной записи будет взиматься плата за продление в течение 24 часов до окончания текущего периода из расчета 5,99$ долларов в месяц или 29,99$ в год.  Вы можете управлять своей  подпиской, посетив настройки учетной записи iTunes после покупки.  Любая неиспользованная часть бесплатного пробного периода, если таковая предлагается, будет аннулирована при покупке пожизненной подписки.", preferredStyle: .actionSheet)
+      alert.addAction(UIAlertAction.init(title: "Понятно", style: .cancel, handler: { _ in
+      }))
+      self.present(alert, animated: true, completion: nil)
   }
   
   @objc func goBack() {

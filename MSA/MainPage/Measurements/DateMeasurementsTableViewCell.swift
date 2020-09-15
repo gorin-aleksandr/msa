@@ -50,7 +50,7 @@ class DateMeasurementsTableViewCell: UITableViewCell {
     }
     
      leftButton.snp.makeConstraints { (make) in
-       make.right.equalTo(rightButton.snp.right).offset(screenSize.height * (-30/iPhoneXHeight))
+       make.right.equalTo(rightButton.snp.right).offset(screenSize.height * (-60/iPhoneXHeight))
          make.centerY.equalTo(self.contentView.snp.centerY)
          make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
          make.width.equalTo(screenSize.height * (28/iPhoneXHeight))

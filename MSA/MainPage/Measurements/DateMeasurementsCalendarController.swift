@@ -31,7 +31,7 @@ class DateMeasurementsCalendarController: UIViewController {
   var endRangeDate: Date?
   var selectedDates: [Date] = []
   
-  @IBAction func backAction(_ sender: Any) {
+  @objc func backAction(_ sender: Any) {
     back()
   }
   
@@ -55,10 +55,11 @@ class DateMeasurementsCalendarController: UIViewController {
   
   @objc
   func getDate(notification: NSNotification) {
-    
-
     if let date = notification.userInfo?["date"] as? Date {
       print(date)
+      if date > Date() {
+         return
+      }
       if startRangeDate == nil {
         startRangeDate = date
       } else  if endRangeDate == nil {
@@ -70,7 +71,6 @@ class DateMeasurementsCalendarController: UIViewController {
         startRangeDate = date
         endRangeDate = nil
         selectedDates = []
-        
       }
       
       if startRangeDate != nil && endRangeDate == nil {
@@ -103,10 +103,15 @@ class DateMeasurementsCalendarController: UIViewController {
                  NSAttributedString.Key.font: NewFonts.SFProDisplayBold17]
     self.navigationController?.navigationBar.titleTextAttributes = attrs
     
-    let backButton = UIBarButtonItem(image: UIImage(named: "ok_blue"), style: .plain, target: self, action: #selector(self.selectDatesAction))
-    self.navigationItem.rightBarButtonItem = backButton
+    let rightBarButton = UIBarButtonItem(image: UIImage(named: "ok_blue"), style: .plain, target: self, action: #selector(self.selectDatesAction))
+    self.navigationItem.rightBarButtonItem = rightBarButton
     self.navigationController?.navigationBar.tintColor = .newBlack
 
+    let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction(_:)))
+    self.navigationItem.leftBarButtonItem = backButton
+    self.navigationController?.navigationBar.tintColor = .newBlack
+
+    
 //    var saveButton = UIButton(type: .custom) as UIButton
 //    self.view.addSubview(saveButton)
 //    saveButton.titleLabel?.font = NewFonts.SFProDisplayBold16
@@ -149,7 +154,7 @@ class DateMeasurementsCalendarController: UIViewController {
   
   @objc
   func back() {
-    navigationController?.popViewController(animated: true)
+    self.dismiss(animated: true, completion: nil)
   }
   
   private func setupCalendarView() {

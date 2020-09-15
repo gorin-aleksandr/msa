@@ -40,8 +40,6 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
       make.left.equalTo(self.contentView.snp.left).offset(screenSize.height * (16/iPhoneXHeight))
     }
     
-   
-    
   }
   
   func setDataCount(days: [Date], measurements: [Measurement], unit: String) {
@@ -90,9 +88,9 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     
     let set1 = LineChartDataSet(entries: values, label: unit)
     set1.drawIconsEnabled = false
-    
+    set1.highlightEnabled = false
     set1.lineDashLengths = nil//[5, 2.5]
-    set1.highlightLineDashLengths = [5, 2.5]
+    set1.highlightLineDashLengths = nil//[5, 2.5]
     set1.setColor(UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00))
     set1.setCircleColor(UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00))
     set1.lineWidth = 2
@@ -126,10 +124,10 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     
     let set2 = LineChartDataSet(entries: values2, label: unit)
        set2.drawIconsEnabled = false
-       
+       set1.highlightEnabled = false
        set2.lineDashLengths = nil//[5, 2.5]
-       set2.highlightLineDashLengths = [5, 2.5]
-    set2.setColor(.clear)
+       set2.highlightLineDashLengths = nil//[5, 2.5]
+       set2.setColor(.clear)
        set2.setCircleColor(UIColor(red: 0.34, green: 0.45, blue: 0.60, alpha: 1.00))
        set2.lineWidth = 2
        set2.circleRadius = 7
@@ -147,6 +145,7 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
 
     let ss = [set1,set2]
     let data = LineChartData(dataSets: ss)
+    data.highlightEnabled = false
     chartView.data = data
 
     

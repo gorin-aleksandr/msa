@@ -64,7 +64,7 @@ class NameSurnameViewController: BasicViewController {
     cityTF.maxNumberOfResults = 5
     cityTF.direction = .up
     cityTF.maxResultsListHeight = 150
-    cityTF.theme.font = UIFont(name: "Rubik-Regular", size: 14)!
+    cityTF.theme.font = NewFonts.SFProDisplayRegular14
     cityTF.theme.fontColor = .darkCyanGreen
     cityTF.theme.bgColor = .white
     cityTF.theme.separatorColor = .darkCyanGreen45

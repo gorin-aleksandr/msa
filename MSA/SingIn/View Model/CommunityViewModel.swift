@@ -15,6 +15,7 @@ class CommunityViewModel {
   var currentUser: UserVO? {
     return AuthModule.currUser
   }
+  var selectedUser: UserVO?
   
   init() {}
   
@@ -27,23 +28,21 @@ class CommunityViewModel {
     }
   }
   
-  func fetchMySportsmans(success: @escaping ()->(),failure: @escaping (String)->()) {
+  func fetchSportsmans(success: @escaping ()->(),failure: @escaping (String)->()) {
     dataLoader.loadAllUsers { [weak self] (users, error) in
       if let error = error {
         Errors.handleError(error, completion: { [weak self] message in
           if let _ = error as? MSAError {
-            //self?.view.setErrorViewHidden(false)
             failure(message)
           } else {
             guard let `self` = self else { return }
-            //  self.view.showGeneralAlert()
             failure(message)
           }
-          //self?.view.stopLoadingViewState()
-          
         })
       } else {
-        self!.users = users.filter { $0.trainerId == self!.currentUser!.id }
+        let trainerId = self!.selectedUser?.id != nil ? self!.selectedUser!.id : self!.currentUser!.id 
+        self!.users = users.filter { $0.trainerId == trainerId }
+        self!.users = self!.users.sorted { $0.lastName < $1.lastName }
         self!.sortedUsers = self!.users
         success()
       }

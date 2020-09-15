@@ -26,9 +26,34 @@ class EmailPasswordViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    title = "Регистрация"
     setupUI()
-    
     presenter.attachView(view: self)
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    navigationController?.setNavigationBarHidden(false, animated: false)
+    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    navigationController?.navigationBar.shadowImage = UIImage()
+    navigationController?.navigationBar.isTranslucent = true
+    let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
+    self.navigationItem.leftBarButtonItem = backButton
+    self.navigationController?.navigationBar.tintColor = .white
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    navigationController?.setNavigationBarHidden(true, animated: false)
+    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+    navigationController?.navigationBar.shadowImage = nil
+    navigationItem.leftBarButtonItem?.tintColor = .newBlack
+    self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+  }
+  
+  @objc func backAction() {
+    self.navigationController?.popViewController(animated: true)
   }
   
   func setupUI() {
@@ -200,9 +225,8 @@ class EmailPasswordViewController: UIViewController {
           
           self.signInpresenter.registerUser(email: email, password: AuthModule.pass, success: {
             SVProgressHUD.dismiss()
-            let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-                  self.navigationController?.pushViewController(nextViewController, animated: true)
-
+            let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
+            self.navigationController?.pushViewController(nextViewController, animated: true)
           }) { (error) in
             SVProgressHUD.dismiss()
             AlertDialog.showAlert("Ошибка", message: error, viewController: self)

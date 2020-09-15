@@ -17,4 +17,5 @@ class UserInfoTableHeaderView: UITableViewHeaderFooterView {
   override func awakeFromNib() {
     titleLabel.font = NewFonts.SFProDisplayBold16
   }
+
 }

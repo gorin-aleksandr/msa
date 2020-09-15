@@ -84,6 +84,10 @@ class OnboardingNameViewController: UIViewController {
     startButton.addTarget(self, action: #selector(startButtonAction(_:)), for: .touchUpInside)
   }
   
+  @objc func backAction() {
+    self.navigationController?.popViewController(animated: true)
+  }
+  
   func setupConstraints() {
     logoImageView.snp.makeConstraints { (make) in
       make.top.equalTo(screenSize.height * (176/iPhoneXHeight))
@@ -127,11 +131,7 @@ class OnboardingNameViewController: UIViewController {
     }
     
   }
-  
-  @objc func backAction() {
-    self.navigationController?.popViewController(animated: true)
-  }
-  
+    
   @objc func startButtonAction(_ sender: UIButton) {
     if sender.isSelected {
       if viewModel!.signInDataControllerType == .name {

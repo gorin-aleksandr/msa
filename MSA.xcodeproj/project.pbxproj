@@ -71,6 +71,8 @@
 		2435E773244B282A003B6361 /* TrainerSkillsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435E772244B282A003B6361 /* TrainerSkillsHeaderView.swift */; };
 		244A78EC243359A700D92828 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244A78EB243359A700D92828 /* ChatListCell.swift */; };
 		244B72F5242F5A54000A6F4A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244B72F4242F5A53000A6F4A /* ChatViewController.swift */; };
+		24551476250FA3F3003B8339 /* SpecializationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24551475250FA3F3003B8339 /* SpecializationCell.swift */; };
+		245F3F42250FA2FF00BEE6FD /* SpecializationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245F3F41250FA2FF00BEE6FD /* SpecializationsViewController.swift */; };
 		24690BE0244FB0960090F5BB /* AchievmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24690BDF244FB0960090F5BB /* AchievmentCell.xib */; };
 		24690BE2244FB0C00090F5BB /* AchievmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24690BE1244FB0C00090F5BB /* AchievmentCell.swift */; };
 		24690BE4244FDC830090F5BB /* EducationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24690BE3244FDC830090F5BB /* EducationCell.xib */; };
@@ -376,6 +378,8 @@
 		24489324243791D50076C01D /* MSARelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MSARelease.entitlements; sourceTree = "<group>"; };
 		244A78EB243359A700D92828 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		244B72F4242F5A53000A6F4A /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		24551475250FA3F3003B8339 /* SpecializationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecializationCell.swift; sourceTree = "<group>"; };
+		245F3F41250FA2FF00BEE6FD /* SpecializationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecializationsViewController.swift; path = "../../../../STO App/STO App/Controllers/SpecializationsViewController.swift"; sourceTree = "<group>"; };
 		24690BDF244FB0960090F5BB /* AchievmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AchievmentCell.xib; sourceTree = "<group>"; };
 		24690BE1244FB0C00090F5BB /* AchievmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentCell.swift; sourceTree = "<group>"; };
 		24690BE3244FDC830090F5BB /* EducationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EducationCell.xib; sourceTree = "<group>"; };
@@ -922,6 +926,8 @@
 		240E628124FD3BF5006A6808 /* New profile */ = {
 			isa = PBXGroup;
 			children = (
+				24551475250FA3F3003B8339 /* SpecializationCell.swift */,
+				245F3F41250FA2FF00BEE6FD /* SpecializationsViewController.swift */,
 				24CA83FD24F6788700DD378A /* ProfileSettingsViewController.swift */,
 				24CA840324F6835800DD378A /* UserSettingsViewController.swift */,
 				24CA840524F68E8100DD378A /* NewProfileViewController.swift */,
@@ -1866,6 +1872,7 @@
 				2487B58924DC90DA000617F5 /* MailLoginViewController.swift in Sources */,
 				35BCB9282210BEF50016C58F /* InAppPurchasesService.swift in Sources */,
 				299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */,
+				245F3F42250FA2FF00BEE6FD /* SpecializationsViewController.swift in Sources */,
 				24AEF47824FFC96900F2BC92 /* UserInfoTableHeaderView.swift in Sources */,
 				24690BE6244FDCE20090F5BB /* EducationCell.swift in Sources */,
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
@@ -2022,6 +2029,7 @@
 				354CE70A219CBE87005F5DDA /* HeartBeatDetailsPresenter.swift in Sources */,
 				29C7154221A02EC0004CE089 /* InternetRechability.swift in Sources */,
 				240677952449DF91004DAE05 /* LikeButtonCell.swift in Sources */,
+				24551476250FA3F3003B8339 /* SpecializationCell.swift in Sources */,
 				2406776D2449DF91004DAE05 /* UITextView+Extensions.swift in Sources */,
 				29F9F2492147B5B8006EDC6A /* VAWeekView.swift in Sources */,
 				2406776A2449DF91004DAE05 /* UIView+Extensions.swift in Sources */,
@@ -2172,7 +2180,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -2196,7 +2204,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;

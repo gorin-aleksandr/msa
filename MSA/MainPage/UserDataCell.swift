@@ -28,6 +28,7 @@ class UserDataCell: UITableViewCell {
     
     func setupUI() {
       valueTextField.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00)
+      valueTextField.cornerRadius = 16
       //mainView.backgroundColor = UIColor.backgroundLightGray()
       //mainView.roundCorners(corners: .allCorners, radius: 16)
     }

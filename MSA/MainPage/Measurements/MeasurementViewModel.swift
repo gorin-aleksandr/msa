@@ -61,12 +61,12 @@ class MeasurementViewModel {
   }
   func setupCurrentWeekTimeFrame(previous: Bool, next: Bool) {
     if previous {
-      startDate = Calendar.current.date(byAdding: .day, value: 14, to: startDate!)!
-      endDate = Date()
+      startDate = Calendar.current.date(byAdding: .day, value: -14, to: startDate!)!
+      endDate = Calendar.current.date(byAdding: .day, value: -14, to: endDate!)!
       currentWeek = Date.dates(from: startDate!, to: endDate!)
     } else if next {
-      startDate = Calendar.current.date(byAdding: .day, value: 14, to: endDate!)!
-      endDate = Date()
+      startDate = Calendar.current.date(byAdding: .day, value: 14, to: startDate!)!
+      endDate = Calendar.current.date(byAdding: .day, value: 14, to: endDate!)!
       currentWeek = Date.dates(from: startDate!, to: endDate!)
 
     } else {
@@ -179,8 +179,14 @@ class MeasurementViewModel {
   func headerCell(tableView: UITableView, indexPath: IndexPath) -> DateMeasurementsTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "DateMeasurementsTableViewCell") as! DateMeasurementsTableViewCell
     cell.titleLabel.text = formatedDate()
+
     cell.leftButton.isHidden = isHiddenLeftRightButton
     cell.rightButton.isHidden = isHiddenLeftRightButton
+//    if !isHiddenLeftRightButton {
+//      cell.rightButton.isHidden =  NSCalendar.current.isDate(endDate!, inSameDayAs: Date()) ? true : false
+//    }
+
+
     cell.selectionStyle = .none
     return cell
   }

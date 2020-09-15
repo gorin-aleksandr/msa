@@ -142,7 +142,7 @@ class ConfigureTranningExersViewController: UIViewController {
         let button = UIButton(type: .custom)
         button.setImage(#imageLiteral(resourceName: "back_"), for: .normal)
         button.setTitle(" Отмена", for: .normal)
-        let font = UIFont(name: "Rubik-Regular", size: 17)
+        let font = NewFonts.SFProDisplayRegular17
         button.titleLabel?.font = font
         button.setTitleColor(darkCyanGreen, for: .normal)
         button.sizeToFit()

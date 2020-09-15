@@ -25,13 +25,8 @@ class MyAuthorizationAppleIdButton: UIButton {
   
   override public func draw(_ rect: CGRect) {
       super.draw(rect)
-
-      // Create ASAuthorizationAppleIDButton
-    if #available(iOS 13.0, *) {
-      // Show authorizationButton
       
       addSubview(authorizationButton)
-
       // Use auto layout to make authorizationButton follow the MyAuthorizationAppleIDButton's dimension
       authorizationButton.translatesAutoresizingMaskIntoConstraints = false
       NSLayoutConstraint.activate([
@@ -40,11 +35,5 @@ class MyAuthorizationAppleIdButton: UIButton {
           authorizationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0),
           authorizationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0),
       ])
-   
-    } else {
-      // Fallback on earlier versions
     }
-
-
-  }
 }

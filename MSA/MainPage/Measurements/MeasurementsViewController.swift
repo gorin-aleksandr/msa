@@ -91,8 +91,10 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   }
   
   @objc func nextWeekAction(_ sender: UIButton) {
-    viewModel!.setupCurrentWeekTimeFrame(previous: false, next: true)
-    self.tableView.reloadData()
+    if !NSCalendar.current.isDate(viewModel!.endDate!, inSameDayAs: Date()) {
+        viewModel!.setupCurrentWeekTimeFrame(previous: false, next: true)
+          self.tableView.reloadData()
+    }
   }
   
   func fetchMeasurements() {

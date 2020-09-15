@@ -8,8 +8,9 @@
 
 import UIKit
 import Firebase
+import SVProgressHUD
 
-class ProfileSettingsViewController: UIViewController {
+class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var nameTextField: UITextField!
@@ -17,7 +18,8 @@ class ProfileSettingsViewController: UIViewController {
   @IBOutlet weak var editButton: UIButton!
   @IBOutlet weak var photoImageView: UIImageView!
   @IBOutlet weak var addPhotoButto: UIButton!
-  
+  var myPicker = UIImagePickerController()
+
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   
   var viewModel  = ProfileViewModel()
@@ -27,26 +29,8 @@ class ProfileSettingsViewController: UIViewController {
     setupUI()
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(true)
-    //self.tabBarController?.tabBar.isHidden = true
-    navigationController?.setNavigationBarHidden(false, animated: false)
-    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-    navigationController?.navigationBar.shadowImage = UIImage()
-    navigationController?.navigationBar.isTranslucent = true
-  }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(true)
-    //self.tabBarController?.tabBar.isHidden = false
-    navigationController?.setNavigationBarHidden(true, animated: false)
-    navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    navigationController?.navigationBar.shadowImage = nil
-    navigationItem.leftBarButtonItem?.tintColor = .newBlack
-  }
-  
-  
   func setupUI() {
+    myPicker.delegate = self
     setupConstraint()
     let backButton = UIBarButtonItem(image: UIImage(named: "arrow-left 1"), style: .plain, target: self, action: #selector(self.backAction))
     self.navigationItem.leftBarButtonItem = backButton
@@ -59,6 +43,7 @@ class ProfileSettingsViewController: UIViewController {
     tableView.tableFooterView = UIView()
     nameTextField.delegate = self
     nameTextField.font = NewFonts.SFProDisplayBold20
+    editButton.isHidden = true
     editButton.addTarget(self, action: #selector(editName), for: .touchUpInside)
     addPhotoButto.addTarget(self, action: #selector(addPhotoAction), for: .touchUpInside)
     nameTextField.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
@@ -105,9 +90,7 @@ class ProfileSettingsViewController: UIViewController {
     self.navigationController?.popViewController(animated: true)
   }
   
-  func showMyCars() {
-    
-  }
+  
   
   func showEditProfile() {
     
@@ -117,8 +100,52 @@ class ProfileSettingsViewController: UIViewController {
     
   }
   
+  func openGallary() {
+         myPicker.allowsEditing = true
+       myPicker.sourceType = UIImagePickerController.SourceType.photoLibrary
+         present(myPicker, animated: true, completion: nil)
+     }
+     
+     func openCamera() {
+         myPicker.allowsEditing = true
+       myPicker.sourceType = UIImagePickerController.SourceType.camera
+         present(myPicker, animated: true, completion: nil)
+     }
+  
+  
   @objc func addPhotoAction(sender: UIButton!) {
+    let alert = UIAlertController(title: "Загрузить из:", message: nil, preferredStyle: .actionSheet)
+     alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
+         self.openCamera()
+     }))
+     alert.addAction(UIAlertAction(title: "Галереи", style: .default, handler: { _ in
+         self.openGallary()
+     }))
+     alert.addAction(UIAlertAction.init(title: "Отменить", style: .cancel, handler: { _ in
+         //self.finishLoading()
+     }))
+     self.present(alert, animated: true, completion: nil)
+     //startLoading()
+  }
+  
+   func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        //finishLoading()
+        dismiss(animated: true, completion: nil)
+    }
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+      guard let chosenImage = info[.editedImage] as? UIImage else {
+        return
+      }
+      dismiss(animated: true, completion: nil)
     
+      SVProgressHUD.show()
+      viewModel.updateUserAvatar(chosenImage, completion: { (image) in
+        self.photoImageView.image = chosenImage
+        SVProgressHUD.dismiss()
+      }) { (error) in
+        SVProgressHUD.dismiss()
+      }
   }
   
   func uploadPhoto() {
@@ -131,11 +158,11 @@ class ProfileSettingsViewController: UIViewController {
         return UIImage(named: "user 3")!
       case 1:
         return UIImage(named: "user 32")!
+//      case 2:
+//        return UIImage(named: "settings (1) 1")!
+//      case 3:
+//        return UIImage(named: "question (1) 1")!
       case 2:
-        return UIImage(named: "settings (1) 1")!
-      case 3:
-        return UIImage(named: "question (1) 1")!
-      case 4:
         return UIImage(named: "logout 1")!
       default:
         return UIImage(named: "maps-and-flags 1")!
@@ -148,11 +175,11 @@ class ProfileSettingsViewController: UIViewController {
         return "Профиль"
       case 1:
         return "Персональный данные"
+//      case 2:
+//        return "Настройки"
+//      case 3:
+//        return "Помощь"
       case 2:
-        return "Настройки"
-      case 3:
-        return "Помощь"
-      case 4:
         return "Выйти"
       default:
         return "Выйти"
@@ -190,7 +217,7 @@ extension ProfileSettingsViewController: UITableViewDataSource, UITableViewDeleg
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 5 //viewModel!.numberOfRowsInSectionForMenuOrder(section)
+    return 3 //viewModel!.numberOfRowsInSectionForMenuOrder(section)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -212,12 +239,11 @@ extension ProfileSettingsViewController: UITableViewDataSource, UITableViewDeleg
       vc.viewModel = viewModel
       self.navigationController?.pushViewController(vc, animated: true)
     } else if indexPath.row == 1 {
-      
       let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "UserSettingsViewController") as! UserSettingsViewController
       vc.viewModel = ProfileViewModel()
       vc.viewModel!.editSettingsControllerType = .userInfo
       self.navigationController?.pushViewController(vc, animated: true)
-    } else if indexPath.row == 4 {
+    } else if indexPath.row == 2 {
       logout()
     }
     
@@ -242,17 +268,9 @@ extension ProfileSettingsViewController: UITextFieldDelegate {
   }
   
   func textFieldDidEndEditing(_ textField: UITextField) {
-    //    SVProgressHUD.show()
-    //    self.viewModel?.updateProfile(success: {
-    //      SVProgressHUD.dismiss()
-    //    }, failedBlock: { (error) in
-    //      self.showInfoAlert(title: "Ошибка", message: error.localizedDescription)
-    //      SVProgressHUD.dismiss()
-    //    })
-    //    print("Chinaa!")
-    //  }
   }
 }
+
 
 
 

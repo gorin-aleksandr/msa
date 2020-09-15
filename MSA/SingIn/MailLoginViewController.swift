@@ -135,9 +135,7 @@ class MailLoginViewController: UIViewController {
     SVProgressHUD.show()
     self.viewModel!.loginUserWithEmail(success: {
       SVProgressHUD.dismiss()
-      let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-      nextViewController.viewModel = ProfileViewModel()
-      //let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "HowToTrainigViewController") as! HowToTrainigViewController
+      let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
       self.navigationController?.pushViewController(nextViewController, animated: true)
     }) { (errorString) in
       SVProgressHUD.dismiss()

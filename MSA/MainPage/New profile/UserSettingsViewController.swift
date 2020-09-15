@@ -17,7 +17,7 @@ class UserSettingsViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Данные о вас"
+        self.title = viewModel?.editSettingsControllerType == .userInfo ? "Данные о вас" : "Внесите данные"
         setupUI()
     }
   
@@ -29,7 +29,16 @@ class UserSettingsViewController: UIViewController {
     self.navigationController?.navigationBar.tintColor = .newBlack
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    navigationController?.setNavigationBarHidden(true, animated: true)
+  }
+  
   func setupUI() {
+    
+    print("ach type = \(viewModel?.achevementType)")
+    print("editSettingsControllerType = \(viewModel?.editSettingsControllerType)")
+
     setupConstraints()
     tableView.dataSource = self
     tableView.delegate = self
@@ -64,8 +73,6 @@ class UserSettingsViewController: UIViewController {
     self.navigationController?.popViewController(animated: true)
   }
   
-
-  
 }
 
 // MARK: - TableViewDataSource
@@ -80,7 +87,7 @@ extension UserSettingsViewController: UITableViewDataSource, UITableViewDelegate
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return viewModel!.numberOfRowInSectionForDataController()
+    return viewModel!.numberOfRowInSectionForDataController(section: section)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -88,7 +95,7 @@ extension UserSettingsViewController: UITableViewDataSource, UITableViewDelegate
     if viewModel!.editSettingsControllerType == .userInfo {
       return viewModel!.editUserCell(indexPath: indexPath, tableView: tableView)
     } else {
-      return viewModel!.editUserCell(indexPath: indexPath, tableView: tableView)
+      return viewModel!.editCurrentAchevementUserCell(indexPath: indexPath, tableView: tableView)
     }
     
   }

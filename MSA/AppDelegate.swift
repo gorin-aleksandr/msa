@@ -32,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let pushManager = PushNotificationManager()
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
+    FirebaseApp.configure()
+
     let config = Realm.Configuration(
       schemaVersion: realmVersion,
       migrationBlock: { migration, oldSchemaVersion in
@@ -42,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     
-    FirebaseApp.configure()
     IQKeyboardManager.shared.enable = true
     MSAppCenter.start("aa023993-9184-4c58-8f34-84dfdb1fb199", withServices:[MSAnalytics.self, MSCrashes.self])
     configureProgressHud()

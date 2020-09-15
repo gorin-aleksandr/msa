@@ -10,14 +10,19 @@ import SVProgressHUD
 
 class HomeViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
-  var images = ["powerlifter","eat","statsIcon","ruller","team"]
-  var titles = ["Тренировки","Питание","Статистика","Замеры","Мои спортсмены"]
-  var descriptions = ["У вас 24 тренировки","Добавьте диету","Ваши результаты","Ваши параметры","У вас 23 спортсмена"]
+  var images = ["powerlifter","ruller","eat","statsIcon","team"]
+  var titles = ["Тренировки","Замеры","Питание","Статистика","Мои спортсмены"]
+  var descriptions = ["У вас 24 тренировки","Ваши параметры","Добавьте диету","Ваши результаты","У вас 23 спортсмена"]
   var viewModel = ProfileViewModel()
-  
+  private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
     if viewModel.selectedUser == nil {
       SVProgressHUD.show()
       self.viewModel.getUser(success: {
@@ -25,16 +30,18 @@ class HomeViewController: UIViewController {
          self.collectionView.reloadData()
        })
     }
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(true)
     if viewModel.selectedUser != nil {
       navigationController?.setNavigationBarHidden(false, animated: false)
+      let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
+        self.navigationItem.leftBarButtonItem = backButton
+        self.navigationController?.navigationBar.tintColor = .newBlack
     } else {
       navigationController?.setNavigationBarHidden(true, animated: false)
     }
- 
+  }
+  
+  @objc func backAction() {
+    self.navigationController?.popViewController(animated: true)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -58,38 +65,44 @@ class HomeViewController: UIViewController {
   }
   
   @objc func presentInputStatus() {
-    let alert = UIAlertController(style: .actionSheet, title: "Укажите цель")
-    let config: TextField.Config = { textField in
-      textField.becomeFirstResponder()
-      textField.textColor = .black
-      if let dream = AuthModule.currUser.purpose, dream != "" {
-        textField.text = dream
-      }
-      textField.placeholder = "Напишите вашу цель"
-      //textField.left(image: image, color: .black)
-      textField.leftViewPadding = 12
-      textField.borderWidth = 1
-      textField.cornerRadius = 8
-      textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
-      textField.backgroundColor = nil
-      textField.keyboardAppearance = .default
-      textField.keyboardType = .default
-      textField.isSecureTextEntry = false
-      textField.returnKeyType = .done
-      textField.action { textField in
-        if let purpose = textField.text, purpose != AuthModule.currUser.purpose  {
-          self.viewModel.setPurpose(purpose: purpose, success: {
-            self.collectionView.reloadData()
-          }) { (error) in
-          }
+    DispatchQueue.main.async {
+          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+          //let navigationController = UINavigationController()
+          //navigationController.setViewControllers([destinationVC], animated: false)
+          self.present(destinationVC, animated: true, completion: nil)
         }
-      }
-    }
-    alert.addOneTextField(configuration: config)
-    let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
-    }
-    alert.addAction(saveAction)
-    alert.show()
+//    let alert = UIAlertController(style: .actionSheet, title: "Укажите цель")
+//    let config: TextField.Config = { textField in
+//      textField.becomeFirstResponder()
+//      textField.textColor = .black
+//      if let dream = AuthModule.currUser.purpose, dream != "" {
+//        textField.text = dream
+//      }
+//      textField.placeholder = "Напишите вашу цель"
+//      //textField.left(image: image, color: .black)
+//      textField.leftViewPadding = 12
+//      textField.borderWidth = 1
+//      textField.cornerRadius = 8
+//      textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
+//      textField.backgroundColor = nil
+//      textField.keyboardAppearance = .default
+//      textField.keyboardType = .default
+//      textField.isSecureTextEntry = false
+//      textField.returnKeyType = .done
+//      textField.action { textField in
+//        if let purpose = textField.text, purpose != AuthModule.currUser.purpose  {
+//          self.viewModel.setPurpose(purpose: purpose, success: {
+//            self.collectionView.reloadData()
+//          }) { (error) in
+//          }
+//        }
+//      }
+//    }
+//    alert.addOneTextField(configuration: config)
+//    let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
+//    }
+//    alert.addAction(saveAction)
+//    alert.show()
   }
   
 }
@@ -102,7 +115,13 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       case 1:
         return 1
       case 2:
-        return 5
+        if AuthModule.currUser.userType == .trainer && viewModel.selectedUser == nil{
+          return 5
+        }
+        if viewModel.selectedUser != nil {
+          return 4
+        }
+        return 4
       default:
         return 6
     }
@@ -147,6 +166,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
       } else {
         if let url = viewModel.selectedUser?.avatar {
+          print(viewModel.selectedUser)
           myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
         } else {
           myCell.logoImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
@@ -192,6 +212,12 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath as IndexPath) as! HomeCollectionViewCell
       myCell.logoImageView.image = UIImage(named: images[indexPath.row])
       myCell.titleLabel.text = titles[indexPath.row]
+      
+      if indexPath.row == 2 || indexPath.row == 3 {
+        myCell.addBluredView()
+      }
+
+      
       if indexPath.row != 4 {
         myCell.descriptionLabel.text = descriptions[indexPath.row]
       } else {
@@ -201,8 +227,8 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
           myCell.descriptionLabel.text = "У вас нет спортсменов"
         }
       }
-      myCell.layer.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00).cgColor
-      myCell.layer.cornerRadius = screenSize.height * (10/iPhoneXHeight)
+      myCell.contentView.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00)
+      myCell.contentView.cornerRadius = screenSize.height * (10/iPhoneXHeight)
       myCell.layer.masksToBounds = false
       return myCell
     }
@@ -212,16 +238,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     if indexPath.section == 0 {
-//      let nextViewController = newProfileStoryboard.instantiateViewController(withIdentifier: "ProfileSettingsViewController") as! ProfileSettingsViewController
-//      nextViewController.viewModel = viewModel
-//      self.navigationController?.pushViewController(nextViewController, animated: true)
-      DispatchQueue.main.async {
-         let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-         //let navigationController = UINavigationController()
-         //navigationController.setViewControllers([destinationVC], animated: false)
-         self.present(destinationVC, animated: true, completion: nil)
+      let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
+      print(viewModel.selectedUser)
+      vc.viewModel = viewModel
+      self.navigationController?.pushViewController(vc, animated: true)
        }
-    }
     
     if indexPath.section == 2 {
       
@@ -238,7 +259,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
 
             }
         }
-        case 3:
+        case 1:
           DispatchQueue.main.async {
          let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "MeasurementsViewController") as! MeasurementsViewController
             nextViewController.viewModel = MeasurementViewModel()
@@ -247,11 +268,20 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             } else {
               nextViewController.viewModel!.selectedUserId = AuthModule.currUser.id!
             }
-        self.navigationController?.pushViewController(nextViewController, animated: true)
+            self.navigationController?.pushViewController(nextViewController, animated: true)
             }
+        case 2:
+            AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
+
+        case 3:
+            AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
+
+
          case 4:
           DispatchQueue.main.async {
           let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "UsersSportsmansViewController") as! UsersSportsmansViewController
+          vc.showSearchBarForMySportsMan = true
+          vc.viewModel = CommunityViewModel()
           self.navigationController?.pushViewController(vc, animated: true)
         }
         default:

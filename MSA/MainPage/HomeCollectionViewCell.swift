@@ -12,12 +12,31 @@ class HomeCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var logoImageView: UIImageView!
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var descriptionLabel: UILabel!
-
+  let hideView = UIView()
+  
   static let identifier = "HomeCollectionViewCell"
   
   override func awakeFromNib() {
     super.awakeFromNib()
     setupUI()
+  }
+  
+  override func prepareForReuse()
+  {
+      super.prepareForReuse()
+      hideView.removeFromSuperview()
+  }
+  
+  func addBluredView() {
+    contentView.addSubview(hideView)
+    hideView.backgroundColor = UIColor(red: 0.00, green: 0.00, blue: 0.00, alpha: 0.10)
+    hideView.cornerRadius = screenSize.height * (10/iPhoneXHeight)
+    hideView.snp.makeConstraints { (make) in
+      make.left.equalTo(contentView.snp.left)
+      make.right.equalTo(contentView.snp.right)
+      make.top.equalTo(contentView.snp.top)
+      make.bottom.equalTo(contentView.snp.bottom)
+     }
   }
   
   func setupUI() {

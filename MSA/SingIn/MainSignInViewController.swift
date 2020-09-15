@@ -34,6 +34,14 @@ class MainSignInViewController: UIViewController {
     super.viewDidLoad()
     setupUI()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+     navigationController?.setNavigationBarHidden(true, animated: false)
+     navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+     navigationController?.navigationBar.shadowImage = nil
+     navigationItem.leftBarButtonItem?.tintColor = .newBlack
+  }
   func setupUI() {
     setupConstraints()
     mailButton.titleLabel?.font = NewFonts.SFProDisplayRegular16
@@ -64,10 +72,9 @@ class MainSignInViewController: UIViewController {
     if #available(iOS 13.0, *) {
       appleButton!.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
       appleButton!.maskToBounds = true
-      appleButton!.addTarget(self, action: #selector(appleButtonAction), for: .touchUpInside)
-    } else {
-      // Fallback on earlier versions
+      appleButton!.authorizationButton.addTarget(self, action: #selector(appleButtonAction), for: .touchDown)
     }
+
     
     haveAccountLabel.font = NewFonts.SFProDisplayRegular16
     haveAccountLabel.textColor = .white
@@ -122,8 +129,8 @@ class MainSignInViewController: UIViewController {
 //      let tap = UITapGestureRecognizer(target: self, action:  #selector(handleAppleSignInSelector))
 //      imgView.addGestureRecognizer(tap)
 //      imgView.isUserInteractionEnabled = true
-//      //self.view.addSubview(imgView)
-//      
+//      self.view.addSubview(imgView)
+//
 //      imgView.snp.makeConstraints { (make) in
 //        make.top.equalTo(self.appleButton!.snp.top)
 //        make.right.equalTo(self.appleButton!.snp.right)
@@ -182,8 +189,7 @@ class MainSignInViewController: UIViewController {
   
   @objc func facebookButtonAction(_ sender: UIButton) {
     viewModel?.loginWithFacebook(success: {
-      let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-      nextViewController.viewModel = ProfileViewModel()
+      let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
       self.navigationController?.pushViewController(nextViewController, animated: true)
     }, failure: { (error) in
       AlertDialog.showAlert("Ошибка", message: error, viewController: self)
@@ -241,19 +247,12 @@ extension MainSignInViewController: ASAuthorizationControllerDelegate, ASAuthori
         print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
         return
       }
-      // Initialize a Firebase credential.
-      
+      // Initialize a Firebase credential.      
       let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce, accessToken: nil)
       viewModel!.loginWithAppleId(credential: credential, success: {
-        //        let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-        //        nextViewController.viewModel = ProfileViewModel()
-        //self.navigationController?.pushViewController(nextViewController, animated: true)
-        
         let storyBoard = UIStoryboard(name: "Profile", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
         self.navigationController?.pushViewController(nextViewController, animated: true)
-        
-        
       }) { (error) in
         AlertDialog.showAlert("Ошибка", message: error, viewController: self)
       }

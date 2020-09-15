@@ -22,7 +22,7 @@ class StartOnboardingViewController: UIViewController {
   @IBOutlet weak var promoPageControl: UIPageControl!
   @IBOutlet weak var backgroundImageView: UIImageView!
   @IBOutlet weak var rightDirectionImageView: UIImageView!
-
+  
   var viewModel = SignInViewModel()
   
   var slides: [PromoView] = []
@@ -75,7 +75,7 @@ class StartOnboardingViewController: UIViewController {
     sportsmanButton.layer.masksToBounds = true
     startButton.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
     startButton.layer.masksToBounds = true
-
+    
     trainerButton.setTitle("Тренер", for: .normal)
     sportsmanButton.setTitle("Спортсмен", for: .normal)
     privacyLabel.text = "Продолжая, вы соглашаетесь с Политикой конфедициальности и Условиями пользования."
@@ -142,12 +142,7 @@ class StartOnboardingViewController: UIViewController {
       make.height.equalTo(screenSize.height * (66/iPhoneXHeight))
     }
     
-    privacyLabel.snp.makeConstraints { (make) in
-      make.top.equalTo(startButton.snp.bottom).offset(screenSize.height * (40/iPhoneXHeight))
-      make.right.equalTo(self.backgroundView.snp.right).offset(screenSize.height * (-20/iPhoneXHeight))
-      make.left.equalTo(self.backgroundView.snp.left).offset(screenSize.height * (20/iPhoneXHeight))
-    }
-    
+   
     promoPageControl.snp.makeConstraints { (make) in
       make.bottom.equalTo(backgroundView.snp.top).offset(screenSize.height * (-20/iPhoneXHeight))
       make.centerX.equalTo(backgroundView.snp.centerX)
@@ -168,12 +163,29 @@ class StartOnboardingViewController: UIViewController {
     
     rightDirectionImageView.snp.makeConstraints { (make) in
       make.centerY.equalTo(self.startButton.snp.centerY)
-      make.right.equalTo(self.startButton.snp.right).offset(screenSize.height * (-26/iPhoneXHeight))
-      make.height.width.equalTo(screenSize.height * (28/iPhoneXHeight))
-      
+      make.right.equalTo(self.startButton.snp.right).offset(screenSize.height * (-6/iPhoneXHeight))
+      make.width.equalTo(screenSize.width * (36/iPhoneXWidth))
+      make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
     }
     
+    let skipOnboardingButton = UIButton()
+    self.backgroundView.addSubview(skipOnboardingButton)
+    skipOnboardingButton.setTitle("Уже есть аккаунт ?", for: .normal)
+    skipOnboardingButton.titleLabel?.font = NewFonts.SFProDisplayBold12
+    skipOnboardingButton.setTitleColor(.newBlue, for: .normal)
+    skipOnboardingButton.addTarget(self, action: #selector(skipButtonAction(_:)), for: .touchUpInside)
     
+    skipOnboardingButton.snp.makeConstraints { (make) in
+      make.top.equalTo(startButton.snp.bottom).offset(screenSize.height * (20/iPhoneXHeight))
+      make.centerX.equalTo(backgroundView.snp.centerX)
+    }
+    
+    privacyLabel.snp.makeConstraints { (make) in
+         make.top.equalTo(skipOnboardingButton.snp.bottom).offset(screenSize.height * (34/iPhoneXHeight))
+         make.right.equalTo(self.backgroundView.snp.right).offset(screenSize.height * (-20/iPhoneXHeight))
+         make.left.equalTo(self.backgroundView.snp.left).offset(screenSize.height * (20/iPhoneXHeight))
+       }
+       
   }
   
   @objc func trainerButtonAction(_ sender: UIButton) {
@@ -205,6 +217,12 @@ class StartOnboardingViewController: UIViewController {
       nextViewController.viewModel?.signInDataControllerType = .name
       self.navigationController?.pushViewController(nextViewController, animated: true)
     }
+  }
+  
+  @objc func skipButtonAction(_ sender: UIButton) {
+    let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "MainSignInViewController") as! MainSignInViewController
+    nextViewController.viewModel = viewModel
+    self.navigationController?.pushViewController(nextViewController, animated: true)
   }
   
   func createSlides() -> [PromoView] {
