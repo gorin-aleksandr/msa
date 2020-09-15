@@ -19,10 +19,10 @@ platform :ios do
   desc "Push a new beta build to Firebase"
   lane :beta do
     increment_build_number(xcodeproj: "MSA.xcodeproj")
-    build_app(workspace: "MSA.xcworkspace", scheme: "MSA", export_method: "ad-hoc", silent: "true", output_directory: "./build_ipa")
+    build_app(workspace: "MSA.xcworkspace", scheme: "MSA", export_method: "ad-hoc", silent: "false", output_directory: "./build_ipa")
 firebase_app_distribution(
- app: “Your firebase App Id”,
- groups: “internal-tester, clients”,
+ app: “1:317876705372:ios:e7db0c5bccc4125ea66e99”,
+ groups: “testers”,
  release_notes: “Lots of amazing new features to test out!”,
  firebase_cli_path: “/usr/local/bin/firebase” )
   end
