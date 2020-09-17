@@ -35,8 +35,23 @@ struct NewFonts {
   static let SFProDisplayRegular24 = UIFont.systemFont(ofSize: screenSize.height * (24/iPhoneXHeight), weight: .regular)
   static let SFProDisplayRegular36 = UIFont.systemFont(ofSize: screenSize.height * (36/iPhoneXHeight), weight: .regular)
 
+    //Bold
+    static let SFProDisplaySemiBold10 = UIFont.systemFont(ofSize: screenSize.height * (10/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold11 = UIFont.systemFont(ofSize: screenSize.height * (11/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold12 = UIFont.systemFont(ofSize: screenSize.height * (12/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold13 = UIFont.systemFont(ofSize: screenSize.height * (13/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold14 = UIFont.systemFont(ofSize: screenSize.height * (14/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold16 = UIFont.systemFont(ofSize: screenSize.height * (16/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold17 = UIFont.systemFont(ofSize: screenSize.height * (17/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold20 = UIFont.systemFont(ofSize: screenSize.height * (20/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold24 = UIFont.systemFont(ofSize: screenSize.height * (24/iPhoneXHeight), weight: .semibold)
+    static let SFProDisplaySemiBold32 = UIFont.systemFont(ofSize: screenSize.height * (32/iPhoneXHeight), weight: .semibold)
+  static let SFProDisplaySemiBold36 = UIFont.systemFont(ofSize: screenSize.height * (36/iPhoneXHeight), weight: .semibold)
+  
+  
   //Bold
   static let SFProDisplayBold10 = UIFont.systemFont(ofSize: screenSize.height * (10/iPhoneXHeight), weight: .bold)
+  static let SFProDisplayBold11 = UIFont.systemFont(ofSize: screenSize.height * (11/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold12 = UIFont.systemFont(ofSize: screenSize.height * (12/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold13 = UIFont.systemFont(ofSize: screenSize.height * (13/iPhoneXHeight), weight: .bold)
   static let SFProDisplayBold14 = UIFont.systemFont(ofSize: screenSize.height * (14/iPhoneXHeight), weight: .bold)

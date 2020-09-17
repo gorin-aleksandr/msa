@@ -19,6 +19,8 @@ import AppCenterCrashes
 import FirebaseMessaging
 import FBSDKLoginKit
 import Siren
+import Instabug
+import Bugsnag
 
 
 @UIApplicationMain
@@ -33,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     FirebaseApp.configure()
-
+    Instabug.start(withToken: "031800b655ec71682ba7e49b1eb649cd", invocationEvents: [.shake, .screenshot])
+    Instabug.setLocale(.russian)
+    BugReporting.shouldCaptureViewHierarchy = true
+    Bugsnag.start()
     let config = Realm.Configuration(
       schemaVersion: realmVersion,
       migrationBlock: { migration, oldSchemaVersion in
@@ -47,7 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     MSAppCenter.start("aa023993-9184-4c58-8f34-84dfdb1fb199", withServices:[MSAnalytics.self, MSCrashes.self])
     configureProgressHud()
     initialConf()
-    
     setupIAPObserver()
     
     let start = StratCoordinator(nav: window?.rootViewController as! UINavigationController)
@@ -55,6 +59,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     logSessionEvent()
     logInAppPurhaseRenewalEvent()
     UIApplication.shared.applicationIconBadgeNumber = 0
+    UITabBar.appearance().barTintColor = UIColor.white // your color
+    UITabBar.appearance().tintColor = .newBlue
+    UITabBar.appearance().layer.borderWidth = 0.0
+    UITabBar.appearance().clipsToBounds = true
+
+    
+    
     Siren.shared.presentationManager = PresentationManager(forceLanguageLocalization: .russian)
     Siren.shared.wail()
     return true

@@ -38,4 +38,6 @@ target 'MSA' do
   pod 'BetterSegmentedControl', '~> 1.3'
   pod 'Charts'
   pod 'SnapKit', '~> 5.0.0'
+  pod 'Instabug'
+  pod 'Bugsnag'
 end

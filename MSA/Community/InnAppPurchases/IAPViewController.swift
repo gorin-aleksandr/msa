@@ -55,6 +55,8 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     //        presenter.fetchSubscriptions()
     //        configureTableView()
     //        configureNavigationBar()
+    InAppPurchasesService.shared.loadProductOptions()
+
     setupUI()
   }
   

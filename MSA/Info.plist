@@ -26,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<string>TRUE</string>
 	<key>FacebookAppID</key>
@@ -99,5 +99,10 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>bugsnag</key>
+	<dict>
+		<key>apiKey</key>
+		<string>81d3fcf11886bb807362295a3ba2632b</string>
+	</dict>
 </dict>
 </plist>

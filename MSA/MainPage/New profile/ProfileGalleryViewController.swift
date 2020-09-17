@@ -48,12 +48,15 @@ class ProfileGalleryViewController: UIViewController, UINavigationControllerDele
     let btn = UIButton(type: .custom) as UIButton
     btn.addTarget(self, action: #selector(addContent), for: .touchUpInside)
     btn.setBackgroundImage(UIImage(named: "Float-1"), for: .normal)
-    self.view.addSubview(btn)
-    btn.snp.makeConstraints { (make) in
-      make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-8/iPhoneXHeight))
-      make.bottom.equalTo(self.view.snp.bottom).offset(screenSize.height * (-25/iPhoneXHeight))
-      make.height.width.equalTo(screenSize.height * (96/iPhoneXHeight))
+    if viewModel?.selectedUser == nil {
+      self.view.addSubview(btn)
+      btn.snp.makeConstraints { (make) in
+         make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-8/iPhoneXHeight))
+         make.bottom.equalTo(self.view.snp.bottom).offset(screenSize.height * (-25/iPhoneXHeight))
+         make.height.width.equalTo(screenSize.height * (96/iPhoneXHeight))
+       }
     }
+ 
   }
 
   @objc func addContent(_ sender: UIButton) {

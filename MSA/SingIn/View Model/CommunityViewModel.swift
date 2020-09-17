@@ -22,7 +22,7 @@ class CommunityViewModel {
   
   func sortUser(value: String) {
     if value != "" {
-      sortedUsers = users.filter{ $0.firstName!.contains(value) || $0.lastName!.contains(value)}
+      sortedUsers = users.filter{ (($0.firstName?.contains(value)) != nil) || (($0.lastName?.contains(value)) != nil)}
     } else {
       sortedUsers = users
     }
@@ -40,7 +40,7 @@ class CommunityViewModel {
           }
         })
       } else {
-        let trainerId = self!.selectedUser?.id != nil ? self!.selectedUser!.id : self!.currentUser!.id 
+        let trainerId = self!.selectedUser?.id != nil ? self!.selectedUser!.id : self!.currentUser!.id
         self!.users = users.filter { $0.trainerId == trainerId }
         self!.users = self!.users.sorted { $0.lastName < $1.lastName }
         self!.sortedUsers = self!.users

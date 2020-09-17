@@ -7,6 +7,7 @@
 
 import UIKit
 import SVProgressHUD
+import Bugsnag
 
 class HomeViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
@@ -15,14 +16,11 @@ class HomeViewController: UIViewController {
   var descriptions = ["У вас 24 тренировки","Ваши параметры","Добавьте диету","Ваши результаты","У вас 23 спортсмена"]
   var viewModel = ProfileViewModel()
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
+  let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
 
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(true)
     if viewModel.selectedUser == nil {
       SVProgressHUD.show()
       self.viewModel.getUser(success: {
@@ -30,6 +28,12 @@ class HomeViewController: UIViewController {
          self.collectionView.reloadData()
        })
     }
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    downloadExercises()
+
     if viewModel.selectedUser != nil {
       navigationController?.setNavigationBarHidden(false, animated: false)
       let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
@@ -58,6 +62,18 @@ class HomeViewController: UIViewController {
       make.right.equalTo(self.view.snp.right)
       make.left.equalTo(self.view.snp.left)
     }
+  }
+  
+  private func downloadExercises() {
+    p.getExercisesFromRealm()
+    p.getTypesFromRealm()
+    p.getFiltersFromRealm()
+    p.getMyExercisesFromRealm()
+    
+    p.getAllExersises()
+    p.getAllTypes()
+    p.getAllFilters()
+    p.getMyExercises()
   }
   
   @objc private func handleAppleSignInSelector() {

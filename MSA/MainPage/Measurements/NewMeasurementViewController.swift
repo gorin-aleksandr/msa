@@ -159,8 +159,8 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
     valueTextField.delegate = self
     valueTextField.keyboardType = .decimalPad
     let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.valueTextField.frame.height))
-       valueTextField.leftView = paddingView
-       valueTextField.leftViewMode = .always
+    valueTextField.leftView = paddingView
+    valueTextField.leftViewMode = .always
     valueTextField.snp.makeConstraints { (make) in
       make.top.equalTo(separatorViewThird.snp.bottom).offset(screenSize.height * (19/iPhoneXHeight))
       make.left.equalTo(self.mainView.snp.left).offset(screenSize.height * (16/iPhoneXHeight))
@@ -221,9 +221,9 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   @objc func saveAction(_ sender: UIButton) {
     if let value = valueTextField.text!.toDouble() {
       viewModel!.saveMeasure(value: value, date: self.viewModel!.newMeasurementDate)
-         self.dismiss(animated: true, completion: nil)
+      self.dismiss(animated: true, completion: nil)
     }
-   
+    
   }
   
   @objc func closeButtonAction(_ sender: UIButton) {
@@ -234,15 +234,21 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   }
   
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-     guard CharacterSet(charactersIn: "1234567890.").isSuperset(of: CharacterSet(charactersIn: string)) else {
-        return false
+    guard CharacterSet(charactersIn: "1234567890.,").isSuperset(of: CharacterSet(charactersIn: string)) else {
+      return false
     }
     if string == "." && textField.text!.contains(".") {
       return false
     }
+    if string == "," && textField.text!.contains(",") {
+      return false
+    }
     if string == "." && textField.text!.isEmpty {
-         return false
-       }
+      return false
+    }
+    if string == "," && textField.text!.isEmpty {
+      return false
+    }
     return true
   }
   

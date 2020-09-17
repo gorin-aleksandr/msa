@@ -18,11 +18,11 @@ class UsersSportsmansViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupUI()
   }
   
   override func viewWillAppear(_ animated: Bool) {
-    super.viewWillDisappear(true)
+    super.viewWillAppear(true)
+    setupUI()
     navigationController?.setNavigationBarHidden(false, animated: false)
     let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
       self.navigationItem.leftBarButtonItem = backButton

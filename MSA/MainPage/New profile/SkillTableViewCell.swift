@@ -60,7 +60,7 @@ class SkillTableViewCell: UITableViewCell {
     make.width.height.equalTo(screenSize.height * (24/iPhoneXHeight))
     }
     achievementLabel.numberOfLines = 0
-    achievementLabel.textAlignment = .center
+    achievementLabel.textAlignment = .right
     achievementLabel.snp.makeConstraints { (make) in
     //make.centerY.equalTo(self.contentView.snp.centerY)
     make.top.equalTo(self.contentView.snp.top).offset(screenSize.height * (5/iPhoneXHeight))

@@ -45,7 +45,7 @@ class InAppPurchasesService: NSObject {
     }
     
     func loadProductOptions() {
-        let productIds = Set(["s_one_month", "s_twelve_month", "t_one_month", "t_twelve_month"])
+        let productIds = Set(["s_one_month", "s_twelve_month", "t_one_month", "t_twelve_month","s_fullAcess","t_fullAcess"])
         let request = SKProductsRequest(productIdentifiers: productIds)
         request.delegate = self
         request.start()
