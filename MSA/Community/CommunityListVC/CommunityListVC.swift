@@ -342,7 +342,12 @@ extension CommunityListViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moveToUserViewController(with: presenter.communityDataSource[indexPath.row])
+      let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
+      vc.viewModel = ProfileViewModel()
+      vc.viewModel?.selectedUser = presenter.communityDataSource[indexPath.row]
+      self.navigationController?.pushViewController(vc, animated: true)
+
+        //moveToUserViewController(with: presenter.communityDataSource[indexPath.row])
     }
 }
 

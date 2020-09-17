@@ -17,10 +17,13 @@ class HomeViewController: UIViewController {
   var viewModel = ProfileViewModel()
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
+  var comunityPresenter: CommunityListPresenterProtocol!
 
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    comunityPresenter = CommunityListPresenter(view: self)
+
     if viewModel.selectedUser == nil {
       SVProgressHUD.show()
       self.viewModel.getUser(success: {
@@ -85,6 +88,7 @@ class HomeViewController: UIViewController {
           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
           //let navigationController = UINavigationController()
           //navigationController.setViewControllers([destinationVC], animated: false)
+          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
           self.present(destinationVC, animated: true, completion: nil)
         }
 //    let alert = UIAlertController(style: .actionSheet, title: "Укажите цель")
@@ -304,6 +308,54 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
           return
       }
     }
+    
+  }
+  
+  
+}
+
+extension HomeViewController: CommunityListViewProtocol {
+  func updateTableView() {
+    
+  }
+  
+  func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
+    
+  }
+  
+  func setCityFilterTextField(name: String?) {
+    
+  }
+  
+  func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
+    
+  }
+  
+  func setErrorViewHidden(_ isHidden: Bool) {
+    
+  }
+  
+  func setLoaderVisible(_ visible: Bool) {
+    
+  }
+  
+  func stopLoadingViewState() {
+    
+  }
+  
+  func showGeneralAlert() {
+    
+  }
+  
+  func showRestoreAlert() {
+    
+  }
+  
+  func showIAP() {
+    
+  }
+  
+  func hideAccessDeniedView() {
     
   }
   

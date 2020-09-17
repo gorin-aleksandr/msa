@@ -202,7 +202,7 @@ class NewProfileViewController: UIViewController {
   
   
   @IBAction func instagramAction(_ sender: Any) {
-      let instagramLink = self.viewModel?.selectedUser?.instagramLink != nil ? self.viewModel?.selectedUser?.instagramLink : AuthModule.currUser.facebookLink
+      let instagramLink = self.viewModel?.selectedUser?.instagramLink != nil ? self.viewModel?.selectedUser?.instagramLink : AuthModule.currUser.instagramLink
 
       let userName =  instagramLink // Your Instagram Username here
     if var link = userName?.detectedFirstLink {

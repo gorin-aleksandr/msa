@@ -369,6 +369,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
   
   @objc func oneMonthSelected() {
     oneMonthSubscriptionButton.isSelected = !oneMonthSubscriptionButton.isSelected
+    presenter.userSelectedProductAt(index: 0)
   }
   
   @objc func twelveMonthSelected() {
