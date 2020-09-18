@@ -18,11 +18,11 @@ class UsersSportsmansViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupUI()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    setupUI()
     navigationController?.setNavigationBarHidden(false, animated: false)
     let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
       self.navigationItem.leftBarButtonItem = backButton
@@ -100,9 +100,14 @@ extension UsersSportsmansViewController: UITableViewDataSource, UITableViewDeleg
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-    nextViewController.viewModel.selectedUser = viewModel!.sortedUsers[indexPath.row]
-    self.navigationController?.pushViewController(nextViewController, animated: true)
+    if viewModel!.selectedUser?.id != AuthModule.currUser.id {
+   
+    } else {
+      let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+      nextViewController.viewModel.selectedUser = viewModel!.sortedUsers[indexPath.row]
+      self.navigationController?.pushViewController(nextViewController, animated: true)
+    }
+    
 
   }
 }

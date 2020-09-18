@@ -12,8 +12,11 @@ import SDWebImage
 import AudioToolbox
 import SVProgressHUD
 import Firebase
+import SwiftRater
 
 class MyTranningsViewController: UIViewController {
+
+  
   
   @IBOutlet weak var barStackView: UIView!
   
@@ -43,10 +46,12 @@ class MyTranningsViewController: UIViewController {
   var weekNumber = 0
   var showDeleteDayButton = false
   var trainingsShown = false
-  
+  var comunityPresenter: CommunityListPresenterProtocol!
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    comunityPresenter = CommunityListPresenter(view: self)
     rightBarButtonStackView = barStackView
     longPressRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(longPressed))
     copyWeekRecognizer = UILongPressGestureRecognizer(target: self, action:  #selector(copyWeek))
@@ -60,6 +65,7 @@ class MyTranningsViewController: UIViewController {
       tableView.bounces = false
     }
     weekLabel.addObserver(self, forKeyPath: "text", options: [.old, .new], context: nil)
+
   }
   
   
@@ -381,13 +387,20 @@ class MyTranningsViewController: UIViewController {
     alert.setValue(myMutableString, forKey: "attributedTitle")
     
     let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
-      self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
-      if addDayWeek {
-        self.addWeek()
-        Analytics.logEvent("creating_training_week", parameters: nil)
+      if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 0 {
+          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+          self.present(destinationVC, animated: true, completion: nil)        
       } else {
-        self.saveTemplate()
+        self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
+         if addDayWeek {
+           self.addWeek()
+           Analytics.logEvent("creating_training_week", parameters: nil)
+         } else {
+           self.saveTemplate()
+         }
       }
+ 
     })
     let secondAction = UIAlertAction(title: "Удалить все тренировки", style: .default, handler: { action in
       self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
@@ -456,6 +469,8 @@ class MyTranningsViewController: UIViewController {
   }
   
   func addDay() {
+    SwiftRater.incrementSignificantUsageCount()
+    
     guard let week = manager.dataSource?.currentWeek else {
       AlertDialog.showAlert("Нельзя добавить день!", message: "Сначала добавьте неделю", viewController: self)
       return
@@ -467,6 +482,8 @@ class MyTranningsViewController: UIViewController {
   }
   
   func addWeek() {
+    SwiftRater.incrementSignificantUsageCount()
+
     if let training = manager.dataSource?.currentTraining {
       manager.createWeak(in: training)
     } else {
@@ -1069,4 +1086,63 @@ extension MyTranningsViewController: TrainingCalendarProtocol {
     }
   }
   
+}
+
+
+extension ExercisesViewController: TrainingsViewDelegate {
+    func synced() {}
+    
+    func trainingEdited() {}
+    
+    func trainingsLoaded() {}
+    
+    func templateCreated() {}
+    
+    func templatesLoaded() {}
+}
+
+extension MyTranningsViewController: CommunityListViewProtocol{
+  func updateTableView() {
+    
+  }
+  
+  func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
+    
+  }
+  
+  func setCityFilterTextField(name: String?) {
+    
+  }
+  
+  func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
+    
+  }
+  
+  func setErrorViewHidden(_ isHidden: Bool) {
+    
+  }
+  
+  func setLoaderVisible(_ visible: Bool) {
+    
+  }
+  
+  func stopLoadingViewState() {
+    
+  }
+  
+  func showGeneralAlert() {
+    
+  }
+  
+  func showRestoreAlert() {
+    
+  }
+  
+  func showIAP() {
+    
+  }
+  
+  func hideAccessDeniedView() {
+    
+  }
 }

@@ -21,6 +21,7 @@ import FBSDKLoginKit
 import Siren
 import Instabug
 import Bugsnag
+import SwiftRater
 
 
 @UIApplicationMain
@@ -37,8 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     FirebaseApp.configure()
     Instabug.start(withToken: "031800b655ec71682ba7e49b1eb649cd", invocationEvents: [.shake, .screenshot])
     Instabug.setLocale(.russian)
+  
     BugReporting.shouldCaptureViewHierarchy = true
     Bugsnag.start()
+   
     let config = Realm.Configuration(
       schemaVersion: realmVersion,
       migrationBlock: { migration, oldSchemaVersion in
@@ -58,16 +61,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     start.start()
     logSessionEvent()
     logInAppPurhaseRenewalEvent()
+   
     UIApplication.shared.applicationIconBadgeNumber = 0
     UITabBar.appearance().barTintColor = UIColor.white // your color
     UITabBar.appearance().tintColor = .newBlue
     UITabBar.appearance().layer.borderWidth = 0.0
     UITabBar.appearance().clipsToBounds = true
-
-    
     
     Siren.shared.presentationManager = PresentationManager(forceLanguageLocalization: .russian)
     Siren.shared.wail()
+   
+    SwiftRater.daysUntilPrompt = 7
+    SwiftRater.usesUntilPrompt = 5
+    SwiftRater.significantUsesUntilPrompt = 3
+    SwiftRater.daysBeforeReminding = 1
+    SwiftRater.showLaterButton = true
+    SwiftRater.debugMode = true
+    SwiftRater.countryCode = "ru"
+    SwiftRater.appLaunched()
+    
     return true
   }
   
@@ -148,7 +160,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   private func configureProgressHud() {
     SVProgressHUD.setBackgroundColor(.clear)
-    SVProgressHUD.setForegroundColor(.lightBlue)
+    SVProgressHUD.setForegroundColor(.newBlue)
   }
   
   private func initialConf() {
@@ -270,14 +282,17 @@ extension AppDelegate: SKPaymentTransactionObserver {
     print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
     NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
     Analytics.logEvent("in_app_p_restored", parameters: ["subscription": transaction.payment.productIdentifier])
+        queue.finishTransaction(transaction)
   }
   
   func handleFailedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
+    queue.finishTransaction(transaction)
     print("Purchase failed for product id: \(transaction.payment.productIdentifier)")
     
   }
   
   func handleDeferredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
+    queue.finishTransaction(transaction)
     print("Purchase deferred for product id: \(transaction.payment.productIdentifier)")
   }
 }

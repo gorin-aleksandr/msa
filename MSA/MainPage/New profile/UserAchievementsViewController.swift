@@ -102,11 +102,12 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     if indexPath.section == 0 && indexPath.row != viewModel.selectedAchievements.count {
-      let cell = tableView.dequeueReusableCell(withIdentifier: SkillTableViewCell.identifier) as! SkillTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: SkillTableViewCell.identifier, for: indexPath) as! SkillTableViewCell
       let achieve = viewModel.selectedAchievements[indexPath.row]
       cell.nameLabel.text = achieve.name
       cell.descriptionLabel.text = achieve.year
-      cell.achievementLabel.text = achieve.rank
+      print("Rank = \(achieve.rank) Achieve( = \(achieve.achieve)")
+      cell.achievementLabel.text = achieve.rank != "" ? achieve.rank : achieve.achieve
       cell.editButton.isHidden = viewModel.selectedUser != nil ? true : false
       cell.editButton.tag = indexPath.section
       cell.editButton.imageView?.tag = indexPath.row
@@ -116,11 +117,10 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
     }
     
     if indexPath.section == 1 && indexPath.row != viewModel.selectedEducation.count {
-      let cell = tableView.dequeueReusableCell(withIdentifier: SkillTableViewCell.identifier) as! SkillTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: SkillTableViewCell.identifier, for: indexPath) as! SkillTableViewCell
       let achieve = viewModel.selectedEducation[indexPath.row]
       cell.nameLabel.text = achieve.name
       cell.descriptionLabel.text = "\(achieve.yearFrom) - \(achieve.yearTo)"
-      cell.achievementLabel.text = ""
       cell.editButton.isHidden = viewModel.selectedUser != nil ? true : false
       cell.selectionStyle = .none
       cell.editButton.tag = indexPath.section
@@ -135,11 +135,9 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
     }
     
     if indexPath.section == 2 && indexPath.row != viewModel.selectedCertificates.count{
-      let cell = tableView.dequeueReusableCell(withIdentifier: SkillTableViewCell.identifier) as! SkillTableViewCell
+      let cell = tableView.dequeueReusableCell(withIdentifier: SkillTableViewCell.identifier, for: indexPath) as! SkillTableViewCell
       let achieve = viewModel.selectedCertificates[indexPath.row]
       cell.nameLabel.text = achieve.name
-      cell.descriptionLabel.text = ""
-      cell.achievementLabel.text = ""
       cell.editButton.isHidden = viewModel.selectedUser != nil ? true : false
       cell.selectionStyle = .none
       cell.editButton.tag = indexPath.section

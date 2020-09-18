@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftRater
 
 class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   var viewModel: MeasurementViewModel?
@@ -24,9 +25,11 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   @IBOutlet weak var valueTextField: UITextField!
   @IBOutlet weak var unitsLabel: UILabel!
   @IBOutlet weak var saveButton: UIButton!
-  
+  var comunityPresenter: CommunityListPresenterProtocol!
+
   override func viewDidLoad() {
     super.viewDidLoad()
+    comunityPresenter = CommunityListPresenter(view: self)
     setupUI()
     view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
     view.isOpaque = false
@@ -219,11 +222,19 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   
   
   @objc func saveAction(_ sender: UIButton) {
-    if let value = valueTextField.text!.toDouble() {
-      viewModel!.saveMeasure(value: value, date: self.viewModel!.newMeasurementDate)
-      self.dismiss(animated: true, completion: nil)
-    }
     
+    if InAppPurchasesService.shared.currentSubscription == nil && viewModel?.selectedMeasurements.count > 2 {
+      let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+      destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+      self.present(destinationVC, animated: true, completion: nil)
+    } else {
+      if let value = valueTextField.text!.toDouble() {
+        SwiftRater.incrementSignificantUsageCount()
+        viewModel!.saveMeasure(value: value, date: self.viewModel!.newMeasurementDate)
+        self.dismiss(animated: true, completion: nil)
+      }
+    }
+
   }
   
   @objc func closeButtonAction(_ sender: UIButton) {
@@ -263,4 +274,50 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
     }
   }
   
+}
+
+extension NewMeasurementViewController: CommunityListViewProtocol{
+  func updateTableView() {
+    
+  }
+  
+  func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
+    
+  }
+  
+  func setCityFilterTextField(name: String?) {
+    
+  }
+  
+  func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
+    
+  }
+  
+  func setErrorViewHidden(_ isHidden: Bool) {
+    
+  }
+  
+  func setLoaderVisible(_ visible: Bool) {
+    
+  }
+  
+  func stopLoadingViewState() {
+    
+  }
+  
+  func showGeneralAlert() {
+    
+  }
+  
+  func showRestoreAlert() {
+    
+  }
+  
+  func showIAP() {
+    
+  }
+  
+  func hideAccessDeniedView() {
+    
+  }
 }

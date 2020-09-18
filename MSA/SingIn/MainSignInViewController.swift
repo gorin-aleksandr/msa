@@ -44,6 +44,9 @@ class MainSignInViewController: UIViewController {
   }
   func setupUI() {
     setupConstraints()
+    
+    mailButton.isHidden = viewModel?.userLastName == "" ? true : false
+    mailLabel.isHidden = viewModel?.userLastName == "" ? true : false
     mailButton.titleLabel?.font = NewFonts.SFProDisplayRegular16
     mailButton.setTitleColor(UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 1.00), for: .normal)
     // mailButton.setBackgroundColor(color: UIColor(red: 0.96, green: 0.96, blue: 0.99, alpha: 0.1), forState: .normal)

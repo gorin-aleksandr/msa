@@ -8,12 +8,13 @@
 import UIKit
 import SVProgressHUD
 import Bugsnag
+import Firebase
 
 class HomeViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
   var images = ["powerlifter","ruller","eat","statsIcon","team"]
   var titles = ["Тренировки","Замеры","Питание","Статистика","Мои спортсмены"]
-  var descriptions = ["У вас 24 тренировки","Ваши параметры","Добавьте диету","Ваши результаты","У вас 23 спортсмена"]
+  var descriptions = ["Работай на результат","Ваши параметры","Добавьте рацион","Ваши результаты","У вас 23 спортсмена"]
   var viewModel = ProfileViewModel()
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
@@ -24,6 +25,15 @@ class HomeViewController: UIViewController {
     setupUI()
     comunityPresenter = CommunityListPresenter(view: self)
 
+    InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
+      self?.logInAppPurhaseRenewalEvent()
+      if InAppPurchasesService.shared.currentSubscription != nil {
+        print("Full acess")
+      } else {
+        print("Havent acess!")
+      }
+    }
+    
     if viewModel.selectedUser == nil {
       SVProgressHUD.show()
       self.viewModel.getUser(success: {
@@ -84,48 +94,89 @@ class HomeViewController: UIViewController {
   }
   
   @objc func presentInputStatus() {
-    DispatchQueue.main.async {
-          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-          //let navigationController = UINavigationController()
-          //navigationController.setViewControllers([destinationVC], animated: false)
-          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
-          self.present(destinationVC, animated: true, completion: nil)
-        }
-//    let alert = UIAlertController(style: .actionSheet, title: "Укажите цель")
-//    let config: TextField.Config = { textField in
-//      textField.becomeFirstResponder()
-//      textField.textColor = .black
-//      if let dream = AuthModule.currUser.purpose, dream != "" {
-//        textField.text = dream
-//      }
-//      textField.placeholder = "Напишите вашу цель"
-//      //textField.left(image: image, color: .black)
-//      textField.leftViewPadding = 12
-//      textField.borderWidth = 1
-//      textField.cornerRadius = 8
-//      textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
-//      textField.backgroundColor = nil
-//      textField.keyboardAppearance = .default
-//      textField.keyboardType = .default
-//      textField.isSecureTextEntry = false
-//      textField.returnKeyType = .done
-//      textField.action { textField in
-//        if let purpose = textField.text, purpose != AuthModule.currUser.purpose  {
-//          self.viewModel.setPurpose(purpose: purpose, success: {
-//            self.collectionView.reloadData()
-//          }) { (error) in
-//          }
-//        }
-//      }
-//    }
-//    alert.addOneTextField(configuration: config)
-//    let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
-//    }
-//    alert.addAction(saveAction)
-//    alert.show()
-  }
   
+    let alert = UIAlertController(style: .actionSheet, title: "Укажите цель")
+    let config: TextField.Config = { textField in
+      textField.becomeFirstResponder()
+      textField.textColor = .black
+      if let dream = AuthModule.currUser.purpose, dream != "" {
+        textField.text = dream
+      }
+      textField.placeholder = "Напишите вашу цель"
+      //textField.left(image: image, color: .black)
+      textField.leftViewPadding = 12
+      textField.borderWidth = 1
+      textField.cornerRadius = 8
+      textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
+      textField.backgroundColor = nil
+      textField.keyboardAppearance = .default
+      textField.keyboardType = .default
+      textField.isSecureTextEntry = false
+      textField.returnKeyType = .done
+      textField.action { textField in
+        if let purpose = textField.text, purpose != AuthModule.currUser.purpose  {
+          self.viewModel.setPurpose(purpose: purpose, success: {
+            self.collectionView.reloadData()
+          }) { (error) in
+          }
+        }
+      }
+    }
+    alert.addOneTextField(configuration: config)
+    let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
+    }
+    alert.addAction(saveAction)
+    alert.show()
+  }
+
+  func logInAppPurhaseRenewalEvent() {
+    let defaults = UserDefaults.standard
+    if let lastExpireDate = defaults.object(forKey: "inAppPurchaseExpireDate") as? Date, let lastPurchaseisTrial = defaults.object(forKey: "inAppPurchaseIsTrial") as? String {
+      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate, let isTrial =  InAppPurchasesService.shared.currentSubscription?.isTrialPeriod, let purchaseName =  InAppPurchasesService.shared.currentSubscription?.productId {
+        
+        if lastPurchaseisTrial == "true" && isTrial == "false" {
+          defaults.set("false", forKey: "inAppPurchaseIsTrial")
+          defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+          switch purchaseName {
+            case "s_one_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+            case "s_twelve_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+            case "t_one_month":
+              Analytics.logEvent("app_store_subscription_convert_coach_1m", parameters: nil)
+            case "t_twelve_month":
+              Analytics.logEvent("app_store_subscription_convert_coach_1y", parameters: nil)
+            default:
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+          }
+          return
+        }
+        
+        if lastExpireDate < expireDate {
+          defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+          switch purchaseName {
+            case "s_one_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+            case "s_twelve_month":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+            case "t_one_month":
+              Analytics.logEvent("app_store_subscription_renew_coach_1m", parameters: nil)
+            case "t_twelve_month":
+              Analytics.logEvent("app_store_subscription_renew_coach_1y", parameters: nil)
+            default:
+              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+          }
+        }
+      }
+    } else {
+      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate {
+        defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+        defaults.set(InAppPurchasesService.shared.currentSubscription!.isTrialPeriod, forKey: "inAppPurchaseIsTrial")
+      }
+    }
+  }
 }
+
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -259,9 +310,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     if indexPath.section == 0 {
       let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
-      print(viewModel.selectedUser)
       vc.viewModel = viewModel
-      self.navigationController?.pushViewController(vc, animated: true)
+      let nc = UINavigationController(rootViewController: vc)
+      nc.modalPresentationStyle = .fullScreen
+      self.present(nc, animated: true, completion: nil)
        }
     
     if indexPath.section == 2 {

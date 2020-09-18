@@ -10,6 +10,7 @@ import UIKit
 import SDWebImage
 import RealmSwift
 import Firebase
+import SwiftRater
 
 let lightBlue = UIColor(rgb: 0x007AFF)
 let lightGrey = UIColor(rgb: 0x030D15)
@@ -51,10 +52,12 @@ class ExercisesForTypeViewController: UIViewController {
     var filteredArray: [Exercise] = []
     var filters: [ExerciseTypeFilter] = []
     var selectedFilter = ""
-    
+    var comunityPresenter: CommunityListPresenterProtocol!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        comunityPresenter = CommunityListPresenter(view: self)
+
         NotificationCenter.default.addObserver(self, selector: #selector(self.exerciseAddedN), name: Notification.Name("Exercise_added"), object: nil)
         
         initialDataFilling()
@@ -231,12 +234,21 @@ class ExercisesForTypeViewController: UIViewController {
                     AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
                 }
             } else {
+                SwiftRater.incrementSignificantUsageCount()
+              
                 Analytics.logEvent("add_exersises", parameters: nil)
                 self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
             }
         } else {
-            Analytics.logEvent("start_creating_own_exersise", parameters: nil)
-            self.performSegue(withIdentifier: "newExerciseSegue", sender: nil)
+          let own = presenter?.getOwnExercises().filter({$0.trainerId == AuthModule.currUser.id})
+          if InAppPurchasesService.shared.currentSubscription == nil && own?.count > 2 {
+              let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+              destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+              self.present(destinationVC, animated: true, completion: nil)
+            } else {
+              Analytics.logEvent("start_creating_own_exersise", parameters: nil)
+              self.performSegue(withIdentifier: "newExerciseSegue", sender: nil)
+          }
         }
     }
     
@@ -503,3 +515,49 @@ extension ExercisesForTypeViewController: TrainingsViewDelegate {
 //        }
 //    }
 //}
+
+extension ExercisesForTypeViewController: CommunityListViewProtocol{
+  func updateTableView() {
+    
+  }
+  
+  func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
+    
+  }
+  
+  func setCityFilterTextField(name: String?) {
+    
+  }
+  
+  func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
+    
+  }
+  
+  func setErrorViewHidden(_ isHidden: Bool) {
+    
+  }
+  
+  func setLoaderVisible(_ visible: Bool) {
+    
+  }
+  
+  func stopLoadingViewState() {
+    
+  }
+  
+  func showGeneralAlert() {
+    
+  }
+  
+  func showRestoreAlert() {
+    
+  }
+  
+  func showIAP() {
+    
+  }
+  
+  func hideAccessDeniedView() {
+    
+  }
+}

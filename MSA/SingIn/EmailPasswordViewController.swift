@@ -231,9 +231,6 @@ class EmailPasswordViewController: UIViewController {
             SVProgressHUD.dismiss()
             AlertDialog.showAlert("Ошибка", message: error, viewController: self)
           }
-
-          
-      
         } else {
           SVProgressHUD.dismiss()
           if let customError = error as? MSAError {

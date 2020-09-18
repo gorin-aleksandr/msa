@@ -25,6 +25,8 @@ class NewProfileViewController: UIViewController {
   @IBOutlet weak var instaButton: UIButton!
   @IBOutlet weak var facebookButton: UIButton!
   @IBOutlet weak var vkButton: UIButton!
+  @IBOutlet weak var backButton: UIButton!
+  @IBOutlet weak var directButton: UIButton!
 
 
   var viewModel: ProfileViewModel? {
@@ -37,34 +39,42 @@ class NewProfileViewController: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
+      self.navigationController?.navigationBar.isHidden = true
       setupUI()
       fetchSkills()
+      directButton.isHidden = true
       viewModel!.getSelectedUsersChat { (value) in
         if self.viewModel?.selectedUser != nil {
-          let directMessageButton = UIBarButtonItem(image: UIImage(named: "message 1"), style: .plain, target: self, action: #selector(self.directMessage))
-          self.navigationItem.rightBarButtonItem = directMessageButton
+          self.directButton.isHidden = false
         }
       }
     }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    navigationController?.setNavigationBarHidden(false, animated: false)
-    navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-    navigationController?.navigationBar.shadowImage = UIImage()
-    navigationController?.navigationBar.isTranslucent = true
-    let backButton = UIBarButtonItem(image: UIImage(named: "arrow-left 1"), style: .plain, target: self, action: #selector(self.backAction))
-    self.navigationItem.leftBarButtonItem = backButton
-    self.navigationController?.navigationBar.tintColor = .newBlack
-
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(true)
-    //navigationController?.setNavigationBarHidden(false, animated: true)
   }
   
   func setupUI() {
+    
+    backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
+    backButton.snp.makeConstraints { (make) in
+         make.top.equalTo(self.view.snp.top).offset(screenSize.height * (60/iPhoneXHeight))
+         make.left.equalTo(self.view.snp.left).offset((screenSize.width * (20/iPhoneXWidth)))
+         make.width.equalTo(20)
+         make.height.equalTo(17)
+       }
+    
+    directButton.addTarget(self, action: #selector(directMessage), for: .touchUpInside)
+    directButton.snp.makeConstraints { (make) in
+         make.top.equalTo(self.view.snp.top).offset(screenSize.height * (60/iPhoneXHeight))
+         make.right.equalTo(self.view.snp.right).offset((screenSize.width * (-20/iPhoneXWidth)))
+         make.width.equalTo(20)
+         make.height.equalTo(17)
+       }
     
     photoImageView.snp.makeConstraints { (make) in
       make.top.equalTo(self.view.snp.top).offset(screenSize.height * (61/iPhoneXHeight))
@@ -98,19 +108,24 @@ class NewProfileViewController: UIViewController {
       make.centerX.equalTo(self.view.snp.centerX)
     }
     
-      if let url = viewModel?.selectedUser?.avatar {
-          photoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
-        nameLabel.text = "\(viewModel?.selectedUser?.firstName ?? "") \(viewModel?.selectedUser?.lastName ?? "")"
-        if viewModel?.selectedUser?.userType == .trainer {
-          cityLabel.text = "Тренер \(viewModel?.selectedUser?.city ?? "")"
-        } else {
-          cityLabel.text = "Спортсмен \(viewModel?.selectedUser?.city ?? "")"
-        }
+      if let user = viewModel?.selectedUser {
+        tagList.isHidden = user.userType == .sportsman ? true : false
+        if let avatar = user.avatar {
+          photoImageView.sd_setImage(with: URL(string: avatar), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
+          }
+       nameLabel.text = "\(viewModel?.selectedUser?.firstName ?? "") \(viewModel?.selectedUser?.lastName ?? "")"
+       if viewModel?.selectedUser?.userType == .trainer {
+         cityLabel.text = "Тренер \(viewModel?.selectedUser?.city ?? "")"
+       } else {
+         cityLabel.text = "Спортсмен \(viewModel?.selectedUser?.city ?? "")"
+       }
+         
     } else {
       if let url = AuthModule.currUser.avatar {
           photoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
         }
         nameLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
+        tagList.isHidden = AuthModule.currUser.userType == .sportsman ? true : false
         if AuthModule.currUser.userType == .trainer {
           cityLabel.text = "Тренер \(AuthModule.currUser.city ?? "")"
         } else {
@@ -129,12 +144,14 @@ class NewProfileViewController: UIViewController {
       if viewModel?.selectedUser?.userType == .trainer {
         segmentedControl.segments = [first,second,third]
       } else {
+        segmentedControl.isHidden = true
         segmentedControl.segments = [first]
       }
     } else {
       if AuthModule.currUser.userType == .trainer {
         segmentedControl.segments = [first,second,third]
       } else {
+        segmentedControl.isHidden = true
         segmentedControl.segments = [first]
       }
     }
@@ -159,6 +176,7 @@ class NewProfileViewController: UIViewController {
   
   @objc func photoControl(_ sender: BetterSegmentedControl) {
     print("The selected index is \(sender.index)")
+  
     updateSegmentedControler(selectedIndex: sender.index)
   }
   
@@ -181,11 +199,11 @@ class NewProfileViewController: UIViewController {
     }
   }
   
-  @IBAction func backAction(_ sender: Any) {
-    self.navigationController?.popViewController(animated: true)
+  @objc func backAction() {
+    self.navigationController?.dismiss(animated: true, completion: nil)
   }
   
-  @IBAction func directMessage(_ sender: Any) {
+  @objc func directMessage() {
     if let id = viewModel?.selectedUser?.id {
       DispatchQueue.main.async {
       let chatViewController = chatStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController
@@ -213,13 +231,13 @@ class NewProfileViewController: UIViewController {
           UIApplication.shared.open(url)
         }
       } else {
-        let appURL = URL(string: "instagram://user?username=\(userName)")!
+      let appURL = URL(string: "instagram://user?username=\(userName ?? "")")!
         let application = UIApplication.shared
         
         if application.canOpenURL(appURL) {
           application.open(appURL)
         } else {
-          let webURL = URL(string: "https://instagram.com/\(userName)")!
+          let webURL = URL(string: "https://instagram.com/\(userName ?? "")")!
           application.open(webURL)
         }
       }

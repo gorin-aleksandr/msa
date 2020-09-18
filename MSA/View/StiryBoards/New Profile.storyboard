@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Oval" translatesAutoresizingMaskIntoConstraints="NO" id="2Le-8O-M8R">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="avatar-placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="2Le-8O-M8R">
                                 <rect key="frame" x="177" y="73" width="60" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -321,6 +321,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ti2-cr-3Az">
+                                <rect key="frame" x="335" y="90" width="20" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="message 1"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GZ0-fk-8I4">
+                                <rect key="frame" x="62" y="83" width="20" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="arrow-left 1"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -346,7 +356,9 @@
                         <viewLayoutGuide key="safeArea" id="pLD-ci-1VB"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="GZ0-fk-8I4" id="46j-ng-cQi"/>
                         <outlet property="cityLabel" destination="wS2-9J-P4V" id="BVT-2Q-4eX"/>
+                        <outlet property="directButton" destination="ti2-cr-3Az" id="Bzl-8Z-aAh"/>
                         <outlet property="facebookButton" destination="7Mg-Fs-KY8" id="nsm-q6-VAs"/>
                         <outlet property="informationView" destination="0mE-Gb-XyD" id="KXX-YV-Wuc"/>
                         <outlet property="instaButton" destination="9xO-w4-p1e" id="52A-vd-seS"/>
@@ -690,9 +702,11 @@
         <image name="Frame 2345" width="28" height="28"/>
         <image name="Frame 8" width="81" height="81"/>
         <image name="Group 915" width="20" height="20"/>
-        <image name="Oval" width="64" height="64"/>
         <image name="Vector" width="13" height="13"/>
+        <image name="arrow-left 1" width="20" height="20"/>
+        <image name="avatar-placeholder" width="250" height="250"/>
         <image name="cheveron-right 1" width="20" height="20"/>
+        <image name="message 1" width="20" height="20"/>
         <image name="plus 2" width="24" height="24"/>
     </resources>
 </document>

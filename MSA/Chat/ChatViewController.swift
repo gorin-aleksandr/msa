@@ -213,8 +213,8 @@ final class ChatViewController: JSQMessagesViewController {
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(true)
-    
     readAllMessages()
+    navigationController?.setNavigationBarHidden(true, animated: animated)
   }
   
   override func viewWillAppear(_ animated: Bool) {

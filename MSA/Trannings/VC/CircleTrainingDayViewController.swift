@@ -9,6 +9,7 @@
 import UIKit
 import CoreBluetooth
 import Firebase
+import SwiftRater
 
 class CircleTrainingDayViewController: UIViewController {
 
@@ -96,8 +97,7 @@ class CircleTrainingDayViewController: UIViewController {
         navigationController?.popViewController(animated: true)
         manager.fullStop()
     }
-    @IBAction func saveButtonAction(_ sender: Any) {
-    }
+
     @IBAction func heartBeatButtonTapped(_ sender: Any) {
         let destinationVC = UIStoryboard(name: "Trannings", bundle: .main).instantiateViewController(withIdentifier: "HeartBeatDeviceViewController") as! HeartBeatDeviceViewController
         let presenter = HeartBeatDevicePresenter(view: destinationVC, heartBeatService: heartBeatService)
@@ -231,6 +231,7 @@ extension CircleTrainingDayViewController: TrainingFlowDelegate {
         cell.progressView.progress = Float(i.1+1)/Float(manager.getIterationsCount())
         
         if stop {
+            SwiftRater.incrementSignificantUsageCount()
             AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)
             disable(myButtons: [stopButton, pauseButton, playNextButton, playButton])
         }

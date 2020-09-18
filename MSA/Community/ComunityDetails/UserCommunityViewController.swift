@@ -163,7 +163,13 @@ extension UserCommunityViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        moveToUserViewController(user: presenter.userCommunityDataSource[indexPath.row])
+      let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
+           vc.viewModel = ProfileViewModel()
+           vc.viewModel?.selectedUser = presenter.userCommunityDataSource[indexPath.row]
+           let nc = UINavigationController(rootViewController: vc)
+           nc.modalPresentationStyle = .fullScreen
+           self.present(nc, animated: true, completion: nil)
+    //    moveToUserViewController(user: presenter.userCommunityDataSource[indexPath.row])
     }
 }
 

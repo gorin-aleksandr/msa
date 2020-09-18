@@ -240,8 +240,10 @@ extension ProfileSettingsViewController: UITableViewDataSource, UITableViewDeleg
     //viewModel!.selectMenu(indexPath)
     if indexPath.row == 0 {
       let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
-      vc.viewModel = viewModel
-      self.navigationController?.pushViewController(vc, animated: true)
+           vc.viewModel = viewModel
+           let nc = UINavigationController(rootViewController: vc)
+           nc.modalPresentationStyle = .fullScreen
+           self.present(nc, animated: true, completion: nil)
     } else if indexPath.row == 1 {
       let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "UserSettingsViewController") as! UserSettingsViewController
       vc.viewModel = ProfileViewModel()

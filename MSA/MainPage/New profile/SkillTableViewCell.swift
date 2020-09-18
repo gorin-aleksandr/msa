@@ -18,16 +18,17 @@ class SkillTableViewCell: UITableViewCell {
 
   static let identifier = "SkillTableViewCell"
   
+  override func prepareForReuse() {
+      super.prepareForReuse()
+    nameLabel.text = ""
+    descriptionLabel.text = ""
+    achievementLabel.text = ""
+  }
+  
     override func awakeFromNib() {
         super.awakeFromNib()
-      nameLabel.font = NewFonts.SFProDisplayBold13
-      nameLabel.textColor = UIColor.newBlack
-      descriptionLabel.font = NewFonts.SFProDisplayRegular12
-      descriptionLabel.textColor = UIColor.textGrey
-      achievementLabel.font = NewFonts.SFProDisplayBold13
-      achievementLabel.textColor = UIColor.newBlack
-      mainView.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00)
       setupUI()
+     
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,6 +36,14 @@ class SkillTableViewCell: UITableViewCell {
     }
   
   func setupUI() {
+    nameLabel.font = NewFonts.SFProDisplayBold13
+         nameLabel.textColor = UIColor.newBlack
+         descriptionLabel.font = NewFonts.SFProDisplayRegular12
+         descriptionLabel.textColor = UIColor.textGrey
+         achievementLabel.font = NewFonts.SFProDisplayBold13
+         achievementLabel.textColor = UIColor.newBlack
+         mainView.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00)
+    
     mainView.cornerRadius = screenSize.height * (8/iPhoneXHeight)
     mainView.snp.makeConstraints { (make) in
       make.top.equalTo(self.contentView.snp.top).offset(screenSize.height * (4/iPhoneXHeight))
@@ -43,10 +52,13 @@ class SkillTableViewCell: UITableViewCell {
       make.right.equalTo(self.contentView.snp.right).offset(screenSize.width * (-16/iPhoneXWidth))
        }
     nameLabel.numberOfLines = 0
-    descriptionLabel.textAlignment = .center
+    nameLabel.textAlignment = .left
     nameLabel.snp.makeConstraints { (make) in
          make.top.equalTo(self.mainView.snp.top).offset(screenSize.height * (16/iPhoneXHeight))
          make.left.equalTo(self.mainView.snp.left).offset(screenSize.width * (16/iPhoneXWidth))
+            make.width.equalTo(mainView.width/2-16)
+
+
     }
     descriptionLabel.numberOfLines = 0
     descriptionLabel.textAlignment = .center
@@ -62,12 +74,10 @@ class SkillTableViewCell: UITableViewCell {
     achievementLabel.numberOfLines = 0
     achievementLabel.textAlignment = .right
     achievementLabel.snp.makeConstraints { (make) in
-    //make.centerY.equalTo(self.contentView.snp.centerY)
     make.top.equalTo(self.contentView.snp.top).offset(screenSize.height * (5/iPhoneXHeight))
     make.bottom.equalTo(self.contentView.snp.bottom).offset(screenSize.height * (-5/iPhoneXHeight))
     make.right.equalTo(self.editButton.snp.left).offset(screenSize.width * (-16/iPhoneXWidth))
-    make.left.equalTo(self.nameLabel.snp.right).offset(screenSize.width * (10/iPhoneXWidth))
-
+      make.width.equalTo(mainView.width/2+16)
     }
   }
 

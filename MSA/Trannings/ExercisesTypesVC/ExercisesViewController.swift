@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import Firebase
+import SwiftRater
 
 class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
@@ -22,7 +23,8 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let searchController = UISearchController(searchResultsController: nil)
     var filteredArray: [Exercise] = []
-    
+    var comunityPresenter: CommunityListPresenterProtocol!
+
     var selectedDataArray: [Exercise] = [] {
         didSet {
             if let _ = trainingManager {
@@ -46,7 +48,8 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
+        comunityPresenter = CommunityListPresenter(view: self)
         searchController.hidesNavigationBarDuringPresentation = false
         configureNavContr()
         presenter.attachView(view: self)
@@ -107,6 +110,8 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func exerciseAddedN(notfication: NSNotification) {
+        SwiftRater.incrementSignificantUsageCount()
+
         AlertDialog.showAlert("Упражнение добавлено", message: "", viewController: self)
         initialDataPreparing()
     }
@@ -181,10 +186,17 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
             } else {
                 Analytics.logEvent("add_exersises", parameters: nil)
                 self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
-            }
+          }
         } else {
-          Analytics.logEvent("start_creating_own_exersise", parameters: nil)
-          self.performSegue(withIdentifier: "newExercise", sender: nil)
+          let own = presenter.getOwnExercises().filter({$0.trainerId == AuthModule.currUser.id})
+          if InAppPurchasesService.shared.currentSubscription == nil && own.count > 2 {
+            let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+            destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+            self.present(destinationVC, animated: true, completion: nil)
+          } else {
+            Analytics.logEvent("start_creating_own_exersise", parameters: nil)
+            self.performSegue(withIdentifier: "newExercise", sender: nil)
+          }
         }
     }
     
@@ -409,14 +421,48 @@ extension ExercisesViewController: UISearchResultsUpdating {
     
 }
 
-extension ExercisesViewController: TrainingsViewDelegate {
-    func synced() {}
+extension ExercisesViewController: CommunityListViewProtocol{
+  func updateTableView() {
     
-    func trainingEdited() {}
+  }
+  
+  func configureFilterView(dataSource: [String], selectedFilterIndex: Int) {
     
-    func trainingsLoaded() {}
+  }
+  
+  func setCityFilterTextField(name: String?) {
     
-    func templateCreated() {}
+  }
+  
+  func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
     
-    func templatesLoaded() {}
+  }
+  
+  func setErrorViewHidden(_ isHidden: Bool) {
+    
+  }
+  
+  func setLoaderVisible(_ visible: Bool) {
+    
+  }
+  
+  func stopLoadingViewState() {
+    
+  }
+  
+  func showGeneralAlert() {
+    
+  }
+  
+  func showRestoreAlert() {
+    
+  }
+  
+  func showIAP() {
+    
+  }
+  
+  func hideAccessDeniedView() {
+    
+  }
 }

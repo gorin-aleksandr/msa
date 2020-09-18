@@ -40,24 +40,37 @@ class IAPViewController: UIViewController, IAPViewProtocol {
   @IBOutlet weak var fourthAdvantageLabel: UILabel!
   @IBOutlet weak var fourthAdvantageImageView: UIImageView!
   
+  let freeAccessLabel = UILabel()
+
   var oneMonthSubscriptionButton = UIButton()
   var twelveMonthSubscriptionButton = UIButton()
   var fullSubscriptionButton = UIButton()
   var toolTipImageView = UIImageView()
   var subscribeButton = UIButton()
   var subscribeLabel = UILabel()
-  
+  var selectedIndex = 1
   var presenter: IAPPresenterProtocol!
-  
+  var currentPrices:[NSDecimalNumber] = []
+ 
   override func viewDidLoad() {
     super.viewDidLoad()
     //        setPromotionText()
-    //        presenter.fetchSubscriptions()
+    SVProgressHUD.show()
+    presenter.fetchSubscriptions()
     //        configureTableView()
     //        configureNavigationBar()
-    InAppPurchasesService.shared.loadProductOptions()
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(handlePurchaseSuccessfull(notification:)),
+                                           name: InAppPurchasesService.purchaseSuccessfulNotification,
+                                           object: nil)
+
 
     setupUI()
+  }
+  
+   override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    SVProgressHUD.dismiss()
   }
   
   func setupUI() {
@@ -76,6 +89,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.left.equalTo(self.backgroundImageView.snp.left)
     }
     
+    closeButton.addTarget(self, action: #selector(closeButtonAction), for: .touchUpInside)
     closeButton.snp.makeConstraints { (make) in
       make.top.equalTo(self.backgroundImageView.snp.top).offset(screenSize.height * (20/iPhoneXHeight))
       make.right.equalTo(self.backgroundImageView.snp.right).offset(screenSize.height * (-20/iPhoneXHeight))
@@ -88,7 +102,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.height.width.equalTo(screenSize.height * (58/iPhoneXHeight))
     }
     
-    titleLabel.text = "Получи доступ к полному функционалу для спортсмена"
+    titleLabel.text = AuthModule.currUser.userType == .trainer ? "Получи доступ к полному функционалу для тренера" : "Получи доступ к полному функционалу для спортсмена"
     titleLabel.font = NewFonts.SFProDisplayBold14
     titleLabel.textAlignment = .center
     titleLabel.textColor = .white
@@ -114,7 +128,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.height.width.equalTo(screenSize.height * (24/iPhoneXHeight))
     }
     
-    firstAdvantageLabel.text = "Открытое сообщество — знакомься, общайся и делись опытом"
+    firstAdvantageLabel.text = AuthModule.currUser.userType == .trainer ? "Открытое сообщество — знакомься, общайся и делись опытом" : "Открытое сообщество — найди своего персонального наставника"
     firstAdvantageLabel.textColor = .white
     firstAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     firstAdvantageLabel.numberOfLines = 0
@@ -141,7 +155,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.height.width.equalTo(screenSize.height * (24/iPhoneXHeight))
     }
     
-    secondAdvantageLabel.text = "Создавай неограниченное количество тренировок для клиентов"
+    secondAdvantageLabel.text = AuthModule.currUser.userType == .trainer ? "Создавай неограниченное количество тренировок для клиентов" : "Программа тренировок в смартфоне — тренируйся, где тебе удобно"
     secondAdvantageLabel.textColor = .white
     secondAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     secondAdvantageLabel.numberOfLines = 0
@@ -168,7 +182,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.height.width.equalTo(screenSize.height * (24/iPhoneXHeight))
     }
     
-    thirdAdvantageLabel.text = "Контролируй параметры — все изменения тела в удобном графике"
+    thirdAdvantageLabel.text = AuthModule.currUser.userType == .trainer ? "Контролируй параметры — все изменения тела в удобном графике" : "Отслеживай результат — все изменения тела в удобном графике"
     thirdAdvantageLabel.textColor = .white
     thirdAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     thirdAdvantageLabel.numberOfLines = 0
@@ -194,7 +208,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.height.width.equalTo(screenSize.height * (24/iPhoneXHeight))
     }
     
-    fourthAdvantageLabel.text = "Включай креатив и добавляй собственные упражнения с фото и видео"
+    fourthAdvantageLabel.text = AuthModule.currUser.userType == .trainer ? "Включай креатив и добавляй собственные упражнения с фото и видео" : "Получай консультации — общайся с тренером во встроенном мессенджере"
     fourthAdvantageLabel.textColor = .white
     fourthAdvantageLabel.font = NewFonts.SFProDisplayRegular14
     fourthAdvantageLabel.numberOfLines = 0
@@ -210,9 +224,11 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     if AuthModule.currUser.userType == .trainer {
       twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthTrainer"), for: .normal)
       twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthTrainerSelected"), for: .selected)
+      twelveMonthSubscriptionButton.isSelected = true
     } else {
       twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthSportsman"), for: .normal)
       twelveMonthSubscriptionButton.setImage(UIImage(named:"twelveMonthSportsmanSelected"), for: .selected)
+      twelveMonthSubscriptionButton.isSelected = true
     }
     twelveMonthSubscriptionButton.addTarget(self, action: #selector(twelveMonthSelected), for: .touchUpInside)
     twelveMonthSubscriptionButton.snp.makeConstraints { (make) in
@@ -266,6 +282,8 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     }
     
     self.view.addSubview(subscribeButton)
+    
+    subscribeButton.addTarget(self, action: #selector(purchaseAction), for: .touchUpInside)
     subscribeButton.setBackgroundColor(color: UIColor(red: 0.341, green: 0.6, blue: 0.361, alpha: 1), forState: .normal)
     subscribeButton.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
     subscribeButton.maskToBounds = true
@@ -277,7 +295,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     }
     
     subscribeButton.addSubview(subscribeLabel)
-    subscribeLabel.text = "Начать пробный период на 3 дня затем 5.99$ в месяц"
+    subscribeLabel.text = "Попробовать 3 дня бесплатно*"
     subscribeLabel.numberOfLines = 0
     subscribeLabel.font = NewFonts.SFProDisplayBold14
     subscribeLabel.textAlignment = .center
@@ -299,10 +317,9 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
     }
     
-    let freeAccessLabel = UILabel()
     self.view.addSubview(freeAccessLabel)
     
-    freeAccessLabel.text = "Попробуйте 3 дня бесплатно*"
+    freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $29,99/год"
     freeAccessLabel.font = NewFonts.SFProDisplayRegular10
     freeAccessLabel.numberOfLines = 0
     freeAccessLabel.textAlignment = .center
@@ -353,7 +370,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
   
   func showAlert(error: String) {
     let alertController = UIAlertController(title: "Ошибка при загрузке встроеных покупок", message: error, preferredStyle: .alert)
-    let repeatAction = UIAlertAction(title: "Повторить", style: .default) { (action) in
+    let repeatAction = UIAlertAction(title: "Повторить", style: .default) { (action) in   SVProgressHUD.show()
       self.presenter.fetchSubscriptions()
     }
     let cancelAction = UIAlertAction(title: "Отменить", style: .default) { (action) in }
@@ -362,22 +379,58 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     self.present(alertController, animated: true, completion: nil)
   }
   
+  @objc func handlePurchaseSuccessfull(notification: Notification) {
+      self.dismiss(animated: true, completion: nil)
+  }
+  
   
   private func setPromotionText() {
     //promotionTextLabel.text = "Саурде!"presenter.setPromotionText()
   }
   
   @objc func oneMonthSelected() {
-    oneMonthSubscriptionButton.isSelected = !oneMonthSubscriptionButton.isSelected
-    presenter.userSelectedProductAt(index: 0)
+    if !oneMonthSubscriptionButton.isSelected {
+      oneMonthSubscriptionButton.isSelected = true
+      twelveMonthSubscriptionButton.isSelected = false
+      fullSubscriptionButton.isSelected = false
+      freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[0])/год"
+      selectedIndex = 0
+    }
   }
   
   @objc func twelveMonthSelected() {
-    twelveMonthSubscriptionButton.isSelected = !twelveMonthSubscriptionButton.isSelected
+    if !twelveMonthSubscriptionButton.isSelected {
+      twelveMonthSubscriptionButton.isSelected = true
+      oneMonthSubscriptionButton.isSelected = false
+      fullSubscriptionButton.isSelected = false
+      freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[1])/год"
+      selectedIndex = 1
+    }
   }
   
   @objc func fullSubscriptionSelected() {
-    fullSubscriptionButton.isSelected = !fullSubscriptionButton.isSelected
+    if !fullSubscriptionButton.isSelected {
+      fullSubscriptionButton.isSelected = true
+      oneMonthSubscriptionButton.isSelected = false
+      twelveMonthSubscriptionButton.isSelected = false
+      freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[2])/год"
+      selectedIndex = 2
+    }
+  }
+  
+  @objc func closeButtonAction() {
+    self.dismiss(animated: true, completion: nil)
+  }
+  
+  @objc func purchaseAction() {
+    presenter.userSelectedProductAt(index: selectedIndex)
+  }
+  
+  func setupButtons() {
+    currentPrices =  presenter.getProductsDataSource().map({ (item) -> NSDecimalNumber in
+      return item.product.price
+    })
+    freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[1])/год"
   }
   
   @objc func showDetailedSubscriptionInfo() {
@@ -393,6 +446,8 @@ class IAPViewController: UIViewController, IAPViewProtocol {
   
   func reloadView() {
     //tableView.reloadData()
+    SVProgressHUD.dismiss()
+    setupButtons()
   }
   
   func setLoaderVisible(_ visible: Bool) {

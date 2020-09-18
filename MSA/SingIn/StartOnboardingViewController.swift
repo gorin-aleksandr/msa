@@ -91,6 +91,13 @@ class StartOnboardingViewController: UIViewController {
     promoScrollView.contentSize.height = 1.0 // disable vertical scroll
   }
   
+  func refreshScrollView() {
+    slides = createSlides()
+    setupSlideScrollView(slides: slides)
+    promoPageControl.numberOfPages = slides.count
+    promoPageControl.currentPage = 0
+  }
+  
   func setupConstraints() {
     backgroundImageView.snp.makeConstraints { (make) in
       make.top.equalTo(self.view.snp.top)
@@ -154,12 +161,7 @@ class StartOnboardingViewController: UIViewController {
       make.right.equalTo(self.backgroundView.snp.right)
       make.left.equalTo(self.backgroundView.snp.left)
     }
-    promoScrollView.snp.makeConstraints { (make) in
-      make.top.equalTo(self.view.snp.top)
-      make.bottom.equalTo(backgroundView.snp.top)
-      make.right.equalTo(self.backgroundView.snp.right)
-      make.left.equalTo(self.backgroundView.snp.left)
-    }
+
     
     rightDirectionImageView.snp.makeConstraints { (make) in
       make.centerY.equalTo(self.startButton.snp.centerY)
@@ -196,6 +198,8 @@ class StartOnboardingViewController: UIViewController {
       sportsmanButton.isSelected = false
       startButton.isSelected = true
       viewModel.updateUserType(value: "ТРЕНЕР")
+      promoScrollView.subviews.forEach({ $0.removeFromSuperview() })
+      refreshScrollView()
     }
   }
   
@@ -207,6 +211,9 @@ class StartOnboardingViewController: UIViewController {
       trainerButton.isSelected = false
       startButton.isSelected = true
       viewModel.updateUserType(value: "СПОРТСМЕН")
+      promoScrollView.subviews.forEach({ $0.removeFromSuperview() })
+      refreshScrollView()
+      refreshScrollView()
     }
   }
   
@@ -228,29 +235,37 @@ class StartOnboardingViewController: UIViewController {
   func createSlides() -> [PromoView] {
     
     let slide1 = Bundle.main.loadNibNamed("PromoView", owner: self, options: nil)?.first as! PromoView
-    slide1.titleLabel.text = "Создание персональных тренировок"
-    slide1.descriptionLabel.text = "Находите ваших клиентов и создавайте персональный программы тренировок и питания"
+    slide1.titleLabel.text = sportsmanButton.isSelected ? "Найди своего наставника" : "Получай клиентов онлайн"
+    slide1.descriptionLabel.text = sportsmanButton.isSelected ? "Большая база тренеров, которые помогут достичь результата" : "Заполни профиль и принимай заявки прямо в приложении"
     slide1.titleLabel.font = NewFonts.SFProDisplayBold32
     slide1.descriptionLabel.font = NewFonts.SFProDisplayRegular16
     slide1.titleLabel.textColor = .white
     slide1.descriptionLabel.textColor = .white
     
     let slide2 = Bundle.main.loadNibNamed("PromoView", owner: self, options: nil)?.first as! PromoView
-    slide2.titleLabel.text = "A real-life bear"
-    slide2.descriptionLabel.text = "Did you know that Winnie the chubby little cubby was based on a real, young bear in London"
+    slide2.titleLabel.text = sportsmanButton.isSelected ?  "Получи индивидуальную программу" : "Создавай программы быстро"
+    slide2.descriptionLabel.text = sportsmanButton.isSelected ? "Начни строить свое идеальное тело уже сегодня" : "Используй готовые упражнения из базы приложения"
     slide2.titleLabel.font = NewFonts.SFProDisplayBold32
     slide2.descriptionLabel.font = NewFonts.SFProDisplayRegular16
     slide2.titleLabel.textColor = .white
     slide2.descriptionLabel.textColor = .white
     
     let slide3 = Bundle.main.loadNibNamed("PromoView", owner: self, options: nil)?.first as! PromoView
-    slide3.titleLabel.text = "A real-life bear"
-    slide3.descriptionLabel.text = "Did you know that Winnie the chubby little cubby was based on a real, young bear in London"
+    slide3.titleLabel.text = sportsmanButton.isSelected ? "Сбрасывай лишнее, наращивай нужное" : "Экономь время, увеличивай доход"
+    slide3.descriptionLabel.text = sportsmanButton.isSelected ? "Замеряй и отслеживай свои параметры в удобном графике" : "Веди всех своих клиентов в одном приложении"
     slide3.titleLabel.font = NewFonts.SFProDisplayBold32
     slide3.descriptionLabel.font = NewFonts.SFProDisplayRegular16
     slide3.titleLabel.textColor = .white
     slide3.descriptionLabel.textColor = .white
-    return [slide1, slide2, slide3]
+    
+    let slide4 = Bundle.main.loadNibNamed("PromoView", owner: self, options: nil)?.first as! PromoView
+    slide4.titleLabel.text = sportsmanButton.isSelected ? "Получай консультации" : "Добавляй собственные упражнения"
+    slide4.descriptionLabel.text = sportsmanButton.isSelected ? "Общайся с наставником во встроенном чате приложения" : "Пиши описание, добавляй фото, видео и ссылку на YouTube"
+    slide4.titleLabel.font = NewFonts.SFProDisplayBold32
+    slide4.descriptionLabel.font = NewFonts.SFProDisplayRegular16
+    slide4.titleLabel.textColor = .white
+    slide4.descriptionLabel.textColor = .white
+    return [slide1, slide2, slide3,slide4]
   }
   
   func setupSlideScrollView(slides : [PromoView]) {

@@ -40,4 +40,5 @@ target 'MSA' do
   pod 'SnapKit', '~> 5.0.0'
   pod 'Instabug'
   pod 'Bugsnag'
+  pod "SwiftRater"
 end

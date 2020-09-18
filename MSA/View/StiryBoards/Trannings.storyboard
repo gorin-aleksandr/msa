@@ -365,7 +365,6 @@
             <objects>
                 <viewController storyboardIdentifier="MyTranningsViewController" hidesBottomBarWhenPushed="YES" id="E78-Q0-tQd" customClass="MyTranningsViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rf8-CC-f5Y">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHj-Hs-h6Q">
@@ -479,7 +478,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавить неделю/день" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Mh-OR-CHB">
-                                        <rect key="frame" x="55" y="14.5" width="175" height="19"/>
+                                        <rect key="frame" x="55" y="14.5" width="187.5" height="19"/>
                                         <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -560,7 +559,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" width="50" style="plain" id="IP1-ga-2if">
-                            <view key="customView" contentMode="scaleToFill" id="2Mr-uA-KPU">
+                            <view key="customView" contentMode="scaleToFill" misplaced="YES" id="2Mr-uA-KPU">
                                 <rect key="frame" x="276" y="5.5" width="83" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -792,19 +791,11 @@
                                 <action selector="backButtonAction:" destination="c5c-HV-PAe" id="rFR-lc-hWQ"/>
                             </connections>
                         </barButtonItem>
-                        <rightBarButtonItems>
-                            <barButtonItem image="save_icon" id="DVG-Yy-ugY">
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="saveButtonAction:" destination="c5c-HV-PAe" id="GTr-FL-HIt"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="CircleGrey" id="DxY-8n-m5h">
-                                <inset key="imageInsets" minX="17" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="largeContentSizeImageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
-                                <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" image="CircleGrey" id="DxY-8n-m5h">
+                            <inset key="imageInsets" minX="17" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="largeContentSizeImageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
+                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -1178,7 +1169,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heartbeat-500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGg-Mi-sE1">
-                                                    <rect key="frame" x="66" y="8" width="110.5" height="20"/>
+                                                    <rect key="frame" x="66" y="8" width="120" height="20"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="17"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1191,7 +1182,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="S/N: 648361-367676" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wv1-WQ-oAw">
-                                                    <rect key="frame" x="66" y="32" width="121.5" height="16"/>
+                                                    <rect key="frame" x="66" y="32" width="123" height="16"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Regular" family="Rubik" pointSize="13"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1248,7 +1239,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Вы можете изменить название Вашего устройства" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZc-Mn-dhE">
-                                <rect key="frame" x="37.5" y="60" width="300" height="37.5"/>
+                                <rect key="frame" x="37.5" y="60" width="300" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="DyP-If-aiN"/>
                                 </constraints>
@@ -1257,7 +1248,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DHp-xq-49D" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                <rect key="frame" x="32" y="131.5" width="311" height="38"/>
+                                <rect key="frame" x="32" y="132" width="311" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="Iha-EL-U87"/>
                                 </constraints>
@@ -1300,7 +1291,7 @@
                                 </userDefinedRuntimeAttributes>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2MS-Aw-LQP">
-                                <rect key="frame" x="32" y="209.5" width="311" height="48"/>
+                                <rect key="frame" x="32" y="210" width="311" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="HeQ-cp-g78"/>
                                 </constraints>
@@ -1607,7 +1598,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="не запускать секундомер при 00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fx1-zD-3ov">
-                                <rect key="frame" x="93" y="453" width="201.5" height="15"/>
+                                <rect key="frame" x="89" y="453" width="209.5" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="AZ9-TW-2Dn"/>
                                 </constraints>
@@ -1620,7 +1611,7 @@
                                 <color key="tintColor" red="0.0" green="0.1843137255" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeQ-Yt-1b1">
-                                <rect key="frame" x="66" y="449.5" width="22" height="22"/>
+                                <rect key="frame" x="62" y="449.5" width="22" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="22" id="hSO-vg-RWH"/>
                                     <constraint firstAttribute="height" constant="22" id="l6R-u7-6DT"/>
@@ -1738,7 +1729,6 @@
         <image name="plus_white" width="16" height="16"/>
         <image name="pulse-ava" width="48" height="48"/>
         <image name="rest_yellow_56px " width="48" height="48"/>
-        <image name="save_icon" width="20" height="20"/>
         <image name="stop_red_56px " width="48" height="48"/>
         <image name="title_timer" width="71" height="17"/>
         <image name="title_timer_1" width="70" height="22"/>

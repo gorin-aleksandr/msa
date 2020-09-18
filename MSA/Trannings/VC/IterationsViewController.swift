@@ -9,6 +9,7 @@
 import UIKit
 import CoreBluetooth
 import SwipeCellKit
+import SwiftRater
 
 class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
 
@@ -106,6 +107,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
             return
         }
         if currentIteration == count - 1 && state == .rest {
+            SwiftRater.incrementSignificantUsageCount()
             tableView.isUserInteractionEnabled = true
             manager.fullStop()
             AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)
@@ -117,6 +119,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     @objc private func stopIteration(_ sender: UIButton) {
+        SwiftRater.incrementSignificantUsageCount()
         tableView.isUserInteractionEnabled = true
         manager.fullStop()
         AlertDialog.showAlert("Тренировка окончена", message: "", viewController: self)

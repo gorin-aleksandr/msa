@@ -822,6 +822,7 @@ extension ProfileViewController {
       userRef.child(key).child("coachDetail").child("achievements").observeSingleEvent(of: .value, with: { snapshot in
         if let dict = snapshot.value as? Dictionary<String, Any> {
           print(dict)
+          self.selectedAchievements = []
           for key in dict.keys {
             let item = dict[key] as? Dictionary<String, Any>
             self.selectedAchievements.append((id: key, name: item?["name"] as! String, rank: item?["rank"] as! String, achieve: item?["achievement"] as! String, year: item?["year"] as! String))

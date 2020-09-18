@@ -52,7 +52,7 @@ class CommunityViewModel {
   func mySportsmanCell(_ tableView: UITableView, _ indexPath: IndexPath) -> SportsmanTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: SportsmanTableViewCell.identifier) as! SportsmanTableViewCell
     let user = sortedUsers[indexPath.row]
-    cell.nameLabel.text = "\(user.firstName ?? "") \(user.lastName ?? "")"
+    cell.nameLabel.text = "\(user.lastName ?? "") \(user.firstName ?? "")"
     cell.descriptionLabel.text = user.purpose
     if let url = user.avatar {
       cell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "avatar-placeholder"), options: .allowInvalidSSLCertificates, completed: nil)

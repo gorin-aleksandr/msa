@@ -345,9 +345,10 @@ extension CommunityListViewController: UITableViewDelegate, UITableViewDataSourc
       let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
       vc.viewModel = ProfileViewModel()
       vc.viewModel?.selectedUser = presenter.communityDataSource[indexPath.row]
-      self.navigationController?.pushViewController(vc, animated: true)
-
-        //moveToUserViewController(with: presenter.communityDataSource[indexPath.row])
+      let nc = UINavigationController(rootViewController: vc)
+      nc.modalPresentationStyle = .fullScreen
+      self.present(nc, animated: true, completion: nil)
+      //moveToUserViewController(with: presenter.communityDataSource[indexPath.row])
     }
 }
 

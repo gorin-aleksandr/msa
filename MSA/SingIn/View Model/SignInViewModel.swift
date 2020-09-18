@@ -71,6 +71,7 @@ class SignInViewModel {
         UserDataManager().getUser(callback: { (user, error) in
           if let user = user {
             Analytics.logEvent("log_in", parameters: nil)
+            self.setUser(user: user)
             success()
           } else {
             failure("Ошибка авторизации")
