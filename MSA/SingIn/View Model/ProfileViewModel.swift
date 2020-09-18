@@ -139,6 +139,7 @@ class ProfileViewModel {
       } else {
         success()
       }
+      success()
     })
   }
   

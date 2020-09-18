@@ -19,7 +19,9 @@ class MailLoginViewController: UIViewController {
   @IBOutlet weak var mainBackgroundImageView: UIImageView!
 
   var viewModel: SignInViewModel?
-  
+  var presenter = SignUpPresenter(signUp: UserDataManager())
+  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -164,3 +166,5 @@ extension MailLoginViewController: UITextFieldDelegate {
     }
   }
 }
+
+

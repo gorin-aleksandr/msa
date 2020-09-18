@@ -21,6 +21,7 @@ class EmailPasswordViewController: UIViewController {
   
   private let presenter = SignUpPresenter(signUp: UserDataManager())
   private let signInpresenter = UserSignInPresenter(auth: AuthModule())
+  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
   var viewModel: SignInViewModel?
   
@@ -28,7 +29,7 @@ class EmailPasswordViewController: UIViewController {
     super.viewDidLoad()
     title = "Регистрация"
     setupUI()
-    presenter.attachView(view: self)
+    signInpresenter.attachView(view: self)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -225,8 +226,6 @@ class EmailPasswordViewController: UIViewController {
           
           self.signInpresenter.registerUser(email: email, password: AuthModule.pass, success: {
             SVProgressHUD.dismiss()
-            let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
-            self.navigationController?.pushViewController(nextViewController, animated: true)
           }) { (error) in
             SVProgressHUD.dismiss()
             AlertDialog.showAlert("Ошибка", message: error, viewController: self)
@@ -288,8 +287,40 @@ extension EmailPasswordViewController: SignUpViewProtocol {
   func finishLoading() {
     //      activityIndicator.stopAnimating()
   }
-  func setUser(user: UserVO) {}
+  //func setUser(user: UserVO) {}
   func userCreated() {}
   func userNotCreated() {}
 }
 
+extension EmailPasswordViewController: SignInViewProtocol {
+
+    func setUser(user: UserVO) {
+        AuthModule.currUser = user
+        presenter.saveUser(context: context, user: AuthModule.currUser)
+    }
+    func setNoUser() {
+        
+    }
+    func notRegistrated(resp: String) {
+        AlertDialog.showAlert("Ошибка", message: resp, viewController: self)
+    }
+    func notLogged(resp: String) {
+        
+    }
+    func loggedWithFacebook() {
+        
+    }
+    func logged() {
+        
+    }
+    func registrated() {
+      SVProgressHUD.show()
+      presenter.createNewUser(newUser: AuthModule.currUser, success: {
+        SVProgressHUD.dismiss()
+        let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+      }) { (value) in
+        AlertDialog.showAlert("Ошибка", message: value, viewController: self)
+      }
+    }
+}
