@@ -83,7 +83,7 @@ class StartOnboardingViewController: UIViewController {
     sportsmanButton.addTarget(self, action: #selector(sportsmanButtonAction(_:)), for: .touchUpInside)
     startButton.addTarget(self, action: #selector(startButtonAction(_:)), for: .touchUpInside)
     slides = createSlides()
-    setupSlideScrollView(slides: slides)
+    //setupSlideScrollView(slides: slides)
     promoPageControl.numberOfPages = slides.count
     promoPageControl.currentPage = 0
     view.bringSubviewToFront(promoPageControl)
@@ -282,6 +282,9 @@ class StartOnboardingViewController: UIViewController {
 
 extension StartOnboardingViewController: UIScrollViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y != 0 {
+        scrollView.contentOffset.y = 0
+    }
     let pageIndex = round(scrollView.contentOffset.x/view.frame.width)
     promoPageControl.currentPage = Int(pageIndex)
   }

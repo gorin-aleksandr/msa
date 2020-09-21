@@ -100,15 +100,11 @@ extension UsersSportsmansViewController: UITableViewDataSource, UITableViewDeleg
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if viewModel!.selectedUser?.id != AuthModule.currUser.id {
-   
-    } else {
-      let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
-      nextViewController.viewModel.selectedUser = viewModel!.sortedUsers[indexPath.row]
-      self.navigationController?.pushViewController(nextViewController, animated: true)
+    if viewModel!.selectedUser == nil {
+       let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+       nextViewController.viewModel.selectedUser = viewModel!.sortedUsers[indexPath.row]
+       self.navigationController?.pushViewController(nextViewController, animated: true)
     }
-    
-
   }
 }
 

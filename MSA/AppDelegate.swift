@@ -74,9 +74,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SwiftRater.daysUntilPrompt = 7
     SwiftRater.usesUntilPrompt = 5
     SwiftRater.significantUsesUntilPrompt = 3
-    SwiftRater.daysBeforeReminding = 1
+    SwiftRater.daysBeforeReminding = 7
     SwiftRater.showLaterButton = true
-    SwiftRater.debugMode = true
+    SwiftRater.debugMode = false
     SwiftRater.countryCode = "ru"
     SwiftRater.appLaunched()
     
@@ -117,6 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationDidBecomeActive(_ application: UIApplication) {
     
     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
+    print("Timer value = \(Int(Date().timeIntervalSince1970)-timeInBackground))")
     UIApplication.shared.applicationIconBadgeNumber = 0
     let current = UNUserNotificationCenter.current()
     
@@ -273,7 +274,6 @@ extension AppDelegate: SKPaymentTransactionObserver {
         } else {
           print("Error appeared")
         }
-        
       }
     }
   }

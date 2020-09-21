@@ -103,6 +103,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func nextIterationstate(_ sender: UIButton) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+
         guard let count = manager.getCurrentExercise()?.iterations.count else {
             return
         }
@@ -119,6 +122,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 
     @objc private func stopIteration(_ sender: UIButton) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+       
         SwiftRater.incrementSignificantUsageCount()
         tableView.isUserInteractionEnabled = true
         manager.fullStop()
@@ -128,6 +134,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func pauseIteration(_ sender: UIButton) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+
         if iterationsPresent() {
             manager.pauseIteration()
             disable(myButtons: [pauseButton, playNextButton])
@@ -135,6 +144,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func resumeIteration(_ sender: UIButton) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+
         if iterationsPresent() {
             if currentIteration == 0 && state == .work {
                 manager.startExercise(from: 0)
@@ -148,6 +160,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     @objc private func startIteration(_ sender: UIButton) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
+
         manager.startExercise(from: sender.tag)
         disable(myButtons: [playButton])
     }

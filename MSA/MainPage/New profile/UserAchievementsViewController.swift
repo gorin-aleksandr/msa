@@ -122,6 +122,7 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
       cell.nameLabel.text = achieve.name
       cell.descriptionLabel.text = "\(achieve.yearFrom) - \(achieve.yearTo)"
       cell.editButton.isHidden = viewModel.selectedUser != nil ? true : false
+      cell.achievementLabel.text = ""
       cell.selectionStyle = .none
       cell.editButton.tag = indexPath.section
       cell.editButton.imageView?.tag = indexPath.row
@@ -138,10 +139,13 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
       let cell = tableView.dequeueReusableCell(withIdentifier: SkillTableViewCell.identifier, for: indexPath) as! SkillTableViewCell
       let achieve = viewModel.selectedCertificates[indexPath.row]
       cell.nameLabel.text = achieve.name
+      cell.achievementLabel.text = ""
+      cell.descriptionLabel.text = ""
       cell.editButton.isHidden = viewModel.selectedUser != nil ? true : false
       cell.selectionStyle = .none
       cell.editButton.tag = indexPath.section
       cell.editButton.imageView?.tag = indexPath.row
+      cell.achievementLabel.text = ""
       // cell.editButton.addTarget(self, action: #selector(editButtonAction(_:)), for: .touchUpInside)
       return cell
     }

@@ -36,7 +36,6 @@ class UserSettingsViewController: UIViewController {
     super.viewWillDisappear(true)
     navigationController?.setNavigationBarHidden(true, animated: true)
     viewModel!.resetSelectedValues()
-    
   }
   
   func setupUI() {

@@ -9,6 +9,7 @@ import UIKit
 import SVProgressHUD
 import Bugsnag
 import Firebase
+import SwiftRater
 
 class HomeViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
@@ -41,6 +42,11 @@ class HomeViewController: UIViewController {
          self.collectionView.reloadData()
        })
     }
+  }
+ 
+  override func viewDidAppear(_ animated: Bool) {
+         super.viewDidAppear(animated)
+         SwiftRater.check()
   }
   
   override func viewWillAppear(_ animated: Bool) {
