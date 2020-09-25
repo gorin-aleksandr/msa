@@ -92,7 +92,7 @@ extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionVi
     cell.c.isHidden = true
     cell.activityIndicator.startAnimating()
     let item = viewModel?.selectedUser?.gallery?[indexPath.row] != nil ? viewModel?.selectedUser?.gallery?[indexPath.row] : presenter.getItems()[index]
-    cell.photoImageView.sd_setImage(with: URL(string: item?.imageUrl ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: { (img, err, cashe, url) in
+    cell.photoImageView.sd_setImage(with: URL(string: item?.imageUrl ?? ""), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: { (img, err, cashe, url) in
         cell.activityIndicator.stopAnimating()
       })
      

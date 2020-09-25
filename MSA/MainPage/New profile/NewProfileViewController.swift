@@ -113,29 +113,33 @@ class NewProfileViewController: UIViewController {
       make.centerX.equalTo(self.view.snp.centerX)
     }
     
-      if let user = viewModel?.selectedUser {
-        tagList.isHidden = user.userType == .sportsman ? true : false
-        if let avatar = user.avatar {
-          photoImageView.sd_setImage(with: URL(string: avatar), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
-          }
-       nameLabel.text = "\(viewModel?.selectedUser?.firstName ?? "") \(viewModel?.selectedUser?.lastName ?? "")"
-       if viewModel?.selectedUser?.userType == .trainer {
-         cityLabel.text = "Тренер \(viewModel?.selectedUser?.city ?? "")"
-       } else {
-         cityLabel.text = "Спортсмен \(viewModel?.selectedUser?.city ?? "")"
-       }
-         
+    if let user = viewModel?.selectedUser {
+      tagList.isHidden = user.userType == .sportsman ? true : false
+      if let avatar = user.avatar {
+        photoImageView.sd_setImage(with: URL(string: avatar), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
+      }  else {
+        photoImageView.image = UIImage(named:"Group-1")
+      }
+      nameLabel.text = "\(viewModel?.selectedUser?.firstName ?? "") \(viewModel?.selectedUser?.lastName ?? "")"
+      if viewModel?.selectedUser?.userType == .trainer {
+        cityLabel.text = "Тренер \(viewModel?.selectedUser?.city ?? "")"
+      } else {
+        cityLabel.text = "Спортсмен \(viewModel?.selectedUser?.city ?? "")"
+      }
+      
     } else {
       if let url = AuthModule.currUser.avatar {
-          photoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
-        }
-        nameLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
-        tagList.isHidden = AuthModule.currUser.userType == .sportsman ? true : false
-        if AuthModule.currUser.userType == .trainer {
-          cityLabel.text = "Тренер \(AuthModule.currUser.city ?? "")"
-        } else {
-          cityLabel.text = "Спортсмен \(AuthModule.currUser.city ?? "")"
-        }
+        photoImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
+      } else {
+        photoImageView.image = UIImage(named:"Group-1")
+      }
+      nameLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
+      tagList.isHidden = AuthModule.currUser.userType == .sportsman ? true : false
+      if AuthModule.currUser.userType == .trainer {
+        cityLabel.text = "Тренер \(AuthModule.currUser.city ?? "")"
+      } else {
+        cityLabel.text = "Спортсмен \(AuthModule.currUser.city ?? "")"
+      }
     }
     
     photoImageView.cornerRadius = 32

@@ -68,7 +68,6 @@ class MeasurementViewModel {
       startDate = Calendar.current.date(byAdding: .day, value: 14, to: startDate!)!
       endDate = Calendar.current.date(byAdding: .day, value: 14, to: endDate!)!
       currentWeek = Date.dates(from: startDate!, to: endDate!)
-
     } else {
         startDate = Calendar.current.date(byAdding: .day, value: -14, to: currentWeekDay)!
         endDate = Date()
@@ -194,7 +193,7 @@ class MeasurementViewModel {
   func chartCell(tableView: UITableView, indexPath: IndexPath) -> ChartTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "ChartTableViewCell") as! ChartTableViewCell
     cell.xMin = xMins[currentTypeId]
-    cell.xMax = xMax[currentTypeId]
+    cell.xMax = xMax[currentTypeId] //selectedMeasurements.map { $0.value }.max()
     let dateRange = selectedDatesRange.isEmpty ? currentWeek! : selectedDatesRange
     cell.setDataCount(days: dateRange, measurements: selectedMeasurements, unit: measureUnits[currentTypeId])
     cell.selectionStyle = .none

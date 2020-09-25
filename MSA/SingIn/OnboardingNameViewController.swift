@@ -8,6 +8,8 @@
 
 import UIKit
 import SearchTextField
+import SVProgressHUD
+
 class OnboardingNameViewController: UIViewController {
   
   @IBOutlet weak var titleLabel: UILabel!
@@ -18,9 +20,11 @@ class OnboardingNameViewController: UIViewController {
   @IBOutlet weak var logoImageView: UIImageView!
 
   var viewModel: SignInViewModel?
-  
+  let presenter = SignUpPresenter(signUp: UserDataManager())
+
   override func viewDidLoad() {
     super.viewDidLoad()
+    presenter.attachView(view: self)
     setupUI()
   }
   
@@ -140,9 +144,25 @@ class OnboardingNameViewController: UIViewController {
         nextViewController.viewModel!.signInDataControllerType = .city
         self.navigationController?.pushViewController(nextViewController, animated: true)
       } else {
-        let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "MainSignInViewController") as! MainSignInViewController
-        nextViewController.viewModel = viewModel
-        self.navigationController?.pushViewController(nextViewController, animated: true)
+        if viewModel!.flowType == .new {
+          let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "MainSignInViewController") as! MainSignInViewController
+          nextViewController.viewModel = viewModel
+          self.navigationController?.pushViewController(nextViewController, animated: true)
+        } else if viewModel!.flowType == .update {
+          AuthModule.currUser.firstName = viewModel!.userName
+          AuthModule.currUser.lastName = viewModel!.userLastName
+          AuthModule.currUser.type = viewModel!.userType
+          AuthModule.currUser.city = viewModel!.userCity
+          
+          SVProgressHUD.show()
+          presenter.createNewUser(newUser: AuthModule.currUser, success: {
+            SVProgressHUD.dismiss()
+            let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
+            self.navigationController?.pushViewController(nextViewController, animated: true)
+          }) { (value) in
+            AlertDialog.showAlert("Ошибка", message: value, viewController: self)
+          }
+        }
       }
     }
   }
@@ -189,4 +209,36 @@ extension OnboardingNameViewController: UITextFieldDelegate {
       
     }
   }
+}
+
+extension OnboardingNameViewController: SignUpViewProtocol {
+  func startLoading() {
+    
+  }
+  
+  func finishLoading() {
+    
+  }
+  
+  func next() {
+    
+  }
+  
+  func notUpdated() {
+    
+  }
+  
+  func setUser(user: UserVO) {
+    
+  }
+  
+  func userCreated() {
+    
+  }
+  
+  func userNotCreated() {
+    
+  }
+  
+  
 }

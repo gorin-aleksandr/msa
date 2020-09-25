@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseMessaging
 import UIKit
 import UserNotifications
+import AVKit
 
 class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCenterDelegate {
    
@@ -65,4 +66,5 @@ class PushNotificationManager: NSObject, MessagingDelegate, UNUserNotificationCe
    (UIBackgroundFetchResult) -> Void) {
     print("Backgrond")
    }
+  
 }

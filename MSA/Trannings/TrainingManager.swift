@@ -955,10 +955,10 @@ class TrainingManager {
   
   // TRAINING FLOW
   
-  private var timer = Timer()
-  private var secondomer = Timer()
+  var timer = Timer()
+  var secondomer = Timer()
   
-  private var iterationState: IterationState = .work
+  var iterationState: IterationState = .work
   var trainingState: TrainingState = .normal
   private var trainingStarted: Bool = false
   private var trainingInProgress: Bool = false
@@ -992,10 +992,10 @@ class TrainingManager {
   private var iterationsCount: Int = 0
   var currentExerciseNumber = 0
   var currentIterationNumber = 0
-  private var currentRestTime = 0
-  private var currentWorkTime = 0
-  private var secondomerTime = 0
-  
+  var currentRestTime = 0
+  var currentWorkTime = 0
+  var secondomerTime = 0
+
   func isLastIteration() -> Bool {
     return trainedIterationsIDS.count >= iterationsForTraining.count
   }
@@ -1134,29 +1134,31 @@ class TrainingManager {
       case .rest:
         if iteration.restTime == 0 {
           if iteration.startTimerOnZero {
-            currentRestTime += time
+            secondomerTime += time
           }
+          self.eventWithTimer(time: secondomerTime, playSound: false)
         } else {
           if (currentRestTime - time) < 0 {
             currentRestTime = 0
           } else {
             currentRestTime -= time
           }
+          self.eventWithTimer(time: self.currentRestTime, playSound: false)
         }
-        self.eventWithTimer(time: self.currentRestTime)
       case .work:
         if iteration.workTime == 0 {
           if iteration.startTimerOnZero {
-            currentWorkTime += time
+            secondomerTime += time
           }
+          self.eventWithTimer(time: self.secondomerTime, playSound: false)
         } else {
           if (currentWorkTime - time) < 0 {
             currentWorkTime = 0
           } else {
             currentWorkTime -= time
           }
+          self.eventWithTimer(time: self.currentWorkTime, playSound: false)
         }
-        self.eventWithTimer(time: self.currentWorkTime)
     }
   }
   
@@ -1278,7 +1280,7 @@ class TrainingManager {
     return nil
   }
   
-  private func startTimer() {
+   func startTimer() {
     Analytics.logEvent("start_timer", parameters: nil)
     trainingInProgress = true
     timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
@@ -1470,7 +1472,7 @@ class TrainingManager {
     finish()
   }
   
-  func eventWithTimer(time: Int) {
+  func eventWithTimer(time: Int, playSound: Bool = true) {
     var min = 0
     var sec = 0
     var minStr = ""
@@ -1491,8 +1493,10 @@ class TrainingManager {
     if iterationState == .rest || secondomerStarted {
       timeString.removeFirst()
     }
-    self.audioEffect(on: time)
-    
+    if playSound {
+      self.audioEffect(on: time)
+    }
+    print("Current timer v1 = \(timeString) - Date:\(Date())")
     self.flowView?.changeTime(time: timeString, iterationState: iterationState, i: (currentExerciseNumber, currentIterationNumber), stop: false)
   }
   

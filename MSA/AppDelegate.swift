@@ -22,13 +22,14 @@ import Siren
 import Instabug
 import Bugsnag
 import SwiftRater
+import AVKit
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var timeInBackground: Int = 0
-  
+
   var window: UIWindow?
   let realmVersion: UInt64 = 0
   let defaults = UserDefaults.standard
@@ -103,10 +104,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationWillResignActive(_ application: UIApplication) {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    timeInBackground = Int(Date().timeIntervalSince1970)
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeToBackground"), object: nil)
+    print("Enter background timer v1 = Date:\(Date())")
   }
   
   func applicationDidEnterBackground(_ application: UIApplication) {
-    timeInBackground = Int(Date().timeIntervalSince1970)
     //        registerNotification()
   }
   
@@ -117,7 +120,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationDidBecomeActive(_ application: UIApplication) {
     
     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
-    print("Timer value = \(Int(Date().timeIntervalSince1970)-timeInBackground))")
+    print("Timer value v1= \(Int(Date().timeIntervalSince1970)-timeInBackground)) - Date:\(Date())")
+    //timeInBackground = 0
     UIApplication.shared.applicationIconBadgeNumber = 0
     let current = UNUserNotificationCenter.current()
     

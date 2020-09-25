@@ -60,7 +60,7 @@ struct UserVO {
         guard let surname = lastName else {
             return name
         }
-        return name + " " + surname
+        return surname + " " + name
     }
     
 }

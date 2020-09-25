@@ -56,6 +56,8 @@ class StratCoordinator {
         navContr?.show(nextViewController, sender: nil)
       } else {
         let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
+        nextViewController.viewModel = SignInViewModel()
+        nextViewController.viewModel?.flowType = .new
         navContr?.show(nextViewController, sender: nil)
       }
     } catch {

@@ -145,6 +145,8 @@
 		24CA840224F682E700DD378A /* UserDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA840124F682E700DD378A /* UserDataCell.swift */; };
 		24CA840424F6835800DD378A /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA840324F6835800DD378A /* UserSettingsViewController.swift */; };
 		24CA840624F68E8100DD378A /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA840524F68E8100DD378A /* NewProfileViewController.swift */; };
+		24D5F45E251CB6E9004F90F1 /* sms-received5.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 24D5F45D251CB6E9004F90F1 /* sms-received5.aiff */; };
+		24D5F460251E45CD004F90F1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D5F45F251E45CD004F90F1 /* AdSupport.framework */; };
 		24D8E15C244472D800F1D31A /* CopyTrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */; };
 		24E054952456E4BE004CACA7 /* YoutubePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E054942456E4BE004CACA7 /* YoutubePlayerViewController.swift */; };
 		24E1509A2518F94A0042CB08 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E150992518F94A0042CB08 /* Test.m */; };
@@ -454,6 +456,8 @@
 		24CA840124F682E700DD378A /* UserDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataCell.swift; sourceTree = "<group>"; };
 		24CA840324F6835800DD378A /* UserSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsViewController.swift; sourceTree = "<group>"; };
 		24CA840524F68E8100DD378A /* NewProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProfileViewController.swift; sourceTree = "<group>"; };
+		24D5F45D251CB6E9004F90F1 /* sms-received5.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "sms-received5.aiff"; sourceTree = "<group>"; };
+		24D5F45F251E45CD004F90F1 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyTrainingManager.swift; sourceTree = "<group>"; };
 		24E054942456E4BE004CACA7 /* YoutubePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubePlayerViewController.swift; sourceTree = "<group>"; };
 		24E150972518F9490042CB08 /* MSA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MSA-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -635,6 +639,7 @@
 			files = (
 				F1AE3B372A271D4281B0EB3D /* Pods_MSA.framework in Frameworks */,
 				35E4D9E22224A7FF0099C293 /* StoreKit.framework in Frameworks */,
+				24D5F460251E45CD004F90F1 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -975,8 +980,8 @@
 				24B72EE12502E6AB0028BA43 /* SF-Pro-Text-SemiboldItalic.otf */,
 				24B72EE22502E6AB0028BA43 /* SF-Pro-Text-Thin.otf */,
 				24B72EE92502E6AD0028BA43 /* SF-Pro-Text-ThinItalic.otf */,
-				24B72EDF2502E6AB0028BA43 /* SF-Pro-Text-Ultralight.otf */,
 				24B72EEF2502E6AF0028BA43 /* SF-Pro-Text-UltralightItalic.otf */,
+				24B72EDF2502E6AB0028BA43 /* SF-Pro-Text-Ultralight.otf */,
 			);
 			path = "SF Pro Display";
 			sourceTree = "<group>";
@@ -1329,6 +1334,7 @@
 			isa = PBXGroup;
 			children = (
 				24E150972518F9490042CB08 /* MSA-Bridging-Header.h */,
+				24D5F45D251CB6E9004F90F1 /* sms-received5.aiff */,
 				2920A49A21A31BF2009E01C5 /* sms-received5.caf */,
 				29F9F2012147AE7D006EDC6A /* TrainingManager.swift */,
 				29F9F2022147AE7E006EDC6A /* TrainingsDataSource.swift */,
@@ -1417,6 +1423,7 @@
 		31648AF8CF9D89128F0538E1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				24D5F45F251E45CD004F90F1 /* AdSupport.framework */,
 				35E4D9E12224A7FF0099C293 /* StoreKit.framework */,
 				4C67B9BD8EEC0B9F245A7062 /* Pods_MSA.framework */,
 			);
@@ -1615,6 +1622,7 @@
 				24B72EF72502E6AF0028BA43 /* SF-Pro-Text-Light.otf in Resources */,
 				299B549120A0D38B004E60A2 /* Rubik-BoldItalic.ttf in Resources */,
 				2483DF4B24EB0CA6003DEE1A /* Assets.xcassets in Resources */,
+				24D5F45E251CB6E9004F90F1 /* sms-received5.aiff in Resources */,
 				24B72EF42502E6AF0028BA43 /* SF-Pro-Text-Thin.otf in Resources */,
 				299B548720A0D38B004E60A2 /* Rubik-MediumItalic.ttf in Resources */,
 				24B72EF62502E6AF0028BA43 /* SF-Pro-Text-RegularItalic.otf in Resources */,
@@ -2200,7 +2208,7 @@
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.50;
+				MARKETING_VERSION = 2.4.51;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2227,7 +2235,7 @@
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.50;
+				MARKETING_VERSION = 2.4.51;
 				PRODUCT_BUNDLE_IDENTIFIER = easyapps.MSA.Prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

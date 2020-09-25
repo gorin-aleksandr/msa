@@ -23,7 +23,7 @@ class StartOnboardingViewController: UIViewController {
   @IBOutlet weak var backgroundImageView: UIImageView!
   @IBOutlet weak var rightDirectionImageView: UIImageView!
   
-  var viewModel = SignInViewModel()
+  var viewModel: SignInViewModel?
   
   var slides: [PromoView] = []
   
@@ -170,6 +170,7 @@ class StartOnboardingViewController: UIViewController {
       make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
     }
     
+    
     let skipOnboardingButton = UIButton()
     self.backgroundView.addSubview(skipOnboardingButton)
     skipOnboardingButton.setTitle("Уже есть аккаунт ?", for: .normal)
@@ -181,6 +182,7 @@ class StartOnboardingViewController: UIViewController {
       make.top.equalTo(startButton.snp.bottom).offset(screenSize.height * (20/iPhoneXHeight))
       make.centerX.equalTo(backgroundView.snp.centerX)
     }
+    skipOnboardingButton.isHidden = viewModel!.flowType == .new ? false : true
     
     privacyLabel.snp.makeConstraints { (make) in
          make.top.equalTo(skipOnboardingButton.snp.bottom).offset(screenSize.height * (34/iPhoneXHeight))
@@ -197,7 +199,7 @@ class StartOnboardingViewController: UIViewController {
     if sender.isSelected {
       sportsmanButton.isSelected = false
       startButton.isSelected = true
-      viewModel.updateUserType(value: "ТРЕНЕР")
+      viewModel!.updateUserType(value: "ТРЕНЕР")
       promoScrollView.subviews.forEach({ $0.removeFromSuperview() })
       refreshScrollView()
     }
@@ -210,7 +212,7 @@ class StartOnboardingViewController: UIViewController {
     if sender.isSelected {
       trainerButton.isSelected = false
       startButton.isSelected = true
-      viewModel.updateUserType(value: "СПОРТСМЕН")
+      viewModel!.updateUserType(value: "СПОРТСМЕН")
       promoScrollView.subviews.forEach({ $0.removeFromSuperview() })
       refreshScrollView()
       refreshScrollView()

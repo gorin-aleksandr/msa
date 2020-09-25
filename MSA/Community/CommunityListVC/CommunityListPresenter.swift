@@ -350,24 +350,27 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
                                     .filter({$0.id != nil})
     }
     
-    private func applyTypeFilter() {
-        switch  typeFilterState {
-        case .sportsmen:
-            communityDataSource = users
-                                    .filter {$0.type == typeFilterState.getUserTypeString()}
-                                    .sorted { $0.getFullName() < $1.getFullName() }
-                                    .filter({$0.id != nil})
-        case .trainers:
-            communityDataSource = users
-                                    .filter {$0.type == typeFilterState.getUserTypeString()}
-                                    .sorted { $0.getFullName() < $1.getFullName() }
-                                    .filter({$0.id != nil})
-        default:
-            communityDataSource = users
-                                    .sorted { $0.getFullName() < $1.getFullName() }
-                                    .filter({$0.id != nil})
-        }
+  private func applyTypeFilter() {
+    switch  typeFilterState {
+      case .sportsmen:
+        var compundArrayWithImages = users.filter { $0.avatar != nil && $0.type == typeFilterState.getUserTypeString() && $0.id != nil}.sorted { $0.getFullName() < $1.getFullName() }
+        let withoutImagesArray = users.filter {$0.avatar == nil && $0.type == typeFilterState.getUserTypeString() && $0.id != nil}.sorted { $0.getFullName() < $1.getFullName() }
+        compundArrayWithImages.append(withoutImagesArray)
+        communityDataSource = compundArrayWithImages
+      
+      case .trainers:
+        var compundArrayWithImages = users.filter {$0.avatar != nil && $0.type == typeFilterState.getUserTypeString() && $0.id != nil}.sorted { $0.getFullName() < $1.getFullName() }
+        let withoutImagesArray = users.filter {$0.avatar == nil && $0.type == typeFilterState.getUserTypeString() && $0.id != nil}.sorted { $0.getFullName() < $1.getFullName() }
+        compundArrayWithImages.append(withoutImagesArray)
+        communityDataSource = compundArrayWithImages
+      default:
+        
+        var compundArrayWithImages = users.filter { $0.avatar != nil  && $0.id != nil }.sorted { $0.getFullName() < $1.getFullName() }
+        let withoutImagesArray = users.filter { $0.avatar == nil && $0.id != nil }.sorted { $0.getFullName() < $1.getFullName() }
+        compundArrayWithImages.append(withoutImagesArray)
+        communityDataSource = compundArrayWithImages
     }
+  }
     
     private func selectFilter() {
         view.configureFilterView(dataSource: filterDataSource, selectedFilterIndex: typeFilterState.rawValue)

@@ -15,6 +15,11 @@ enum SignInDataControllerType {
   case city
 }
 
+enum SignUpFlowType {
+  case new
+  case update
+}
+
 class SignInViewModel {
   
   var userName = ""
@@ -23,6 +28,7 @@ class SignInViewModel {
   var userMail = ""
   var userType = ""
   var userPassword = ""
+  var flowType: SignUpFlowType = .new
   var signInDataControllerType: SignInDataControllerType?
   var cities: [String] = []
   private let auth: AuthModule = AuthModule()
@@ -136,9 +142,18 @@ class SignInViewModel {
     AuthModule.facebookAuth = true
     auth.loginFacebook { (user, error) in
       if error == nil && user != nil {
-        let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+        let user = UserVO(id: user?.id, email: user?.email, firstName: self.userName != "" ? self.userName : user?.firstName, lastName:  self.userLastName != "" ? self.userLastName : user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: self.userType != "" ? self.userType : nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: self.userCity != "" ? self.userCity : nil )
         self.setUser(user: user)
-        success()
+        UserDataManager().getUser(callback: { (user, error) in
+          if let user = user {
+            Analytics.logEvent("log_in", parameters: nil)
+            self.setUser(user: user)
+            success()
+          } else {
+            success()
+            //failure("Ошибка авторизации")
+          }
+        })
       } else {
         if let error = error {
           let error = error as NSError
@@ -170,10 +185,18 @@ class SignInViewModel {
     AuthModule.appleAuth = true
     auth.loginAppleId(credential: credential) { (user, error) in
       if error == nil && user != nil {
-        let user = UserVO(id: user?.id, email: user?.email, firstName: user?.firstName, lastName: user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: nil)
+        let user = UserVO(id: user?.id, email: user?.email, firstName: self.userName != "" ? self.userName : user?.firstName, lastName:  self.userLastName != "" ? self.userLastName : user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: self.userType != "" ? self.userType : nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: self.userCity != "" ? self.userCity : nil )
         self.setUser(user: user)
-        success()
-        return
+        UserDataManager().getUser(callback: { (user, error) in
+        if let user = user {
+          Analytics.logEvent("log_in", parameters: nil)
+          self.setUser(user: user)
+          success()
+        } else {
+          success()
+          //failure("Ошибка авторизации")
+        }
+      })
       } else {
         if let error = error {
           failure(error.localizedDescription)

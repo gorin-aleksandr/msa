@@ -52,7 +52,7 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
     addPhotoButto.addTarget(self, action: #selector(addPhotoAction), for: .touchUpInside)
     nameTextField.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
     if let url = AuthModule.currUser.avatar {
-      photoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
+      photoImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
     }
     
   }
@@ -178,7 +178,7 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
       case 0:
         return "Профиль"
       case 1:
-        return "Персональный данные"
+        return "Персональные данные"
 //      case 2:
 //        return "Настройки"
 //      case 3:
@@ -198,6 +198,7 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
         AuthModule.currUser.id = nil
         Analytics.logEvent("logout", parameters: nil)
         let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
+        nextViewController.viewModel = SignInViewModel()
         let nc = UINavigationController(rootViewController: nextViewController)
         nc.modalPresentationStyle = .fullScreen
         self.present(nc, animated: true, completion: nil)

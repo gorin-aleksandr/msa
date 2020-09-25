@@ -10,6 +10,9 @@ import SVProgressHUD
 import Bugsnag
 import Firebase
 import SwiftRater
+import AVKit
+import SPPermissions
+
 
 class HomeViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
@@ -17,14 +20,18 @@ class HomeViewController: UIViewController {
   var titles = ["Тренировки","Замеры","Питание","Статистика","Мои спортсмены"]
   var descriptions = ["Работай на результат","Ваши параметры","Добавьте рацион","Ваши результаты","У вас 23 спортсмена"]
   var viewModel = ProfileViewModel()
+  let pushManager = PushNotificationManager()
   private let presenter = GalleryDataPresenter(gallery: GalleryDataManager())
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
   var comunityPresenter: CommunityListPresenterProtocol!
+  var permissionController: SPPermissionsDialogController?
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     setupUI()
     comunityPresenter = CommunityListPresenter(view: self)
+    setupPermissionAlert()
 
     InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
       self?.logInAppPurhaseRenewalEvent()
@@ -60,6 +67,22 @@ class HomeViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .newBlack
     } else {
       navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+  }
+  
+  func setupPermissionAlert() {
+    let defaults = UserDefaults.standard
+    let mainPermission = defaults.bool(forKey: "allowedMainNotificationPermission")
+    permissionController = SPPermissions.dialog([.notification])
+    permissionController!.titleText = "Нужно разрешение"
+    permissionController!.headerText = ""
+    permissionController!.footerText = ""
+    permissionController!.dataSource = self
+    permissionController!.delegate = self
+    let state = SPPermission.notification.isAuthorized
+    if !state && !mainPermission {
+      defaults.set(true, forKey: "allowedMainNotificationPermission")
+      permissionController!.present(on: self)
     }
   }
   
@@ -237,16 +260,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeProfileCollectionViewCell", for: indexPath as IndexPath) as! HomeProfileCollectionViewCell
       if viewModel.selectedUser == nil {
         if let url = AuthModule.currUser.avatar {
-          myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
+          myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
         } else {
-          myCell.logoImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
+          myCell.logoImageView.image = UIImage(named:"Group-1")
         }
       } else {
         if let url = viewModel.selectedUser?.avatar {
-          print(viewModel.selectedUser)
-          myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: #imageLiteral(resourceName: "avatarPlaceholder"), options: .allowInvalidSSLCertificates, completed: nil)
+          myCell.logoImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
         } else {
-          myCell.logoImageView.image = #imageLiteral(resourceName: "avatarPlaceholder")
+          myCell.logoImageView.image = UIImage(named:"Group-1")
         }
       }
     
@@ -293,7 +315,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       if indexPath.row == 2 || indexPath.row == 3 {
         myCell.addBluredView()
       }
-
       
       if indexPath.row != 4 {
         myCell.descriptionLabel.text = descriptions[indexPath.row]
@@ -390,32 +411,52 @@ extension HomeViewController: CommunityListViewProtocol {
   }
   
   func setErrorViewHidden(_ isHidden: Bool) {
-    
   }
   
   func setLoaderVisible(_ visible: Bool) {
-    
   }
   
   func stopLoadingViewState() {
-    
   }
   
   func showGeneralAlert() {
-    
   }
   
   func showRestoreAlert() {
-    
   }
   
   func showIAP() {
-    
   }
   
   func hideAccessDeniedView() {
+  }
+}
+
+extension HomeViewController: SPPermissionsDataSource, SPPermissionsDelegate{
+  func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
+    cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
+    cell.permissionTitleLabel.text = "Уведомления"
+    cell.button.allowTitle = "Разрешить"
+    cell.button.allowedTitle = "Разрешены"
+    cell.iconView.color = .darkCyanGreen
+    cell.button.allowTitleColor = .darkCyanGreen
+    cell.button.allowedBackgroundColor = .darkCyanGreen
+    return cell
+  }
+  
+  func didAllow(permission: SPPermission) {
+    pushManager.registerForPushNotifications()
+  }
+  
+  func didDenied(permission: SPPermission) {
+  }
+  
+  func didHide(permissions ids: [Int]) {
     
   }
   
-  
+  func deniedData(for permission: SPPermission) -> SPPermissionDeniedAlertData? {
+    permissionController!.dismiss(animated: true, completion: nil)
+    return nil
+  }
 }

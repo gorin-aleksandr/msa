@@ -14,6 +14,8 @@ target 'MSA' do
   pod 'Firebase/Storage'
   pod 'Firebase/Firestore'
   pod 'Firebase/Messaging'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/DynamicLinks'
   pod 'JSQMessagesViewController'
   pod 'SDWebImage'
   pod 'IQKeyboardManagerSwift', '6.5.0'
