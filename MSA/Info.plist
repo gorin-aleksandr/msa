@@ -26,7 +26,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>6</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAdvertiserIDCollectionEnabled</key>
 	<string>TRUE</string>
 	<key>FacebookAppID</key>
@@ -78,10 +78,6 @@
 	<string>Разрешите приложению доступ к Вашему микрофону</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Разрешите приложению доступ к Вашей фото библиотеке</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
