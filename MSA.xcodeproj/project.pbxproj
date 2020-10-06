@@ -72,7 +72,6 @@
 		244A78EC243359A700D92828 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244A78EB243359A700D92828 /* ChatListCell.swift */; };
 		244B72F5242F5A54000A6F4A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244B72F4242F5A53000A6F4A /* ChatViewController.swift */; };
 		24551476250FA3F3003B8339 /* SpecializationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24551475250FA3F3003B8339 /* SpecializationCell.swift */; };
-		245F3F42250FA2FF00BEE6FD /* SpecializationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245F3F41250FA2FF00BEE6FD /* SpecializationsViewController.swift */; };
 		24690BE0244FB0960090F5BB /* AchievmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24690BDF244FB0960090F5BB /* AchievmentCell.xib */; };
 		24690BE2244FB0C00090F5BB /* AchievmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24690BE1244FB0C00090F5BB /* AchievmentCell.swift */; };
 		24690BE4244FDC830090F5BB /* EducationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 24690BE3244FDC830090F5BB /* EducationCell.xib */; };
@@ -151,6 +150,7 @@
 		24D8E15C244472D800F1D31A /* CopyTrainingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8E15B244472D800F1D31A /* CopyTrainingManager.swift */; };
 		24E054952456E4BE004CACA7 /* YoutubePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E054942456E4BE004CACA7 /* YoutubePlayerViewController.swift */; };
 		24E1509A2518F94A0042CB08 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 24E150992518F94A0042CB08 /* Test.m */; };
+		24FD6044252CFCE00019CC31 /* SpecializationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FD6043252CFCDF0019CC31 /* SpecializationsViewController.swift */; };
 		24FEE3E6242F5CCB001670F6 /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E5242F5CCB001670F6 /* Channel.swift */; };
 		24FEE3E8242F5DF6001670F6 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E7242F5DF5001670F6 /* Helpers.swift */; };
 		24FEE3EA242F5E5E001670F6 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */; };
@@ -383,7 +383,6 @@
 		244A78EB243359A700D92828 /* ChatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		244B72F4242F5A53000A6F4A /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		24551475250FA3F3003B8339 /* SpecializationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecializationCell.swift; sourceTree = "<group>"; };
-		245F3F41250FA2FF00BEE6FD /* SpecializationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpecializationsViewController.swift; path = "../../../../STO App/STO App/Controllers/SpecializationsViewController.swift"; sourceTree = "<group>"; };
 		24690BDF244FB0960090F5BB /* AchievmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AchievmentCell.xib; sourceTree = "<group>"; };
 		24690BE1244FB0C00090F5BB /* AchievmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentCell.swift; sourceTree = "<group>"; };
 		24690BE3244FDC830090F5BB /* EducationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EducationCell.xib; sourceTree = "<group>"; };
@@ -465,6 +464,7 @@
 		24E150972518F9490042CB08 /* MSA-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MSA-Bridging-Header.h"; sourceTree = "<group>"; };
 		24E150982518F94A0042CB08 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
 		24E150992518F94A0042CB08 /* Test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Test.m; sourceTree = "<group>"; };
+		24FD6043252CFCDF0019CC31 /* SpecializationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecializationsViewController.swift; sourceTree = "<group>"; };
 		24FEE3E5242F5CCB001670F6 /* Channel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		24FEE3E7242F5DF5001670F6 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		24FEE3E9242F5E5E001670F6 /* UIImage+Gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
@@ -937,8 +937,8 @@
 		240E628124FD3BF5006A6808 /* New profile */ = {
 			isa = PBXGroup;
 			children = (
+				24FD6043252CFCDF0019CC31 /* SpecializationsViewController.swift */,
 				24551475250FA3F3003B8339 /* SpecializationCell.swift */,
-				245F3F41250FA2FF00BEE6FD /* SpecializationsViewController.swift */,
 				24CA83FD24F6788700DD378A /* ProfileSettingsViewController.swift */,
 				24CA840324F6835800DD378A /* UserSettingsViewController.swift */,
 				24CA840524F68E8100DD378A /* NewProfileViewController.swift */,
@@ -1897,7 +1897,6 @@
 				2487B58924DC90DA000617F5 /* MailLoginViewController.swift in Sources */,
 				35BCB9282210BEF50016C58F /* InAppPurchasesService.swift in Sources */,
 				299AA10820E94E9A00BCCA12 /* NewExerciseDataSource.swift in Sources */,
-				245F3F42250FA2FF00BEE6FD /* SpecializationsViewController.swift in Sources */,
 				24AEF47824FFC96900F2BC92 /* UserInfoTableHeaderView.swift in Sources */,
 				24690BE6244FDCE20090F5BB /* EducationCell.swift in Sources */,
 				29B0972220D4DFAA00CA7219 /* FilterCollectionViewCell.swift in Sources */,
@@ -1997,6 +1996,7 @@
 				291950B820474D5E004891FF /* MSA.xcdatamodeld in Sources */,
 				2406778C2449DF91004DAE05 /* Contact.swift in Sources */,
 				2483DF4724EAFEA5003DEE1A /* HomeProfileCollectionViewCell.swift in Sources */,
+				24FD6044252CFCE00019CC31 /* SpecializationsViewController.swift in Sources */,
 				29D2CD6F20A170870073C838 /* StartCoordinator.swift in Sources */,
 				2940A35520D9081B00EBAE84 /* TextTableViewCell.swift in Sources */,
 				29F9F2502147B5B8006EDC6A /* VAMonthView.swift in Sources */,
