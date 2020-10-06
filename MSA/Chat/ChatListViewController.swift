@@ -19,19 +19,20 @@ class ChatListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        SVProgressHUD.show()
+        viewModel.getChatList(success: {
+          self.setBadgeForChatCounter()
+          self.tableView.reloadData()
+          SVProgressHUD.dismiss()
+        }) {
+        }
         setupUI()
         setupPermissionAlert()
     }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    SVProgressHUD.show()
-    viewModel.getChatList(success: {
-      self.setBadgeForChatCounter()
-      self.tableView.reloadData()
-      SVProgressHUD.dismiss()
-    }) {
-    }
+    
   }
   
   func setupPermissionAlert() {
@@ -57,7 +58,7 @@ class ChatListViewController: UIViewController {
         count = count + 1
       }
     }
-      super.tabBarController?.viewControllers![3].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
+      super.tabBarController?.viewControllers![2].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
   }
   
   func setupUI() {
@@ -114,7 +115,9 @@ extension ChatListViewController: UITableViewDelegate {
     chatViewController?.viewModel?.chatUserAvatar = chat.userAvatar
     let nc = UINavigationController(rootViewController: chatViewController!)
     nc.modalPresentationStyle = .fullScreen
-    self.present(nc, animated: true, completion: nil)
+    DispatchQueue.main.async {
+        self.present(nc, animated: true, completion: nil)
+    }
   }
 }
 

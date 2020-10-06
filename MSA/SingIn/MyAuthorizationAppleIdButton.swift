@@ -29,11 +29,17 @@ class MyAuthorizationAppleIdButton: UIButton {
       addSubview(authorizationButton)
       // Use auto layout to make authorizationButton follow the MyAuthorizationAppleIDButton's dimension
       authorizationButton.translatesAutoresizingMaskIntoConstraints = false
-      NSLayoutConstraint.activate([
-          authorizationButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0.0),
-          authorizationButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0.0),
-          authorizationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0),
-          authorizationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0),
-      ])
+    authorizationButton.snp.makeConstraints { (make) in
+        make.top.equalTo(self.snp.top)
+        make.bottom.equalTo(self.snp.bottom)
+        make.right.equalTo(self.snp.right)
+        make.left.equalTo(self.snp.left)
+       }
+//      NSLayoutConstraint.activate([
+//          authorizationButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 0.0),
+//          authorizationButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0.0),
+//          authorizationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0.0),
+//          authorizationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0.0),
+//      ])
     }
 }

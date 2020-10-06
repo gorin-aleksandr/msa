@@ -9,6 +9,7 @@
 import UIKit
 import SearchTextField
 import SVProgressHUD
+import Firebase
 
 class OnboardingNameViewController: UIViewController {
   
@@ -157,6 +158,14 @@ class OnboardingNameViewController: UIViewController {
           SVProgressHUD.show()
           presenter.createNewUser(newUser: AuthModule.currUser, success: {
             SVProgressHUD.dismiss()
+            Analytics.logEvent("sign_up", parameters: nil)
+            Analytics.logEvent("user_city_registration", parameters: ["city": AuthModule.currUser.city ?? ""])
+                 switch AuthModule.currUser.userType {
+                   case .sportsman:
+                     Analytics.logEvent("sign_up_sportsman", parameters: nil)
+                   case .trainer:
+                     Analytics.logEvent("sign_up_coach", parameters: nil)
+                 }
             let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
             self.navigationController?.pushViewController(nextViewController, animated: true)
           }) { (value) in

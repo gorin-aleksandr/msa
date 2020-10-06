@@ -294,8 +294,17 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       make.width.equalTo(screenSize.width * (335/iPhoneXWidth))
     }
     
+    let rightDirectionImageView = UIImageView()
+     rightDirectionImageView.image = UIImage(named:"doubleChevron")
+     subscribeButton.addSubview(rightDirectionImageView)
+     rightDirectionImageView.snp.makeConstraints { (make) in
+       make.centerY.equalTo(self.subscribeButton.snp.centerY)
+       make.right.equalTo(self.subscribeButton.snp.right).offset(screenSize.height * (-6/iPhoneXHeight))
+       make.width.equalTo(screenSize.width * (36/iPhoneXWidth))
+       make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
+     }
+    
     subscribeButton.addSubview(subscribeLabel)
-    subscribeLabel.text = "Попробовать 3 дня бесплатно*"
     subscribeLabel.numberOfLines = 0
     subscribeLabel.font = NewFonts.SFProDisplayBold14
     subscribeLabel.textAlignment = .center
@@ -303,23 +312,15 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     subscribeLabel.snp.makeConstraints { (make) in
       make.top.equalTo(self.subscribeButton.snp.top).offset(screenSize.height * (7/iPhoneXHeight))
       make.bottom.equalTo(self.subscribeButton.snp.bottom).offset(screenSize.height * (-7/iPhoneXHeight))
-      make.left.equalTo(self.subscribeButton.snp.left).offset(screenSize.height * (10/iPhoneXHeight))
-      make.right.equalTo(self.subscribeButton.snp.right).offset(screenSize.height * (-10/iPhoneXHeight))
+      make.left.equalTo(self.subscribeButton.snp.left).offset(screenSize.height * (40/iPhoneXHeight))
+      make.right.equalTo(self.subscribeButton.snp.right).offset(screenSize.height * (-40/iPhoneXHeight))
     }
     
-    let rightDirectionImageView = UIImageView()
-    rightDirectionImageView.image = UIImage(named:"doubleChevron")
-    subscribeButton.addSubview(rightDirectionImageView)
-    rightDirectionImageView.snp.makeConstraints { (make) in
-      make.centerY.equalTo(self.subscribeButton.snp.centerY)
-      make.right.equalTo(self.subscribeButton.snp.right).offset(screenSize.height * (-6/iPhoneXHeight))
-      make.width.equalTo(screenSize.width * (36/iPhoneXWidth))
-      make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
-    }
+ 
     
     self.view.addSubview(freeAccessLabel)
     
-    freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $29,99/год"
+    freeAccessLabel.text = ""
     freeAccessLabel.font = NewFonts.SFProDisplayRegular10
     freeAccessLabel.numberOfLines = 0
     freeAccessLabel.textAlignment = .center
@@ -393,7 +394,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       oneMonthSubscriptionButton.isSelected = true
       twelveMonthSubscriptionButton.isSelected = false
       fullSubscriptionButton.isSelected = false
-      freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[0])/год"
+      subscribeLabel.text = "Начать пробный период период на 3 дня затем \(currentPrices[0])$/год"
       selectedIndex = 0
     }
   }
@@ -403,7 +404,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       twelveMonthSubscriptionButton.isSelected = true
       oneMonthSubscriptionButton.isSelected = false
       fullSubscriptionButton.isSelected = false
-      freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[1])/год"
+      subscribeLabel.text = "Начать пробный период период на 3 дня затем \(currentPrices[1])$/год"
       selectedIndex = 1
     }
   }
@@ -413,7 +414,7 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       fullSubscriptionButton.isSelected = true
       oneMonthSubscriptionButton.isSelected = false
       twelveMonthSubscriptionButton.isSelected = false
-      freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[2])/год"
+      subscribeLabel.text = "Начать пробный период период на 3 дня затем \(currentPrices[2])$/год"
       selectedIndex = 2
     }
   }
@@ -430,7 +431,8 @@ class IAPViewController: UIViewController, IAPViewProtocol {
     currentPrices =  presenter.getProductsDataSource().map({ (item) -> NSDecimalNumber in
       return item.product.price
     })
-    freeAccessLabel.text = "*Первые 3 дня — бесплатно, далее — $\(currentPrices[1])/год"
+    freeAccessLabel.text = "Первые 3 дня — бесплатно*"
+    subscribeLabel.text = "Начать пробный период период на 3 дня затем \(currentPrices[1])$/год"
   }
   
   @objc func showDetailedSubscriptionInfo() {

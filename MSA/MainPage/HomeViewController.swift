@@ -28,7 +28,6 @@ class HomeViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     setupUI()
     comunityPresenter = CommunityListPresenter(view: self)
     setupPermissionAlert()
@@ -175,8 +174,12 @@ class HomeViewController: UIViewController {
               Analytics.logEvent("app_store_subscription_convert_coach_1m", parameters: nil)
             case "t_twelve_month":
               Analytics.logEvent("app_store_subscription_convert_coach_1y", parameters: nil)
+            case "s_fullAcess":
+              Analytics.logEvent("app_store_subscription_convert_sportsman_fullAcess", parameters: nil)
+            case "t_fullAcess":
+              Analytics.logEvent("app_store_subscription_convert_coach_fullAcess", parameters: nil)
             default:
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              return
           }
           return
         }
@@ -192,8 +195,12 @@ class HomeViewController: UIViewController {
               Analytics.logEvent("app_store_subscription_renew_coach_1m", parameters: nil)
             case "t_twelve_month":
               Analytics.logEvent("app_store_subscription_renew_coach_1y", parameters: nil)
+            case "s_fullAcess":
+              Analytics.logEvent("app_store_subscription_renew_sportsman_fullAcess", parameters: nil)
+            case "t_fullAcess":
+              Analytics.logEvent("app_store_subscription_renew_coach_fullAcess", parameters: nil)
             default:
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              return
           }
         }
       }
@@ -243,8 +250,8 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     if indexPath.section == 0 {
       return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (80/iPhoneXHeight))
     } else if indexPath.section == 1  {
-      return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (40/iPhoneXHeight))
-    }  else {
+      return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (127/iPhoneXHeight))
+    } else {
       if indexPath.row != 4 {
         return CGSize(width: screenSize.width * (162/iPhoneXWidth), height: screenSize.height * (124/iPhoneXHeight))
       } else {
@@ -284,34 +291,38 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       return myCell
       
     } else if indexPath.section == 1 {
-      let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeTargetCollectionViewCell", for: indexPath as IndexPath) as! HomeTargetCollectionViewCell
-      if let selectedUser = viewModel.selectedUser  {
-        if let purpose = selectedUser.purpose {
-          myCell.titleLabel.text = purpose
-        } else {
-          myCell.titleLabel.text = ""
-        }
-        
-      } else {
-        if let purpose = AuthModule.currUser.purpose {
-          myCell.titleLabel.text = purpose
-        } else {
-          myCell.titleLabel.text = "Укажите цель"
-        }
-      }
-    
-      myCell.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
-      myCell.layer.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00).cgColor
-      myCell.layer.masksToBounds = false
-      let tap = UITapGestureRecognizer(target: self, action:  #selector(handleAppleSignInSelector))
-      myCell.rightImageView.addGestureRecognizer(tap)
-      myCell.rightImageView.isUserInteractionEnabled = true
+      let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShareAppCollectionViewCell", for: indexPath as IndexPath) as! ShareAppCollectionViewCell
+      myCell.shareTextButton.addTarget(self, action: #selector(shareProfileAction(_:)), for: .touchUpInside)
+      myCell.shareImageButton.addTarget(self, action: #selector(shareProfileAction(_:)), for: .touchUpInside)
+//      let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeTargetCollectionViewCell", for: indexPath as IndexPath) as! HomeTargetCollectionViewCell
+//      if let selectedUser = viewModel.selectedUser  {
+//        if let purpose = selectedUser.purpose {
+//          myCell.titleLabel.text = purpose
+//        } else {
+//          myCell.titleLabel.text = ""
+//        }
+//
+//      } else {
+//        if let purpose = AuthModule.currUser.purpose {
+//          myCell.titleLabel.text = purpose
+//        } else {
+//          myCell.titleLabel.text = "Укажите цель"
+//        }
+//      }
+//
+//      myCell.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
+//      myCell.layer.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00).cgColor
+//      myCell.layer.masksToBounds = false
+//      let tap = UITapGestureRecognizer(target: self, action:  #selector(handleAppleSignInSelector))
+//      myCell.rightImageView.addGestureRecognizer(tap)
+//      myCell.rightImageView.isUserInteractionEnabled = true
+      
       return myCell
     } else {
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath as IndexPath) as! HomeCollectionViewCell
       myCell.logoImageView.image = UIImage(named: images[indexPath.row])
       myCell.titleLabel.text = titles[indexPath.row]
-      
+
       if indexPath.row == 2 || indexPath.row == 3 {
         myCell.addBluredView()
       }
@@ -330,8 +341,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       myCell.layer.masksToBounds = false
       return myCell
     }
-    
-    
   }
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -341,10 +350,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       let nc = UINavigationController(rootViewController: vc)
       nc.modalPresentationStyle = .fullScreen
       self.present(nc, animated: true, completion: nil)
-       }
+    }
     
     if indexPath.section == 2 {
-      
       switch indexPath.row {
         case 0:
           DispatchQueue.main.async {
@@ -355,7 +363,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             } else {
               let vc = trainingStoryboard.instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
               self.navigationController?.pushViewController(vc, animated: true)
-
             }
         }
         case 1:
@@ -363,19 +370,18 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
          let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "MeasurementsViewController") as! MeasurementsViewController
             nextViewController.viewModel = MeasurementViewModel()
             if let selectedUser = self.viewModel.selectedUser  {
-              nextViewController.viewModel!.selectedUserId = selectedUser.id!
+              guard let userId = selectedUser.id else {return}
+              nextViewController.viewModel!.selectedUserId = userId
             } else {
-              nextViewController.viewModel!.selectedUserId = AuthModule.currUser.id!
+              guard let userId = AuthModule.currUser.id else {return}
+              nextViewController.viewModel!.selectedUserId = userId
             }
             self.navigationController?.pushViewController(nextViewController, animated: true)
             }
         case 2:
             AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
-
         case 3:
             AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
-
-
          case 4:
           DispatchQueue.main.async {
           let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "UsersSportsmansViewController") as! UsersSportsmansViewController
@@ -390,6 +396,77 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
   }
   
+  @objc func shareProfileAction(_ sender: UIButton) {
+    
+    guard let sharelink = URL(string: "https://msafitnessapp.com/users=\(AuthModule.currUser.id ?? "")") else { return }
+    guard let dynLink = DynamicLinkComponents.init(link: sharelink, domainURIPrefix: "https://easyapps.page.link") else { return }
+    let options = DynamicLinkComponentsOptions()
+    options.pathLength = .short
+    dynLink.options = options
+    var shortUrl = dynLink.url
+    dynLink.shorten() { url, warnings, error in
+          guard let url = url, error != nil else { return }
+          shortUrl = url
+          print("The short URL is: \(url)")
+      
+    }
+    
+    if let bundleID = Bundle.main.bundleIdentifier {
+        dynLink.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleID)
+        dynLink.iOSParameters!.appStoreID = "1440506128"
+        dynLink.iOSParameters!.fallbackURL = URL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")
+        dynLink.androidParameters = DynamicLinkAndroidParameters(packageName: bundleID)
+    }
+    
+    dynLink.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
+    dynLink.otherPlatformParameters?.fallbackUrl = URL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")
+
+    dynLink.navigationInfoParameters = DynamicLinkNavigationInfoParameters()
+    dynLink.navigationInfoParameters?.isForcedRedirectEnabled = true
+    
+    // Setting description
+    let firstActivityItem = "Найди меня в MSA"
+    // Setting url
+    let secondActivityItem : NSURL = NSURL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")!
+//    // If you want to use an image
+//    let image : UIImage = UIImage(named: "your-image-name")!
+    let activityViewController : UIActivityViewController = UIActivityViewController(
+      activityItems: [firstActivityItem, shortUrl], applicationActivities: nil)
+//
+    
+    // This line remove the arrow of the popover to show in iPad
+    activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
+    activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
+    
+    // Pre-configuring activity items
+    if #available(iOS 13.0, *) {
+      activityViewController.activityItemsConfiguration = [
+        UIActivity.ActivityType.message,.addToReadingList,.mail,.postToFacebook,.postToTwitter
+        ] as? UIActivityItemsConfigurationReading
+    } else {
+      // Fallback on earlier versions
+    }
+    
+    // Anything you want to exclude
+    activityViewController.excludedActivityTypes = [
+        UIActivity.ActivityType.postToWeibo,
+        UIActivity.ActivityType.print,
+        UIActivity.ActivityType.assignToContact,
+        UIActivity.ActivityType.saveToCameraRoll,
+        UIActivity.ActivityType.addToReadingList,
+        UIActivity.ActivityType.postToFlickr,
+        UIActivity.ActivityType.postToVimeo,
+        UIActivity.ActivityType.postToTencentWeibo,
+        UIActivity.ActivityType.postToFacebook
+    ]
+    
+    if #available(iOS 13.0, *) {
+      activityViewController.isModalInPresentation = true
+    } else {
+      // Fallback on earlier versions
+    }
+    self.present(activityViewController, animated: true, completion: nil)
+  }
   
 }
 

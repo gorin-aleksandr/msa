@@ -31,6 +31,7 @@ class ProfileViewModel {
   
   private var dataLoader = UserDataManager()
   
+  var selectedUserId = ""
   var selectedUser: UserVO?
   var userSkills: [String] = []
   var selectedAchievements:[(id: String, name: String, rank: String, achieve: String, year: String)] = []
@@ -60,10 +61,7 @@ class ProfileViewModel {
   var facebookLink = AuthModule.currUser.facebookLink
   var vkLink = AuthModule.currUser.vkLink
 
- // var mail = AuthModule.currUser.email
   var chatId: String?
-
-
   var users: [UserVO] = [] {
     didSet {
       communityDataSource = users
@@ -72,7 +70,6 @@ class ProfileViewModel {
   var reloadSkillsTable: (() -> ())?
   var reloadAchievementsTable: (() -> ())?
   var reloadTable: (() -> ())?
-  
   var communityDataSource = [UserVO]()
   
   init() {  }
@@ -86,6 +83,17 @@ class ProfileViewModel {
     }
   }
   
+  func getUserById(completion: @escaping (Bool) -> Void) {
+      dataLoader.getUser(userId: self.selectedUserId) { (user, error) in
+        if let fetchedUser = user {
+          self.selectedUser = fetchedUser
+          completion(true)
+        } else {
+          completion(false)
+        }
+    }
+  }
+
   func numberOfRowInSectionForDataController(section: Int) -> Int {
     if editSettingsControllerType == .userInfo {
       switch section {
@@ -266,7 +274,7 @@ class ProfileViewModel {
   func fetchAchievements(completion: @escaping (Bool) -> Void) {
     let key = selectedUser?.id != nil ? selectedUser?.id : AuthModule.currUser.id
     
-    dataLoader.userRef.child(key!).child("coachDetail").child("achievements").observeSingleEvent(of: .value, with: { snapshot in
+    dataLoader.userRef.child(key ?? "").child("coachDetail").child("achievements").observeSingleEvent(of: .value, with: { snapshot in
       if let dict = snapshot.value as? Dictionary<String, Any> {
         self.selectedAchievements = []
         print(dict)

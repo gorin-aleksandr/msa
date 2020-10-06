@@ -22,6 +22,7 @@ class MainSignInViewController: UIViewController {
   @IBOutlet weak var logoImageView: UIImageView!
   @IBOutlet weak var facebookImageView: UIImageView!
   @IBOutlet weak var mainBackgroundImageView: UIImageView!
+  
   @available(iOS 13.0, *)
   @IBOutlet lazy var appleButton: MyAuthorizationAppleIdButton? = { return nil }()
 
@@ -127,21 +128,7 @@ class MainSignInViewController: UIViewController {
         make.height.equalTo(screenSize.height * (48/iPhoneXHeight))
         make.width.equalTo(screenSize.width * (335/iPhoneXWidth))
       }
-      
-//      let imgView = UIImageView(image: UIImage(named: "AppleBlack"))
-//      let tap = UITapGestureRecognizer(target: self, action:  #selector(handleAppleSignInSelector))
-//      imgView.addGestureRecognizer(tap)
-//      imgView.isUserInteractionEnabled = true
-//      self.view.addSubview(imgView)
-//
-//      imgView.snp.makeConstraints { (make) in
-//        make.top.equalTo(self.appleButton!.snp.top)
-//        make.right.equalTo(self.appleButton!.snp.right)
-//        make.left.equalTo(self.appleButton!.snp.left)
-//        make.bottom.equalTo(self.appleButton!.snp.bottom)
-//      }
     } else {
-      // Fallback on earlier versions
     }
     
     haveAccountLabel.snp.makeConstraints { (make) in

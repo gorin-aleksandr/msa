@@ -387,7 +387,7 @@ class MyTranningsViewController: UIViewController {
     alert.setValue(myMutableString, forKey: "attributedTitle")
     
     let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
-      if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 0 {
+      if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
           destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
           self.present(destinationVC, animated: true, completion: nil)        

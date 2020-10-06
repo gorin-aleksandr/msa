@@ -47,7 +47,6 @@ final class ChatViewController: JSQMessagesViewController {
   var firstMessage = ""
   var imageUrl = ""
   var firstMessageProductId = 0
-  var isAutoResponseShown = false
   var presenter: CommunityListPresenterProtocol!
 
   private var localTyping = false
@@ -98,6 +97,7 @@ final class ChatViewController: JSQMessagesViewController {
     dataLoader.getUser(userId: self.viewModel!.chatUserId) { (user, error) in
       self.viewModel?.chatUser = user
     }
+    readAllMessages()
   }
 
   @objc func somethingWasTapped(_ sth: AnyObject){
@@ -150,26 +150,20 @@ final class ChatViewController: JSQMessagesViewController {
       label.font = NewFonts.SFProDisplayBold16
       label.textColor = darkCyanGreen
       // Creates the image view
-      if viewModel!.chatUserAvatar != "" && viewModel!.chatUserAvatar != nil{
+    if viewModel!.chatUserAvatar != "" && viewModel!.chatUserAvatar != nil {
       let image = UIImageView()
-           image.sd_setImage(with: URL(string: viewModel!.chatUserAvatar!), completed: nil)
-           //image.image = UIImage(named: imageName)
-           // Maintains the image's aspect ratio:
-           let imageAspect = image.image!.size.width / image.image!.size.height
-
-           // Sets the image frame so that it's immediately before the text:
-           let imageX = label.frame.origin.x - label.frame.size.height * imageAspect
-           let imageY = label.frame.origin.y
-
-           let imageWidth = label.frame.size.height * imageAspect
-           let imageHeight = label.frame.size.height
-
-           image.frame = CGRect(x: imageX, y: imageY-1, width: imageWidth, height: imageHeight)
-
-           image.contentMode = UIView.ContentMode.scaleAspectFit
-           image.roundCorners(.allCorners, radius: 10)
-           // Adds both the label and image view to the titleView
-           titleView.addSubview(image)
+      image.sd_setImage(with: URL(string: viewModel!.chatUserAvatar!), completed: {
+        newImage,error,type,url in
+        let imageAspect = image.image!.size.width / image.image!.size.height
+        let imageX = label.frame.origin.x - label.frame.size.height * imageAspect
+        let imageY = label.frame.origin.y
+        let imageWidth = label.frame.size.height * imageAspect
+        let imageHeight = label.frame.size.height
+        image.frame = CGRect(x: imageX, y: imageY-1, width: imageWidth, height: imageHeight)
+        image.contentMode = UIView.ContentMode.scaleAspectFit
+        image.roundCorners(.allCorners, radius: 10)
+        titleView.addSubview(image)
+      })
     }
      
       titleView.addSubview(label)
@@ -206,9 +200,6 @@ final class ChatViewController: JSQMessagesViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
-    readAllMessages()
-    isAutoResponseShown = false
   }
   
   override func viewWillDisappear(_ animated: Bool) {

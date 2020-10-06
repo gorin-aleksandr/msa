@@ -304,7 +304,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Frame 8" translatesAutoresizingMaskIntoConstraints="NO" id="QEV-GR-nDF">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Group-1" translatesAutoresizingMaskIntoConstraints="NO" id="QEV-GR-nDF">
                                 <rect key="frame" x="157" y="61" width="81" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -531,7 +531,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Frame 8" translatesAutoresizingMaskIntoConstraints="NO" id="S8n-sb-kNR">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Group-1" translatesAutoresizingMaskIntoConstraints="NO" id="S8n-sb-kNR">
                                                             <rect key="frame" x="8" y="24" width="48" height="46"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -700,8 +700,8 @@
         <image name="Frame 2343" width="28" height="28"/>
         <image name="Frame 2344" width="28" height="28"/>
         <image name="Frame 2345" width="28" height="28"/>
-        <image name="Frame 8" width="81" height="81"/>
         <image name="Group 915" width="20" height="20"/>
+        <image name="Group-1" width="64" height="64"/>
         <image name="Vector" width="13" height="13"/>
         <image name="arrow-left 1" width="20" height="20"/>
         <image name="avatar-placeholder" width="250" height="250"/>

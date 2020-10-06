@@ -9,6 +9,7 @@
 import UIKit
 import TagListView
 import BetterSegmentedControl
+import PhotoSlider
 
 class NewProfileViewController: UIViewController {
 
@@ -27,7 +28,10 @@ class NewProfileViewController: UIViewController {
   @IBOutlet weak var vkButton: UIButton!
   @IBOutlet weak var backButton: UIButton!
   @IBOutlet weak var directButton: UIButton!
-
+  
+  var galleryViewController: ProfileGalleryViewController?
+  var achievementsViewController: UserAchievementsViewController?
+  var userSportsmansViewController: UsersSportsmansViewController?
 
   var viewModel: ProfileViewModel? {
     didSet {
@@ -37,18 +41,34 @@ class NewProfileViewController: UIViewController {
     }
   }
   
-    override func viewDidLoad() {
+  override func viewDidLoad() {
         super.viewDidLoad()
       self.navigationController?.navigationBar.isHidden = true
       setupUI()
-      fetchSkills()
       directButton.isHidden = true
-      viewModel!.getSelectedUsersChat { (value) in
-        if self.viewModel?.selectedUser != nil {
-          self.directButton.isHidden = false
+  }
+
+  func loadUserFromDynamicLink() {
+    viewModel!.getUserById { (success) in
+      if success {
+        self.setupProfile()
+        self.fetchSkills()
+        self.updateControllersViewModel()
+        self.viewModel!.getSelectedUsersChat { (value) in
+          if self.viewModel?.selectedUser != nil {
+            self.directButton.isHidden = false
+          }
         }
       }
     }
+  }
+  
+  func updateControllersViewModel() {
+    achievementsViewController!.viewModel.selectedUser = self.viewModel?.selectedUser
+    achievementsViewController?.viewModel.reloadAchievementsTable?()
+    userSportsmansViewController!.viewModel?.selectedUser = self.viewModel?.selectedUser
+    userSportsmansViewController!.fetchSportsmans()
+  }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(true)
@@ -57,6 +77,57 @@ class NewProfileViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
+    if viewModel?.selectedUserId == "" {
+     setupProfile()
+     fetchSkills()
+      viewModel!.getSelectedUsersChat { (value) in
+        if self.viewModel?.selectedUser != nil {
+          self.directButton.isHidden = false
+        }
+      }
+    } else {
+      loadUserFromDynamicLink()
+    }
+  }
+  
+  func setupProfile() {
+    if self.viewModel?.selectedUser != nil {
+         instaButton.isHidden = self.viewModel?.selectedUser?.instagramLink != nil && self.viewModel?.selectedUser?.instagramLink?.count > 0 ? false : true
+         facebookButton.isHidden = self.viewModel?.selectedUser?.facebookLink != nil && self.viewModel?.selectedUser?.facebookLink?.count > 0  ? false : true
+         vkButton.isHidden = self.viewModel?.selectedUser?.vkLink != nil && self.viewModel?.selectedUser?.vkLink?.count > 0 ? false : true
+       } else {
+         instaButton.isHidden = AuthModule.currUser.instagramLink != nil && AuthModule.currUser.instagramLink?.count > 0 ? false : true
+         facebookButton.isHidden = AuthModule.currUser.facebookLink != nil && AuthModule.currUser.facebookLink?.count > 0 ? false : true
+         vkButton.isHidden = AuthModule.currUser.vkLink != nil && AuthModule.currUser.vkLink?.count > 0 ? false : true
+       }
+    
+       if let user = viewModel?.selectedUser {
+         tagList.isHidden = user.userType == .sportsman ? true : false
+         if let avatar = user.avatar {
+           photoImageView.sd_setImage(with: URL(string: avatar), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
+         }  else {
+           photoImageView.image = UIImage(named:"Group-1")
+         }
+         nameLabel.text = "\(viewModel?.selectedUser?.firstName ?? "") \(viewModel?.selectedUser?.lastName ?? "")"
+         if viewModel?.selectedUser?.userType == .trainer {
+           cityLabel.text = "Тренер \(viewModel?.selectedUser?.city ?? "")"
+         } else {
+           cityLabel.text = "Спортсмен \(viewModel?.selectedUser?.city ?? "")"
+         }
+       } else {
+         if let url = AuthModule.currUser.avatar {
+           photoImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
+         } else {
+           photoImageView.image = UIImage(named:"Group-1")
+         }
+         nameLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
+         tagList.isHidden = AuthModule.currUser.userType == .sportsman ? true : false
+         if AuthModule.currUser.userType == .trainer {
+           cityLabel.text = "Тренер \(AuthModule.currUser.city ?? "")"
+         } else {
+           cityLabel.text = "Спортсмен \(AuthModule.currUser.city ?? "")"
+         }
+       }
   }
   
   override func viewWillDisappear(_ animated: Bool) {
@@ -64,7 +135,6 @@ class NewProfileViewController: UIViewController {
   }
   
   func setupUI() {
-    
     backButton.addTarget(self, action: #selector(backAction), for: .touchUpInside)
     backButton.snp.makeConstraints { (make) in
          make.top.equalTo(self.view.snp.top).offset(screenSize.height * (60/iPhoneXHeight))
@@ -98,49 +168,11 @@ class NewProfileViewController: UIViewController {
         make.centerX.equalTo(self.view.snp.centerX)
       }
     
-    if self.viewModel?.selectedUser != nil {
-      instaButton.isHidden = self.viewModel?.selectedUser?.instagramLink != nil && self.viewModel?.selectedUser?.instagramLink?.count > 0 ? false : true
-      facebookButton.isHidden = self.viewModel?.selectedUser?.facebookLink != nil && self.viewModel?.selectedUser?.facebookLink?.count > 0  ? false : true
-      vkButton.isHidden = self.viewModel?.selectedUser?.vkLink != nil && self.viewModel?.selectedUser?.vkLink?.count > 0 ? false : true
-    } else {
-      instaButton.isHidden = AuthModule.currUser.instagramLink != nil && AuthModule.currUser.instagramLink?.count > 0 ? false : true
-      facebookButton.isHidden = AuthModule.currUser.facebookLink != nil && AuthModule.currUser.facebookLink?.count > 0 ? false : true
-      vkButton.isHidden = AuthModule.currUser.vkLink != nil && AuthModule.currUser.vkLink?.count > 0 ? false : true
-    }
-    
     scrollView.snp.makeConstraints { (make) in
       make.top.equalTo(self.socialsStackView.snp.bottom).offset(screenSize.height * (12/iPhoneXHeight))
       make.centerX.equalTo(self.view.snp.centerX)
     }
-    
-    if let user = viewModel?.selectedUser {
-      tagList.isHidden = user.userType == .sportsman ? true : false
-      if let avatar = user.avatar {
-        photoImageView.sd_setImage(with: URL(string: avatar), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
-      }  else {
-        photoImageView.image = UIImage(named:"Group-1")
-      }
-      nameLabel.text = "\(viewModel?.selectedUser?.firstName ?? "") \(viewModel?.selectedUser?.lastName ?? "")"
-      if viewModel?.selectedUser?.userType == .trainer {
-        cityLabel.text = "Тренер \(viewModel?.selectedUser?.city ?? "")"
-      } else {
-        cityLabel.text = "Спортсмен \(viewModel?.selectedUser?.city ?? "")"
-      }
-      
-    } else {
-      if let url = AuthModule.currUser.avatar {
-        photoImageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: nil)
-      } else {
-        photoImageView.image = UIImage(named:"Group-1")
-      }
-      nameLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
-      tagList.isHidden = AuthModule.currUser.userType == .sportsman ? true : false
-      if AuthModule.currUser.userType == .trainer {
-        cityLabel.text = "Тренер \(AuthModule.currUser.city ?? "")"
-      } else {
-        cityLabel.text = "Спортсмен \(AuthModule.currUser.city ?? "")"
-      }
-    }
+  
     
     photoImageView.cornerRadius = 32
     tagList.textFont = NewFonts.SFProDisplaySemiBold12
@@ -169,6 +201,16 @@ class NewProfileViewController: UIViewController {
     photoView.alpha = 1
     informationView.alpha = 0
     sportsmanView.alpha = 0
+    
+     let pictureTap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+          photoImageView.addGestureRecognizer(pictureTap)
+          photoImageView.isUserInteractionEnabled = true
+  }
+  
+  @objc func imageTapped() {
+    let photoSlider = PhotoSlider.ViewController(images: [photoImageView.image ?? UIImage()])
+    photoSlider.pageControl.isHidden = true
+    self.present(photoSlider, animated: true, completion: nil)
   }
   
   func fetchSkills() {
@@ -276,7 +318,6 @@ class NewProfileViewController: UIViewController {
        } else {
          let appURL = URL(string: "vk://vk.com/\(userName)")!
          let application = UIApplication.shared
-         
          if application.canOpenURL(appURL) {
            application.open(appURL)
          } else {
@@ -284,24 +325,25 @@ class NewProfileViewController: UIViewController {
            application.open(webURL)
          }
        }
-     
    }
   
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     print("\(segue.destination)")
     if let vc: ProfileGalleryViewController = segue.destination as? ProfileGalleryViewController {
-      vc.viewModel = self.viewModel
+      galleryViewController = vc
+      galleryViewController!.viewModel = self.viewModel
     }
     
     if let vc: UserAchievementsViewController = segue.destination as? UserAchievementsViewController {
-      vc.viewModel = self.viewModel!
+      achievementsViewController = vc
+      achievementsViewController!.viewModel = self.viewModel!
      }
     
     if let vc: UsersSportsmansViewController = segue.destination as? UsersSportsmansViewController {
-         vc.viewModel = CommunityViewModel()
-         vc.viewModel?.selectedUser = self.viewModel!.selectedUser 
+         userSportsmansViewController = vc
+         userSportsmansViewController!.viewModel = CommunityViewModel()
+         userSportsmansViewController!.viewModel?.selectedUser = self.viewModel!.selectedUser
        }
-
   }
 
 }

@@ -265,6 +265,8 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 Analytics.logEvent("in_app_p_sportsman_1m", parameters: nil)
               } else if transaction.payment.productIdentifier == "s_twelve_month" {
                 Analytics.logEvent("in_app_p_sportsman_1y", parameters: nil)
+            } else if transaction.payment.productIdentifier == "s_fullAcess" {
+                Analytics.logEvent("in_app_p_sportsman_fullAccess", parameters: nil)
             }
             case .trainer:
               Analytics.logEvent("in_app_p_coach", parameters: nil)
@@ -272,6 +274,8 @@ extension AppDelegate: SKPaymentTransactionObserver {
                 Analytics.logEvent("in_app_p_coach_1m", parameters: nil)
               } else if transaction.payment.productIdentifier == "t_twelve_month" {
                 Analytics.logEvent("in_app_p_coach_1y", parameters: nil)
+            } else if transaction.payment.productIdentifier == "t_fullAcess" {
+                Analytics.logEvent("in_app_p_coach_fullAcsess", parameters: nil)
             }
           }
           NotificationCenter.default.post(name: InAppPurchasesService.purchaseSuccessfulNotification, object: nil)
@@ -301,3 +305,54 @@ extension AppDelegate: SKPaymentTransactionObserver {
   }
 }
 
+extension AppDelegate {
+  func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+       let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url)
+       if dynamicLink != nil {
+            print("Dynamic link : \(String(describing: dynamicLink?.url))")
+            return true
+       }
+       return false
+  }
+  
+  func application(_ application: UIApplication, continue userActivity:
+  NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+       guard let inCommingURL = userActivity.webpageURL else { return false }
+       print("Incomming Web Page URL: \(inCommingURL)")
+       shareLinkHandling(inCommingURL)
+       return true
+  }
+  
+  fileprivate func shareLinkHandling(_ inCommingURL: URL) {
+    
+    _ = DynamicLinks.dynamicLinks().handleUniversalLink(inCommingURL) { (dynamiclink, error) in
+      
+      guard error == nil else {
+        print("Found an error: \(error?.localizedDescription ?? "")")
+        return
+      }
+      print("Dynamic link : \(String(describing: dynamiclink?.url))")
+      let path = dynamiclink?.url?.path
+      var userId = ""
+      if let range = path?.range(of: "/users=") {
+         let id = path?[range.upperBound...]
+         userId = id?.description ?? ""
+      }
+      if userId != "" {
+        if let window = self.window, let rootViewController = window.rootViewController {
+               var currentController = rootViewController
+               while let presentedController = currentController.presentedViewController {
+                   currentController = presentedController
+               }
+              let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
+               vc.viewModel = ProfileViewModel()
+               vc.viewModel?.selectedUserId = userId
+               let nc = UINavigationController(rootViewController: vc)
+               nc.modalPresentationStyle = .fullScreen
+               currentController.present(nc, animated: true, completion: nil)
+          }
+      }
+    }
+  
+  }
+}

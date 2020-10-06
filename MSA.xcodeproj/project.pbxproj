@@ -97,6 +97,7 @@
 		2487B58B24DC9E9F000617F5 /* HowToTrainigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2487B58A24DC9E9F000617F5 /* HowToTrainigViewController.swift */; };
 		2497F22C245347B30017F723 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2497F22B245347B20017F723 /* UserProfileViewController.swift */; };
 		24A1D73A245ACD2800BF71FC /* MyAuthorizationAppleIdButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A1D739245ACD2700BF71FC /* MyAuthorizationAppleIdButton.swift */; };
+		24A735BD252B3CEF000650DD /* ShareAppCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A735BC252B3CEF000650DD /* ShareAppCollectionViewCell.swift */; };
 		24AEF46A24FD558B00F2BC92 /* ProfileGalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AEF46924FD558B00F2BC92 /* ProfileGalleryViewController.swift */; };
 		24AEF46C24FD5C9A00F2BC92 /* UserAchievementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AEF46B24FD5C9A00F2BC92 /* UserAchievementsViewController.swift */; };
 		24AEF46E24FD5FBE00F2BC92 /* Measurements.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24AEF46D24FD5FBE00F2BC92 /* Measurements.storyboard */; };
@@ -408,6 +409,7 @@
 		2487B58A24DC9E9F000617F5 /* HowToTrainigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToTrainigViewController.swift; sourceTree = "<group>"; };
 		2497F22B245347B20017F723 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		24A1D739245ACD2700BF71FC /* MyAuthorizationAppleIdButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAuthorizationAppleIdButton.swift; sourceTree = "<group>"; };
+		24A735BC252B3CEF000650DD /* ShareAppCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAppCollectionViewCell.swift; sourceTree = "<group>"; };
 		24AEF46924FD558B00F2BC92 /* ProfileGalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileGalleryViewController.swift; sourceTree = "<group>"; };
 		24AEF46B24FD5C9A00F2BC92 /* UserAchievementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAchievementsViewController.swift; sourceTree = "<group>"; };
 		24AEF46D24FD5FBE00F2BC92 /* Measurements.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Measurements.storyboard; sourceTree = "<group>"; };
@@ -1295,6 +1297,7 @@
 				24BDFD7B24EAD1BA00C56BF5 /* HomeViewController.swift */,
 				2483DF4624EAFEA5003DEE1A /* HomeProfileCollectionViewCell.swift */,
 				2483DF4824EB06AA003DEE1A /* HomeTargetCollectionViewCell.swift */,
+				24A735BC252B3CEF000650DD /* ShareAppCollectionViewCell.swift */,
 				24BDFD7D24EAD50200C56BF5 /* HomeCollectionViewCell.swift */,
 				295123722086182200D9035B /* EditProfileVC */,
 				299B58E7208645CD00CBE646 /* SetPurposeVC */,
@@ -2054,6 +2057,7 @@
 				24551476250FA3F3003B8339 /* SpecializationCell.swift in Sources */,
 				2406776D2449DF91004DAE05 /* UITextView+Extensions.swift in Sources */,
 				29F9F2492147B5B8006EDC6A /* VAWeekView.swift in Sources */,
+				24A735BD252B3CEF000650DD /* ShareAppCollectionViewCell.swift in Sources */,
 				2406776A2449DF91004DAE05 /* UIView+Extensions.swift in Sources */,
 				29F9F2482147B5B8006EDC6A /* VACalendar.swift in Sources */,
 				35FC83F520EFBDDF00AECFC8 /* Button+Ext.swift in Sources */,
@@ -2203,7 +2207,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
@@ -2230,7 +2234,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = CK33C2G28N;
 				INFOPLIST_FILE = MSA/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
