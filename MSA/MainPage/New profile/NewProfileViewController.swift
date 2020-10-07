@@ -45,7 +45,6 @@ class NewProfileViewController: UIViewController {
         super.viewDidLoad()
       self.navigationController?.navigationBar.isHidden = true
       setupUI()
-      directButton.isHidden = true
   }
 
   func loadUserFromDynamicLink() {
@@ -77,6 +76,7 @@ class NewProfileViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
+    directButton.isHidden = true
     if viewModel?.selectedUserId == "" {
      setupProfile()
      fetchSkills()
@@ -272,8 +272,7 @@ class NewProfileViewController: UIViewController {
   
   @IBAction func instagramAction(_ sender: Any) {
       let instagramLink = self.viewModel?.selectedUser?.instagramLink != nil ? self.viewModel?.selectedUser?.instagramLink : AuthModule.currUser.instagramLink
-
-      let userName =  instagramLink // Your Instagram Username here
+    let userName =  instagramLink?.trimmingCharacters(in: .whitespaces) // Your Instagram Username here
     if var link = userName?.detectedFirstLink {
         if !link.contains("https://") {
           link = "https://\(link)"
@@ -292,12 +291,11 @@ class NewProfileViewController: UIViewController {
           application.open(webURL)
         }
       }
-    
    }
   
   @IBAction func facebookAction(_ sender: Any) {
       let facebookLink = self.viewModel?.selectedUser?.facebookLink != nil ? self.viewModel?.selectedUser?.facebookLink : AuthModule.currUser.facebookLink
-      let userName =  facebookLink?.trimmingCharacters(in: .whitespaces)
+    let userName =  facebookLink?.trimmingCharacters(in: .whitespaces)
     if let link = userName?.detectedFirstLink {
          if let url = URL(string: link) {
            UIApplication.shared.open(url)
