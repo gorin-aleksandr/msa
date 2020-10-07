@@ -40,7 +40,7 @@ class SpecializationsViewController: UIViewController {
   }
   
   func setupUI() {
-    title = "Выберите специализации"
+    title = "Выбери специализации"
     tableView.contentInsetAdjustmentBehavior = .never
     tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 150, right: 0)
     tableView.dataSource = self

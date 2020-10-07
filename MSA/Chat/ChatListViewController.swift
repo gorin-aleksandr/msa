@@ -123,10 +123,9 @@ extension ChatListViewController: UITableViewDelegate {
 
 extension ChatListViewController: SPPermissionsDataSource, SPPermissionsDelegate{
   func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
-    cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
-    cell.permissionTitleLabel.text = "Включите пуш - уведомления в настройках приложения"
+    cell.permissionDescriptionLabel.text = "Получай уведомления о новых сообщениях в чате и новостях"
+    cell.permissionTitleLabel.text = "Включи пуш - уведомления в настройках приложения"
     cell.button.allowTitle = "В настройки"
-    //cell.button.allowedTitle = "Разрешены"
     cell.iconView.color = .darkCyanGreen
     cell.button.allowTitleColor = .darkCyanGreen
     cell.button.allowedBackgroundColor = .darkCyanGreen

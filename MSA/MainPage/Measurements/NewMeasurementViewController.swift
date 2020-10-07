@@ -265,7 +265,7 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   
   @objc func showPicker() {
     
-    DatePickerDialog(buttonColor: lightBlue_).show("Выберите дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
+    DatePickerDialog(buttonColor: lightBlue_).show("Выбери дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
       (date, int) -> Void in
       if date != nil {
         self.dateValueButton.setTitle(date?.dateString(), for: .normal)

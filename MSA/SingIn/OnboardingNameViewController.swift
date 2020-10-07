@@ -53,11 +53,11 @@ class OnboardingNameViewController: UIViewController {
 
     titleLabel.font = NewFonts.SFProDisplayBold24
     titleLabel.textColor = UIColor.newBlack
-    titleLabel.text = viewModel!.signInDataControllerType == .name ?  "Давайте познакомимся" : "Откуда вы ?"
+    titleLabel.text = viewModel!.signInDataControllerType == .name ?  "Давай познакомимся" : "Откуда ты ?"
     
     descriptionLabel.font = NewFonts.SFProDisplayRegular16
     descriptionLabel.textColor = UIColor.newBlack
-    descriptionLabel.text = viewModel!.signInDataControllerType == .name ? "Введите ваше имя" : "Укажите ваш город"
+    descriptionLabel.text = viewModel!.signInDataControllerType == .name ? "Введи свое имя" : "Укажи свой город"
     
     nameTextField.placeholder = viewModel!.signInDataControllerType == .name ? "Имя" : "Город"
     nameTextField.backgroundColor = UIColor.textFieldBackgroundGrey

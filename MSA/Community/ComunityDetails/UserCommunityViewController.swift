@@ -63,7 +63,7 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol, 
         if self.presenter.state == .trainers {
             self.showDeleteTrainerAlert(for: user)
         } else {
-            let alert = UIAlertController(title: nil, message: "Вы дейсвительно хотите удалить из запросов/друзей? ", preferredStyle: .actionSheet)
+            let alert = UIAlertController(title: nil, message: "Ты дейсвительно хочешь удалить из запросов/друзей? ", preferredStyle: .actionSheet)
             let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
                 self?.presenter.deleteAction(for: user)
             }
@@ -75,7 +75,7 @@ class UserCommunityViewController: UIViewController, UserCommunityViewProtocol, 
     }
     
     func showDeleteTrainerAlert(for user: UserVO) {
-        let alert = UIAlertController(title: nil, message: "Вы уверены, что хотите удалить тренера?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: "Ты уверен(а), что хочешь удалить тренера?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             self?.presenter.deleteAction(for: user)
         }

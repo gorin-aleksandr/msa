@@ -108,7 +108,7 @@ class MultipleChoicesViewController: UIViewController {
     }
     
     private func configureControllerTitle() {
-        self.navigationItem.setTitle(title: "Круговая тренировка", subtitle: "выберите упражнения")
+        self.navigationItem.setTitle(title: "Круговая тренировка", subtitle: "Выбери упражнения")
     }
     
     private func getElementsForChoosing() {

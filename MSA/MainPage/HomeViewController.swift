@@ -452,7 +452,7 @@ extension HomeViewController: CommunityListViewProtocol {
 
 extension HomeViewController: SPPermissionsDataSource, SPPermissionsDelegate{
   func configure(_ cell: SPPermissionTableViewCell, for permission: SPPermission) -> SPPermissionTableViewCell {
-    cell.permissionDescriptionLabel.text = "Получайте уведомления о новых сообщениях в чате и новостях"
+    cell.permissionDescriptionLabel.text = "Получай уведомления о новых сообщениях в чате и новостях"
     cell.permissionTitleLabel.text = "Уведомления"
     cell.button.allowTitle = "Разрешить"
     cell.button.allowedTitle = "Разрешены"

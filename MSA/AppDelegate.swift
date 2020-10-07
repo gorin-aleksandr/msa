@@ -70,6 +70,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UITabBar.appearance().clipsToBounds = true
     
     Siren.shared.presentationManager = PresentationManager(forceLanguageLocalization: .russian)
+    Siren.shared.rulesManager = RulesManager(globalRules: .critical,
+                                      showAlertAfterCurrentVersionHasBeenReleasedForDays: 1)
+
+
     Siren.shared.wail()
    
     SwiftRater.daysUntilPrompt = 7

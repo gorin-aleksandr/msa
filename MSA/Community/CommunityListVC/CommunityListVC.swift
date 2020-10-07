@@ -146,7 +146,7 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
     }
     
     func showAlertFor(user: UserVO, isTrainerEnabled: Bool) {
-        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Вы можете перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Ты можешь перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
             print("Cancel")
         }

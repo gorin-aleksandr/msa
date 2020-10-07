@@ -172,7 +172,7 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
     switch indexPath.section {
       case 0:
         if indexPath.row == viewModel.selectedAchievements.count {
-          let ac = UIAlertController(title: "Выберите тип достижения", message: nil, preferredStyle: .actionSheet)
+          let ac = UIAlertController(title: "Выбери тип достижения", message: nil, preferredStyle: .actionSheet)
           let rankAction = UIAlertAction(title: "Звание", style: .default, handler: { (action) in
             vc.viewModel!.editSettingsControllerType = .newAchievement
             vc.viewModel!.achevementType = .rank

@@ -205,7 +205,7 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
     }
     
     func showDeleteAlert(for user: UserVO) {
-        let alert = UIAlertController(title: nil, message: profilePresenter.state == .userTrainer ? "Вы действительно хотите удалить тренера?" : "Вы дейсвительно хотите удалить из запросов/друзей/спортсменов?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: profilePresenter.state == .userTrainer ? "Ты действительно хочешь удалить тренера?" : "Ты дейсвительно хочешь удалить из запросов/друзей/спортсменов?", preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
             SVProgressHUD.show()
             self?.profilePresenter.deleteAction(for: user)
@@ -217,7 +217,7 @@ class UserProfileViewController: BasicViewController, UIPopoverControllerDelegat
     }
     
     func showAddAlertFor(user: UserVO, isTrainerEnabled: Bool) {
-        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Вы можете перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Добавить в свое сообщество \(user.getFullName())", message: "Ты можешь перейти на страницу тренера/друга на вкладке “Сообщество”", preferredStyle: .alert)
         let cancelActionButton = UIAlertAction(title: "Отмена", style: .cancel) { action -> Void in
             print("Cancel")
         }

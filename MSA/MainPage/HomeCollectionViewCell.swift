@@ -29,7 +29,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
   
   func addBluredView() {
     contentView.addSubview(hideView)
-    hideView.backgroundColor = UIColor(red: 0.00, green: 0.00, blue: 0.00, alpha: 0.10)
+    hideView.backgroundColor = UIColor(red: 0.971, green: 0.973, blue: 0.975, alpha: 0.56)
+
     hideView.cornerRadius = screenSize.height * (10/iPhoneXHeight)
     hideView.snp.makeConstraints { (make) in
       make.left.equalTo(contentView.snp.left)

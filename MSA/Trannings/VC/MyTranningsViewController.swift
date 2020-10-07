@@ -128,7 +128,7 @@ class MyTranningsViewController: UIViewController {
   @objc func copyWeek(sender: UILongPressGestureRecognizer) {
     if sender.state == .began {
       AudioServicesPlaySystemSound(1519)
-      let alertController = UIAlertController(title: "Внимание!", message: "Вы хотите скопировать неделю?", preferredStyle: .alert)
+      let alertController = UIAlertController(title: "Внимание!", message: "Ты хочешь скопировать неделю?", preferredStyle: .alert)
       let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
         CopyTrainingsManager.shared.copiedWeek = self.manager.dataSource?.currentWeek
         self.mainAddWeekDayView.insertButton.backgroundColor = .lightGREEN
@@ -148,7 +148,7 @@ class MyTranningsViewController: UIViewController {
       
       AudioServicesPlaySystemSound(1519)
       
-      let alertController = UIAlertController(title: "Внимание!", message: "Вы хотите скопировать \(index+1) день?", preferredStyle: .alert)
+      let alertController = UIAlertController(title: "Внимание!", message: "Ты хочешь скопировать \(index+1) день?", preferredStyle: .alert)
       let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
         CopyTrainingsManager.shared.copiedDay = self.manager.dataSource?.currentWeek?.days[index]
         //self.manager.copyDay(at: index)
@@ -503,7 +503,7 @@ class MyTranningsViewController: UIViewController {
     if info.0 {
       let array = (info.1)!.map{String($0+1)}
       let joined = array.joined(separator: ", ")
-      AlertDialog.showAlert("Вы не можете начать тренировку!", message: "В упражнениях №\(joined) не добавнены подходы.", viewController: self)
+      AlertDialog.showAlert("Ты не можешь начать тренировку!", message: "В упражнениях №\(joined) не добавнены подходы.", viewController: self)
     } else {
       completion()
     }
@@ -535,7 +535,7 @@ class MyTranningsViewController: UIViewController {
         self.performSegue(withIdentifier: "roundTraining", sender: nil)
       }
     } else {
-      AlertDialog.showAlert("Вы не можете начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
+      AlertDialog.showAlert("Ты не можешь начать тренировку!", message: "Сначала добавьте упражнения", viewController: self)
     }
   }
   
@@ -548,7 +548,7 @@ class MyTranningsViewController: UIViewController {
         self.performSegue(withIdentifier: "chooseExercisesForRoundTraining", sender: nil)
       }
     } else {
-      AlertDialog.showAlert("Вы не можете настроить тренировку!", message: "Сначала добавьте упражнения", viewController: self)
+      AlertDialog.showAlert("Ты не можешь настроить тренировку!", message: "Сначала добавьте упражнения", viewController: self)
     }
   }
   
@@ -560,7 +560,7 @@ class MyTranningsViewController: UIViewController {
   
   func datePickerTapped() {
     
-    DatePickerDialog(buttonColor: lightBlue_).show("Выберите дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
+    DatePickerDialog(buttonColor: lightBlue_).show("Выбери дату", doneButtonTitle: "Выбрать", cancelButtonTitle: "Отменить", datePickerMode: .date) {
       (date, int) -> Void in
       if let dt = date {
         let data = nowDateStringForCalendar(date: date!)
@@ -698,7 +698,7 @@ class MyTranningsViewController: UIViewController {
   }
   
   private func showDeleteTrainingsAlert() {
-    let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить все созданные тренировки?", preferredStyle: .alert)
+    let alertController = UIAlertController(title: "Внимание!", message: "Ты уверен(а), что хочешь удалить все созданные тренировки?", preferredStyle: .alert)
     let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
       self.deleteTraining()
     }
@@ -708,7 +708,7 @@ class MyTranningsViewController: UIViewController {
     self.present(alertController, animated: true, completion: nil)
   }
   private func showDeleteWeekAlert() {
-    let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить все упражнения в неделе?", preferredStyle: .alert)
+    let alertController = UIAlertController(title: "Внимание!", message: "Ты уверен(а), что хочешь удалить все упражнения в неделе?", preferredStyle: .alert)
     let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
       self.deleteWeek()
     }
@@ -719,14 +719,14 @@ class MyTranningsViewController: UIViewController {
   }
   
   private func showNoInsert() {
-    let alert = UIAlertController(title: "Ошибка", message: "Для копирования тренировочного дня/недели нажмите и удерживайте ячейку дня или название недели", preferredStyle: .alert)
+    let alert = UIAlertController(title: "Ошибка", message: "Для копирования тренировочного дня/недели нажми и удерживай ячейку дня или название недели", preferredStyle: .alert)
     let okAction = UIAlertAction(title: "Ок", style: .default, handler: nil)
     alert.addAction(okAction)
     present(alert, animated: true)
   }
   
   @objc func showDeleteDayAlert(sender: UIButton) {
-    let alertController = UIAlertController(title: "Внимание!", message: "Вы уверены, что хотите удалить день?", preferredStyle: .alert)
+    let alertController = UIAlertController(title: "Внимание!", message: "Ты уверен(а), что хочешь удалить день?", preferredStyle: .alert)
     let yesAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) in
       self.manager.deleteDay(at: sender.tag)
       self.showHideButtons()
