@@ -500,19 +500,6 @@ class ProfileViewModel {
     }
   }
   
-  func setPurpose(purpose: String, success: @escaping () -> (), failure: @escaping (_ error: String) -> ()) {
-    if let id = AuthModule.currUser.id {
-      dataLoader.userRef.child(id).updateChildValues(["purpose": purpose], withCompletionBlock: { (error, ref) in
-        if let err = error?.localizedDescription {
-          failure(err)
-        } else {
-          AuthModule.currUser.purpose = purpose
-          success()
-        }
-      })
-    }
-  }
-  
   func updateUserAvatar(_ image: UIImage,completion: @escaping (UIImage) -> Void,failure: @escaping (String) -> Void) {
     if let id = AuthModule.currUser.id {
       if let data = image.jpegData(compressionQuality: 0.5) {

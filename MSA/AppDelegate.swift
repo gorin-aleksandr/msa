@@ -80,7 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SwiftRater.debugMode = false
     SwiftRater.countryCode = "ru"
     SwiftRater.appLaunched()
-    
     return true
   }
   
@@ -120,8 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func applicationDidBecomeActive(_ application: UIApplication) {
     
     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
-    print("Timer value v1= \(Int(Date().timeIntervalSince1970)-timeInBackground)) - Date:\(Date())")
-    //timeInBackground = 0
+    print("Timer value v1 = \(Int(Date().timeIntervalSince1970)-timeInBackground)) - Date:\(Date())")
     UIApplication.shared.applicationIconBadgeNumber = 0
     let current = UNUserNotificationCenter.current()
     

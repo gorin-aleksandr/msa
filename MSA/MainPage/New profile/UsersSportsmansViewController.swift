@@ -19,6 +19,7 @@ class UsersSportsmansViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    fetchSportsmans()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -27,7 +28,6 @@ class UsersSportsmansViewController: UIViewController {
     let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
       self.navigationItem.leftBarButtonItem = backButton
       self.navigationController?.navigationBar.tintColor = .newBlack
-    fetchSportsmans()
   }
   
   func fetchSportsmans() {

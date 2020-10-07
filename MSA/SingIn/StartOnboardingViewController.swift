@@ -230,7 +230,7 @@ class StartOnboardingViewController: UIViewController {
   
   @objc func skipButtonAction(_ sender: UIButton) {
     let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "MainSignInViewController") as! MainSignInViewController
-    nextViewController.viewModel = viewModel
+    nextViewController.viewModel = SignInViewModel()
     self.navigationController?.pushViewController(nextViewController, animated: true)
   }
   

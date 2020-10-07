@@ -33,6 +33,7 @@ class SignInViewModel {
   var cities: [String] = []
   private let auth: AuthModule = AuthModule()
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  let presenter = SignUpPresenter(signUp: UserDataManager())
   
   init() {
     if let js = loadJson(filename: "cities") {
@@ -138,7 +139,7 @@ class SignInViewModel {
     (UIApplication.shared.delegate as! AppDelegate).saveContext()
   }
   
-  func loginWithFacebook(success: @escaping () -> (), failure: @escaping (_ error: String) -> ()) {
+  func loginWithFacebook(success: @escaping (Bool) -> (), failure: @escaping (_ error: String) -> ()) {
     AuthModule.facebookAuth = true
     auth.loginFacebook { (user, error) in
       if error == nil && user != nil {
@@ -148,10 +149,25 @@ class SignInViewModel {
           if let user = user {
             Analytics.logEvent("log_in", parameters: nil)
             self.setUser(user: user)
-            success()
+            success(true)
           } else {
-            success()
-            //failure("Ошибка авторизации")
+            if AuthModule.currUser.type != nil {
+              self.presenter.createNewUser(newUser: AuthModule.currUser, success: {
+                Analytics.logEvent("sign_up", parameters: nil)
+                Analytics.logEvent("user_city_registration", parameters: ["city": AuthModule.currUser.city ?? ""])
+                switch AuthModule.currUser.userType {
+                  case .sportsman:
+                    Analytics.logEvent("sign_up_sportsman", parameters: nil)
+                  case .trainer:
+                    Analytics.logEvent("sign_up_coach", parameters: nil)
+                }
+                success(true)
+              }) { (error) in
+                failure(error)
+              }
+            } else {
+              success(false)
+            }
           }
         })
       } else {
@@ -181,22 +197,37 @@ class SignInViewModel {
     }
   }
   
-  func loginWithAppleId(credential: AuthCredential,success: @escaping () -> (), failure: @escaping (_ error: String) -> ()) {
+  func loginWithAppleId(credential: AuthCredential,success: @escaping (Bool) -> (), failure: @escaping (_ error: String) -> ()) {
     AuthModule.appleAuth = true
     auth.loginAppleId(credential: credential) { (user, error) in
       if error == nil && user != nil {
         let user = UserVO(id: user?.id, email: user?.email, firstName: self.userName != "" ? self.userName : user?.firstName, lastName:  self.userLastName != "" ? self.userLastName : user?.lastName, avatar: user?.avatar, level: nil, age: nil, sex: nil, height: nil, heightType: nil, weight: nil,weightType: nil, type: self.userType != "" ? self.userType : nil, purpose: nil, gallery: nil, friends: nil, trainerId: nil, sportsmen: nil, requests: nil, city: self.userCity != "" ? self.userCity : nil )
         self.setUser(user: user)
         UserDataManager().getUser(callback: { (user, error) in
-        if let user = user {
-          Analytics.logEvent("log_in", parameters: nil)
-          self.setUser(user: user)
-          success()
-        } else {
-          success()
-          //failure("Ошибка авторизации")
-        }
-      })
+          if let user = user {
+            Analytics.logEvent("log_in", parameters: nil)
+            self.setUser(user: user)
+            success(true)
+          } else {
+            if AuthModule.currUser.type != nil {
+              self.presenter.createNewUser(newUser: AuthModule.currUser, success: {
+                Analytics.logEvent("sign_up", parameters: nil)
+                Analytics.logEvent("user_city_registration", parameters: ["city": AuthModule.currUser.city ?? ""])
+                switch AuthModule.currUser.userType {
+                  case .sportsman:
+                    Analytics.logEvent("sign_up_sportsman", parameters: nil)
+                  case .trainer:
+                    Analytics.logEvent("sign_up_coach", parameters: nil)
+                }
+                success(true)
+              }) { (error) in
+                failure(error)
+              }
+            } else {
+              success(false)
+            }
+          }
+        })
       } else {
         if let error = error {
           failure(error.localizedDescription)
@@ -207,5 +238,4 @@ class SignInViewModel {
       }
     }
   }
-  
 }

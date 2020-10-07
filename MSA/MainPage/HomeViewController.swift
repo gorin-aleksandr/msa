@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
   var comunityPresenter: CommunityListPresenterProtocol!
   var permissionController: SPPermissionsDialogController?
+  let defaults = UserDefaults.standard
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -116,46 +117,6 @@ class HomeViewController: UIViewController {
     p.getAllFilters()
     p.getMyExercises()
   }
-  
-  @objc private func handleAppleSignInSelector() {
-    presentInputStatus()
-  }
-  
-  @objc func presentInputStatus() {
-  
-    let alert = UIAlertController(style: .actionSheet, title: "Укажите цель")
-    let config: TextField.Config = { textField in
-      textField.becomeFirstResponder()
-      textField.textColor = .black
-      if let dream = AuthModule.currUser.purpose, dream != "" {
-        textField.text = dream
-      }
-      textField.placeholder = "Напишите вашу цель"
-      //textField.left(image: image, color: .black)
-      textField.leftViewPadding = 12
-      textField.borderWidth = 1
-      textField.cornerRadius = 8
-      textField.borderColor = UIColor.lightGray.withAlphaComponent(0.5)
-      textField.backgroundColor = nil
-      textField.keyboardAppearance = .default
-      textField.keyboardType = .default
-      textField.isSecureTextEntry = false
-      textField.returnKeyType = .done
-      textField.action { textField in
-        if let purpose = textField.text, purpose != AuthModule.currUser.purpose  {
-          self.viewModel.setPurpose(purpose: purpose, success: {
-            self.collectionView.reloadData()
-          }) { (error) in
-          }
-        }
-      }
-    }
-    alert.addOneTextField(configuration: config)
-    let saveAction = UIAlertAction(title: "Сохранить", style: .default) { (action) in
-    }
-    alert.addAction(saveAction)
-    alert.show()
-  }
 
   func logInAppPurhaseRenewalEvent() {
     let defaults = UserDefaults.standard
@@ -220,9 +181,17 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       case 0:
         return 1
       case 1:
+        if viewModel.selectedUser != nil {
+          return 0
+        }
+        if let showDashboardShare = defaults.object(forKey: "showDashboardShare") as? Bool {
+          if showDashboardShare == false {
+            return 0
+          }
+        }
         return 1
       case 2:
-        if AuthModule.currUser.userType == .trainer && viewModel.selectedUser == nil{
+        if AuthModule.currUser.userType == .trainer && viewModel.selectedUser == nil {
           return 5
         }
         if viewModel.selectedUser != nil {
@@ -278,7 +247,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
           myCell.logoImageView.image = UIImage(named:"Group-1")
         }
       }
-    
       myCell.logoImageView.cornerRadius = myCell.logoImageView.frame.width/2
       if let selectedUser = viewModel.selectedUser  {
         myCell.titleLabel.text = "\(selectedUser.firstName ?? "") \(selectedUser.lastName ?? "")"
@@ -292,31 +260,10 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       
     } else if indexPath.section == 1 {
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShareAppCollectionViewCell", for: indexPath as IndexPath) as! ShareAppCollectionViewCell
+      myCell.titleLabel.text = AuthModule.currUser.userType == .trainer ? "Поделись профилем MSA со своим спортсменом" : "Ходишь в зал с другом? Поделись MSA чтобы прогрессировать вместе!"
       myCell.shareTextButton.addTarget(self, action: #selector(shareProfileAction(_:)), for: .touchUpInside)
       myCell.shareImageButton.addTarget(self, action: #selector(shareProfileAction(_:)), for: .touchUpInside)
-//      let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeTargetCollectionViewCell", for: indexPath as IndexPath) as! HomeTargetCollectionViewCell
-//      if let selectedUser = viewModel.selectedUser  {
-//        if let purpose = selectedUser.purpose {
-//          myCell.titleLabel.text = purpose
-//        } else {
-//          myCell.titleLabel.text = ""
-//        }
-//
-//      } else {
-//        if let purpose = AuthModule.currUser.purpose {
-//          myCell.titleLabel.text = purpose
-//        } else {
-//          myCell.titleLabel.text = "Укажите цель"
-//        }
-//      }
-//
-//      myCell.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
-//      myCell.layer.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.98, alpha: 1.00).cgColor
-//      myCell.layer.masksToBounds = false
-//      let tap = UITapGestureRecognizer(target: self, action:  #selector(handleAppleSignInSelector))
-//      myCell.rightImageView.addGestureRecognizer(tap)
-//      myCell.rightImageView.isUserInteractionEnabled = true
-      
+      myCell.notNowButton.addTarget(self, action: #selector(notNowShareProfileAction(_:)), for: .touchUpInside)
       return myCell
     } else {
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath as IndexPath) as! HomeCollectionViewCell
@@ -396,6 +343,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
   }
   
+  @objc func notNowShareProfileAction(_ sender: UIButton) {
+    defaults.set(false, forKey: "showDashboardShare")
+    collectionView.reloadData()
+  }
+  
   @objc func shareProfileAction(_ sender: UIButton) {
     
     guard let sharelink = URL(string: "https://msafitnessapp.com/users=\(AuthModule.currUser.id ?? "")") else { return }
@@ -404,41 +356,28 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     options.pathLength = .short
     dynLink.options = options
     var shortUrl = dynLink.url
-    dynLink.shorten() { url, warnings, error in
-          guard let url = url, error != nil else { return }
-          shortUrl = url
-          print("The short URL is: \(url)")
-      
-    }
-    
     if let bundleID = Bundle.main.bundleIdentifier {
         dynLink.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleID)
         dynLink.iOSParameters!.appStoreID = "1440506128"
         dynLink.iOSParameters!.fallbackURL = URL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")
         dynLink.androidParameters = DynamicLinkAndroidParameters(packageName: bundleID)
     }
-    
     dynLink.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
     dynLink.otherPlatformParameters?.fallbackUrl = URL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")
-
     dynLink.navigationInfoParameters = DynamicLinkNavigationInfoParameters()
     dynLink.navigationInfoParameters?.isForcedRedirectEnabled = true
+    dynLink.shorten() { url, warnings, error in
+          guard let url = url, error != nil else { return }
+          shortUrl = url
+          print("The short URL is: \(url)")
+    }
     
-    // Setting description
     let firstActivityItem = "Найди меня в MSA"
-    // Setting url
     let secondActivityItem : NSURL = NSURL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")!
-//    // If you want to use an image
-//    let image : UIImage = UIImage(named: "your-image-name")!
     let activityViewController : UIActivityViewController = UIActivityViewController(
       activityItems: [firstActivityItem, shortUrl], applicationActivities: nil)
-//
-    
-    // This line remove the arrow of the popover to show in iPad
     activityViewController.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.down
     activityViewController.popoverPresentationController?.sourceRect = CGRect(x: 150, y: 150, width: 0, height: 0)
-    
-    // Pre-configuring activity items
     if #available(iOS 13.0, *) {
       activityViewController.activityItemsConfiguration = [
         UIActivity.ActivityType.message,.addToReadingList,.mail,.postToFacebook,.postToTwitter
@@ -465,7 +404,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     } else {
       // Fallback on earlier versions
     }
-    self.present(activityViewController, animated: true, completion: nil)
+    DispatchQueue.main.async {
+      self.present(activityViewController, animated: true, completion: nil)
+    }
   }
   
 }

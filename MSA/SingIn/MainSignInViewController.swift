@@ -10,6 +10,7 @@ import UIKit
 import AuthenticationServices
 import CryptoKit
 import Firebase
+import SVProgressHUD
 
 class MainSignInViewController: UIViewController {
   
@@ -178,17 +179,20 @@ class MainSignInViewController: UIViewController {
   }
   
   @objc func facebookButtonAction(_ sender: UIButton) {
-    viewModel?.loginWithFacebook(success: {
-      if AuthModule.currUser.type == nil {
+    SVProgressHUD.show()
+    viewModel?.loginWithFacebook(success: { isSuccess in
+      SVProgressHUD.dismiss()
+      if isSuccess {
+        let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
+        self.navigationController?.pushViewController(nextViewController, animated: true)
+      } else {
         let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
         nextViewController.viewModel = SignInViewModel()
         nextViewController.viewModel?.flowType = .update
         self.navigationController?.pushViewController(nextViewController, animated: true)
-      } else {
-        let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
-        self.navigationController?.pushViewController(nextViewController, animated: true)
       }
     }, failure: { (error) in
+      SVProgressHUD.dismiss()
       AlertDialog.showAlert("Ошибка", message: error, viewController: self)
     })
   }
@@ -246,16 +250,16 @@ extension MainSignInViewController: ASAuthorizationControllerDelegate, ASAuthori
       }
       // Initialize a Firebase credential.      
       let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce, accessToken: nil)
-      viewModel!.loginWithAppleId(credential: credential, success: {
-        if AuthModule.currUser.type == nil {
-          let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
-          nextViewController.viewModel = SignInViewModel()
-          nextViewController.viewModel?.flowType = .update
-          self.navigationController?.pushViewController(nextViewController, animated: true)
-        } else {
-          let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
-          self.navigationController?.pushViewController(nextViewController, animated: true)
-        }
+      viewModel!.loginWithAppleId(credential: credential, success: { isSuccess in
+        if isSuccess {
+              let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
+              self.navigationController?.pushViewController(nextViewController, animated: true)
+            } else {
+              let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
+              nextViewController.viewModel = SignInViewModel()
+              nextViewController.viewModel?.flowType = .update
+              self.navigationController?.pushViewController(nextViewController, animated: true)
+            }
       }) { (error) in
         AlertDialog.showAlert("Ошибка", message: error, viewController: self)
       }

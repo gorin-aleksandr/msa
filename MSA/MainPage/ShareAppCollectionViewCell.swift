@@ -36,7 +36,7 @@ class ShareAppCollectionViewCell: UICollectionViewCell {
       make.bottom.equalTo(self.contentView.snp.bottom)
     }
     
-    titleLabel.text = "Ходишь в зал с другом? Поделись MSA чтобы прогрессировать вместе!"
+    titleLabel.text = ""
     titleLabel.font = NewFonts.SFProDisplaySemiBold14
     titleLabel.textColor = UIColor.newBlue
     titleLabel.numberOfLines = 0
