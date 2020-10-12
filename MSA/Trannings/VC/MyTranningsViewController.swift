@@ -266,25 +266,28 @@ class MyTranningsViewController: UIViewController {
   
   @IBAction func back(_ sender: Any) {
     if manager.sportsmanId != AuthModule.currUser.id {
-      SVProgressHUD.show()
-      manager.editTraining(wiht:  manager.getCurrentTraining()?.id ?? -1, success: { [weak self] in
-        guard let self = self else {return}
-        DispatchQueue.main.async { [weak self] in
-          guard let self = self else {return}
-          RealmManager.shared.clearTrainings()
-          self.manager.clearRealm()
-          SVProgressHUD.dismiss()
-          self.navigationController?.popViewController(animated: true)
-        }
-      }) { [weak self] (error) in
-        guard let self = self else {return}
-        DispatchQueue.main.async { [weak self] in
-          guard let self = self else {return}
-          RealmManager.shared.clearTrainings()
-          SVProgressHUD.dismiss()
-          AlertDialog.showAlert("Error", message: "\(error?.localizedDescription ?? "")", viewController: self)
-        }
-      }
+      RealmManager.shared.clearTrainings()
+      self.manager.clearRealm()
+      self.navigationController?.popViewController(animated: true)
+//      SVProgressHUD.show()
+//      manager.editTraining(wiht:  manager.getCurrentTraining()?.id ?? -1, success: { [weak self] in
+//        guard let self = self else {return}
+//        DispatchQueue.main.async { [weak self] in
+//          guard let self = self else {return}
+//          RealmManager.shared.clearTrainings()
+//          self.manager.clearRealm()
+//          SVProgressHUD.dismiss()
+//          self.navigationController?.popViewController(animated: true)
+//        }
+//      }) { [weak self] (error) in
+//        guard let self = self else {return}
+//        DispatchQueue.main.async { [weak self] in
+//          guard let self = self else {return}
+//          RealmManager.shared.clearTrainings()
+//          SVProgressHUD.dismiss()
+//          AlertDialog.showAlert("Error", message: "\(error?.localizedDescription ?? "")", viewController: self)
+//        }
+//      }
     } else {
       self.navigationController?.popViewController(animated: true)
     }

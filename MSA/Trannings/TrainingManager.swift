@@ -868,7 +868,6 @@ class TrainingManager {
     dataSource?.set(trainings: items)
     dataSource?.currentTraining = items.first
 
-//hz
     self.saveTrainingsToRealm(trainings: items)
     self.setSynced()
     firstLoad = false
