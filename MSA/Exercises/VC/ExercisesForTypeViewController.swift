@@ -235,7 +235,6 @@ class ExercisesForTypeViewController: UIViewController {
                 }
             } else {
                 SwiftRater.incrementSignificantUsageCount()
-              
                 Analytics.logEvent("add_exersises", parameters: nil)
                 self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
             }

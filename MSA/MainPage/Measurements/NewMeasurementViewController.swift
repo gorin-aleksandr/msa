@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import SwiftRater
+import Firebase
 
 class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   var viewModel: MeasurementViewModel?

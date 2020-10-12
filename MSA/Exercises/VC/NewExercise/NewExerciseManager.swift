@@ -143,7 +143,56 @@ class NewExerciseManager {
             }
         }
     }
-    
+  
+  func parseExercises(snapchot: DataSnapshot) -> [Exercise] {
+      var items = [Exercise]()
+      for snap in snapchot.children {
+          let s = snap as! DataSnapshot
+          if let _ = s.childSnapshot(forPath: "id").value as? NSNull {
+              return []
+          }
+          guard let _ = s.childSnapshot(forPath: "id").value as? String else {continue}
+          let picturesUrls = List<Image>()
+          let filterIds = List<Id>()
+          if let pictures = s.childSnapshot(forPath: "pictures").value as? NSArray {
+              for p in (pictures as! [[String:String]]) {
+                  let image = Image()
+                  image.url = p["url"]!
+                  picturesUrls.append(image)
+              }
+          }
+          if let filters = s.childSnapshot(forPath: "filterIDs").value as? NSArray {
+              for f in (filters as! [[String:Int]]) {
+                  let filt = Id()
+                  filt.id = f["id"]!
+                  filterIds.append(filt)
+              }
+          }
+          let exercise = Exercise()
+          
+          exercise.id = s.childSnapshot(forPath: "id").value as! String
+          exercise.realTypeId = s.childSnapshot(forPath: "realTypeId").value as? Int ?? -1
+          exercise.name = s.childSnapshot(forPath: "name").value as? String ?? ""
+          exercise.pictures = picturesUrls
+          exercise.typeId = s.childSnapshot(forPath: "typeId").value as! Int
+          exercise.trainerId = s.childSnapshot(forPath: "trainerId").value as? String ?? ""
+          exercise.videoUrl = s.childSnapshot(forPath: "videoUrl").value as? String ?? ""
+          exercise.exerciseDescriprion = s.childSnapshot(forPath: "description").value as? String ?? "No description"
+          exercise.howToDo = s.childSnapshot(forPath: "howToDo").value as? String ?? "No info about doing"
+          exercise.link = s.childSnapshot(forPath: "link").value as? String ?? "Загрузить видео"
+          exercise.filterIDs = filterIds
+          items.append(exercise)
+      }
+      return items
+  }
+  
+  func getSelectedExercisesByTrainer(exerciseIds: [String], trainerId: String, completion: @escaping ([Exercise])->(), failure: @escaping (_ error: Error?)->()) {
+    Database.database().reference().child("ExercisesByTrainers").child(trainerId).observeSingleEvent(of: .value) { (data) in
+      let items = self.parseExercises(snapchot: data).filter { exerciseIds.contains($0.id) }
+      completion(items)
+    }
+  }
+  
     func addExerciseToUser(id: String, ex: Exercise, completion: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
         fillData(exercise: ex)
         var newInfo = makeExerciseForFirebase(id: id, or: true)
@@ -159,6 +208,7 @@ class NewExerciseManager {
             }
         }
     }
+  
     func addExercisesToUser(id: String, exercises: [Exercise], completion: @escaping ()->(), failure: @escaping (_ error: Error?)->()) {
         var exInfo = [String:Any]()
         for ex in exercises {

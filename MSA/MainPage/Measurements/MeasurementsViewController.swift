@@ -9,6 +9,7 @@
 import UIKit
 import Charts
 import SVProgressHUD
+import Firebase
 
 class MeasurementsViewController: UIViewController, ChartViewDelegate {
   @IBOutlet var tableView: UITableView!
@@ -24,6 +25,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    Analytics.logEvent("measurements_screen", parameters: ["name": viewModel!.currentTypeTitle])
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -157,6 +159,7 @@ extension MeasurementsViewController: UITableViewDataSource, UITableViewDelegate
     if indexPath.section == 1 {
       viewModel!.currentTypeId = indexPath.row
       viewModel!.currentTypeTitle = viewModel!.titles[indexPath.row]
+      Analytics.logEvent("measurements_screen", parameters: ["name": viewModel!.currentTypeTitle])
       fetchMeasurements()
     }
     

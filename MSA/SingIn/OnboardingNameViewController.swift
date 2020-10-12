@@ -173,6 +173,18 @@ class OnboardingNameViewController: UIViewController {
           }
         }
       }
+    } else {
+      if viewModel!.signInDataControllerType == .name {
+        if nameTextField.text!.isEmpty {
+          AlertDialog.showAlert("", message: "Введи свое имя", viewController: self)
+        } else if lastNameTextField.text!.isEmpty {
+          AlertDialog.showAlert("", message: "Введи свою фамилию", viewController: self)
+        }
+      } else {
+        if nameTextField.text!.isEmpty {
+          AlertDialog.showAlert("", message: "Начни писать название своего города и выбери его с выпадающего списка", viewController: self)
+        }
+      }
     }
   }
   
@@ -215,7 +227,6 @@ extension OnboardingNameViewController: UITextFieldDelegate {
       startButton.isSelected = true
     } else {
       startButton.isSelected = false
-      
     }
   }
 }

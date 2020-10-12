@@ -151,6 +151,7 @@ class MyTranningsViewController: UIViewController {
       let alertController = UIAlertController(title: "Внимание!", message: "Ты хочешь скопировать \(index+1) день?", preferredStyle: .alert)
       let yesAction = UIAlertAction(title: "Да", style: .cancel) { (action) in
         CopyTrainingsManager.shared.copiedDay = self.manager.dataSource?.currentWeek?.days[index]
+        print(CopyTrainingsManager.shared.copiedDay?.exercises)
         //self.manager.copyDay(at: index)
         self.mainAddWeekDayView.insertButton.backgroundColor = .lightGREEN
         self.tableView.reloadData()
@@ -365,18 +366,39 @@ class MyTranningsViewController: UIViewController {
   @objc
   func insertDayWeekButtonAction(_ sender: UIButton) {
     if  CopyTrainingsManager.shared.copiedDay != nil {
-      self.manager.insertNewDay()
+      self.manager.insertNewDay(completion: {
+        self.tableView.reloadData()
+        self.changeWeek()
+        SVProgressHUD.dismiss()
+      }, failure: { error in
+        SVProgressHUD.dismiss()
+        AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
+      })
       self.mainAddWeekDayView.insertButton.backgroundColor = .lightGray
     } else if CopyTrainingsManager.shared.copiedWeek != nil {
-      self.manager.insertNewWeek()
+      SVProgressHUD.show()
+      self.manager.insertNewWeek(completion: {
+        self.tableView.reloadData()
+        self.changeWeek()
+        SVProgressHUD.dismiss()
+      }, failure: { error in
+        SVProgressHUD.dismiss()
+        AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
+      })
       self.mainAddWeekDayView.insertButton.backgroundColor = .lightGray
     } else {
       showNoInsert()
     }
-    self.tableView.reloadData()
-    self.changeWeek()
     
   }
+  
+  func performAfterDelay(delay : Double, onCompletion: @escaping() -> Void){
+
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay, execute: {
+         onCompletion()
+      })
+  }
+  
   func showOptionsAlert(addDayWeek: Bool) {
     let alert = UIAlertController(title: "Редактирование тренировки", message: "", preferredStyle: UIAlertController.Style.alert)
     
@@ -829,6 +851,8 @@ extension MyTranningsViewController: UITableViewDelegate, UITableViewDataSource 
         tap.indexPath = indexPath
         cell.exerciseImageView.addGestureRecognizer(tap)
         cell.exerciseImageView.tag = indexPath.row
+      } else {
+        print("Кастомная тренировка!")
       }
       return cell
     }
@@ -1146,3 +1170,5 @@ extension MyTranningsViewController: CommunityListViewProtocol{
     
   }
 }
+
+

@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import FirebaseFirestore
+import Firebase
 
 class Measurement {
   var id: String
@@ -135,7 +136,8 @@ class MeasurementViewModel {
         "type" : newMeasurementId,
         "timeStamp": FieldValue.serverTimestamp()
       ])
-    }    
+    }
+    Analytics.logEvent("add_measurement", parameters: ["name": newMeasurementsTitle])
     reloadChart?()
   }
   

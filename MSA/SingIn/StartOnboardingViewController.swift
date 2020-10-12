@@ -47,8 +47,8 @@ class StartOnboardingViewController: UIViewController {
     backgroundView.cornerRadius = screenSize.height * (10/iPhoneXHeight)
     titleLabel.font = NewFonts.SFProDisplayBold24
     descriptionLabel.font = NewFonts.SFProDisplayRegular16
-    trainerButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
-    sportsmanButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
+    trainerButton.titleLabel?.font = NewFonts.SFProDisplaySemiBold14
+    sportsmanButton.titleLabel?.font = NewFonts.SFProDisplaySemiBold14
     startButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
     privacyLabel.font = NewFonts.SFProDisplayRegular12
     titleLabel.textColor = UIColor.newBlack
@@ -271,12 +271,11 @@ class StartOnboardingViewController: UIViewController {
   }
   
   func setupSlideScrollView(slides : [PromoView]) {
-    //promoScrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
     promoScrollView.contentSize = CGSize(width: view.frame.width * CGFloat(slides.count), height: view.frame.height)
     promoScrollView.isPagingEnabled = true
     
     for i in 0 ..< slides.count {
-      slides[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: 0, width: view.frame.width, height: view.frame.height)
+      slides[i].frame = CGRect(x: view.frame.width * CGFloat(i), y: screenSize.height * (85/iPhoneXHeight), width: view.frame.width, height: view.frame.height)
       promoScrollView.addSubview(slides[i])
     }
   }

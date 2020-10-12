@@ -30,6 +30,7 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
+    downloadExercises()
     comunityPresenter = CommunityListPresenter(view: self)
     setupPermissionAlert()
 
@@ -58,16 +59,6 @@ class HomeViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    downloadExercises()
-
-    if viewModel.selectedUser != nil {
-      navigationController?.setNavigationBarHidden(false, animated: false)
-      let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
-        self.navigationItem.leftBarButtonItem = backButton
-        self.navigationController?.navigationBar.tintColor = .newBlack
-    } else {
-      navigationController?.setNavigationBarHidden(true, animated: false)
-    }
   }
   
   func setupPermissionAlert() {
@@ -96,6 +87,15 @@ class HomeViewController: UIViewController {
   }
   
   func setupUI() {
+    if viewModel.selectedUser != nil {
+      navigationController?.setNavigationBarHidden(false, animated: false)
+      let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
+        self.navigationItem.leftBarButtonItem = backButton
+        self.navigationController?.navigationBar.tintColor = .newBlack
+    } else {
+      navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.snp.makeConstraints { (make) in

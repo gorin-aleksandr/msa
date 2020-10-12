@@ -65,7 +65,7 @@ class ShareAppCollectionViewCell: UICollectionViewCell {
       make.height.equalTo(screenSize.height * (48/iPhoneXHeight))
     }
     
-    shareTextButton.setTitle("Поделится", for: .normal)
+    shareTextButton.setTitle("Поделиться", for: .normal)
     shareTextButton.titleLabel?.font = NewFonts.SFProDisplayBold13
     shareTextButton.setTitleColor(UIColor.newBlue, for: .normal)
     shareTextButton.snp.makeConstraints { (make) in
