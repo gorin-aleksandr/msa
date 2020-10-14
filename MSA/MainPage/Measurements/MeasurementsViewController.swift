@@ -195,10 +195,10 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     
     var values = (0..<days.count).map { (i) -> ChartDataEntry in
       if let index = measurements.firstIndex(where: {NSCalendar.current.isDate(days[i], inSameDayAs: $0.createdDate)}) {
-        return ChartDataEntry(x: Double(i), y: measurements[index].value.roundTo(places: 1), data: nil)
+        return ChartDataEntry(x: Double(i), y: measurements[index].value, data: nil)
       } else {
         if let index = measurements.lastIndex(where: { $0.createdDate < days[i]}) {
-          return ChartDataEntry(x: Double(i), y: measurements[index].value.roundTo(places: 1), data: nil)
+          return ChartDataEntry(x: Double(i), y: measurements[index].value, data: nil)
         }
       }
       return ChartDataEntry(x: Double(i), y: 0, data: nil)
@@ -236,7 +236,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     var values2: [ChartDataEntry] = []
     for i in 0..<days.count {
       if let index = measurements.firstIndex(where: {NSCalendar.current.isDate(days[i], inSameDayAs: $0.createdDate)}) {
-        values2.append(ChartDataEntry(x: Double(i), y: measurements[index].value.roundTo(places: 1), data: nil))
+        values2.append(ChartDataEntry(x: Double(i), y: measurements[index].value, data: nil))
       }
     }
     
@@ -257,6 +257,14 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     set2.formLineWidth = 1
     set2.formSize = 15
     set2.fillAlpha = 1
+    
+    
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .none
+    formatter.maximumFractionDigits = 1
+    formatter.multiplier = 1.0
+    set2.valueFormatter = DefaultValueFormatter(formatter: formatter)
+    
     //       set2.fill = Fill(linearGradient: gradient, angle: -90)
     //       set2.drawFilledEnaself.bled = true
     //chartView.lineData?.addDataSet(set2)
