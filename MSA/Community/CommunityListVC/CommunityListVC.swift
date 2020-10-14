@@ -163,6 +163,11 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
        
         if isTrainerEnabled {
             let addTrainerAction = UIAlertAction(title: "Добавить в тренеры", style: .default, handler: { [weak self] _ in
+              
+              #if DEBUG
+              SVProgressHUD.show()
+              self?.presenter.addAsTrainer(user: user)
+              #else
               if InAppPurchasesService.shared.currentSubscription == nil {
                 let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
                 destinationVC.presenter = self?.presenter.createIAPPresenter(for: destinationVC)
@@ -171,6 +176,8 @@ class CommunityListViewController: UIViewController, CommunityListViewProtocol, 
                 SVProgressHUD.show()
                 self?.presenter.addAsTrainer(user: user)
               }
+              #endif
+
             })
         alert.addAction(addTrainerAction)
         }

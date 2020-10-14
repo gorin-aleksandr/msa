@@ -239,7 +239,7 @@ class MyTranningsViewController: UIViewController {
     
     if manager.dataSource?.currentTraining?.weeks.count == nil {
       self.refreshControl.beginRefreshing()
-      self.view.isUserInteractionEnabled = false
+      //self.view.isUserInteractionEnabled = false
     }
   }
   
@@ -412,19 +412,32 @@ class MyTranningsViewController: UIViewController {
     alert.setValue(myMutableString, forKey: "attributedTitle")
     
     let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
+      
+      #if DEBUG
+      self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
+      if addDayWeek {
+        self.addWeek()
+        Analytics.logEvent("creating_training_week", parameters: nil)
+      } else {
+        self.saveTemplate()
+      }
+      #else
       if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
-          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
-          self.present(destinationVC, animated: true, completion: nil)        
+        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+        destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+        self.present(destinationVC, animated: true, completion: nil)
       } else {
         self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
-         if addDayWeek {
-           self.addWeek()
-           Analytics.logEvent("creating_training_week", parameters: nil)
-         } else {
-           self.saveTemplate()
-         }
+        if addDayWeek {
+          self.addWeek()
+          Analytics.logEvent("creating_training_week", parameters: nil)
+        } else {
+          self.saveTemplate()
+        }
       }
+      #endif
+      
+
  
     })
     let secondAction = UIAlertAction(title: "Удалить все тренировки", style: .default, handler: { action in
@@ -1016,7 +1029,7 @@ extension MyTranningsViewController: TrainingsViewDelegate {
       }
     }
     self.refreshControl.endRefreshing()
-    self.view.isUserInteractionEnabled = true
+    //self.view.isUserInteractionEnabled = true
   }
   
   func errorOccurred(err: String) {

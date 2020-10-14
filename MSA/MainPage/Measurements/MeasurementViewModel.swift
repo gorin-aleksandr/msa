@@ -49,9 +49,11 @@ class MeasurementViewModel {
   var newMeasurementDate = Date()
   var newMeasurementId = 0
   var xMins: [Double] = [30,140,2,2,30,20,30,70,50,50,20,20,50,30,30]
-  var xMax: [Double] = [200,220,50,50,80,150,50,200,160,160,70,70,200,120,120]
+  var xMaxs: [Double] = [200,220,50,50,80,150,50,200,160,160,70,70,200,120,120]
   var selectedMeasurements: [Measurement] = []
   var reloadChart: (() -> ())?
+  var xMin = 0.0
+  var xMax = 0.0
   
   init() {
     //    try! realm.write {
@@ -70,22 +72,15 @@ class MeasurementViewModel {
       endDate = Calendar.current.date(byAdding: .day, value: 14, to: endDate!)!
       currentWeek = Date.dates(from: startDate!, to: endDate!)
     } else {
-        startDate = Calendar.current.date(byAdding: .day, value: -14, to: currentWeekDay)!
-        endDate = Date()
-        currentWeek = Date.dates(from: startDate!, to: endDate!)
+      startDate = Calendar.current.date(byAdding: .day, value: -14, to: currentWeekDay)!
+      endDate = Date()
+      currentWeek = Date.dates(from: startDate!, to: endDate!)
     }
- 
+    
   }
   
   func numberOfRowInSectionForDataController(section: Int) -> Int {
-    switch section {
-      case 0:
-        return 3
-      case 1:
-        return titles.count
-      default:
-        return 0
-    }
+    return titles.count
   }
   
   func fetchMeasurements(success: @escaping (Bool)->()) {
@@ -105,7 +100,7 @@ class MeasurementViewModel {
         let stamp = item["createdDate"] as! Timestamp
         let date = stamp.dateValue()
         print("New value: \(stamp.dateValue()) val =\(item["value"] as! Double)")
-
+        
         let measurement = Measurement(id: diff.document.documentID,type: item["type"] as! Int, value: item["value"] as! Double, createdDate: date)
         print("Date = \(stamp.dateValue())")
         self.selectedMeasurements.append(measurement)
@@ -124,11 +119,11 @@ class MeasurementViewModel {
     if let index = selectedMeasurements.firstIndex(where: {NSCalendar.current.isDate(date, inSameDayAs: $0.createdDate)}) {
       let measurement = selectedMeasurements[index]
       db.collection("Measurements").document(selectedUserId).collection("\(newMeasurementId)").document(measurement.id).updateData([
-         "value": value,
-         "createdDate": date,
-         "type" : newMeasurementId,
-         "timeStamp": FieldValue.serverTimestamp()
-       ])
+        "value": value,
+        "createdDate": date,
+        "type" : newMeasurementId,
+        "timeStamp": FieldValue.serverTimestamp()
+      ])
     } else {
       db.collection("Measurements").document(selectedUserId).collection("\(newMeasurementId)").addDocument(data: [
         "value": value,
@@ -146,21 +141,7 @@ class MeasurementViewModel {
   }
   
   func heightForRow(indexPath: IndexPath) -> CGFloat {
-    if indexPath.section == 0 {
-      switch indexPath.row {
-        case 0:
-          return screenSize.height * (60/iPhoneXHeight)
-        case 1:
-          return screenSize.height * (306/iPhoneXHeight)
-        case 2:
-          return screenSize.height * (40/iPhoneXHeight)
-        default:
-          return screenSize.height * (60/iPhoneXHeight)
-      }
-    } else {
-      return screenSize.height * (78/iPhoneXHeight)
-    }
-    
+    return screenSize.height * (78/iPhoneXHeight)
   }
   
   func formatedDate() -> String? {
@@ -180,14 +161,14 @@ class MeasurementViewModel {
   func headerCell(tableView: UITableView, indexPath: IndexPath) -> DateMeasurementsTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "DateMeasurementsTableViewCell") as! DateMeasurementsTableViewCell
     cell.titleLabel.text = formatedDate()
-
+    
     cell.leftButton.isHidden = isHiddenLeftRightButton
     cell.rightButton.isHidden = isHiddenLeftRightButton
-//    if !isHiddenLeftRightButton {
-//      cell.rightButton.isHidden =  NSCalendar.current.isDate(endDate!, inSameDayAs: Date()) ? true : false
-//    }
-
-
+    //    if !isHiddenLeftRightButton {
+    //      cell.rightButton.isHidden =  NSCalendar.current.isDate(endDate!, inSameDayAs: Date()) ? true : false
+    //    }
+    
+    
     cell.selectionStyle = .none
     return cell
   }
@@ -195,7 +176,7 @@ class MeasurementViewModel {
   func chartCell(tableView: UITableView, indexPath: IndexPath) -> ChartTableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "ChartTableViewCell") as! ChartTableViewCell
     cell.xMin = xMins[currentTypeId]
-    cell.xMax = xMax[currentTypeId] //selectedMeasurements.map { $0.value }.max()
+    cell.xMax = xMaxs[currentTypeId] //selectedMeasurements.map { $0.value }.max()
     let dateRange = selectedDatesRange.isEmpty ? currentWeek! : selectedDatesRange
     cell.setDataCount(days: dateRange, measurements: selectedMeasurements, unit: measureUnits[currentTypeId])
     cell.selectionStyle = .none

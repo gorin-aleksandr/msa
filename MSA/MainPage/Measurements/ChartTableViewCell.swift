@@ -85,7 +85,7 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     }
     
     values.sort(by: { $0.x < $1.x })
-    
+
     let set1 = LineChartDataSet(entries: values, label: unit)
     set1.drawIconsEnabled = false
     set1.highlightEnabled = false
@@ -109,18 +109,14 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     set1.fillAlpha = 1
     set1.fill = Fill(linearGradient: gradient, angle: -90)
     set1.drawFilledEnabled = true
-    
     //chartView.data = data
-   
     //chartView.lineData?.addDataSet(set1)
-    
     var values2: [ChartDataEntry] = []
     for i in 0..<days.count {
       if let index = measurements.firstIndex(where: {NSCalendar.current.isDate(days[i], inSameDayAs: $0.createdDate)}) {
         values2.append(ChartDataEntry(x: Double(i), y: measurements[index].value, data: nil))
       }
     }
-
     
     let set2 = LineChartDataSet(entries: values2, label: unit)
        set2.drawIconsEnabled = false
@@ -148,53 +144,9 @@ class ChartTableViewCell: UITableViewCell, ChartViewDelegate {
     data.highlightEnabled = false
     chartView.data = data
 
-    
-    
     for set in chartView.data!.dataSets as! [LineChartDataSet] {
          set.mode = (set.mode == .linear) ? .horizontalBezier : .stepped
        }
        chartView.setNeedsDisplay()
-  }
-}
-
-@objc(BarChartFormatter)
-public class BarChartFormatter: NSObject, IAxisValueFormatter{
-
-  var currentWeek: [Date]
-  
-  public init(datesRange: [Date]) {
-    currentWeek = datesRange
-  }
-
-  public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-    if currentWeek.count == 7 {
-      return "\(currentWeek[Int(value)].day) \(dayOfWeek(index: Int(value)))"
-    } else {
-      return "\(currentWeek[Int(value)].day)/\(currentWeek[Int(value)].month)"
-    }
-  
-  }
-
-}
-
-
-func dayOfWeek(index: Int) -> String {
-  switch index {
-    case 0:
-     return "Пн"
-    case 1:
-    return "Вт"
-    case 2:
-    return "Ср"
-    case 3:
-    return "Чт"
-    case 4:
-    return "Пт"
-    case 5:
-    return "Сб"
-    case 6:
-    return "Вс"
-    default:
-        return "Пн"
   }
 }

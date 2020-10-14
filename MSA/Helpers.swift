@@ -9,6 +9,7 @@
 import UIKit
 import CryptoKit
 import CommonCrypto
+import Charts
 
 let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
 let signInStoryboard = UIStoryboard(name: "SignIn", bundle:nil)
@@ -24,8 +25,8 @@ let screenSize: CGRect = UIScreen.main.bounds
 
 
 func randomString(length: Int) -> String {
-    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    return String((0..<length).map{ _ in letters.randomElement()! })
+  let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  return String((0..<length).map{ _ in letters.randomElement()! })
 }
 
 func nowDateString() -> String {
@@ -332,17 +333,17 @@ class CustomTitleView: UIView
 }
 
 extension UITextField {
-
-enum Direction {
+  
+  enum Direction {
     case Left
     case Right
-}
-
-// add image to textfield
-func withImage(direction: Direction, image: UIImage, colorSeparator: UIColor, colorBorder: UIColor){
+  }
+  
+  // add image to textfield
+  func withImage(direction: Direction, image: UIImage, colorSeparator: UIColor, colorBorder: UIColor){
     let mainView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
     mainView.layer.cornerRadius = 5
-
+    
     let view = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 45))
     view.backgroundColor = .clear
     view.clipsToBounds = true
@@ -350,29 +351,72 @@ func withImage(direction: Direction, image: UIImage, colorSeparator: UIColor, co
     view.layer.borderWidth = CGFloat(0.5)
     view.layer.borderColor = colorBorder.cgColor
     mainView.addSubview(view)
-
+    
     let imageView = UIImageView(image: image)
     imageView.contentMode = .scaleAspectFit
     imageView.frame = CGRect(x: 12.0, y: 10.0, width: 24.0, height: 24.0)
     view.addSubview(imageView)
-
+    
     let seperatorView = UIView()
     seperatorView.backgroundColor = colorSeparator
     //mainView.addSubview(seperatorView)
-
+    
     if(Direction.Left == direction){ // image left
-       // seperatorView.frame = CGRect(x: 45, y: 0, width: 5, height: 45)
-        self.leftViewMode = .always
-        self.leftView = mainView
+      // seperatorView.frame = CGRect(x: 45, y: 0, width: 5, height: 45)
+      self.leftViewMode = .always
+      self.leftView = mainView
     } else { // image right
-        //seperatorView.frame = CGRect(x: 0, y: 0, width: 5, height: 45)
-        self.rightViewMode = .always
-        self.rightView = mainView
+      //seperatorView.frame = CGRect(x: 0, y: 0, width: 5, height: 45)
+      self.rightViewMode = .always
+      self.rightView = mainView
     }
-
+    
     self.layer.borderColor = colorBorder.cgColor
     self.layer.borderWidth = CGFloat(0.5)
     self.layer.cornerRadius = 5
+  }
 }
 
+@objc(BarChartFormatter)
+public class BarChartFormatter: NSObject, IAxisValueFormatter{
+  var currentWeek: [Date]
+  public init(datesRange: [Date]) {
+    currentWeek = datesRange
+  }
+  
+  public func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    if currentWeek.count == 7 {
+      return "\(currentWeek[Int(value)].day) \(dayOfWeek(index: Int(value)))"
+    } else {
+      return "\(currentWeek[Int(value)].day)/\(currentWeek[Int(value)].month)"
+    }
+  }
+}
+
+func dayOfWeek(index: Int) -> String {
+  switch index {
+    case 0:
+      return "Пн"
+    case 1:
+      return "Вт"
+    case 2:
+      return "Ср"
+    case 3:
+      return "Чт"
+    case 4:
+      return "Пт"
+    case 5:
+      return "Сб"
+    case 6:
+      return "Вс"
+    default:
+      return "Пн"
+  }
+}
+
+extension Double {
+    func roundTo(places: Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
 }

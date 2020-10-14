@@ -26,14 +26,14 @@ class HomeViewController: UIViewController {
   var comunityPresenter: CommunityListPresenterProtocol!
   var permissionController: SPPermissionsDialogController?
   let defaults = UserDefaults.standard
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
     downloadExercises()
     comunityPresenter = CommunityListPresenter(view: self)
     setupPermissionAlert()
-
+    
     InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
       self?.logInAppPurhaseRenewalEvent()
       if InAppPurchasesService.shared.currentSubscription != nil {
@@ -46,15 +46,15 @@ class HomeViewController: UIViewController {
     if viewModel.selectedUser == nil {
       SVProgressHUD.show()
       self.viewModel.getUser(success: {
-         SVProgressHUD.dismiss()
-         self.collectionView.reloadData()
-       })
+        SVProgressHUD.dismiss()
+        self.collectionView.reloadData()
+      })
     }
   }
- 
+  
   override func viewDidAppear(_ animated: Bool) {
-         super.viewDidAppear(animated)
-         SwiftRater.check()
+    super.viewDidAppear(animated)
+    SwiftRater.check()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -90,8 +90,8 @@ class HomeViewController: UIViewController {
     if viewModel.selectedUser != nil {
       navigationController?.setNavigationBarHidden(false, animated: false)
       let backButton = UIBarButtonItem(image: UIImage(named: "backIcon"), style: .plain, target: self, action: #selector(self.backAction))
-        self.navigationItem.leftBarButtonItem = backButton
-        self.navigationController?.navigationBar.tintColor = .newBlack
+      self.navigationItem.leftBarButtonItem = backButton
+      self.navigationController?.navigationBar.tintColor = .newBlack
     } else {
       navigationController?.setNavigationBarHidden(true, animated: false)
     }
@@ -117,9 +117,16 @@ class HomeViewController: UIViewController {
     p.getAllFilters()
     p.getMyExercises()
   }
-
+  
   func logInAppPurhaseRenewalEvent() {
     let defaults = UserDefaults.standard
+    if defaults.object(forKey: "inAppPurchaseExpireDate") == nil {
+      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate {
+             defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
+             defaults.set(InAppPurchasesService.shared.currentSubscription!.isTrialPeriod, forKey: "inAppPurchaseIsTrial")
+           }
+    }
+    
     if let lastExpireDate = defaults.object(forKey: "inAppPurchaseExpireDate") as? Date, let lastPurchaseisTrial = defaults.object(forKey: "inAppPurchaseIsTrial") as? String {
       if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate, let isTrial =  InAppPurchasesService.shared.currentSubscription?.isTrialPeriod, let purchaseName =  InAppPurchasesService.shared.currentSubscription?.productId {
         
@@ -149,26 +156,26 @@ class HomeViewController: UIViewController {
           defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
           switch purchaseName {
             case "s_one_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              Analytics.logEvent("app_store_subscription_renew_sportsman_1m", parameters: nil)
             case "s_twelve_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+              Analytics.logEvent("app_store_subscription_renew_sportsman_1y", parameters: nil)
             case "t_one_month":
               Analytics.logEvent("app_store_subscription_renew_coach_1m", parameters: nil)
             case "t_twelve_month":
               Analytics.logEvent("app_store_subscription_renew_coach_1y", parameters: nil)
-            case "s_fullAcess":
-              Analytics.logEvent("app_store_subscription_renew_sportsman_fullAcess", parameters: nil)
-            case "t_fullAcess":
-              Analytics.logEvent("app_store_subscription_renew_coach_fullAcess", parameters: nil)
             default:
               return
           }
         }
-      }
-    } else {
-      if let expireDate = InAppPurchasesService.shared.currentSubscription?.expiresDate {
-        defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
-        defaults.set(InAppPurchasesService.shared.currentSubscription!.isTrialPeriod, forKey: "inAppPurchaseIsTrial")
+      } else {
+        Analytics.logEvent("unsubscribe", parameters: nil)
+        switch AuthModule.currUser.userType {
+          case .sportsman:
+            Analytics.logEvent("unsubscribe_sportsman", parameters: nil)
+          case .trainer:
+            Analytics.logEvent("unsubscribe_coach", parameters: nil)
+        }
+        defaults.set(nil, forKey: "inAppPurchaseExpireDate")
       }
     }
   }
@@ -269,7 +276,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       let myCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionViewCell", for: indexPath as IndexPath) as! HomeCollectionViewCell
       myCell.logoImageView.image = UIImage(named: images[indexPath.row])
       myCell.titleLabel.text = titles[indexPath.row]
-
+      
       if indexPath.row == 2 || indexPath.row == 3 {
         myCell.addBluredView()
       }
@@ -304,9 +311,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         case 0:
           DispatchQueue.main.async {
             if let selectedUser = self.viewModel.selectedUser  {
-            let destinationVC = UIStoryboard(name: "Trannings", bundle: nil).instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
+              let destinationVC = UIStoryboard(name: "Trannings", bundle: nil).instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
               destinationVC.manager.trainingType = .notMine(userId: selectedUser.id)
-                   self.navigationController?.pushViewController(destinationVC, animated: true)
+              self.navigationController?.pushViewController(destinationVC, animated: true)
             } else {
               let vc = trainingStoryboard.instantiateViewController(withIdentifier: "MyTranningsViewController") as! MyTranningsViewController
               self.navigationController?.pushViewController(vc, animated: true)
@@ -314,7 +321,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         case 1:
           DispatchQueue.main.async {
-         let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "MeasurementsViewController") as! MeasurementsViewController
+            let nextViewController = measurementsStoryboard.instantiateViewController(withIdentifier: "MeasurementsViewController") as! MeasurementsViewController
             nextViewController.viewModel = MeasurementViewModel()
             if let selectedUser = self.viewModel.selectedUser  {
               guard let userId = selectedUser.id else {return}
@@ -324,17 +331,17 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
               nextViewController.viewModel!.selectedUserId = userId
             }
             self.navigationController?.pushViewController(nextViewController, animated: true)
-            }
+        }
         case 2:
-            AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
+          AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
         case 3:
-            AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
-         case 4:
+          AlertDialog.showAlert("Спасибо, что ты с нами 💪", message: "Мы активно разрабатываем этот блок👨‍💻", viewController: self)
+        case 4:
           DispatchQueue.main.async {
-          let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "UsersSportsmansViewController") as! UsersSportsmansViewController
-          vc.showSearchBarForMySportsMan = true
-          vc.viewModel = CommunityViewModel()
-          self.navigationController?.pushViewController(vc, animated: true)
+            let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "UsersSportsmansViewController") as! UsersSportsmansViewController
+            vc.showSearchBarForMySportsMan = true
+            vc.viewModel = CommunityViewModel()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
         default:
           return
@@ -357,19 +364,19 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     dynLink.options = options
     var shortUrl = dynLink.url
     if let bundleID = Bundle.main.bundleIdentifier {
-        dynLink.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleID)
-        dynLink.iOSParameters!.appStoreID = "1440506128"
-        dynLink.iOSParameters!.fallbackURL = URL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")
-        dynLink.androidParameters = DynamicLinkAndroidParameters(packageName: bundleID)
+      dynLink.iOSParameters = DynamicLinkIOSParameters(bundleID: bundleID)
+      dynLink.iOSParameters!.appStoreID = "1440506128"
+      dynLink.iOSParameters!.fallbackURL = URL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")
+      dynLink.androidParameters = DynamicLinkAndroidParameters(packageName: bundleID)
     }
     dynLink.otherPlatformParameters = DynamicLinkOtherPlatformParameters()
     dynLink.otherPlatformParameters?.fallbackUrl = URL(string: "https://apps.apple.com/ua/app/msa-my-sport-assistant/id1440506128?l=ru")
     dynLink.navigationInfoParameters = DynamicLinkNavigationInfoParameters()
     dynLink.navigationInfoParameters?.isForcedRedirectEnabled = true
     dynLink.shorten() { url, warnings, error in
-          guard let url = url, error != nil else { return }
-          shortUrl = url
-          print("The short URL is: \(url)")
+      guard let url = url, error != nil else { return }
+      shortUrl = url
+      print("The short URL is: \(url)")
     }
     
     let firstActivityItem = "Найди меня в MSA"
@@ -388,15 +395,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     // Anything you want to exclude
     activityViewController.excludedActivityTypes = [
-        UIActivity.ActivityType.postToWeibo,
-        UIActivity.ActivityType.print,
-        UIActivity.ActivityType.assignToContact,
-        UIActivity.ActivityType.saveToCameraRoll,
-        UIActivity.ActivityType.addToReadingList,
-        UIActivity.ActivityType.postToFlickr,
-        UIActivity.ActivityType.postToVimeo,
-        UIActivity.ActivityType.postToTencentWeibo,
-        UIActivity.ActivityType.postToFacebook
+      UIActivity.ActivityType.postToWeibo,
+      UIActivity.ActivityType.print,
+      UIActivity.ActivityType.assignToContact,
+      UIActivity.ActivityType.saveToCameraRoll,
+      UIActivity.ActivityType.addToReadingList,
+      UIActivity.ActivityType.postToFlickr,
+      UIActivity.ActivityType.postToVimeo,
+      UIActivity.ActivityType.postToTencentWeibo,
+      UIActivity.ActivityType.postToFacebook
     ]
     
     if #available(iOS 13.0, *) {
