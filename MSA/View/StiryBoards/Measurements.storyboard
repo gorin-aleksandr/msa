@@ -13,7 +13,7 @@
             <objects>
                 <viewController storyboardIdentifier="MeasurementsViewController" id="8a7-xI-bXd" customClass="MeasurementsViewController" customModule="MSA" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JU9-Yb-yKN">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="2000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UJm-ni-GNB" customClass="LineChartView" customModule="Charts">
@@ -69,7 +69,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rlN-kR-oag">
-                                <rect key="frame" x="-6" y="547" width="426" height="930"/>
+                                <rect key="frame" x="20" y="1070" width="426" height="930"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
@@ -186,18 +186,55 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mpA-sq-hfm">
+                                <rect key="frame" x="20" y="635" width="366" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vCV-Wq-fkB">
+                                        <rect key="frame" x="61" y="54" width="42" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bO-tJ-NF6">
+                                        <rect key="frame" x="160" y="54" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kye-FK-442">
+                                        <rect key="frame" x="244" y="54" width="97" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVv-zR-y9j">
+                                        <rect key="frame" x="136" y="8" width="42" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="vgN-vc-02m"/>
                     </view>
-                    <size key="freeformSize" width="414" height="1500"/>
+                    <size key="freeformSize" width="414" height="2000"/>
                     <connections>
+                        <outlet property="addTargetButton" destination="5bO-tJ-NF6" id="WW1-gS-343"/>
                         <outlet property="calendarButton" destination="x8w-j4-ZR0" id="fVg-Ze-OKQ"/>
                         <outlet property="chartView" destination="UJm-ni-GNB" id="kIb-gX-7CO"/>
                         <outlet property="iconImageView" destination="DVe-eH-kfD" id="AgM-kA-VWp"/>
                         <outlet property="leftButton" destination="4ZT-3z-4mi" id="u81-6R-vyu"/>
+                        <outlet property="measurementValueLabel" destination="FVv-zR-y9j" id="9wa-pb-GHD"/>
                         <outlet property="rightButton" destination="j5q-of-7LB" id="0kH-rg-cpf"/>
                         <outlet property="tableView" destination="rlN-kR-oag" id="fdu-GN-bKz"/>
+                        <outlet property="targetBackgroundView" destination="mpA-sq-hfm" id="I5Y-9e-Liy"/>
+                        <outlet property="targetTitleLabel" destination="vCV-Wq-fkB" id="f9V-0H-Qqh"/>
+                        <outlet property="targetValueTextField" destination="Kye-FK-442" id="QAZ-Cl-sVi"/>
                         <outlet property="titlMeasureContentView" destination="m4I-Tg-AH7" id="jxe-Z4-brk"/>
                         <outlet property="titleContentView" destination="3v9-C9-rrg" id="dun-as-2aK"/>
                         <outlet property="titleLabel" destination="XCT-ru-tBe" id="mtk-Ql-Jjw"/>

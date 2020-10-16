@@ -23,10 +23,16 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   @IBOutlet weak var iconImageView: UIImageView!
   @IBOutlet weak var titlMeasureContentView: UIView!
   
-  
+  @IBOutlet weak var targetTitleLabel: UILabel!
+  @IBOutlet weak var addTargetButton: UIButton!
+  @IBOutlet weak var measurementValueLabel: UILabel!
+  @IBOutlet weak var targetValueTextField: UITextField!
+  @IBOutlet weak var targetBackgroundView: UIView!
+
   @IBOutlet var tableView: UITableView!
   @IBOutlet var chartView: LineChartView!
-  
+  let defaults = UserDefaults.standard
+  var newTarget = true
   var viewModel: MeasurementViewModel? {
     didSet {
       self.viewModel!.reloadChart = {
@@ -61,8 +67,9 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     tableView.dataSource = self
     tableView.delegate = self
     
+    setupTargetView()
     titleContentView.snp.makeConstraints { (make) in
-      make.top.equalTo(self.view.snp.top)
+      make.top.equalTo(self.targetBackgroundView.snp.bottom)
       make.height.equalTo(screenSize.height * (60/iPhoneXHeight))
       make.right.equalTo(self.view.snp.right)
       make.left.equalTo(self.view.snp.left)
@@ -147,8 +154,102 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     btn.addTarget(self, action: #selector(addMeasure), for: .touchUpInside)
   }
   
-  func setupChart() {
+  func setupTargetView() {
+      if defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") != nil {
+        newTarget = false
+      }
+      targetValueTextField.keyboardType = .decimalPad
     
+      targetBackgroundView.cornerRadius = screenSize.height * (16/iPhoneXHeight)
+      targetBackgroundView.backgroundColor = UIColor(red: 0.969, green: 0.969, blue: 0.996, alpha: 1)
+      targetBackgroundView.snp.makeConstraints { (make) in
+        make.top.equalTo(self.view.snp.top).offset(screenSize.height * (16/iPhoneXHeight))
+        make.height.equalTo(screenSize.height * (60/iPhoneXHeight))
+        make.right.equalTo(self.view.snp.right).offset(screenSize.width * (-16/iPhoneXWidth))
+        make.left.equalTo(self.view.snp.left).offset(screenSize.width * (16/iPhoneXWidth))
+      }
+      
+      targetTitleLabel.text = "Целевой замер"
+      targetTitleLabel.textColor = .newBlue
+      targetTitleLabel.font = NewFonts.SFProDisplaySemiBold13
+      targetTitleLabel.snp.makeConstraints { (make) in
+        make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
+        make.left.equalTo(self.targetBackgroundView.snp.left).offset(screenSize.width * (20/iPhoneXWidth))
+      }
+    addTargetButton.addTarget(self, action: #selector(addTargetAction(_:)), for: .touchUpInside)
+    let toolBar = UIToolbar()
+    toolBar.sizeToFit()
+    let flexibleButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    let button = UIBarButtonItem(title: "Сохранить", style: .plain, target: self,
+                                     action: #selector(saveTargetValue))
+    toolBar.setItems([flexibleButton,button], animated: true)
+    toolBar.isUserInteractionEnabled = true
+    targetValueTextField.inputAccessoryView = toolBar
+    
+    if defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") != nil || newTarget == false {
+      measurementValueLabel.isHidden = false
+      targetValueTextField.isHidden = false
+      addTargetButton.setTitle("", for: .normal)
+      addTargetButton.setBackgroundImage(UIImage(named: "Auto Fix"), for: .normal)
+      addTargetButton.snp.makeConstraints { (make) in
+        make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
+        make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
+        make.width.equalTo(screenSize.width * (28/iPhoneXWidth))
+        make.right.equalTo(self.targetBackgroundView.snp.right).offset(screenSize.width * (-16/iPhoneXWidth))
+      }
+      
+      addTargetButton.snp.makeConstraints { (make) in
+             make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
+             make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
+             make.width.equalTo(screenSize.width * (28/iPhoneXWidth))
+             make.right.equalTo(self.targetBackgroundView.snp.right).offset(screenSize.width * (-16/iPhoneXWidth))
+      }
+      
+      measurementValueLabel.text = viewModel!.measureUnits[viewModel!.currentTypeId]
+      measurementValueLabel.textColor = .black
+      measurementValueLabel.font = NewFonts.SFProDisplaySemiBold16
+      measurementValueLabel.snp.makeConstraints { (make) in
+             make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
+             make.right.equalTo(self.addTargetButton.snp.left).offset(screenSize.width * (-20/iPhoneXWidth))
+      }
+       targetValueTextField.placeholder = "0"
+       targetValueTextField.textAlignment = .right
+       targetValueTextField.textColor = .black
+       targetValueTextField.font = NewFonts.SFProDisplaySemiBold16
+       targetValueTextField.snp.makeConstraints { (make) in
+              make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
+              make.right.equalTo(self.measurementValueLabel.snp.left).offset(screenSize.width * (-8/iPhoneXWidth))
+              make.left.equalTo(self.targetTitleLabel.snp.right).offset(screenSize.width * (-20/iPhoneXWidth))
+      }
+      
+      if let value = defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") {
+        targetValueTextField.text = "\(value)"
+      }
+      
+    } else {
+      targetValueTextField.placeholder = "0"
+      measurementValueLabel.isHidden = true
+      targetValueTextField.isHidden = true
+      addTargetButton.setTitle("Добавить", for: .normal)
+      addTargetButton.titleLabel?.font = NewFonts.SFProDisplaySemiBold14
+      addTargetButton.setTitleColor(.white, for: .normal)
+      addTargetButton.setBackgroundColor(color: .newBlue, forState: .normal)
+      addTargetButton.layer.masksToBounds = true
+      addTargetButton.layer.cornerRadius = (screenSize.height * (32/iPhoneXHeight))/2
+      
+      targetValueTextField.text = ""
+      addTargetButton.snp.removeConstraints()
+      addTargetButton.snp.makeConstraints { (make) in
+        make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
+        make.height.equalTo(screenSize.height * (32/iPhoneXHeight))
+        make.width.equalTo(screenSize.width * (92/iPhoneXWidth))
+        make.right.equalTo(self.targetBackgroundView.snp.right).offset(screenSize.width * (-16/iPhoneXWidth))
+      }
+    }
+  
+  }
+  
+  func setupChart() {
     titleLabel.text = viewModel!.formatedDate()
     leftButton.isHidden = viewModel!.isHiddenLeftRightButton
     rightButton.isHidden = viewModel!.isHiddenLeftRightButton
@@ -168,7 +269,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     chartView.delegate = self
     
     // x-axis limit line
-    let llXAxis = ChartLimitLine(limit: 10, label: "Index 10")
+    let llXAxis = ChartLimitLine(limit: 10, label: "Цель")
     llXAxis.lineWidth = 4
     llXAxis.lineDashLengths = [10, 10, 0]
     llXAxis.labelPosition = .bottomRight
@@ -185,13 +286,23 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
       leftAxis.axisMaximum = viewModel!.xMaxs[viewModel!.currentTypeId]
       leftAxis.axisMinimum = viewModel!.xMins[viewModel!.currentTypeId]
     }
+    
+    if let value = defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") as? Double {
+      let ll1 = ChartLimitLine(limit: value, label: "Цель")
+          ll1.lineWidth = 4
+          ll1.lineColor = UIColor(red: 0.291, green: 0.671, blue: 0.329, alpha: 1)
+          ll1.lineDashLengths = [5, 5]
+          ll1.labelPosition = .topRight
+          ll1.valueFont = .systemFont(ofSize: 10)
+         leftAxis.addLimitLine(ll1)
+    }
+
     leftAxis.drawLimitLinesBehindDataEnabled = true
     chartView.rightAxis.enabled = false
     chartView.legend.form = .line
     chartView.xAxis.valueFormatter = BarChartFormatter(datesRange: days)
     chartView.xAxis.granularity = 1.0
     chartView.animate(xAxisDuration: 1)
-    
     
     var values = (0..<days.count).map { (i) -> ChartDataEntry in
       if let index = measurements.firstIndex(where: {NSCalendar.current.isDate(days[i], inSameDayAs: $0.createdDate)}) {
@@ -306,6 +417,22 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     self.tableView.reloadData()
   }
   
+  @objc func addTargetAction(_ sender: UIButton) {
+    targetValueTextField.becomeFirstResponder()
+    if newTarget {
+      newTarget = false
+    }
+    setupTargetView()
+  }
+  
+  @objc func saveTargetValue(_ sender: UIButton) {
+    if let value = targetValueTextField.text!.toDouble() {
+      defaults.set(value, forKey: "targetMeasurement\(viewModel!.currentTypeId)")
+      setupChart()
+    }
+    targetValueTextField.resignFirstResponder()
+  }
+  
   @objc func nextWeekAction(_ sender: UIButton) {
     if !NSCalendar.current.isDate(viewModel!.endDate!, inSameDayAs: Date()) {
       viewModel!.setupCurrentWeekTimeFrame(previous: false, next: true)
@@ -320,6 +447,8 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
       SVProgressHUD.dismiss()
       self.setupChart()
       self.tableView.reloadData()
+      self.newTarget = true
+      self.setupTargetView()
     })
   }
   

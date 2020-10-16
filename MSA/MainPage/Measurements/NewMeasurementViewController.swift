@@ -172,7 +172,6 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
       make.height.equalTo(screenSize.height * (64/iPhoneXHeight))
     }
     
-    
     let separatorVertical = UIView()
     separatorVertical.backgroundColor = .separatorGray
     mainView.addSubview(separatorVertical)
