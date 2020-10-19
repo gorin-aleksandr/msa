@@ -118,6 +118,7 @@ class MeasurementViewModel {
     
     if let index = selectedMeasurements.firstIndex(where: {NSCalendar.current.isDate(date, inSameDayAs: $0.createdDate)}) {
       let measurement = selectedMeasurements[index]
+      print("Userid = \(selectedUserId)")
       db.collection("Measurements").document(selectedUserId).collection("\(newMeasurementId)").document(measurement.id).updateData([
         "value": value,
         "createdDate": date,

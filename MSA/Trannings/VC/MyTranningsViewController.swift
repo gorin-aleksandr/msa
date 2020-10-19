@@ -15,7 +15,7 @@ import Firebase
 import SwiftRater
 
 class MyTranningsViewController: UIViewController {
-
+  
   
   
   @IBOutlet weak var barStackView: UIView!
@@ -47,7 +47,7 @@ class MyTranningsViewController: UIViewController {
   var showDeleteDayButton = false
   var trainingsShown = false
   var comunityPresenter: CommunityListPresenterProtocol!
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -65,7 +65,7 @@ class MyTranningsViewController: UIViewController {
       tableView.bounces = false
     }
     weekLabel.addObserver(self, forKeyPath: "text", options: [.old, .new], context: nil)
-
+    
   }
   
   
@@ -269,25 +269,25 @@ class MyTranningsViewController: UIViewController {
       RealmManager.shared.clearTrainings()
       self.manager.clearRealm()
       self.navigationController?.popViewController(animated: true)
-//      SVProgressHUD.show()
-//      manager.editTraining(wiht:  manager.getCurrentTraining()?.id ?? -1, success: { [weak self] in
-//        guard let self = self else {return}
-//        DispatchQueue.main.async { [weak self] in
-//          guard let self = self else {return}
-//          RealmManager.shared.clearTrainings()
-//          self.manager.clearRealm()
-//          SVProgressHUD.dismiss()
-//          self.navigationController?.popViewController(animated: true)
-//        }
-//      }) { [weak self] (error) in
-//        guard let self = self else {return}
-//        DispatchQueue.main.async { [weak self] in
-//          guard let self = self else {return}
-//          RealmManager.shared.clearTrainings()
-//          SVProgressHUD.dismiss()
-//          AlertDialog.showAlert("Error", message: "\(error?.localizedDescription ?? "")", viewController: self)
-//        }
-//      }
+      //      SVProgressHUD.show()
+      //      manager.editTraining(wiht:  manager.getCurrentTraining()?.id ?? -1, success: { [weak self] in
+      //        guard let self = self else {return}
+      //        DispatchQueue.main.async { [weak self] in
+      //          guard let self = self else {return}
+      //          RealmManager.shared.clearTrainings()
+      //          self.manager.clearRealm()
+      //          SVProgressHUD.dismiss()
+      //          self.navigationController?.popViewController(animated: true)
+      //        }
+      //      }) { [weak self] (error) in
+      //        guard let self = self else {return}
+      //        DispatchQueue.main.async { [weak self] in
+      //          guard let self = self else {return}
+      //          RealmManager.shared.clearTrainings()
+      //          SVProgressHUD.dismiss()
+      //          AlertDialog.showAlert("Error", message: "\(error?.localizedDescription ?? "")", viewController: self)
+      //        }
+      //      }
     } else {
       self.navigationController?.popViewController(animated: true)
     }
@@ -396,10 +396,10 @@ class MyTranningsViewController: UIViewController {
   }
   
   func performAfterDelay(delay : Double, onCompletion: @escaping() -> Void){
-
-      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay, execute: {
-         onCompletion()
-      })
+    
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delay, execute: {
+      onCompletion()
+    })
   }
   
   func showOptionsAlert(addDayWeek: Bool) {
@@ -413,20 +413,7 @@ class MyTranningsViewController: UIViewController {
     
     let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
       
-      #if DEBUG
-      self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
-      if addDayWeek {
-        self.addWeek()
-        Analytics.logEvent("creating_training_week", parameters: nil)
-      } else {
-        self.saveTemplate()
-      }
-      #else
-      if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
-        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-        destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
-        self.present(destinationVC, animated: true, completion: nil)
-      } else {
+      if !Env.isProduction() {
         self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
         if addDayWeek {
           self.addWeek()
@@ -434,11 +421,22 @@ class MyTranningsViewController: UIViewController {
         } else {
           self.saveTemplate()
         }
+        
+      } else {
+        if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
+          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+          self.present(destinationVC, animated: true, completion: nil)
+        } else {
+          self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
+          if addDayWeek {
+            self.addWeek()
+            Analytics.logEvent("creating_training_week", parameters: nil)
+          } else {
+            self.saveTemplate()
+          }
+        }
       }
-      #endif
-      
-
- 
     })
     let secondAction = UIAlertAction(title: "Удалить все тренировки", style: .default, handler: { action in
       self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
@@ -521,7 +519,7 @@ class MyTranningsViewController: UIViewController {
   
   func addWeek() {
     SwiftRater.incrementSignificantUsageCount()
-
+    
     if let training = manager.dataSource?.currentTraining {
       manager.createWeak(in: training)
     } else {
@@ -1006,19 +1004,19 @@ extension MyTranningsViewController: TrainingsViewDelegate {
   
   func trainingsLoaded() {
     if manager.sportsmanId == AuthModule.currUser.id {
-        if !manager.firstLoad {
-          if !trainingsShown {
-            setupFirstWeek()
-            changeWeek()
-            if manager.dataSource!.trainings.count != 0 { trainingsShown = true }
-          } else {
-            self.tableView.reloadData()
-          }
-        } else {
-          changeWeek()
+      if !manager.firstLoad {
+        if !trainingsShown {
           setupFirstWeek()
+          changeWeek()
+          if manager.dataSource!.trainings.count != 0 { trainingsShown = true }
+        } else {
+          self.tableView.reloadData()
         }
-    
+      } else {
+        changeWeek()
+        setupFirstWeek()
+      }
+      
     } else {
       if !trainingsShown {
         setupFirstWeek()
@@ -1130,15 +1128,15 @@ extension MyTranningsViewController: TrainingCalendarProtocol {
 
 
 extension ExercisesViewController: TrainingsViewDelegate {
-    func synced() {}
-    
-    func trainingEdited() {}
-    
-    func trainingsLoaded() {}
-    
-    func templateCreated() {}
-    
-    func templatesLoaded() {}
+  func synced() {}
+  
+  func trainingEdited() {}
+  
+  func trainingsLoaded() {}
+  
+  func templateCreated() {}
+  
+  func templatesLoaded() {}
 }
 
 extension MyTranningsViewController: CommunityListViewProtocol{

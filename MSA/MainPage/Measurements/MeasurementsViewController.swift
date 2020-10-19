@@ -279,9 +279,29 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     chartView.xAxis.labelPosition = .bottom
     let leftAxis = chartView.leftAxis
     leftAxis.removeAllLimitLines()
-    if let maxObject = measurements.max(by: { $0.value < $1.value }), let minObject = measurements.min(by: { $0.value > $1.value }) {
-      leftAxis.axisMaximum = maxObject.value * 1.05
-      leftAxis.axisMinimum = minObject.value * 0.95
+    if let maxObject = measurements.max(by: { $0.value < $1.value }), let minObject = measurements.min(by: { $0.value < $1.value }) {
+      
+      if let value = defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") as? Double, value != 0 {
+      
+        for item in measurements {
+          print("item: \(item.value)")
+        }
+        
+        print("Max = \(maxObject.value)")
+        print("Min = \(minObject.value)")
+
+        if value > maxObject.value {
+          leftAxis.axisMaximum = value * 1.05
+          leftAxis.axisMinimum = minObject.value * 0.95
+        }
+        if value < minObject.value {
+          leftAxis.axisMaximum = maxObject.value * 1.05
+          leftAxis.axisMinimum = value * 0.95
+        }
+      } else {
+        leftAxis.axisMaximum = maxObject.value * 1.05
+        leftAxis.axisMinimum = minObject.value * 0.95
+      }
     } else {
       leftAxis.axisMaximum = viewModel!.xMaxs[viewModel!.currentTypeId]
       leftAxis.axisMinimum = viewModel!.xMins[viewModel!.currentTypeId]
@@ -289,7 +309,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     
     if let value = defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") as? Double {
       let ll1 = ChartLimitLine(limit: value, label: "Цель")
-          ll1.lineWidth = 4
+          ll1.lineWidth = 2
           ll1.lineColor = UIColor(red: 0.291, green: 0.671, blue: 0.329, alpha: 1)
           ll1.lineDashLengths = [5, 5]
           ll1.labelPosition = .topRight
@@ -489,6 +509,7 @@ extension MeasurementsViewController: MeasurementsCalendarDelegate {
   func selectedDates(dates: [Date]) {
     self.viewModel!.isHiddenLeftRightButton = true
     self.viewModel!.selectedDatesRange = dates
+    self.setupChart()
     self.tableView.reloadData()
     print("Chizas! \(dates)")
   }

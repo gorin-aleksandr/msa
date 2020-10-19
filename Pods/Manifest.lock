@@ -230,6 +230,7 @@ PODS:
     - SDWebImage/GIF
   - DKPhotoGallery/Resource (0.0.12):
     - SDWebImage/GIF
+  - EmptyStateKit (1.1.0)
   - Fabric (1.8.2)
   - FBSDKCoreKit (6.5.2):
     - FBSDKCoreKit/Basics (= 6.5.2)
@@ -443,6 +444,7 @@ DEPENDENCIES:
   - Charts
   - Crashlytics (= 3.11.1)
   - DKImagePickerController (from `https://github.com/zhangao0086/DKImagePickerController.git`, branch `develop`)
+  - EmptyStateKit
   - Fabric (= 1.8.2)
   - FBSDKLoginKit
   - Firebase/Analytics
@@ -500,6 +502,7 @@ SPEC REPOS:
     - CropViewController
     - DKCamera
     - DKPhotoGallery
+    - EmptyStateKit
     - FBSDKCoreKit
     - FBSDKLoginKit
     - Firebase
@@ -576,6 +579,7 @@ SPEC CHECKSUMS:
   DKCamera: a902b66921fca14b7a75266feb8c7568aa7caa71
   DKImagePickerController: 4a3e7948a848c4348e600b3fe5ce41478835fa10
   DKPhotoGallery: 1b4d65d9a485dfdd2002f22daa5b955eafb350ea
+  EmptyStateKit: dc41e9ce5c6089f67a49d063bce73ade9f2ba73f
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
   FBSDKCoreKit: ada5c8a05188daefc9addb985c52b8a1b26da519
   FBSDKLoginKit: caa165495afa29a12324cb2307fe6e5b33783142
@@ -628,6 +632,6 @@ SPEC CHECKSUMS:
   TagListView: 987b0bdbb16cd9d9e7c0e2ec32aff37ecba8b173
   YoutubePlayer-in-WKWebView: af2f5929fc78882d94bfdfeea999b661b78d9717
 
-PODFILE CHECKSUM: 2d36db650f54f7c7b18ac15d585137a0fda0177d
+PODFILE CHECKSUM: bcf3ae2f938d89f3115ed0b8a4c15988bfdd57c6
 
 COCOAPODS: 1.10.0.rc.1

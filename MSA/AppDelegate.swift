@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let pushManager = PushNotificationManager()
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    let schemeName = Bundle.main.infoDictionary!["CURRENT_SCHEME_NAME"] as! String
+    print("Scheme name = \(schemeName)")
+
     FirebaseApp.configure()
     Instabug.start(withToken: "031800b655ec71682ba7e49b1eb649cd", invocationEvents: [.shake, .screenshot])
     Instabug.setLocale(.russian)

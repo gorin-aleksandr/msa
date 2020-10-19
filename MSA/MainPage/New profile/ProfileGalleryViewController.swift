@@ -12,6 +12,7 @@ import AVFoundation
 import SDWebImage
 import PhotoSlider
 import SVProgressHUD
+import EmptyStateKit
 
 class ProfileGalleryViewController: UIViewController, UINavigationControllerDelegate {
   @IBOutlet weak var galleryCollectionView: UICollectionView!
@@ -29,10 +30,18 @@ class ProfileGalleryViewController: UIViewController, UINavigationControllerDele
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
     setupUI()
-
   }
   
   func setupUI() {
+    var format = EmptyStateFormat()
+    format.titleAttributes = [.font: UIFont.systemFont(ofSize: 26, weight: .bold), .foregroundColor: UIColor.black]
+    format.descriptionAttributes = [.font: UIFont.systemFont(ofSize: 16, weight: .regular), .foregroundColor: UIColor.black]
+    format.imageSize = CGSize(width: screenSize.width * (277/iPhoneXWidth), height: screenSize.height * (181/iPhoneXHeight) )
+    format.verticalMargin = -62
+    format.buttonWidth = 200
+    galleryCollectionView.emptyState.format = format
+    galleryCollectionView.emptyState.delegate = self
+
     presenter.attachView(view: self)
     presenter.getGallery(for: AuthModule.currUser.id)
     myPicker.delegate = self
@@ -78,6 +87,9 @@ extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionVi
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if  let count = viewModel?.selectedUser?.gallery?.count {
+      if count == 0 {
+        self.galleryCollectionView.emptyState.show(MainState.emptyGalleryForUser)
+      }
       return count
     } else {
       return presenter.getItems().count
@@ -254,7 +266,14 @@ extension ProfileGalleryViewController: GalleryDataProtocol {
   }
   
   func openImage(image: UIImage) {
-    
   }
   
+}
+
+// MARK: - EmptyStateDelegate
+extension ProfileGalleryViewController: EmptyStateDelegate {
+
+    func emptyState(emptyState: EmptyState, didPressButton button: UIButton) {
+        //self.present(StoAppNavigation().userCarsViewController(viewModel: OrderViewModel()), animated: true, completion: nil)
+    }
 }

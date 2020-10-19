@@ -91,6 +91,7 @@ class NewProfileViewController: UIViewController {
   }
   
   func setupProfile() {
+    
     if self.viewModel?.selectedUser != nil {
          instaButton.isHidden = self.viewModel?.selectedUser?.instagramLink != nil && self.viewModel?.selectedUser?.instagramLink?.count > 0 ? false : true
          facebookButton.isHidden = self.viewModel?.selectedUser?.facebookLink != nil && self.viewModel?.selectedUser?.facebookLink?.count > 0  ? false : true
@@ -271,6 +272,7 @@ class NewProfileViewController: UIViewController {
   
   
   @IBAction func instagramAction(_ sender: Any) {
+    //print("id = \(self.viewModel?.selectedUser?.id)")
       let instagramLink = self.viewModel?.selectedUser?.instagramLink != nil ? self.viewModel?.selectedUser?.instagramLink : AuthModule.currUser.instagramLink
     let userName =  instagramLink?.trimmingCharacters(in: .whitespaces) // Your Instagram Username here
     if var link = userName?.detectedFirstLink {

@@ -10,6 +10,7 @@ import UIKit
 import CryptoKit
 import CommonCrypto
 import Charts
+import EmptyStateKit
 
 let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
 let signInStoryboard = UIStoryboard(name: "SignIn", bundle:nil)
@@ -418,5 +419,84 @@ extension Double {
     func roundTo(places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
+    }
+}
+
+struct Env {
+    
+    private static let production : Bool = {
+        #if DEBUG
+            print("DEBUG")
+            let dic = ProcessInfo.processInfo.environment
+            if let forceProduction = dic["forceProduction"] , forceProduction == "true" {
+                return true
+            }
+            return false
+        #elseif ADHOC
+            print("ADHOC")
+            return false
+        #else
+            print("PRODUCTION")
+            return true
+        #endif
+    }()
+
+    static func isProduction () -> Bool {
+        return self.production
+    }
+
+}
+
+enum MainState: CustomState {
+    case emptyGalleryForUser
+    case noSearch
+    case noInternet
+    case noOrders
+    case noProposals
+    case noCars
+
+    var image: UIImage? {
+        switch self {
+        case .emptyGalleryForUser: return UIImage(named: "emptyGallery")
+        case .noSearch: return UIImage(named: "Search")
+        case .noInternet: return UIImage(named: "Internet")
+        case .noOrders: return UIImage(named: "tasksEmpty")
+        case .noProposals: return UIImage(named: "noProposals")
+        case .noCars: return UIImage(named: "noCars")
+        }
+    }
+
+    var title: String? {
+        switch self {
+        case .emptyGalleryForUser: return ""
+        case .noSearch: return "No results"
+        case .noInternet: return "We’re Sorry"
+        case .noOrders: return "Заявок сейчас нет"
+        case .noProposals: return "Откликов еще нет"
+        case .noCars: return "Автомобилей еще нет"
+
+        }
+    }
+
+    var description: String? {
+        switch self {
+        case .emptyGalleryForUser: return "У этого пользователя пока нет фото."
+        case .noSearch: return "Please try another search item"
+        case .noInternet: return "Our staff is still working on the issue for better experience"
+        case .noOrders: return "Расскажите, что у вас случилось?"
+        case .noProposals: return "Мы подбираем лучших мастеров для решения вашей проблемы, подождите еще немного."
+        case .noCars: return "Добавьте свой автомобиль для того, чтобы создать заявку"
+        }
+    }
+
+    var titleButton: String? {
+        switch self {
+        case .emptyGalleryForUser: return nil
+        case .noSearch: return "Go back"
+        case .noInternet: return "Try again?"
+        case .noOrders: return "Создать заявку"
+        case .noProposals: return nil
+        case .noCars: return "Добавить авто"
+        }
     }
 }

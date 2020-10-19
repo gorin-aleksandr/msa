@@ -43,4 +43,5 @@ target 'MSA' do
   pod 'Instabug'
   pod 'Bugsnag'
   pod "SwiftRater"
+  pod 'EmptyStateKit'
 end
