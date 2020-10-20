@@ -156,7 +156,7 @@ final class ChatViewController: JSQMessagesViewController {
       label.sizeToFit()
       label.center = titleView.center
       label.textAlignment = NSTextAlignment.center
-      label.font = NewFonts.SFProDisplayBold16
+      label.font = NewFonts.SFProDisplaySemiBold14
       label.textColor = darkCyanGreen
       // Creates the image view
     if viewModel!.chatUserAvatar != "" && viewModel!.chatUserAvatar != nil {
