@@ -189,11 +189,6 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
       }
     } else {
       let own = presenter.getOwnExercises().filter({$0.trainerId == AuthModule.currUser.id})
-      if !Env.isProduction() {
-        
-        Analytics.logEvent("start_creating_own_exersise", parameters: nil)
-        self.performSegue(withIdentifier: "newExercise", sender: nil)
-      } else {
         if InAppPurchasesService.shared.currentSubscription == nil && own.count > 2 {
           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
           destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
@@ -202,7 +197,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
           Analytics.logEvent("start_creating_own_exersise", parameters: nil)
           self.performSegue(withIdentifier: "newExercise", sender: nil)
         }
-      }
+      
     }
   }
   

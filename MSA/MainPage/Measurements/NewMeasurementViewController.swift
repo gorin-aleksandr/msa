@@ -222,25 +222,20 @@ class NewMeasurementViewController: UIViewController, UITextFieldDelegate {
   
   
   @objc func saveAction(_ sender: UIButton) {
-    if !Env.isProduction() {
-      if let value = valueTextField.text!.toDouble() {
-        SwiftRater.incrementSignificantUsageCount()
-        viewModel!.saveMeasure(value: value, date: self.viewModel!.newMeasurementDate)
-        self.dismiss(animated: true, completion: nil)
-      }
-    } else {
-      if InAppPurchasesService.shared.currentSubscription == nil && viewModel?.selectedMeasurements.count > 2 {
-        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-        destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
-        self.present(destinationVC, animated: true, completion: nil)
-      } else {
+
+    //IAP uncomment
+//      if InAppPurchasesService.shared.currentSubscription == nil && viewModel?.selectedMeasurements.count > 2 {
+//        let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+//        destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+//        self.present(destinationVC, animated: true, completion: nil)
+//      } else {
         if let value = valueTextField.text!.toDouble() {
           SwiftRater.incrementSignificantUsageCount()
           viewModel!.saveMeasure(value: value, date: self.viewModel!.newMeasurementDate)
           self.dismiss(animated: true, completion: nil)
         }
-      }
-    }
+     // }
+    
   }
   
   @objc func closeButtonAction(_ sender: UIButton) {

@@ -31,7 +31,6 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
 
   @IBOutlet var tableView: UITableView!
   @IBOutlet var chartView: LineChartView!
-  let defaults = UserDefaults.standard
   var newTarget = true
   var viewModel: MeasurementViewModel? {
     didSet {
@@ -66,7 +65,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     
     tableView.dataSource = self
     tableView.delegate = self
-    
+    targetValueTextField.delegate = self
     setupTargetView()
     titleContentView.snp.makeConstraints { (make) in
       make.top.equalTo(self.targetBackgroundView.snp.bottom)
@@ -155,7 +154,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   }
   
   func setupTargetView() {
-      if defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") != nil {
+    if viewModel!.targetMeasurement != nil {
         newTarget = false
       }
       targetValueTextField.keyboardType = .decimalPad
@@ -186,25 +185,19 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     toolBar.isUserInteractionEnabled = true
     targetValueTextField.inputAccessoryView = toolBar
     
-    if defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") != nil || newTarget == false {
+    if viewModel!.targetMeasurement != nil || newTarget == false {
       measurementValueLabel.isHidden = false
       targetValueTextField.isHidden = false
       addTargetButton.setTitle("", for: .normal)
+      addTargetButton.layer.cornerRadius = 0
       addTargetButton.setBackgroundImage(UIImage(named: "Auto Fix"), for: .normal)
       addTargetButton.snp.makeConstraints { (make) in
         make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
-        make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
+        make.height.equalTo(screenSize.width * (28/iPhoneXWidth))
         make.width.equalTo(screenSize.width * (28/iPhoneXWidth))
         make.right.equalTo(self.targetBackgroundView.snp.right).offset(screenSize.width * (-16/iPhoneXWidth))
       }
-      
-      addTargetButton.snp.makeConstraints { (make) in
-             make.centerY.equalTo(self.targetBackgroundView.snp.centerY)
-             make.height.equalTo(screenSize.height * (28/iPhoneXHeight))
-             make.width.equalTo(screenSize.width * (28/iPhoneXWidth))
-             make.right.equalTo(self.targetBackgroundView.snp.right).offset(screenSize.width * (-16/iPhoneXWidth))
-      }
-      
+        
       measurementValueLabel.text = viewModel!.measureUnits[viewModel!.currentTypeId]
       measurementValueLabel.textColor = .black
       measurementValueLabel.font = NewFonts.SFProDisplaySemiBold16
@@ -222,7 +215,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
               make.left.equalTo(self.targetTitleLabel.snp.right).offset(screenSize.width * (-20/iPhoneXWidth))
       }
       
-      if let value = defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") {
+      if let value = viewModel!.targetMeasurement?.value {
         targetValueTextField.text = "\(value)"
       }
       
@@ -279,35 +272,25 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
     chartView.xAxis.labelPosition = .bottom
     let leftAxis = chartView.leftAxis
     leftAxis.removeAllLimitLines()
-    if let maxObject = measurements.max(by: { $0.value < $1.value }), let minObject = measurements.min(by: { $0.value < $1.value }) {
-      
-      if let value = defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") as? Double, value != 0 {
-      
-        for item in measurements {
-          print("item: \(item.value)")
-        }
-        
-        print("Max = \(maxObject.value)")
-        print("Min = \(minObject.value)")
-
-        if value > maxObject.value {
-          leftAxis.axisMaximum = value * 1.05
-          leftAxis.axisMinimum = minObject.value * 0.95
-        }
-        if value < minObject.value {
-          leftAxis.axisMaximum = maxObject.value * 1.05
-          leftAxis.axisMinimum = value * 0.95
-        }
-      } else {
-        leftAxis.axisMaximum = maxObject.value * 1.05
-        leftAxis.axisMinimum = minObject.value * 0.95
+    var measurementWithTarget = measurements
+    if let target = viewModel!.targetMeasurement {
+      if target.value != 0 {
+        measurementWithTarget.append(target)
       }
+    }
+    if let maxObject = measurementWithTarget.max(by: { $0.value < $1.value }), let minObject = measurementWithTarget.min(by: { $0.value < $1.value }) {
+      for item in measurementWithTarget {
+               print("item: \(item.value)")
+             }
+      leftAxis.axisMaximum = maxObject.value * 1.05
+      leftAxis.axisMinimum = minObject.value * 0.95
+
     } else {
       leftAxis.axisMaximum = viewModel!.xMaxs[viewModel!.currentTypeId]
       leftAxis.axisMinimum = viewModel!.xMins[viewModel!.currentTypeId]
     }
     
-    if let value = defaults.object(forKey: "targetMeasurement\(viewModel!.currentTypeId)") as? Double {
+    if let value = viewModel!.targetMeasurement?.value, value != 0 {
       let ll1 = ChartLimitLine(limit: value, label: "Цель")
           ll1.lineWidth = 2
           ll1.lineColor = UIColor(red: 0.291, green: 0.671, blue: 0.329, alpha: 1)
@@ -447,8 +430,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   
   @objc func saveTargetValue(_ sender: UIButton) {
     if let value = targetValueTextField.text!.toDouble() {
-      defaults.set(value, forKey: "targetMeasurement\(viewModel!.currentTypeId)")
-      setupChart()
+       viewModel!.saveMeasure(value: value, date: Date(), target: true)
     }
     targetValueTextField.resignFirstResponder()
   }
@@ -475,7 +457,6 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
     print("Chart value selected!")
   }
-  
 }
 
 // MARK: - TableViewDataSource
@@ -515,3 +496,24 @@ extension MeasurementsViewController: MeasurementsCalendarDelegate {
   }
 }
 
+
+extension MeasurementsViewController: UITextFieldDelegate {
+  func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    guard CharacterSet(charactersIn: "1234567890.,").isSuperset(of: CharacterSet(charactersIn: string)) else {
+      return false
+    }
+    if string == "." && textField.text!.contains(".") {
+      return false
+    }
+    if string == "," && textField.text!.contains(",") {
+      return false
+    }
+    if string == "." && textField.text!.isEmpty {
+      return false
+    }
+    if string == "," && textField.text!.isEmpty {
+      return false
+    }
+    return true
+  }
+}

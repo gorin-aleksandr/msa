@@ -412,22 +412,14 @@ class MyTranningsViewController: UIViewController {
     alert.setValue(myMutableString, forKey: "attributedTitle")
     
     let firstAction = UIAlertAction(title: "Сохранить как шаблон", style: .default, handler: { action in
-      
-      if !Env.isProduction() {
-        self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
-        if addDayWeek {
-          self.addWeek()
-          Analytics.logEvent("creating_training_week", parameters: nil)
-        } else {
-          self.saveTemplate()
-        }
-        
-      } else {
-        if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
-          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
-          self.present(destinationVC, animated: true, completion: nil)
-        } else {
+    
+      //IAP uncomment
+
+//        if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
+//          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+//          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+//          self.present(destinationVC, animated: true, completion: nil)
+//        } else {
           self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
           if addDayWeek {
             self.addWeek()
@@ -435,8 +427,8 @@ class MyTranningsViewController: UIViewController {
           } else {
             self.saveTemplate()
           }
-        }
-      }
+       // }
+      
     })
     let secondAction = UIAlertAction(title: "Удалить все тренировки", style: .default, handler: { action in
       self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor

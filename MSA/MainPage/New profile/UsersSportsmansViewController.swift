@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import EmptyStateKit
 
 class UsersSportsmansViewController: UIViewController {
   @IBOutlet weak var searchBar: UISearchBar!
@@ -33,13 +34,25 @@ class UsersSportsmansViewController: UIViewController {
   func fetchSportsmans() {
     SVProgressHUD.show()
      viewModel!.fetchSportsmans(success: {
-       SVProgressHUD.dismiss()
+      self.checkEmptyState()
+      SVProgressHUD.dismiss()
        self.tableView.reloadData()
      }) { error in
        SVProgressHUD.dismiss()
      }
   }
   
+  func checkEmptyState() {
+    if viewModel!.users.count == 0 {
+      if showSearchBarForMySportsMan == false {
+        self.tableView.emptyState.show(MainState.noSporstmansForCoach)
+      } else {
+        self.tableView.emptyState.show(MainState.noSporstmansForMe)
+      }
+    } else {
+       self.tableView.emptyState.hide()
+    }
+  }
   @objc func backAction() {
     self.navigationController?.popViewController(animated: true)
   }
@@ -51,6 +64,15 @@ class UsersSportsmansViewController: UIViewController {
   }
   
   func setupUI() {
+    var format = EmptyStateFormat()
+    format.titleAttributes = [.font: UIFont.systemFont(ofSize: 26, weight: .bold), .foregroundColor: UIColor.black]
+    format.descriptionAttributes = [.font: UIFont.systemFont(ofSize: 16, weight: .regular), .foregroundColor: UIColor.black]
+    format.imageSize = CGSize(width: screenSize.width * (277/iPhoneXWidth), height: screenSize.height * (181/iPhoneXHeight) )
+    format.verticalMargin = 0
+    format.buttonWidth = 200
+    tableView.emptyState.format = format
+    tableView.emptyState.delegate = self
+    
     tableView.dataSource = self
     tableView.delegate = self
     tableView.separatorStyle = .none
@@ -121,4 +143,12 @@ extension UsersSportsmansViewController: UISearchBarDelegate {
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
       print("searchText \(searchBar.text)")
   }
+}
+
+// MARK: - EmptyStateDelegate
+extension UsersSportsmansViewController: EmptyStateDelegate {
+
+    func emptyState(emptyState: EmptyState, didPressButton button: UIButton) {
+        //self.present(StoAppNavigation().userCarsViewController(viewModel: OrderViewModel()), animated: true, completion: nil)
+    }
 }

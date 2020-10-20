@@ -416,87 +416,96 @@ func dayOfWeek(index: Int) -> String {
 }
 
 extension Double {
-    func roundTo(places: Int) -> Double {
-        let divisor = pow(10.0, Double(places))
-        return (self * divisor).rounded() / divisor
-    }
+  func roundTo(places: Int) -> Double {
+    let divisor = pow(10.0, Double(places))
+    return (self * divisor).rounded() / divisor
+  }
 }
 
 struct Env {
-    
-    private static let production : Bool = {
-        #if DEBUG
-            print("DEBUG")
-            let dic = ProcessInfo.processInfo.environment
-            if let forceProduction = dic["forceProduction"] , forceProduction == "true" {
-                return true
-            }
-            return false
-        #elseif ADHOC
-            print("ADHOC")
-            return false
-        #else
-            print("PRODUCTION")
-            return true
-        #endif
-    }()
-
-    static func isProduction () -> Bool {
-        return self.production
+  
+  private static let production : Bool = {
+    #if DEBUG
+    print("DEBUG")
+    let dic = ProcessInfo.processInfo.environment
+    if let forceProduction = dic["forceProduction"] , forceProduction == "true" {
+      return true
     }
-
+    return false
+    #elseif ADHOC
+    print("ADHOC")
+    return false
+    #else
+    print("PRODUCTION")
+    return true
+    #endif
+  }()
+  
+  static func isProduction () -> Bool {
+    return self.production
+  }
+  
 }
 
 enum MainState: CustomState {
-    case emptyGalleryForUser
-    case noSearch
-    case noInternet
-    case noOrders
-    case noProposals
-    case noCars
-
-    var image: UIImage? {
-        switch self {
-        case .emptyGalleryForUser: return UIImage(named: "emptyGallery")
-        case .noSearch: return UIImage(named: "Search")
-        case .noInternet: return UIImage(named: "Internet")
-        case .noOrders: return UIImage(named: "tasksEmpty")
-        case .noProposals: return UIImage(named: "noProposals")
-        case .noCars: return UIImage(named: "noCars")
-        }
+  case emptyGalleryForUser
+  case emptyGalleryForMe
+  case noInfoForCoachUser
+  case noSporstmansForCoach
+  case noSporstmansForMe
+  case noChats
+  case noMessages
+  case noCars
+  
+  var image: UIImage? {
+    switch self {
+      case .emptyGalleryForUser: return UIImage(named: "emptyGallery")
+      case .emptyGalleryForMe: return UIImage(named: "emptyGallery")
+      case .noInfoForCoachUser: return UIImage(named: "noUserInfo")
+      case .noSporstmansForCoach: return UIImage(named: "emptySpotsmans")
+      case .noSporstmansForMe: return UIImage(named: "emptySpotsmans")
+      case .noChats: return UIImage(named: "noChatsForUser")
+      case .noMessages: return UIImage(named: "noMesages")
+      case .noCars: return UIImage(named: "noCars")
     }
-
-    var title: String? {
-        switch self {
-        case .emptyGalleryForUser: return ""
-        case .noSearch: return "No results"
-        case .noInternet: return "We’re Sorry"
-        case .noOrders: return "Заявок сейчас нет"
-        case .noProposals: return "Откликов еще нет"
-        case .noCars: return "Автомобилей еще нет"
-
-        }
+  }
+  
+  var title: String? {
+    switch self {
+      case .emptyGalleryForUser: return ""
+      case .emptyGalleryForMe: return ""
+      case .noInfoForCoachUser: return ""
+      case .noSporstmansForCoach: return ""
+      case .noSporstmansForMe: return ""
+      case .noChats: return ""
+      case .noMessages: return ""
+      case .noCars: return "Автомобилей еще нет"
     }
-
-    var description: String? {
-        switch self {
-        case .emptyGalleryForUser: return "У этого пользователя пока нет фото."
-        case .noSearch: return "Please try another search item"
-        case .noInternet: return "Our staff is still working on the issue for better experience"
-        case .noOrders: return "Расскажите, что у вас случилось?"
-        case .noProposals: return "Мы подбираем лучших мастеров для решения вашей проблемы, подождите еще немного."
-        case .noCars: return "Добавьте свой автомобиль для того, чтобы создать заявку"
-        }
+  }
+  
+  var description: String? {
+    switch self {
+      case .emptyGalleryForUser: return "У этого пользователя пока нет фото."
+      case .emptyGalleryForMe: return "У этого пользователя пока нет фото."
+      case .noInfoForCoachUser: return "Пользователь еще не заполнил информацию о себе "
+      case .noSporstmansForCoach: return "У этого тренера пока нет спортсменов."
+      case .noSporstmansForMe: return "У тебя пока нет спортсменов. Найди спортсменов в сообществе, или пригласи их в приложение."
+      case .noChats: return "У тебя еще нет активных переписок.\nПерейди в сообщество,\nчтобы найти новые знакомства."
+      case .noMessages: return "Нет сообщений"
+      case .noCars: return "Добавьте свой автомобиль для того, чтобы создать заявку"
     }
-
-    var titleButton: String? {
-        switch self {
-        case .emptyGalleryForUser: return nil
-        case .noSearch: return "Go back"
-        case .noInternet: return "Try again?"
-        case .noOrders: return "Создать заявку"
-        case .noProposals: return nil
-        case .noCars: return "Добавить авто"
-        }
+  }
+  
+  var titleButton: String? {
+    switch self {
+      case .emptyGalleryForUser: return nil
+      case .emptyGalleryForMe: return nil
+      case .noInfoForCoachUser: return nil
+      case .noSporstmansForCoach: return nil
+      case .noSporstmansForMe: return nil
+      case .noChats: return nil
+      case .noMessages: return nil
+      case .noCars: return "Добавить авто"
     }
+  }
 }

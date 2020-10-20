@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
   let p = ExersisesTypesPresenter(exercises: ExersisesDataManager())
   var comunityPresenter: CommunityListPresenterProtocol!
   var permissionController: SPPermissionsDialogController?
+  var chatViewModel: ChatListViewModel = ChatListViewModel()
   let defaults = UserDefaults.standard
   
   override func viewDidLoad() {
@@ -59,6 +60,7 @@ class HomeViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
+    fetchChats()
   }
   
   func setupPermissionAlert() {
@@ -116,6 +118,23 @@ class HomeViewController: UIViewController {
     p.getAllTypes()
     p.getAllFilters()
     p.getMyExercises()
+  }
+  
+  func fetchChats() {
+    chatViewModel.getChatList(success: {
+      self.setBadgeForChatCounter()
+    }) {
+    }
+  }
+  
+  func setBadgeForChatCounter() {
+    var count = 0
+    for chat in chatViewModel.chats {
+      if chat.newMessages == true {
+        count = count + 1
+      }
+    }
+    super.tabBarController?.viewControllers![2].tabBarItem.badgeValue = count > 0 ? "\(count)" : nil
   }
   
   func logInAppPurhaseRenewalEvent() {

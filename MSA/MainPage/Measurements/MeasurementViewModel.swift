@@ -16,12 +16,14 @@ class Measurement {
   var type: Int
   var value: Double
   var createdDate: Date
-  
-  init(id: String, type: Int, value: Double, createdDate: Date) {
+  var target: Bool
+
+  init(id: String, type: Int, value: Double, createdDate: Date, target: Bool) {
     self.id = id
     self.type = type
     self.value = value
     self.createdDate = createdDate
+    self.target = target
   }
 }
 
@@ -51,6 +53,7 @@ class MeasurementViewModel {
   var xMins: [Double] = [30,140,2,2,30,20,30,70,50,50,20,20,50,30,30]
   var xMaxs: [Double] = [200,220,50,50,80,150,50,200,160,160,70,70,200,120,120]
   var selectedMeasurements: [Measurement] = []
+  var targetMeasurement: Measurement?
   var reloadChart: (() -> ())?
   var xMin = 0.0
   var xMax = 0.0
@@ -99,12 +102,22 @@ class MeasurementViewModel {
         let item = diff.document.data()
         let stamp = item["createdDate"] as! Timestamp
         let date = stamp.dateValue()
-        print("New value: \(stamp.dateValue()) val =\(item["value"] as! Double)")
-        
-        let measurement = Measurement(id: diff.document.documentID,type: item["type"] as! Int, value: item["value"] as! Double, createdDate: date)
+        var target = false
+        if let targetValue = item["target"] as? Bool {
+          if targetValue == true {
+            target = targetValue
+          }
+        }
+        let measurement = Measurement(id: diff.document.documentID,type: item["type"] as! Int, value: item["value"] as! Double, createdDate: date, target: target)
         print("Date = \(stamp.dateValue())")
         self.selectedMeasurements.append(measurement)
         print(snapshot)
+      }
+      if let index = self.selectedMeasurements.firstIndex(where: {$0.target == true}) {
+        self.targetMeasurement = self.selectedMeasurements[index]
+        self.selectedMeasurements.remove(at: index)
+      } else {
+        self.targetMeasurement = nil
       }
       success(true)
     }
@@ -114,25 +127,52 @@ class MeasurementViewModel {
     
   }
   
-  func saveMeasure(value: Double, date: Date) {
+  func saveMeasure(value: Double, date: Date, target: Bool = false) {
     
-    if let index = selectedMeasurements.firstIndex(where: {NSCalendar.current.isDate(date, inSameDayAs: $0.createdDate)}) {
-      let measurement = selectedMeasurements[index]
-      print("Userid = \(selectedUserId)")
-      db.collection("Measurements").document(selectedUserId).collection("\(newMeasurementId)").document(measurement.id).updateData([
-        "value": value,
-        "createdDate": date,
-        "type" : newMeasurementId,
-        "timeStamp": FieldValue.serverTimestamp()
-      ])
+    if target == false {
+      if let index = selectedMeasurements.firstIndex(where: {NSCalendar.current.isDate(date, inSameDayAs: $0.createdDate)}) {
+          let measurement = selectedMeasurements[index]
+          print("Userid = \(selectedUserId)")
+          db.collection("Measurements").document(selectedUserId).collection("\(newMeasurementId)").document(measurement.id).updateData([
+            "value": value,
+            "createdDate": date,
+            "type" : newMeasurementId,
+            "target" : target,
+            "timeStamp": FieldValue.serverTimestamp()
+          ])
+        } else {
+          db.collection("Measurements").document(selectedUserId).collection("\(newMeasurementId)").addDocument(data: [
+            "value": value,
+            "createdDate": date,
+            "type" : newMeasurementId,
+            "target" : target,
+            "timeStamp": FieldValue.serverTimestamp()
+          ])
+        }
     } else {
-      db.collection("Measurements").document(selectedUserId).collection("\(newMeasurementId)").addDocument(data: [
-        "value": value,
-        "createdDate": date,
-        "type" : newMeasurementId,
-        "timeStamp": FieldValue.serverTimestamp()
-      ])
+      if let currentTarget = targetMeasurement {
+          print("Userid = \(selectedUserId)")
+          print("currentTypeId = \(currentTypeId)")
+          print("target = \(target)")
+
+          db.collection("Measurements").document(selectedUserId).collection("\(currentTypeId)").document(currentTarget.id).updateData([
+            "value": value,
+            "createdDate": date,
+            "type" : currentTypeId,
+            "target" : target,
+            "timeStamp": FieldValue.serverTimestamp()
+          ])
+        } else {
+          db.collection("Measurements").document(selectedUserId).collection("\(currentTypeId)").addDocument(data: [
+            "value": value,
+            "createdDate": date,
+            "type" : currentTypeId,
+            "target" : target,
+            "timeStamp": FieldValue.serverTimestamp()
+          ])
+        }
     }
+  
     Analytics.logEvent("add_measurement", parameters: ["name": newMeasurementsTitle])
     reloadChart?()
   }

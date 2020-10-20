@@ -10,6 +10,7 @@ import UIKit
 import SDWebImage
 import SVProgressHUD
 import SPPermissions
+import EmptyStateKit
 
 class ChatListViewController: UIViewController {
 
@@ -19,20 +20,21 @@ class ChatListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        SVProgressHUD.show()
-        viewModel.getChatList(success: {
-          self.setBadgeForChatCounter()
-          self.tableView.reloadData()
-          SVProgressHUD.dismiss()
-        }) {
-        }
         setupUI()
         setupPermissionAlert()
+        SVProgressHUD.show()
+              viewModel.getChatList(success: {
+                self.setBadgeForChatCounter()
+                self.checkEmptyState()
+                self.tableView.reloadData()
+                SVProgressHUD.dismiss()
+              }) {
+        }
     }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    
+
   }
   
   func setupPermissionAlert() {
@@ -62,6 +64,14 @@ class ChatListViewController: UIViewController {
   }
   
   func setupUI() {
+    var format = EmptyStateFormat()
+    format.titleAttributes = [.font: UIFont.systemFont(ofSize: 26, weight: .bold), .foregroundColor: UIColor.black]
+    format.descriptionAttributes = [.font: UIFont.systemFont(ofSize: 16, weight: .regular), .foregroundColor: UIColor.black]
+    format.imageSize = CGSize(width: screenSize.width * (277/iPhoneXWidth), height: screenSize.height * (181/iPhoneXHeight) )
+    format.verticalMargin = 0
+    format.buttonWidth = 200
+    tableView.emptyState.format = format
+    
     tableView.tableFooterView = UIView()
     tableView.dataSource = self
     tableView.delegate = self
@@ -69,7 +79,14 @@ class ChatListViewController: UIViewController {
                  NSAttributedString.Key.font: UIFont(name: "Rubik-Medium", size: 17)!]
     self.navigationController?.navigationBar.titleTextAttributes = attrs
     self.title = "Чаты"
-
+  }
+  
+  func checkEmptyState() {
+    if viewModel.chats.count == 0 {
+        self.tableView.emptyState.show(MainState.noChats)
+    } else {
+       self.tableView.emptyState.hide()
+    }
   }
 
 }

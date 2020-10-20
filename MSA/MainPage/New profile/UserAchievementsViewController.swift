@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import EmptyStateKit
 
 class UserAchievementsViewController: UIViewController {
   @IBOutlet weak var tableView: UITableView!
@@ -27,6 +28,15 @@ class UserAchievementsViewController: UIViewController {
   }
   
   func setupUI() {
+    var format = EmptyStateFormat()
+    format.titleAttributes = [.font: UIFont.systemFont(ofSize: 26, weight: .bold), .foregroundColor: UIColor.black]
+    format.descriptionAttributes = [.font: UIFont.systemFont(ofSize: 16, weight: .regular), .foregroundColor: UIColor.black]
+    format.imageSize = CGSize(width: screenSize.width * (277/iPhoneXWidth), height: screenSize.height * (181/iPhoneXHeight) )
+    format.verticalMargin = 0
+    format.buttonWidth = 200
+    tableView.emptyState.format = format
+    tableView.emptyState.delegate = self
+
     tableView.dataSource = self
     tableView.delegate = self
     tableView.separatorStyle = .none
@@ -52,7 +62,16 @@ class UserAchievementsViewController: UIViewController {
     })
     group.notify(queue: .main) {
       SVProgressHUD.dismiss()
+      self.checkEmptyState()
       self.tableView.reloadData()
+    }
+  }
+  
+  func checkEmptyState() {
+    if viewModel.selectedAchievements.count == 0 && viewModel.selectedEducation.count == 0 && viewModel.selectedCertificates.count == 0 {
+        self.tableView.emptyState.show(MainState.noInfoForCoachUser)
+    } else {
+       self.tableView.emptyState.hide()
     }
   }
   
@@ -88,7 +107,11 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
   
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 3
+    if viewModel.selectedAchievements.count == 0 && viewModel.selectedEducation.count == 0 && viewModel.selectedCertificates.count == 0 {
+      return 0
+    } else {
+      return 3
+    }
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -293,4 +316,12 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
     actionSheetController.addAction(cancelActionButton)
     self.present(actionSheetController, animated: true, completion: nil)
   }
+}
+
+// MARK: - EmptyStateDelegate
+extension UserAchievementsViewController: EmptyStateDelegate {
+
+    func emptyState(emptyState: EmptyState, didPressButton button: UIButton) {
+        //self.present(StoAppNavigation().userCarsViewController(viewModel: OrderViewModel()), animated: true, completion: nil)
+    }
 }

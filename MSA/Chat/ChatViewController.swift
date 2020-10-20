@@ -28,6 +28,7 @@ import JSQMessagesViewController
 import FirebaseAuth
 import SDWebImage
 import PhotoSlider
+import EmptyStateKit
 
 final class ChatViewController: JSQMessagesViewController {
   
@@ -70,6 +71,14 @@ final class ChatViewController: JSQMessagesViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    var format = EmptyStateFormat()
+    format.titleAttributes = [.font: UIFont.systemFont(ofSize: 26, weight: .bold), .foregroundColor: UIColor.black]
+    format.descriptionAttributes = [.font: UIFont.systemFont(ofSize: 16, weight: .regular), .foregroundColor: UIColor.black]
+    format.imageSize = CGSize(width: screenSize.width * (277/iPhoneXWidth), height: screenSize.height * (181/iPhoneXHeight) )
+    format.verticalMargin = 0
+    format.buttonWidth = 200
+    collectionView.emptyState.format = format
   
     self.senderId = self.viewModel!.currentUserId
     actInd.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
@@ -315,7 +324,10 @@ final class ChatViewController: JSQMessagesViewController {
         
         if snapshot.documentChanges.count == 0 {
           self.dismissHUD()
-        }
+          self.collectionView.emptyState.show(MainState.noMessages)
+        } else {
+          self.collectionView.emptyState.hide()
+      }
         snapshot.documentChanges.forEach { diff in
           if (diff.type == .added) {
             print("New message: \(diff.document.data())")

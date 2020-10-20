@@ -37,11 +37,11 @@ class ProfileGalleryViewController: UIViewController, UINavigationControllerDele
     format.titleAttributes = [.font: UIFont.systemFont(ofSize: 26, weight: .bold), .foregroundColor: UIColor.black]
     format.descriptionAttributes = [.font: UIFont.systemFont(ofSize: 16, weight: .regular), .foregroundColor: UIColor.black]
     format.imageSize = CGSize(width: screenSize.width * (277/iPhoneXWidth), height: screenSize.height * (181/iPhoneXHeight) )
-    format.verticalMargin = -62
+    format.verticalMargin = 0
     format.buttonWidth = 200
     galleryCollectionView.emptyState.format = format
     galleryCollectionView.emptyState.delegate = self
-
+    
     presenter.attachView(view: self)
     presenter.getGallery(for: AuthModule.currUser.id)
     myPicker.delegate = self
@@ -60,14 +60,14 @@ class ProfileGalleryViewController: UIViewController, UINavigationControllerDele
     if viewModel?.selectedUser == nil {
       self.view.addSubview(btn)
       btn.snp.makeConstraints { (make) in
-         make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-8/iPhoneXHeight))
-         make.bottom.equalTo(self.view.snp.bottom).offset(screenSize.height * (-25/iPhoneXHeight))
-         make.height.width.equalTo(screenSize.height * (96/iPhoneXHeight))
-       }
+        make.right.equalTo(self.view.snp.right).offset(screenSize.height * (-8/iPhoneXHeight))
+        make.bottom.equalTo(self.view.snp.bottom).offset(screenSize.height * (-25/iPhoneXHeight))
+        make.height.width.equalTo(screenSize.height * (96/iPhoneXHeight))
+      }
     }
- 
+    
   }
-
+  
   @objc func addContent(_ sender: UIButton) {
     let alert = UIAlertController(title: "Загрузить:", message: nil, preferredStyle: .actionSheet)
     alert.addAction(UIAlertAction(title: "Камеры", style: .default, handler: { _ in
@@ -89,12 +89,18 @@ extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionVi
     if  let count = viewModel?.selectedUser?.gallery?.count {
       if count == 0 {
         self.galleryCollectionView.emptyState.show(MainState.emptyGalleryForUser)
+      } else {
+        self.galleryCollectionView.emptyState.hide()
       }
       return count
     } else {
+      if presenter.getItems().count == 0 {
+        self.galleryCollectionView.emptyState.show(MainState.emptyGalleryForMe)
+      } else {
+        self.galleryCollectionView.emptyState.hide()
+      }      
       return presenter.getItems().count
     }
-    return 0
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -104,11 +110,11 @@ extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionVi
     cell.c.isHidden = true
     cell.activityIndicator.startAnimating()
     let item = viewModel?.selectedUser?.gallery?[indexPath.row] != nil ? viewModel?.selectedUser?.gallery?[indexPath.row] : presenter.getItems()[index]
-    cell.photoImageView.sd_setImage(with: URL(string: item?.imageUrl ?? ""), placeholderImage: UIImage(named:"Group-1"), options: .allowInvalidSSLCertificates, completed: { (img, err, cashe, url) in
-        cell.activityIndicator.stopAnimating()
-      })
-     
-
+    cell.photoImageView.sd_setImage(with: URL(string: item?.imageUrl ?? ""), placeholderImage: nil, options: .allowInvalidSSLCertificates, completed: { (img, err, cashe, url) in
+      cell.activityIndicator.stopAnimating()
+    })
+    
+    
     if let video = item?.video_url, video != "" {
       cell.video.alpha = 1
     } else {
@@ -129,7 +135,7 @@ extension ProfileGalleryViewController: UICollectionViewDelegate, UICollectionVi
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let index = indexPath.row
     let item = viewModel?.selectedUser?.gallery?[indexPath.row] != nil ? viewModel?.selectedUser?.gallery?[indexPath.row] : presenter.getItems()[index]
-
+    
     if let url = item?.video_url  {
       playVideo(url: url)
     } else {
@@ -210,7 +216,7 @@ extension ProfileGalleryViewController: GalleryDataProtocol {
     presenter.setCurrentVideoUrl(url: url)
     presenter.uploadPhoto(image: img)
     DispatchQueue.main.async {
-          self.galleryCollectionView.reloadData()
+      self.galleryCollectionView.reloadData()
     }
   }
   
@@ -272,8 +278,8 @@ extension ProfileGalleryViewController: GalleryDataProtocol {
 
 // MARK: - EmptyStateDelegate
 extension ProfileGalleryViewController: EmptyStateDelegate {
-
-    func emptyState(emptyState: EmptyState, didPressButton button: UIButton) {
-        //self.present(StoAppNavigation().userCarsViewController(viewModel: OrderViewModel()), animated: true, completion: nil)
-    }
+  
+  func emptyState(emptyState: EmptyState, didPressButton button: UIButton) {
+    //self.present(StoAppNavigation().userCarsViewController(viewModel: OrderViewModel()), animated: true, completion: nil)
+  }
 }
