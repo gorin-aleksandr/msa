@@ -225,7 +225,10 @@ class UserDataManager {
                 "weightType": user.weightType,
                 "type": user.type,
                 "city": user.city,
-                "fcmToken": user.fcmToken
+                "fcmToken": user.fcmToken,
+                "instagramLink": user.instagramLink,
+                "facebookLink": user.facebookLink,
+                "vkLink": user.vkLink
                 ] as [String:Any]
             if password != nil {
               update.removeValue(forKey: "email")

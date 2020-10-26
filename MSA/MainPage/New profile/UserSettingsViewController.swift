@@ -150,13 +150,13 @@ extension UserSettingsViewController: UITableViewDataSource, UITableViewDelegate
     
     if viewModel!.editSettingsControllerType == .userInfo {
       let cell = viewModel!.editUserCell(indexPath: indexPath, tableView: tableView)
-      cell.valueTextField.delegate = self
+      cell.valueTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
       cell.valueTextField.tag = indexPath.row
       cell.valueTextField.textInputView.tag = indexPath.section
       return cell
     } else {
       let cell = viewModel!.editCurrentAchevementUserCell(indexPath: indexPath, tableView: tableView)
-      cell.valueTextField.delegate = self
+      cell.valueTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
       cell.valueTextField.tag = indexPath.row
       if viewModel!.achevementType == .rank {
         if indexPath.row == 1 {
@@ -212,7 +212,8 @@ extension UserSettingsViewController: UITableViewDataSource, UITableViewDelegate
   }
 }
 extension UserSettingsViewController: UITextFieldDelegate {
-  func textFieldDidChangeSelection(_ textField: UITextField) {
+  
+  @objc func textFieldDidChange(_ textField: UITextField) {
     viewModel!.updateTextValue(text: textField.text!,tag: textField.tag, section: textField.textInputView.tag)
   }
   

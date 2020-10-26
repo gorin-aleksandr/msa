@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import AssetsLibrary
 
 /**
  - AllPhotos: Get all photos assets in the assets group.
@@ -483,14 +482,10 @@ open class DKImagePickerController: DKUINavigationController, DKImageBaseManager
         if let metadata = metadata {
             let imageData = image.jpegData(compressionQuality: 1)!
             
-            if #available(iOS 9.0, *) {
-                if let imageDataWithMetadata = self.writeMetadata(metadata, into: imageData) {
-                    self.saveImageDataToAlbumForiOS9(imageDataWithMetadata, completeBlock)
-                } else {
-                    self.saveImageDataToAlbumForiOS9(imageData, completeBlock)
-                }
+            if let imageDataWithMetadata = self.writeMetadata(metadata, into: imageData) {
+                self.saveImageDataToAlbumForiOS9(imageDataWithMetadata, completeBlock)
             } else {
-                self.saveImageDataToAlbumForiOS8(imageData, metadata, completeBlock)
+                self.saveImageDataToAlbumForiOS9(imageData, completeBlock)
             }
         } else {
             self.saveImageToAlbum(image, completeBlock)
@@ -514,41 +509,34 @@ open class DKImagePickerController: DKUINavigationController, DKImageBaseManager
         }
     }
     
-    @objc open func saveImageDataToAlbumForiOS8(_ imageData: Data,
-                                                _ metadata: Dictionary<AnyHashable, Any>?,
-                                                _ completeBlock: @escaping ((_ asset: DKAsset) -> Void)) {
-        let library = ALAssetsLibrary()
-        library.writeImageData(toSavedPhotosAlbum: imageData, metadata: metadata, completionBlock: { (newURL, error) in
-            if let _ = error {
-                completeBlock(DKAsset(image: UIImage(data: imageData)!))
-            } else {
-                if let newAsset = PHAsset.fetchAssets(withALAssetURLs: [newURL!], options: nil).firstObject {
-                    completeBlock(DKAsset(originalAsset: newAsset))
-                }
-            }
-        })
-    }
-    
     @objc open func saveImageDataToAlbumForiOS9(_ imageDataWithMetadata: Data, _ completeBlock: @escaping ((_ asset: DKAsset) -> Void)) {
-        var newImageIdentifier: String!
+        var newImageIdentifier: String = ""
         
         PHPhotoLibrary.shared().performChanges({
-            if #available(iOS 9.0, *) {
-                let assetRequest = PHAssetCreationRequest.forAsset()
-                assetRequest.addResource(with: .photo, data: imageDataWithMetadata, options: nil)
-                newImageIdentifier = assetRequest.placeholderForCreatedAsset!.localIdentifier
-            } else {
-                // Fallback on earlier versions
-            }
+            let assetRequest = PHAssetCreationRequest.forAsset()
+            assetRequest.addResource(with: .photo, data: imageDataWithMetadata, options: nil)
+            newImageIdentifier = assetRequest.placeholderForCreatedAsset?.localIdentifier ?? ""
         }) { (success, error) in
             DispatchQueue.main.async(execute: {
+                if newImageIdentifier.isEmpty, let img =  UIImage(data: imageDataWithMetadata) {
+                    completeBlock(DKAsset(image: img))
+                    return
+                }
+                if newImageIdentifier.isEmpty {
+                    completeBlock(DKAsset(image: UIImage()))
+                    return
+                }
+
                 if success, let newAsset = PHAsset.fetchAssets(withLocalIdentifiers: [newImageIdentifier], options: nil).firstObject {
                     completeBlock(DKAsset(originalAsset: newAsset))
                 } else {
-                    completeBlock(DKAsset(image: UIImage(data: imageDataWithMetadata)!))
+                    if let img =  UIImage(data: imageDataWithMetadata) {
+                        completeBlock(DKAsset(image: img))
+                    } else {
+                        completeBlock(DKAsset(image: UIImage()))
+                    }
                 }
             })
-            
         }
     }
     

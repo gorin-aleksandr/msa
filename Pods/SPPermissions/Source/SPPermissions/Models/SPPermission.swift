@@ -43,6 +43,7 @@ import UIKit
     #endif
     case notification = 2
     case locationWhenInUse = 9
+    case tracking = 14
     
     /**
      Check permission is allowed.
@@ -106,6 +107,8 @@ import UIKit
             return nil
         case .locationWhenInUse:
             return "NSLocationWhenInUseUsageDescription"
+        case .tracking:
+            return "NSUserTrackingUsageDescription"
         }
     }
 }
@@ -194,6 +197,13 @@ extension SPPermission {
         case .locationWhenInUse:
             #if SPPERMISSION_LOCATION
             return SPLocationPermission(type: SPLocationPermission.SPLocationType.WhenInUse)
+            #else
+            fatalError(error(permission))
+            #endif
+        case .tracking:
+            #if SPPERMISSION_TRACKING
+            fatalError("Now not supported Tracking. Only in Beta now.")
+            /*return SPTrackingPermission()*/
             #else
             fatalError(error(permission))
             #endif

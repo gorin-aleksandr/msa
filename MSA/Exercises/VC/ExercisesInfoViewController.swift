@@ -118,7 +118,7 @@ class ExercisesInfoViewController: UIViewController {
     seconds += 1
     if seconds > 15 {
       stopTimer()
-      Analytics.logEvent("screen_exercise_description", parameters: nil)
+      AnalyticsSender.shared.logEvent(eventName: "screen_exercise_description")
     }
   }
   

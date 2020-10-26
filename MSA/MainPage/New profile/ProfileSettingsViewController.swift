@@ -196,7 +196,7 @@ class ProfileSettingsViewController: UIViewController, UIImagePickerControllerDe
       self.viewModel.clearRealm()
       if loggedOut {
         AuthModule.currUser.id = nil
-        Analytics.logEvent("logout", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "logout")
         let nextViewController = signInStoryboard.instantiateViewController(withIdentifier: "StartOnboardingViewController") as! StartOnboardingViewController
         nextViewController.viewModel = SignInViewModel()
         let nc = UINavigationController(rootViewController: nextViewController)
@@ -265,17 +265,11 @@ extension ProfileSettingsViewController: UITextFieldDelegate {
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     return true
   }
-  
-  func textFieldDidChangeSelection(_ textField: UITextField) {
-    //viewModel!.updateNameTextValue(text: textField.text ?? "")
-  }
-  
+
   func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
     return true
   }
   
-  func textFieldDidEndEditing(_ textField: UITextField) {
-  }
 }
 
 

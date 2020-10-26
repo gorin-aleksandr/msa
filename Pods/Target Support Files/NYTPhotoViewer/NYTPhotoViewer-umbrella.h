@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "NYTInterstitialViewController.h"
 #import "NYTPhotoCaptionView.h"
 #import "NYTPhotoDismissalInteractionController.h"
 #import "NYTPhotosOverlayView.h"
@@ -24,7 +25,7 @@
 #import "NYTScalingImageView.h"
 #import "NYTPhoto.h"
 #import "NYTPhotoCaptionViewLayoutWidthHinting.h"
-#import "NYTPhotoContainer.h"
+#import "NYTPhotoViewerContainer.h"
 #import "NYTPhotoViewerDataSource.h"
 #import "NSBundle+NYTPhotoViewer.h"
 

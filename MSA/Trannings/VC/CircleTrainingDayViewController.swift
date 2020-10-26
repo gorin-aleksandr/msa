@@ -85,9 +85,9 @@ class CircleTrainingDayViewController: UIViewController {
     func sendLogEvent() {
       switch manager.trainingState {
         case .round:
-              Analytics.logEvent("start_circle_training", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "start_circle_training")
         case .normal:
-              Analytics.logEvent("start_interval_training", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "start_interval_training")
         default:
         return
       }

@@ -167,7 +167,7 @@ class MyTranningsViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     initialDataLoading()
     initialViewConfiguration()
-    Analytics.logEvent("opening_training_screen", parameters: nil)
+    AnalyticsSender.shared.logEvent(eventName: "opening_training_screen")
   }
   
   private func initialDataLoading() {
@@ -415,26 +415,26 @@ class MyTranningsViewController: UIViewController {
     
       //IAP uncomment
 
-//        if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
-//          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
-//          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
-//          self.present(destinationVC, animated: true, completion: nil)
+      //  if InAppPurchasesService.shared.currentSubscription == nil && self.manager.dataSource?.currentTraining?.weeks.count > 3 {
+          let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
+          destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
+          self.present(destinationVC, animated: true, completion: nil)
 //        } else {
-          self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
-          if addDayWeek {
-            self.addWeek()
-            Analytics.logEvent("creating_training_week", parameters: nil)
-          } else {
-            self.saveTemplate()
-          }
-       // }
+//          self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
+//          if addDayWeek {
+//            self.addWeek()
+//            AnalyticsSender.shared.logEvent(eventName: "creating_training_week")
+//          } else {
+//            self.saveTemplate()
+//          }
+//        }
       
     })
     let secondAction = UIAlertAction(title: "Удалить все тренировки", style: .default, handler: { action in
       self.segmentControl.layer.borderColor = lightWhiteBlue.cgColor
       if addDayWeek {
         self.addDay()
-        Analytics.logEvent("creating_training_day", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "creating_training_day")
       } else {
         self.showDeleteTrainingsAlert()
       }

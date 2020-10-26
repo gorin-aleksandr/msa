@@ -23,7 +23,7 @@ import Instabug
 import Bugsnag
 import SwiftRater
 import AVKit
-
+import Amplitude
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -57,6 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     IQKeyboardManager.shared.enable = true
     MSAppCenter.start("aa023993-9184-4c58-8f34-84dfdb1fb199", withServices:[MSAnalytics.self, MSCrashes.self])
+    Amplitude.instance()?.initializeApiKey("af115dbe191333220b83850908f6b50b")
+    
     configureProgressHud()
     initialConf()
     setupIAPObserver()
@@ -187,11 +189,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let components = cal.dateComponents([.hour], from: latestSessionDate, to: currentDate)
       let diff = components.hour!
       if diff > 48 {
-        Analytics.logEvent("session_start_7days", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "session_start_7days")
       } else if diff > 24 {
-        Analytics.logEvent("session_start_48h", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "session_start_48h")
       } else {
-        Analytics.logEvent("session_start_24h", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "session_start_24h")
       }
       print(diff)
     }
@@ -233,23 +235,23 @@ extension AppDelegate: SKPaymentTransactionObserver {
         if success {
           switch AuthModule.currUser.userType {
             case .sportsman:
-                Analytics.logEvent("in_app_p_sportsman", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "in_app_p_sportsman")
               if transaction.payment.productIdentifier == "s_one_month" {
-                Analytics.logEvent("in_app_p_sportsman_1m", parameters: nil)
+                AnalyticsSender.shared.logEvent(eventName: "in_app_p_sportsman")
               } else if transaction.payment.productIdentifier == "s_twelve_month" {
-                Analytics.logEvent("in_app_p_sportsman_1y", parameters: nil)
-            } else if transaction.payment.productIdentifier == "s_fullAcess" {
-                Analytics.logEvent("in_app_p_sportsman_fullAccess", parameters: nil)
-            }
+                AnalyticsSender.shared.logEvent(eventName: "in_app_p_sportsman_1y")
+              } else if transaction.payment.productIdentifier == "s_fullAcess" {
+                AnalyticsSender.shared.logEvent(eventName: "in_app_p_sportsman_fullAccess")
+              }
             case .trainer:
-              Analytics.logEvent("in_app_p_coach", parameters: nil)
-            if transaction.payment.productIdentifier == "t_one_month" {
-                Analytics.logEvent("in_app_p_coach_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "in_app_p_coach")
+              if transaction.payment.productIdentifier == "t_one_month" {
+                AnalyticsSender.shared.logEvent(eventName: "in_app_p_coach_1m")
               } else if transaction.payment.productIdentifier == "t_twelve_month" {
-                Analytics.logEvent("in_app_p_coach_1y", parameters: nil)
-            } else if transaction.payment.productIdentifier == "t_fullAcess" {
-                Analytics.logEvent("in_app_p_coach_fullAcsess", parameters: nil)
-            }
+                AnalyticsSender.shared.logEvent(eventName: "in_app_p_coach_1y")
+              } else if transaction.payment.productIdentifier == "t_fullAcess" {
+                AnalyticsSender.shared.logEvent(eventName: "in_app_p_coach_fullAcsess")
+              }
           }
           NotificationCenter.default.post(name: InAppPurchasesService.purchaseSuccessfulNotification, object: nil)
         } else {
@@ -262,8 +264,8 @@ extension AppDelegate: SKPaymentTransactionObserver {
   func handleRestoredState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {
     print("Purchase restored for product id: \(transaction.payment.productIdentifier)")
     NotificationCenter.default.post(name: InAppPurchasesService.restoreSuccessfulNotification, object: nil)
-    Analytics.logEvent("in_app_p_restored", parameters: ["subscription": transaction.payment.productIdentifier])
-        queue.finishTransaction(transaction)
+    AnalyticsSender.shared.logEvent(eventName: "in_app_p_restored", params: ["subscription": transaction.payment.productIdentifier])
+    queue.finishTransaction(transaction)
   }
   
   func handleFailedState(for transaction: SKPaymentTransaction, in queue: SKPaymentQueue) {

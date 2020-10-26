@@ -432,7 +432,9 @@ class IAPViewController: UIViewController, IAPViewProtocol {
       return item.product.price
     })
     freeAccessLabel.text = "Первые 3 дня — бесплатно*"
-    subscribeLabel.text = "Начать пробный период период на 3 дня затем \(currentPrices[1])$/год"
+    if !currentPrices.isEmpty {
+      subscribeLabel.text = "Начать пробный период период на 3 дня затем \(currentPrices[1])$/год"
+    }
   }
   
   @objc func showDetailedSubscriptionInfo() {

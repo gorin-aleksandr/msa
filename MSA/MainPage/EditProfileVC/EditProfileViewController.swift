@@ -310,7 +310,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         if let city = cityTF.text {
             presenter.setCity(city: city)
-            Analytics.logEvent("user_city_update_profile", parameters: ["city": city])
+            AnalyticsSender.shared.logEvent(eventName: "user_city_update_profile", params: ["city": city])
         }
         if let email = emailTextField.text {
           if email != AuthModule.currUser.email {
@@ -499,7 +499,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 nextViewController.modalPresentationStyle = .fullScreen
                 self.navigationController?.show(nextViewController, sender: self)
                 AuthModule.currUser.id = nil
-                Analytics.logEvent("logout", parameters: nil)
+                AnalyticsSender.shared.logEvent(eventName: "logout")
             } else {
                 AlertDialog.showAlert("Ошибка", message: "Ошибка при выходе из приложения", viewController: self)
             }

@@ -26,6 +26,7 @@ enum AchievementType {
 
 class ProfileViewModel {
   
+  let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   var editSettingsControllerType: EditSettingsControllerType = .userInfo
   var achevementType: AchievementType?
   
@@ -143,6 +144,7 @@ class ProfileViewModel {
     dataLoader.getUser(callback: { (user, error) in
       if let user = user {
         AuthModule.currUser = user
+        UserSignInPresenter(auth: AuthModule()).saveUser(context: self.context, user: AuthModule.currUser)
         success()
       } else {
         success()
@@ -489,7 +491,7 @@ class ProfileViewModel {
     self.dataLoader.updateProfile(AuthModule.currUser) { (updated,error) in
       //self.view?.finishLoading()
       if updated {
-       // self.view?.setUser(user: AuthModule.currUser)
+        self.setUser(user: AuthModule.currUser, context: self.context)
         callback(true,nil)
       } else {
         if let err = error?.localizedDescription {
@@ -498,6 +500,43 @@ class ProfileViewModel {
         }
       }
     }
+  }
+  
+  func setUser(user: UserVO, context: NSManagedObjectContext) {
+    AuthModule.currUser = user
+    saveUser(context: context, user: user)
+  }
+  
+  func saveUser(context: NSManagedObjectContext, user: UserVO) {
+    deleteUserBlock(context: context, callback: {_ in })
+    let task = User(context: context)
+    task.avatar = user.avatar
+    task.id = user.id
+    task.email = user.email
+    task.name = user.firstName
+    task.surname = user.lastName
+    task.type = user.type
+    task.level = user.level
+    task.sex = user.sex
+    task.heightType = user.heightType
+    task.weightType = user.weightType
+    task.purpose = user.purpose
+    
+    if let city = user.city {
+      task.city = city
+    }
+    
+    if let age = user.age {
+      task.age = Int64(age)
+    }
+    if let height = user.height {
+      task.height = Int64(height)
+    }
+    if let weight = user.weight {
+      task.weight = Int64(weight)
+    }
+    
+    (UIApplication.shared.delegate as! AppDelegate).saveContext()
   }
   
   func updateUserAvatar(_ image: UIImage,completion: @escaping (UIImage) -> Void,failure: @escaping (String) -> Void) {

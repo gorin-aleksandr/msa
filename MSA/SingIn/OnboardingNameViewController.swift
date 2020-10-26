@@ -59,11 +59,16 @@ class OnboardingNameViewController: UIViewController {
     descriptionLabel.textColor = UIColor.newBlack
     descriptionLabel.text = viewModel!.signInDataControllerType == .name ? "Введи свое имя" : "Укажи свой город"
     
+    let badQualityRatio: CGFloat = 0
+    nameTextField.layer.shouldRasterize = false
+    nameTextField.layer.rasterizationScale = UIScreen.main.scale/badQualityRatio
+
     nameTextField.placeholder = viewModel!.signInDataControllerType == .name ? "Имя" : "Город"
     nameTextField.backgroundColor = UIColor.textFieldBackgroundGrey
     nameTextField.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
     nameTextField.font = NewFonts.SFProDisplayRegular16
-    nameTextField.delegate = self
+    nameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
     nameTextField.lineColor = .clear
 
     if viewModel!.signInDataControllerType == .city {
@@ -74,7 +79,7 @@ class OnboardingNameViewController: UIViewController {
     lastNameTextField.backgroundColor = UIColor.textFieldBackgroundGrey
     lastNameTextField.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)
     lastNameTextField.font = NewFonts.SFProDisplayRegular16
-    lastNameTextField.delegate = self
+    lastNameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     lastNameTextField.isHidden = viewModel!.signInDataControllerType == .name ? false : true
     
     startButton.titleLabel?.font = NewFonts.SFProDisplayRegular14
@@ -158,13 +163,13 @@ class OnboardingNameViewController: UIViewController {
           SVProgressHUD.show()
           presenter.createNewUser(newUser: AuthModule.currUser, success: {
             SVProgressHUD.dismiss()
-            Analytics.logEvent("sign_up", parameters: nil)
-            Analytics.logEvent("user_city_registration", parameters: ["city": AuthModule.currUser.city ?? ""])
+            AnalyticsSender.shared.logEvent(eventName: "sign_up")
+            AnalyticsSender.shared.logEvent(eventName: "user_city_registration",params: ["city": AuthModule.currUser.city ?? ""])
                  switch AuthModule.currUser.userType {
                    case .sportsman:
-                     Analytics.logEvent("sign_up_sportsman", parameters: nil)
+                    AnalyticsSender.shared.logEvent(eventName: "sign_up_sportsman")
                    case .trainer:
-                     Analytics.logEvent("sign_up_coach", parameters: nil)
+                    AnalyticsSender.shared.logEvent(eventName: "sign_up_coach")
                  }
             let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
             self.navigationController?.pushViewController(nextViewController, animated: true)
@@ -212,7 +217,8 @@ class OnboardingNameViewController: UIViewController {
 }
 
 extension OnboardingNameViewController: UITextFieldDelegate {
-  func textFieldDidChangeSelection(_ textField: UITextField) {
+
+  @objc func textFieldDidChange(_ textField: UITextField) {
     if textField == nameTextField {
       if viewModel!.signInDataControllerType == .name {
         viewModel!.updateName(value: textField.text ?? "")
@@ -229,6 +235,7 @@ extension OnboardingNameViewController: UITextFieldDelegate {
       startButton.isSelected = false
     }
   }
+  
 }
 
 extension OnboardingNameViewController: SignUpViewProtocol {

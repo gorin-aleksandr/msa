@@ -16,6 +16,7 @@ target 'MSA' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Analytics'
   pod 'Firebase/DynamicLinks'
+  pod 'Firebase/Crashlytics'
   pod 'JSQMessagesViewController'
   pod 'SDWebImage'
   pod 'IQKeyboardManagerSwift', '6.5.0'
@@ -27,8 +28,6 @@ target 'MSA' do
   pod 'SVProgressHUD'
   pod 'FZAccordionTableView'
   pod 'SwipeCellKit'
-  pod 'Fabric', '= 1.8.2'
-  pod 'Crashlytics', '= 3.11.1'
   pod "PhotoSlider"
   pod 'AppCenter'
   pod 'TagListView' 
@@ -44,4 +43,5 @@ target 'MSA' do
   pod 'Bugsnag'
   pod "SwiftRater"
   pod 'EmptyStateKit'
+  pod 'Amplitude', '~> 5.0.0'
 end

@@ -220,6 +220,7 @@ final class TelegramPickerViewController: UIViewController {
                 self.alertController?.dismiss(animated: true)
             }
             alert.show()
+          default: return
         }
     }
     

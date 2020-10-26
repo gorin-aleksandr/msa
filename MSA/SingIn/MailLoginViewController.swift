@@ -69,7 +69,8 @@ class MailLoginViewController: UIViewController {
     let color = UIColor.white
     let placeholder = mailTextField.placeholder ?? ""
     mailTextField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor : color])
-    mailTextField.delegate = self
+    mailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
     let paddingView2 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.mailTextField.frame.height))
      mailTextField.leftView = paddingView2
      mailTextField.leftViewMode = .always
@@ -81,7 +82,7 @@ class MailLoginViewController: UIViewController {
     passwordTextField.textColor = .white
     let placeholderPassword = passwordTextField.placeholder ?? ""
     passwordTextField.attributedPlaceholder = NSAttributedString(string: placeholderPassword, attributes: [NSAttributedString.Key.foregroundColor : color])
-    passwordTextField.delegate = self
+    passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     let paddingView3 = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: self.passwordTextField.frame.height))
         passwordTextField.leftView = paddingView3
         passwordTextField.leftViewMode = .always
@@ -158,13 +159,14 @@ class MailLoginViewController: UIViewController {
 }
 
 extension MailLoginViewController: UITextFieldDelegate {
-  func textFieldDidChangeSelection(_ textField: UITextField) {
+  @objc func textFieldDidChange(_ textField: UITextField) {
     if textField == mailTextField {
       viewModel!.updateMail(value: textField.text ?? "")
     } else {
       viewModel!.updatePassword(value: textField.text ?? "")
     }
   }
+
 }
 
 

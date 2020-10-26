@@ -143,8 +143,7 @@ void bsg_kscrw_i_addIntegerElement(const BSG_KSCrashReportWriter *const writer,
 void bsg_kscrw_i_addUIntegerElement(const BSG_KSCrashReportWriter *const writer,
                                     const char *const key,
                                     const unsigned long long value) {
-    bsg_ksjsonaddIntegerElement(bsg_getJsonContext(writer), key,
-                                (long long)value);
+    bsg_ksjsonaddUIntegerElement(bsg_getJsonContext(writer), key, value);
 }
 
 void bsg_kscrw_i_addStringElement(const BSG_KSCrashReportWriter *const writer,
@@ -1181,8 +1180,8 @@ void bsg_kscrw_i_writeError(const BSG_KSCrashReportWriter *const writer,
                             const char *const key,
                             const BSG_KSCrash_SentryContext *const crash) {
     int machExceptionType = 0;
-    kern_return_t machCode = 0;
-    kern_return_t machSubCode = 0;
+    int64_t machCode = 0;
+    int64_t machSubCode = 0;
     int sigNum = 0;
     int sigCode = 0;
     const char *exceptionName = NULL;
@@ -1192,14 +1191,14 @@ void bsg_kscrw_i_writeError(const BSG_KSCrashReportWriter *const writer,
     switch (crash->crashType) {
     case BSG_KSCrashTypeMachException:
         machExceptionType = crash->mach.type;
-        machCode = (kern_return_t)crash->mach.code;
+        machCode = crash->mach.code;
         if (machCode == KERN_PROTECTION_FAILURE && crash->isStackOverflow) {
             // A stack overflow should return KERN_INVALID_ADDRESS, but
             // when a stack blasts through the guard pages at the top of the
             // stack, it generates KERN_PROTECTION_FAILURE. Correct for this.
             machCode = KERN_INVALID_ADDRESS;
         }
-        machSubCode = (kern_return_t)crash->mach.subcode;
+        machSubCode = crash->mach.subcode;
 
         sigNum =
             bsg_kssignal_signalForMachException(machExceptionType, machCode);
@@ -1253,20 +1252,25 @@ void bsg_kscrw_i_writeError(const BSG_KSCrashReportWriter *const writer,
         case BSG_KSCrashTypeMachException:
             writer->beginObject(writer, BSG_KSCrashField_Mach);
             {
+                char buffer[20] = {0};
+                
                 writer->addUIntegerElement(writer, BSG_KSCrashField_Exception,
                                            (unsigned)machExceptionType);
                 if (machExceptionName != NULL) {
                     writer->addStringElement(writer, BSG_KSCrashField_ExceptionName,
                                              machExceptionName);
                 }
-                writer->addUIntegerElement(writer, BSG_KSCrashField_Code,
-                                           (unsigned)machCode);
+                
+                snprintf(buffer, sizeof(buffer), "0x%llx", machCode);
+                writer->addStringElement(writer, BSG_KSCrashField_Code, buffer);
+                
                 if (machCodeName != NULL) {
                     writer->addStringElement(writer, BSG_KSCrashField_CodeName,
                                              machCodeName);
                 }
-                writer->addUIntegerElement(writer, BSG_KSCrashField_Subcode,
-                                           (unsigned)machSubCode);
+                
+                snprintf(buffer, sizeof(buffer), "0x%llx", machSubCode);
+                writer->addStringElement(writer, BSG_KSCrashField_Subcode, buffer);
             }
             writer->endContainer(writer);
             writer->addStringElement(writer, BSG_KSCrashField_Type,
@@ -1347,8 +1351,6 @@ void bsg_kscrw_i_writeAppStats(const BSG_KSCrashReportWriter *const writer,
                                BSG_KSCrash_State *state) {
     writer->beginObject(writer, key);
     {
-        writer->addBooleanElement(writer, BSG_KSCrashField_AppActive,
-                                  state->applicationIsActive);
         writer->addBooleanElement(writer, BSG_KSCrashField_AppInFG,
                                   state->applicationIsInForeground);
 
@@ -1358,7 +1360,7 @@ void bsg_kscrw_i_writeAppStats(const BSG_KSCrashReportWriter *const writer,
                                   state->sessionsSinceLastCrash);
         writer->addFloatingPointElement(writer,
                                         BSG_KSCrashField_ActiveTimeSinceCrash,
-                                        state->activeDurationSinceLastCrash);
+                                        state->foregroundDurationSinceLastCrash);
         writer->addFloatingPointElement(
             writer, BSG_KSCrashField_BGTimeSinceCrash,
             state->backgroundDurationSinceLastCrash);
@@ -1367,7 +1369,7 @@ void bsg_kscrw_i_writeAppStats(const BSG_KSCrashReportWriter *const writer,
                                   state->sessionsSinceLaunch);
         writer->addFloatingPointElement(writer,
                                         BSG_KSCrashField_ActiveTimeSinceLaunch,
-                                        state->activeDurationSinceLaunch);
+                                        state->foregroundDurationSinceLaunch);
         writer->addFloatingPointElement(writer,
                                         BSG_KSCrashField_BGTimeSinceLaunch,
                                         state->backgroundDurationSinceLaunch);
@@ -1504,7 +1506,7 @@ void bsg_kscrashreport_writeMinimalReport(
     BSG_KSCrashReportWriter *writer = &concreteWriter;
     bsg_kscrw_i_prepareReportWriter(writer, &jsonContext);
 
-    bsg_ksjsonbeginEncode(bsg_getJsonContext(writer), true,
+    bsg_ksjsonbeginEncode(bsg_getJsonContext(writer), false,
                           bsg_kscrw_i_addJSONData, &fd);
 
     writer->beginObject(writer, BSG_KSCrashField_Report);
@@ -1551,7 +1553,7 @@ void bsg_kscrashreport_writeStandardReport(
     BSG_KSCrashReportWriter *writer = &concreteWriter;
     bsg_kscrw_i_prepareReportWriter(writer, &jsonContext);
 
-    bsg_ksjsonbeginEncode(bsg_getJsonContext(writer), true,
+    bsg_ksjsonbeginEncode(bsg_getJsonContext(writer), false,
                           bsg_kscrw_i_addJSONData, &fd);
 
     // KSCrash report fields are not required for handled errors as
@@ -1655,45 +1657,24 @@ void bsg_kscrashreport_logCrash(const BSG_KSCrash_Context *const crashContext) {
     bsg_kscrw_i_logCrashThreadBacktrace(&crashContext->crash);
 }
 
-int bsg_kscrw_i_collectJsonData(const char *const data, const size_t length, void *const userData) {
-    BSG_ThreadDataBuffer *thread_data = (BSG_ThreadDataBuffer *)userData;
-    if (thread_data->data == NULL) {
-        // Allocate initial memory for JSON data
-        void *ptr = malloc(BSG_THREAD_DATA_SIZE_INITIAL);
-        if (ptr != NULL) {
-            thread_data->data = ptr;
-            *thread_data->data = '\0';
-            thread_data->allocated_size = BSG_THREAD_DATA_SIZE_INITIAL;
-        } else { // failed to allocate enough memory - abandon collection
-            return BSG_KSJSON_ERROR_CANNOT_ADD_DATA;
-        }
+void bsg_kscrw_i_captureThreadTrace(const BSG_KSCrash_Context *crashContext,
+                                    const char *path) {
+    int fd = open(path, O_RDWR | O_CREAT | O_EXCL, 0644);
+    if (fd < 0) {
+        BSG_KSLOG_ERROR("Could not open file %s: %s", path, strerror(errno));
+        return;
     }
-    while (strlen(thread_data->data) + length >= thread_data->allocated_size) {
-        // Expand memory to hold further data
-        void *ptr = realloc(thread_data->data, thread_data->allocated_size + BSG_THREAD_DATA_SIZE_INCREMENT);
-        if (ptr != NULL) {
-            thread_data->data = ptr;
-            thread_data->allocated_size += BSG_THREAD_DATA_SIZE_INCREMENT;
-        } else { // failed to allocate enough memory - abandon collection
-            return BSG_KSJSON_ERROR_CANNOT_ADD_DATA;
-        }
-    }
-    strncat(thread_data->data, data, length);
-    return BSG_KSJSON_OK;
-}
-
-char *bsg_kscrw_i_captureThreadTrace(const BSG_KSCrash_Context *crashContext) {
     BSG_KSJSONEncodeContext jsonContext;
     BSG_KSCrashReportWriter concreteWriter;
     BSG_KSCrashReportWriter *writer = &concreteWriter;
     bsg_kscrw_i_prepareReportWriter(writer, &jsonContext);
-    BSG_ThreadDataBuffer userData = { NULL, 0 };
-    bsg_ksjsonbeginEncode(bsg_getJsonContext(writer), false, bsg_kscrw_i_collectJsonData, &userData);
+    bsg_ksjsonbeginEncode(bsg_getJsonContext(writer), false,
+                          bsg_kscrw_i_addJSONData, &fd);
     writer->beginObject(writer, BSG_KSCrashField_Report);
     bsg_kscrw_i_writeTraceInfo(crashContext, writer);
     writer->endContainer(writer);
     bsg_ksjsonendEncode(bsg_getJsonContext(writer));
-    return userData.data;
+    close(fd);
 }
 
 void bsg_kscrw_i_writeTraceInfo(const BSG_KSCrash_Context *crashContext,

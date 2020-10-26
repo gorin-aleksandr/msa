@@ -319,13 +319,14 @@ extension EmailPasswordViewController: SignInViewProtocol {
       
       presenter.createNewUser(newUser: AuthModule.currUser, success: {
         SVProgressHUD.dismiss()
-        Analytics.logEvent("sign_up", parameters: nil)
-        Analytics.logEvent("user_city_registration", parameters: ["city": AuthModule.currUser.city ?? ""])
+        AnalyticsSender.shared.logEvent(eventName: "sign_up")
+        AnalyticsSender.shared.logEvent(eventName: "user_city_registration", params: ["city": AuthModule.currUser.city ?? ""])
+
         switch AuthModule.currUser.userType {
           case .sportsman:
-            Analytics.logEvent("sign_up_sportsman", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "sign_up_sportsman")
           case .trainer:
-            Analytics.logEvent("sign_up_coach", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "sign_up_coach")
         }
         let nextViewController = profileStoryboard.instantiateViewController(withIdentifier: "tabBarVC") as! UITabBarController
         self.navigationController?.pushViewController(nextViewController, animated: true)

@@ -95,15 +95,15 @@ class NameSurnameViewController: BasicViewController {
       anotherPresenter.setSurname(surname: surname)
       if let city = cityTF.text {
         anotherPresenter.setCity(city: city)
-        Analytics.logEvent("user_city_registration", parameters: ["city": city])
+        AnalyticsSender.shared.logEvent(eventName: "user_city_registration", params: ["city": city])
       }
       anotherPresenter.setType(type: type)
-      Analytics.logEvent("sign_up", parameters: nil)
+      AnalyticsSender.shared.logEvent(eventName: "sign_up")
       switch type {
         case .sport:
-          Analytics.logEvent("sign_up_sportsman", parameters: nil)
+          AnalyticsSender.shared.logEvent(eventName: "sign_up_sportsman")
         case .trainer:
-          Analytics.logEvent("sign_up_coach", parameters: nil)
+          AnalyticsSender.shared.logEvent(eventName: "sign_up_coach")
       }
       registrated()
     } else {

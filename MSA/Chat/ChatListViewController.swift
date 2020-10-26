@@ -13,24 +13,25 @@ import SPPermissions
 import EmptyStateKit
 
 class ChatListViewController: UIViewController {
-
+  
   @IBOutlet weak var tableView: UITableView!
   var viewModel: ChatListViewModel = ChatListViewModel()
   var permissionController: SPPermissionsDialogController?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-        setupPermissionAlert()
-        SVProgressHUD.show()
-              viewModel.getChatList(success: {
-                self.setBadgeForChatCounter()
-                self.checkEmptyState()
-                self.tableView.reloadData()
-                SVProgressHUD.dismiss()
-              }) {
-        }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    setupUI()
+    setupPermissionAlert()
+    SVProgressHUD.show()
+    viewModel.getChatList {
+      self.setBadgeForChatCounter()
+      self.checkEmptyState()
+      self.tableView.reloadData()
+      SVProgressHUD.dismiss()
+    } failedBlock: {
+      SVProgressHUD.dismiss()
     }
+}
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)

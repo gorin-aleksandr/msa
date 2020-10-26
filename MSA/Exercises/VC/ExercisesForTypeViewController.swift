@@ -228,32 +228,29 @@ class ExercisesForTypeViewController: UIViewController {
             if manager.sportsmanId != AuthModule.currUser.id {
                 let newExMan = NewExerciseManager()
                 newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: presenter.selectedExercisesForTraining, completion: {
-                    Analytics.logEvent("add_exersises", parameters: nil)
+                    AnalyticsSender.shared.logEvent(eventName: "add_exersises")
                     self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
                 }) { (error) in
                     AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
                 }
             } else {
                 SwiftRater.incrementSignificantUsageCount()
-                Analytics.logEvent("add_exersises", parameters: nil)
+                AnalyticsSender.shared.logEvent(eventName: "add_exersises")
                 self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
             }
         } else {
           let own = presenter?.getOwnExercises().filter({$0.trainerId == AuthModule.currUser.id})
           
-          #if DEBUG
-          Analytics.logEvent("start_creating_own_exersise", parameters: nil)
-          self.performSegue(withIdentifier: "newExerciseSegue", sender: nil)
-          #else
+       
           if InAppPurchasesService.shared.currentSubscription == nil && own?.count > 2 {
             let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "IAPViwController") as! IAPViewController
             destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
             self.present(destinationVC, animated: true, completion: nil)
           } else {
-            Analytics.logEvent("start_creating_own_exersise", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "start_creating_own_exersise")
             self.performSegue(withIdentifier: "newExerciseSegue", sender: nil)
           }
-          #endif
+       
         }
     }
     

@@ -43,7 +43,7 @@ class MeasurementsViewController: UIViewController, ChartViewDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
-    Analytics.logEvent("measurements_screen", parameters: ["name": viewModel!.currentTypeTitle])
+    AnalyticsSender.shared.logEvent(eventName: "measurements_screen", params: ["name": viewModel!.currentTypeTitle])
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -481,7 +481,7 @@ extension MeasurementsViewController: UITableViewDataSource, UITableViewDelegate
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     viewModel!.currentTypeId = indexPath.row
     viewModel!.currentTypeTitle = viewModel!.titles[indexPath.row]
-    Analytics.logEvent("measurements_screen", parameters: ["name": viewModel!.currentTypeTitle])
+    AnalyticsSender.shared.logEvent(eventName: "measurements_screen", params: ["name": viewModel!.currentTypeTitle])
     fetchMeasurements()
   }
 }

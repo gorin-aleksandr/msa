@@ -11,6 +11,8 @@ import CryptoKit
 import CommonCrypto
 import Charts
 import EmptyStateKit
+import Firebase
+import Amplitude
 
 let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
 let signInStoryboard = UIStoryboard(name: "SignIn", bundle:nil)
@@ -508,4 +510,14 @@ enum MainState: CustomState {
       case .noCars: return "Добавить авто"
     }
   }
+}
+
+struct AnalyticsSender {
+    static let shared = AnalyticsSender()
+    private init() { }
+   
+  func logEvent(eventName: String, params: [String: Any]? = nil) {
+    Analytics.logEvent(eventName, parameters: params)
+    Amplitude.instance()?.logEvent(eventName)
+    }
 }

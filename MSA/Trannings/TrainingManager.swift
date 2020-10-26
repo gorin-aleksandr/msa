@@ -1311,7 +1311,8 @@ class TrainingManager {
   }
   
    func startTimer() {
-    Analytics.logEvent("start_timer", parameters: nil)
+    AnalyticsSender.shared.logEvent(eventName: "start_timer")
+
     trainingInProgress = true
     timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
       if !self.isTrainingFinished() {
@@ -1365,7 +1366,8 @@ class TrainingManager {
       self.secondomerTime += 1
       self.eventWithTimer(time: self.secondomerTime)
     }
-    Analytics.logEvent("start_stopwatch", parameters: nil)
+    AnalyticsSender.shared.logEvent(eventName: "start_stopwatch")
+
   }
   private func pauseSecondomer() {
     secondomer.invalidate()

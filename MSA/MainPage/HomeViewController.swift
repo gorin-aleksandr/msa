@@ -34,15 +34,7 @@ class HomeViewController: UIViewController {
     downloadExercises()
     comunityPresenter = CommunityListPresenter(view: self)
     setupPermissionAlert()
-    
-    InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
-      self?.logInAppPurhaseRenewalEvent()
-      if InAppPurchasesService.shared.currentSubscription != nil {
-        print("Full acess")
-      } else {
-        print("Havent acess!")
-      }
-    }
+    fetchChats()
     
     if viewModel.selectedUser == nil {
       SVProgressHUD.show()
@@ -51,6 +43,17 @@ class HomeViewController: UIViewController {
         self.collectionView.reloadData()
       })
     }
+    
+    InAppPurchasesService.shared.uploadReceipt { [weak self] loaded in
+      self?.logInAppPurhaseRenewalEvent()
+      if InAppPurchasesService.shared.currentSubscription != nil {
+        print("Full acess")
+      } else {
+        print("Havent acess!")
+      }
+      
+    }
+    
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -60,7 +63,6 @@ class HomeViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
-    fetchChats()
   }
   
   func setupPermissionAlert() {
@@ -154,17 +156,17 @@ class HomeViewController: UIViewController {
           defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
           switch purchaseName {
             case "s_one_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_sportsman_1m")
             case "s_twelve_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_sportsman_1y")
             case "t_one_month":
-              Analytics.logEvent("app_store_subscription_convert_coach_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_coach_1m")
             case "t_twelve_month":
-              Analytics.logEvent("app_store_subscription_convert_coach_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_coach_1y")
             case "s_fullAcess":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_fullAcess", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_sportsman_fullAcess")
             case "t_fullAcess":
-              Analytics.logEvent("app_store_subscription_convert_coach_fullAcess", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_coach_fullAcess")
             default:
               return
           }
@@ -175,24 +177,25 @@ class HomeViewController: UIViewController {
           defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
           switch purchaseName {
             case "s_one_month":
-              Analytics.logEvent("app_store_subscription_renew_sportsman_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_sportsman_1m")
             case "s_twelve_month":
-              Analytics.logEvent("app_store_subscription_renew_sportsman_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_sportsman_1y")
             case "t_one_month":
-              Analytics.logEvent("app_store_subscription_renew_coach_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_coach_1m")
             case "t_twelve_month":
-              Analytics.logEvent("app_store_subscription_renew_coach_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_coach_1y")
             default:
               return
           }
         }
       } else {
-        Analytics.logEvent("unsubscribe", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "unsubscribe")
+
         switch AuthModule.currUser.userType {
           case .sportsman:
-            Analytics.logEvent("unsubscribe_sportsman", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "unsubscribe_sportsman")
           case .trainer:
-            Analytics.logEvent("unsubscribe_coach", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "unsubscribe_coach")
         }
         defaults.set(nil, forKey: "inAppPurchaseExpireDate")
       }
@@ -241,19 +244,34 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     //    let padding: CGFloat =  1
     //    let collectionViewSizeWidth = collectionView.frame.size.width - padding
     //    let collectionViewSizeHeight = collectionView.frame.size.height - padding
-    
-    if indexPath.section == 0 {
-      return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (80/iPhoneXHeight))
-    } else if indexPath.section == 1  {
-      return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (127/iPhoneXHeight))
-    } else {
-      if indexPath.row != 4 {
-        return CGSize(width: screenSize.width * (162/iPhoneXWidth), height: screenSize.height * (124/iPhoneXHeight))
+    if UIScreen.main.scale == 1{
+      if indexPath.section == 0 {
+        return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (80/iPhoneXHeight))
+      } else if indexPath.section == 1  {
+        return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (127/iPhoneXHeight))
       } else {
-        return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (124/iPhoneXHeight))
-        
+        if indexPath.row != 4 {
+          return CGSize(width: screenSize.width * (162/iPhoneXWidth), height: screenSize.height * (124/iPhoneXHeight))
+        } else {
+          return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (124/iPhoneXHeight))
+          
+        }
+      }
+    } else {
+      if indexPath.section == 0 {
+        return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (80/iPhoneXHeight))
+      } else if indexPath.section == 1  {
+        return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (127/iPhoneXHeight))
+      } else {
+        if indexPath.row != 4 {
+          return CGSize(width: screenSize.width * 0.9, height: screenSize.height * (124/iPhoneXHeight))
+        } else {
+          return CGSize(width: screenSize.width * 0.9, height: screenSize.height * (124/iPhoneXHeight))
+          
+        }
       }
     }
+
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -277,6 +295,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
       if let selectedUser = viewModel.selectedUser  {
         myCell.titleLabel.text = "\(selectedUser.firstName ?? "") \(selectedUser.lastName ?? "")"
       } else {
+        print("Account: \(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")")
         myCell.titleLabel.text = "\(AuthModule.currUser.firstName ?? "") \(AuthModule.currUser.lastName ?? "")"
       }
       myCell.layer.cornerRadius = screenSize.height * (16/iPhoneXHeight)

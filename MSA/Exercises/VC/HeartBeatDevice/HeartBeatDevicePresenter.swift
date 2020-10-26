@@ -86,7 +86,7 @@ extension HeartBeatDevicePresenter: HeartBeatManagerDelegate {
     
     
     func deviceDidConnected(peripheral: CBPeripheral) {
-        Analytics.logEvent("heart_rate_connection", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "heart_rate_connection")
         view?.reloadTableView()
     }
     

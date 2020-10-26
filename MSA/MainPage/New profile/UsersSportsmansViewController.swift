@@ -44,7 +44,7 @@ class UsersSportsmansViewController: UIViewController {
   
   func checkEmptyState() {
     if viewModel!.users.count == 0 {
-      if showSearchBarForMySportsMan == false {
+      if viewModel!.selectedUser?.id != nil {
         self.tableView.emptyState.show(MainState.noSporstmansForCoach)
       } else {
         self.tableView.emptyState.show(MainState.noSporstmansForMe)

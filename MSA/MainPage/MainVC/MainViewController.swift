@@ -114,15 +114,15 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
           defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
           switch purchaseName {
             case "s_one_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_sportsman_1m")
             case "s_twelve_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_sportsman_1y")
             case "t_one_month":
-              Analytics.logEvent("app_store_subscription_convert_coach_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_coach_1m")
             case "t_twelve_month":
-              Analytics.logEvent("app_store_subscription_convert_coach_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_convert_coach_1y")
             default:
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              return
           }
           return
         }
@@ -131,15 +131,15 @@ class MainViewController: BasicViewController, UIImagePickerControllerDelegate, 
           defaults.set(expireDate, forKey: "inAppPurchaseExpireDate")
           switch purchaseName {
             case "s_one_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_sportsman_1m")
             case "s_twelve_month":
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_sportsman_1y")
             case "t_one_month":
-              Analytics.logEvent("app_store_subscription_renew_coach_1m", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_coach_1m")
             case "t_twelve_month":
-              Analytics.logEvent("app_store_subscription_renew_coach_1y", parameters: nil)
+              AnalyticsSender.shared.logEvent(eventName: "app_store_subscription_renew_coach_1y")
             default:
-              Analytics.logEvent("app_store_subscription_convert_sportsman_1m", parameters: nil)
+              return
           }
         }
       }

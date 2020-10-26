@@ -197,7 +197,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
         self?.addAsSportsman(idToAdd: currentId, userId: id)
         self?.state = .userTrainer
         AuthModule.currUser.trainerId = id
-        Analytics.logEvent("add_coach", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "add_coach")
       }
     }
   }
@@ -226,7 +226,7 @@ class ProfilePresenter: ProfilePresenterProtocol {
       if error != nil {
         print(error?.localizedDescription)
       }
-      Analytics.logEvent("add_sportsman", parameters: nil)
+      AnalyticsSender.shared.logEvent(eventName: "add_sportsman")
     })
   }
   

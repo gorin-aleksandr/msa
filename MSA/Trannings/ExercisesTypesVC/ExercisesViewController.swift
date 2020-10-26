@@ -178,13 +178,14 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
       if manager.sportsmanId != AuthModule.currUser.id {
         let newExMan = NewExerciseManager()
         newExMan.addExercisesToUser(id: manager.sportsmanId ?? "", exercises: presenter.selectedExercisesForTraining, completion: {
-          Analytics.logEvent("add_exersises", parameters: nil)
+          AnalyticsSender.shared.logEvent(eventName: "add_exersises")
           self.addExercisesToTraining(newExercises: self.presenter.selectedExercisesForTraining, manager: manager)
         }) { (error) in
           AlertDialog.showAlert("Ошибка", message: error?.localizedDescription ?? "", viewController: self)
         }
       } else {
-        Analytics.logEvent("add_exersises", parameters: nil)
+        AnalyticsSender.shared.logEvent(eventName: "add_exersises")
+
         self.addExercisesToTraining(newExercises: presenter.selectedExercisesForTraining, manager: manager)
       }
     } else {
@@ -194,7 +195,7 @@ class ExercisesViewController: UIViewController, UIGestureRecognizerDelegate {
           destinationVC.presenter = self.comunityPresenter.createIAPPresenter(for: destinationVC)
           self.present(destinationVC, animated: true, completion: nil)
         } else {
-          Analytics.logEvent("start_creating_own_exersise", parameters: nil)
+          AnalyticsSender.shared.logEvent(eventName: "start_creating_own_exersise")
           self.performSegue(withIdentifier: "newExercise", sender: nil)
         }
       

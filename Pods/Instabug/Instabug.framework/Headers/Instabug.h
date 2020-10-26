@@ -3,14 +3,13 @@
 
  Contains:   API for using Instabug's SDK.
 
- Copyright:  (c) 2013-2019 by Instabug, Inc., all rights reserved.
+ Copyright:  (c) 2013-2020 by Instabug, Inc., all rights reserved.
 
- Version:    9.1.7
+ Version:    10.0.2
  */
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "InstabugCore.h"
 #import "IBGNetworkLogger.h"
 #import "IBGReport.h"
 #import "IBGLog.h"
@@ -20,6 +19,8 @@
 #import "IBGFeatureRequests.h"
 #import "IBGChats.h"
 #import "IBGReplies.h"
+#import "IBGAPM.h"
+#import "IBGExecutionTrace.h"
 #import "UIView+Instabug.h"
 
 /**
@@ -215,6 +216,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  @brief Sets the color theme of the SDK's whole UI.
+ 
+ @discussion Defaults is `IBGColorThemeLight`. Color theme is not updated
+ automatically based on iOS Light or Dark mode changes.
 
  @param colorTheme An `IBGColorTheme` to set the SDK's UI to.
  

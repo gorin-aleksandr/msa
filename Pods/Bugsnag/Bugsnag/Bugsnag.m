@@ -25,13 +25,16 @@
 //
 
 #import "Bugsnag.h"
+
 #import "BSG_KSCrash.h"
+#import "BugsnagBreadcrumbs.h"
 #import "BugsnagLogger.h"
 #import "BugsnagClient.h"
 #import "BugsnagClientInternal.h"
 #import "BugsnagKeys.h"
 #import "BugsnagPlugin.h"
 #import "BugsnagHandledState.h"
+#import "BugsnagSystemState.h"
 
 static BugsnagClient *bsg_g_bugsnag_client = NULL;
 
@@ -89,6 +92,14 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
         }
         return bsg_g_bugsnag_client;
     }
+}
+
+/**
+ * Purge the global client so that it will be regenerated on the next call to start.
+ * This is only used by the unit tests.
+ */
++ (void)purge {
+    bsg_g_bugsnag_client = nil;
 }
 
 + (BugsnagConfiguration *)configuration {
@@ -187,6 +198,14 @@ static BugsnagClient *bsg_g_bugsnag_client = NULL;
         [self.client leaveBreadcrumbWithMessage:message
                                        metadata:metadata
                                         andType:type];
+    }
+}
+
++ (NSArray<BugsnagBreadcrumb *> *_Nonnull)breadcrumbs {
+    if ([self bugsnagStarted]) {
+        return [self.client.breadcrumbs getBreadcrumbs];
+    } else {
+        return @[];
     }
 }
 

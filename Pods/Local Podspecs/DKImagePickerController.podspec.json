@@ -1,6 +1,6 @@
 {
   "name": "DKImagePickerController",
-  "version": "4.2.2",
+  "version": "4.3.2",
   "summary": "DKImagePickerController is a highly customizable, pure-Swift library.",
   "homepage": "https://github.com/zhangao0086/DKImagePickerController",
   "license": {
@@ -11,11 +11,11 @@
     "Bannings": "zhangao0086@gmail.com"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "source": {
     "git": "https://github.com/zhangao0086/DKImagePickerController.git",
-    "tag": "4.2.2"
+    "tag": "4.3.2"
   },
   "requires_arc": true,
   "swift_versions": [

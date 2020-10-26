@@ -244,7 +244,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
                 self?.addAsSportsman(idToAdd: currentId, userId: id)
                // self?.removeFromFriends()
                 self?.updateTrainerInDataSource(for: id)
-                Analytics.logEvent("add_coach", parameters: nil)
+                AnalyticsSender.shared.logEvent(eventName: "add_coach")
             }
         }
     }
@@ -255,7 +255,7 @@ final class CommunityListPresenter: CommunityListPresenterProtocol {
             if error != nil {
                 self?.view.showGeneralAlert()
             }
-            Analytics.logEvent("add_sportsman", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "add_sportsman")
         })
     }
     

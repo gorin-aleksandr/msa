@@ -114,35 +114,41 @@ final class ChatViewController: JSQMessagesViewController {
   }
   
   private func moveToUserViewController(with user: UserVO) {
-    let state = presenter.getPersonState(person: user)
-         print("state:\(state)")
          
-         if user.userType == .trainer && state == .trainersSportsman {
-           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
-          //setMailButton
-          
-           destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
-            let nc = UINavigationController(rootViewController: destinationVC)
-            self.present(nc, animated: true, completion: {
-              destinationVC.setMailButton(hidden: true)
-            })
-         } else if user.userType == .trainer {
-           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
-          destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
-          let nc = UINavigationController(rootViewController: destinationVC)
-          self.present(nc, animated: true, completion: {
-            destinationVC.setMailButton(hidden: true)
-          })
-
-         } else {
-           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
-           destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
-          let nc = UINavigationController(rootViewController: destinationVC)
-          self.present(nc, animated: true, completion: {
-            destinationVC.setMailButton(hidden: true)
-          })
-
-         }
+      let vc = newProfileStoryboard.instantiateViewController(withIdentifier: "NewProfileViewController") as! NewProfileViewController
+      vc.viewModel = ProfileViewModel()
+      vc.viewModel?.selectedUser = user
+      let nc = UINavigationController(rootViewController: vc)
+      //nc.modalPresentationStyle = .
+      self.present(nc, animated: true, completion: nil)
+    //let state = presenter.getPersonState(person: user)
+    //         print("state:\(state)")
+//         if user.userType == .trainer && state == .trainersSportsman {
+//           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+//          //setMailButton
+//
+//           destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+//            let nc = UINavigationController(rootViewController: destinationVC)
+//            self.present(nc, animated: true, completion: {
+//              destinationVC.setMailButton(hidden: true)
+//            })
+//         } else if user.userType == .trainer {
+//           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+//          destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+//          let nc = UINavigationController(rootViewController: destinationVC)
+//          self.present(nc, animated: true, completion: {
+//            destinationVC.setMailButton(hidden: true)
+//          })
+//
+//         } else {
+//           let destinationVC = UIStoryboard(name: "Community", bundle: nil).instantiateViewController(withIdentifier: "UserProfileViewController") as! UserProfileViewController
+//           destinationVC.profilePresenter = presenter.createProfilePresenter(user: user, for: destinationVC)
+//          let nc = UINavigationController(rootViewController: destinationVC)
+//          self.present(nc, animated: true, completion: {
+//            destinationVC.setMailButton(hidden: true)
+//          })
+//
+//         }
   }
   
   func navTitleWithImageAndText(titleText: String, imageName: String) -> UIView {
@@ -219,6 +225,7 @@ final class ChatViewController: JSQMessagesViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(true)
+    navigationController?.setNavigationBarHidden(false, animated: animated)
     self.tabBarController?.tabBar.isTranslucent = false
     self.tabBarController?.tabBar.layer.zPosition = 0
   }
@@ -409,12 +416,12 @@ final class ChatViewController: JSQMessagesViewController {
         })
       }
     } else {
-      
-      SDWebImageManager.shared().imageDownloader?.downloadImage(with: URL(string: photoURL), options: .continueInBackground, progress: { (value, second, url) in
-      }, completed: { (image, data, error, value) in
-        mediaItem.image = image
-        self.collectionView.reloadData()
-      })
+            
+//      SDWebImageManager.shared.imageDownloader?.downloadImage(with: URL(string: photoURL), options: .continueInBackground, progress: { (value, second, url) in
+//      }, completed: { (image, data, error, value) in
+//        mediaItem.image = image
+//        self.collectionView.reloadData()
+//      })
     }
     
   }

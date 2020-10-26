@@ -38,7 +38,7 @@ class UserSignInPresenter {
         self.view?.setUser(user: user)
         UserDataManager().getUser(callback: { (user, error) in
           if let user = user {
-            Analytics.logEvent("log_in", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "log_in")
             self.view?.setUser(user: user)
             self.view?.logged()
             self.view?.finishLoading()

@@ -88,8 +88,8 @@ extension PresentationManager {
     ///   - currentAppStoreVersion: The current version of the app in the App Store.
     ///   - handler: The completion handler that returns the an `AlertAction` depending on the type of action the end-user took.
     func presentAlert(withRules rules: Rules,
-                               forCurrentAppStoreVersion currentAppStoreVersion: String,
-                               completion handler: CompletionHandler?) {
+                      forCurrentAppStoreVersion currentAppStoreVersion: String,
+                      completion handler: CompletionHandler?) {
         UserDefaults.alertPresentationDate = Date()
 
         // Alert Title
@@ -133,7 +133,7 @@ extension PresentationManager {
         // If the alertType is .none, an alert will not be presented.
         // If the `updaterWindow` is not hidden, then an alert is already presented.
         // The latter prevents `UIAlertController`'s from appearing on top of each other.
-        if rules.alertType != .none, updaterWindow.isHidden {
+        if rules.alertType != .none, let updaterWindow = updaterWindow, updaterWindow.isHidden {
             alertController?.show(window: updaterWindow)
         } else {
             // This is a safety precaution to avoid multiple windows from presenting on top of each other.
@@ -143,6 +143,7 @@ extension PresentationManager {
 
     /// Removes the `alertController` from memory.
     func cleanUp() {
+        guard let updaterWindow = updaterWindow else { return }
         alertController?.hide(window: updaterWindow)
         alertController?.dismiss(animated: true, completion: nil)
         updaterWindow.resignKey()
@@ -160,10 +161,10 @@ private extension PresentationManager {
     /// - Returns: The `Update` alert action.
     func updateAlertAction(completion handler: CompletionHandler?) -> UIAlertAction {
         let title: String
-        if self.updateButtonTitle == AlertConstants.updateButtonTitle {
+        if updateButtonTitle == AlertConstants.updateButtonTitle {
             title = localization.updateButtonTitle()
         } else {
-            title = self.updateButtonTitle
+            title = updateButtonTitle
         }
 
         let action = UIAlertAction(title: title, style: .default) { _ in
@@ -182,10 +183,10 @@ private extension PresentationManager {
     /// - Returns: The `Next time` alert action.
     func nextTimeAlertAction(completion handler: CompletionHandler?) -> UIAlertAction {
         let title: String
-        if self.nextTimeButtonTitle == AlertConstants.nextTimeButtonTitle {
+        if nextTimeButtonTitle == AlertConstants.nextTimeButtonTitle {
             title = localization.nextTimeButtonTitle()
         } else {
-            title = self.nextTimeButtonTitle
+            title = nextTimeButtonTitle
         }
 
         let action = UIAlertAction(title: title, style: .default) { _ in
@@ -205,10 +206,10 @@ private extension PresentationManager {
     /// - Returns: The `Skip this version` alert action.
     func skipAlertAction(forCurrentAppStoreVersion currentAppStoreVersion: String, completion handler: CompletionHandler?) -> UIAlertAction {
         let title: String
-        if self.skipButtonTitle == AlertConstants.skipButtonTitle {
+        if skipButtonTitle == AlertConstants.skipButtonTitle {
             title = localization.skipButtonTitle()
         } else {
-            title = self.skipButtonTitle
+            title = skipButtonTitle
         }
 
         let action = UIAlertAction(title: title, style: .default) { _ in
@@ -224,11 +225,10 @@ private extension PresentationManager {
 // MARK: - Helpers
 
 private extension PresentationManager {
-    private func createWindow() -> UIWindow {
+    private func createWindow() -> UIWindow? {
         var window = UIWindow()
         if #available(iOS 13.0, *) {
-            guard let windowScene = UIApplication.shared.connectedScenes
-                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return UIWindow() }
+            guard let windowScene = getFirstForegroundScene() else { return nil }
             window = UIWindow(windowScene: windowScene)
         } else {
             window = UIWindow(frame: UIScreen.main.bounds)
@@ -241,5 +241,17 @@ private extension PresentationManager {
 
         window.rootViewController = viewController
         return window
+    }
+
+    @available(iOS 13.0, *)
+    private func getFirstForegroundScene() -> UIWindowScene? {
+        let connectedScenes = UIApplication.shared.connectedScenes
+        if let windowActiveScene = connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+            return windowActiveScene
+        } else if let windowInactiveScene = connectedScenes.first(where: { $0.activationState == .foregroundInactive }) as? UIWindowScene {
+            return windowInactiveScene
+        } else {
+            return nil
+        }
     }
 }

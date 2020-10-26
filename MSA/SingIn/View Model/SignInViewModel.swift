@@ -77,7 +77,7 @@ class SignInViewModel {
         self.setUser(user: user)
         UserDataManager().getUser(callback: { (user, error) in
           if let user = user {
-            Analytics.logEvent("log_in", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "log_in")
             self.setUser(user: user)
             success()
           } else {
@@ -147,19 +147,19 @@ class SignInViewModel {
         self.setUser(user: user)
         UserDataManager().getUser(callback: { (user, error) in
           if let user = user {
-            Analytics.logEvent("log_in", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "log_in")
             self.setUser(user: user)
             success(true)
           } else {
             if AuthModule.currUser.type != nil {
               self.presenter.createNewUser(newUser: AuthModule.currUser, success: {
-                Analytics.logEvent("sign_up", parameters: nil)
-                Analytics.logEvent("user_city_registration", parameters: ["city": AuthModule.currUser.city ?? ""])
+                AnalyticsSender.shared.logEvent(eventName: "sign_up")
+                AnalyticsSender.shared.logEvent(eventName: "user_city_registration", params: ["city": AuthModule.currUser.city ?? ""])
                 switch AuthModule.currUser.userType {
                   case .sportsman:
-                    Analytics.logEvent("sign_up_sportsman", parameters: nil)
+                    AnalyticsSender.shared.logEvent(eventName: "sign_up_sportsman")
                   case .trainer:
-                    Analytics.logEvent("sign_up_coach", parameters: nil)
+                    AnalyticsSender.shared.logEvent(eventName: "sign_up_coach")
                 }
                 success(true)
               }) { (error) in
@@ -205,19 +205,19 @@ class SignInViewModel {
         self.setUser(user: user)
         UserDataManager().getUser(callback: { (user, error) in
           if let user = user {
-            Analytics.logEvent("log_in", parameters: nil)
+            AnalyticsSender.shared.logEvent(eventName: "log_in")
             self.setUser(user: user)
             success(true)
           } else {
             if AuthModule.currUser.type != nil {
               self.presenter.createNewUser(newUser: AuthModule.currUser, success: {
-                Analytics.logEvent("sign_up", parameters: nil)
-                Analytics.logEvent("user_city_registration", parameters: ["city": AuthModule.currUser.city ?? ""])
+                AnalyticsSender.shared.logEvent(eventName: "sign_up")
+                AnalyticsSender.shared.logEvent(eventName: "user_city_registration", params: ["city": AuthModule.currUser.city ?? ""])
                 switch AuthModule.currUser.userType {
                   case .sportsman:
-                    Analytics.logEvent("sign_up_sportsman", parameters: nil)
+                    AnalyticsSender.shared.logEvent(eventName: "sign_up_sportsman")
                   case .trainer:
-                    Analytics.logEvent("sign_up_coach", parameters: nil)
+                    AnalyticsSender.shared.logEvent(eventName: "sign_up_coach")
                 }
                 success(true)
               }) { (error) in

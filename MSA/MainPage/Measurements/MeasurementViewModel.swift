@@ -173,7 +173,7 @@ class MeasurementViewModel {
         }
     }
   
-    Analytics.logEvent("add_measurement", parameters: ["name": newMeasurementsTitle])
+    AnalyticsSender.shared.logEvent(eventName: "add_measurement", params: ["name": newMeasurementsTitle])
     reloadChart?()
   }
   
