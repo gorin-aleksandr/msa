@@ -77,7 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Siren.shared.rulesManager = RulesManager(globalRules: .critical,
                                       showAlertAfterCurrentVersionHasBeenReleasedForDays: 1)
 
-
     Siren.shared.wail()
    
     SwiftRater.daysUntilPrompt = 7
@@ -126,7 +125,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func applicationDidBecomeActive(_ application: UIApplication) {
     
-    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: Int(Date().timeIntervalSince1970)-timeInBackground)
+    let timeDifference = Int(Date().timeIntervalSince1970) - timeInBackground > 0 ? Int(Date().timeIntervalSince1970) - timeInBackground - 1 : Int(Date().timeIntervalSince1970) - timeInBackground
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AppComeFromBackground"), object: timeDifference)
     print("Timer value v1 = \(Int(Date().timeIntervalSince1970)-timeInBackground)) - Date:\(Date())")
     UIApplication.shared.applicationIconBadgeNumber = 0
     let current = UNUserNotificationCenter.current()

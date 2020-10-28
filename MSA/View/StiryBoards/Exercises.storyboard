@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U7j-nU-ptn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U7j-nU-ptn">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -117,7 +118,7 @@
                                                         <constraint firstAttribute="width" constant="50" id="PA8-XG-r9P"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" LKLKLK" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN1-Cx-IqQ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" LKL" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dN1-Cx-IqQ">
                                                     <rect key="frame" x="65" y="5" width="270" height="60"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -131,7 +132,7 @@
                                                     </constraints>
                                                 </view>
                                                 <imageView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox-empty" translatesAutoresizingMaskIntoConstraints="NO" id="4tn-uE-BcJ">
-                                                    <rect key="frame" x="340" y="25" width="20" height="20"/>
+                                                    <rect key="frame" x="339" y="25" width="20" height="20"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" image="YES" allowsDirectInteraction="YES"/>
                                                         <bool key="isElement" value="YES"/>
@@ -144,7 +145,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7t-GT-Rfo">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FsV-Ft-FsV">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FsV-Ft-FsV">
                                                             <rect key="frame" x="0.0" y="0.0" width="70" height="69.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="70" id="4bz-gq-X1c"/>
@@ -153,7 +154,7 @@
                                                                 <action selector="imageTapped:" destination="Hwv-jC-Zfd" eventType="touchUpInside" id="n76-ey-Gma"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzV-Ly-3wl">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yzV-Ly-3wl">
                                                             <rect key="frame" x="70" y="0.0" width="305" height="69.5"/>
                                                             <connections>
                                                                 <action selector="descriptionTapped:" destination="Hwv-jC-Zfd" eventType="touchUpInside" id="X1N-ZM-Bgo"/>
@@ -189,6 +190,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="NGy-Kh-1Oq"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="FnJ-cV-b0i" firstAttribute="top" secondItem="NGy-Kh-1Oq" secondAttribute="top" id="4TE-3f-uiI"/>
@@ -200,7 +202,6 @@
                             <constraint firstItem="NGy-Kh-1Oq" firstAttribute="trailing" secondItem="oOI-jN-UrX" secondAttribute="trailing" id="ZvD-Ps-a1h"/>
                             <constraint firstItem="NGy-Kh-1Oq" firstAttribute="trailing" secondItem="FnJ-cV-b0i" secondAttribute="trailing" id="ei4-iV-rRm"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="NGy-Kh-1Oq"/>
                     </view>
                     <navigationItem key="navigationItem" title="Упражнения" id="0Yv-qS-2sU">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="Plus" id="3nw-Vu-S9T">
@@ -267,7 +268,7 @@
                                                     <constraint firstAttribute="height" constant="1" id="Q5A-Cu-N9w"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmr-sU-a8X">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bmr-sU-a8X">
                                                 <rect key="frame" x="242" y="0.0" width="71" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="KQ0-88-QbO"/>
@@ -313,6 +314,7 @@
                                 <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="h8a-Xh-015"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ekW-B4-cjP" firstAttribute="trailing" secondItem="h8a-Xh-015" secondAttribute="trailing" id="3hp-sR-jTP"/>
@@ -326,7 +328,6 @@
                             <constraint firstItem="ekW-B4-cjP" firstAttribute="leading" secondItem="h8a-Xh-015" secondAttribute="leading" id="v9W-tC-iLJ"/>
                             <constraint firstItem="h8a-Xh-015" firstAttribute="trailing" secondItem="cLh-Rc-FBr" secondAttribute="trailing" constant="30" id="znh-2B-1bN"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="h8a-Xh-015"/>
                     </view>
                     <navigationItem key="navigationItem" title="Новое упражнение" id="7d8-fl-LV2">
                         <barButtonItem key="leftBarButtonItem" image="back" id="tCm-t9-Z0R">
@@ -382,7 +383,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Упражнение" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eO8-zz-FeX">
-                                                    <rect key="frame" x="84" y="16" width="246" height="43"/>
+                                                    <rect key="frame" x="84" y="11" width="245" height="53"/>
                                                     <fontDescription key="fontDescription" name="Rubik-Medium" family="Rubik" pointSize="17"/>
                                                     <color key="textColor" red="0.0039215686269999999" green="0.29803921570000003" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -395,7 +396,7 @@
                                                     </constraints>
                                                 </view>
                                                 <imageView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox-empty" translatesAutoresizingMaskIntoConstraints="NO" id="vTZ-Pb-1Ln">
-                                                    <rect key="frame" x="340" y="27.5" width="20" height="20"/>
+                                                    <rect key="frame" x="339" y="27.5" width="20" height="20"/>
                                                     <accessibility key="accessibilityConfiguration">
                                                         <accessibilityTraits key="traits" image="YES" allowsDirectInteraction="YES"/>
                                                         <bool key="isElement" value="YES"/>
@@ -408,7 +409,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w31-sB-Wiy">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhn-va-gSg">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhn-va-gSg">
                                                             <rect key="frame" x="0.0" y="0.0" width="80" height="74.5"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="80" id="4s6-zx-bZY"/>
@@ -417,7 +418,7 @@
                                                                 <action selector="imageTapped:" destination="mcW-YU-kBb" eventType="touchUpInside" id="bjn-a5-FTe"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsj-b0-p7L">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gsj-b0-p7L">
                                                             <rect key="frame" x="80" y="0.0" width="295" height="74.5"/>
                                                             <connections>
                                                                 <action selector="descriptionTapped:" destination="mcW-YU-kBb" eventType="touchUpInside" id="yoo-d6-LEC"/>
@@ -436,13 +437,13 @@
                                                 <constraint firstItem="w31-sB-Wiy" firstAttribute="leading" secondItem="dUD-RS-kjO" secondAttribute="leading" id="WoS-46-lTd"/>
                                                 <constraint firstItem="Kpe-hx-AeM" firstAttribute="centerY" secondItem="dUD-RS-kjO" secondAttribute="centerY" id="Wrf-nb-BeL"/>
                                                 <constraint firstItem="vTZ-Pb-1Ln" firstAttribute="centerY" secondItem="dUD-RS-kjO" secondAttribute="centerY" id="Zpx-0s-XWL"/>
-                                                <constraint firstItem="eO8-zz-FeX" firstAttribute="top" secondItem="dUD-RS-kjO" secondAttribute="topMargin" constant="5" id="bul-fu-FN1"/>
+                                                <constraint firstItem="eO8-zz-FeX" firstAttribute="top" secondItem="dUD-RS-kjO" secondAttribute="topMargin" id="bul-fu-FN1"/>
                                                 <constraint firstAttribute="trailing" secondItem="BmA-5K-EVp" secondAttribute="trailing" id="cic-GA-UnK"/>
                                                 <constraint firstItem="Kpe-hx-AeM" firstAttribute="centerY" secondItem="dUD-RS-kjO" secondAttribute="centerY" id="i4d-wR-Y15"/>
                                                 <constraint firstItem="BmA-5K-EVp" firstAttribute="leading" secondItem="Kpe-hx-AeM" secondAttribute="trailing" constant="8" id="jN0-CQ-cm9"/>
                                                 <constraint firstItem="Kpe-hx-AeM" firstAttribute="leading" secondItem="dUD-RS-kjO" secondAttribute="leading" constant="12" id="ogP-CY-qX9"/>
                                                 <constraint firstAttribute="bottom" secondItem="BmA-5K-EVp" secondAttribute="bottom" id="tYG-kT-7ea"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="eO8-zz-FeX" secondAttribute="bottom" constant="5" id="tkD-lr-T4Y"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="eO8-zz-FeX" secondAttribute="bottom" id="tkD-lr-T4Y"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -470,6 +471,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="NHx-JO-S4u"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="VMi-73-eP6" firstAttribute="leading" secondItem="NHx-JO-S4u" secondAttribute="leading" id="A6E-1Z-Hke"/>
@@ -480,7 +482,6 @@
                             <constraint firstItem="NHx-JO-S4u" firstAttribute="trailing" secondItem="VMi-73-eP6" secondAttribute="trailing" id="ure-JF-3Bh"/>
                             <constraint firstItem="1mg-dg-jPb" firstAttribute="leading" secondItem="NHx-JO-S4u" secondAttribute="leading" id="uvw-lO-tCS"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="NHx-JO-S4u"/>
                     </view>
                     <navigationItem key="navigationItem" title="Вид упражнения" id="0L2-OM-Ite">
                         <barButtonItem key="leftBarButtonItem" image="back" id="bdh-dC-tpb">
@@ -534,6 +535,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="Wp3-eI-sM1"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Wp3-eI-sM1" firstAttribute="bottom" secondItem="ous-NH-tzS" secondAttribute="bottom" id="HWW-KB-vtB"/>
@@ -541,7 +543,6 @@
                             <constraint firstItem="Wp3-eI-sM1" firstAttribute="trailing" secondItem="ous-NH-tzS" secondAttribute="trailing" id="hw4-eZ-kCb"/>
                             <constraint firstItem="ous-NH-tzS" firstAttribute="top" secondItem="Wp3-eI-sM1" secondAttribute="top" id="sCu-Pz-WlO"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Wp3-eI-sM1"/>
                     </view>
                     <navigationItem key="navigationItem" title="Упражнения" id="rEY-Wo-DgG">
                         <barButtonItem key="leftBarButtonItem" image="back" id="dva-Ir-MW7">
@@ -576,19 +577,19 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3tk-xK-ZZk" customClass="WKYTPlayerView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="241" id="cV3-9g-tnW"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Wbq-lj-OVZ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="3tk-xK-ZZk" firstAttribute="leading" secondItem="Wbq-lj-OVZ" secondAttribute="leading" id="4Fy-Ec-Lk7"/>
                             <constraint firstItem="3tk-xK-ZZk" firstAttribute="top" secondItem="Wbq-lj-OVZ" secondAttribute="top" id="N0Z-lW-P93"/>
                             <constraint firstItem="3tk-xK-ZZk" firstAttribute="trailing" secondItem="Wbq-lj-OVZ" secondAttribute="trailing" id="ohv-fn-yXV"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Wbq-lj-OVZ"/>
                     </view>
                     <connections>
                         <outlet property="playerView" destination="3tk-xK-ZZk" id="XlI-Pm-JEq"/>
@@ -599,15 +600,18 @@
             <point key="canvasLocation" x="-4380" y="314.39280359820094"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="IH0-2z-9zU"/>
+        <segue reference="5un-LR-fho"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="Plus" width="18" height="18"/>
         <image name="back" width="13" height="22"/>
         <image name="checkbox-empty" width="18" height="18"/>
         <image name="edit-24px" width="26" height="26"/>
         <image name="ok_blue" width="16" height="10"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Erm-Q3-52b"/>
-        <segue reference="tK7-KX-Pwn"/>
-    </inferredMetricsTieBreakers>
 </document>

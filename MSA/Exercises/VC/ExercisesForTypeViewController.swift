@@ -310,7 +310,6 @@ extension ExercisesForTypeViewController: UITableViewDataSource, UITableViewDele
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "exerciseForTypeTableCell", for: indexPath) as? ExercisesTableViewCell else { return UITableViewCell() }
         if let _ = trainingManager {
             cell.checkBoxImage.isHidden = false
-            
         } else {
             cell.checkBoxImage.isHidden = true
         }

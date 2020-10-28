@@ -97,6 +97,7 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func becameActive(_ notification: NSNotification) {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         guard let time = notification.object as? Int else {return}
         //if time > 5 && time < 10000 {
         manager.resetFromBackground(with: time)
@@ -108,7 +109,15 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
     print("Current rest time v1 = \(manager.currentRestTime)")
     print("Current work time v1 = \(manager.currentWorkTime)")
     print("Current iterationState v1 = \(manager.iterationState)")
-    
+    if manager.timer != nil {
+      manager.timer!.invalidate()
+      manager.timer = nil
+    }
+    if manager.secondomer != nil {
+      manager.secondomer!.invalidate()
+      manager.secondomer = nil
+
+    }
     if manager.iterationState == .work {
       if manager.currentWorkTime > 4 {
         let center = UNUserNotificationCenter.current()
@@ -119,7 +128,9 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
           let soundName = UNNotificationSoundName("sms-received5.aiff")
           content.sound = UNNotificationSound(named: soundName)
           let uuidString = randomString(length: 10)
-          let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval((manager.currentWorkTime - 4) - n), repeats: false)
+          print("Notify = \(TimeInterval(manager.currentWorkTime - n))")
+          let alarm = TimeInterval(manager.currentWorkTime - n)
+          let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: alarm, repeats: false)
           let request1 = UNNotificationRequest(identifier: "\(uuidString)1", content: content, trigger: trigger1)
           center.add(request1) { (error:Error?) in
             if let theError = error {
@@ -140,7 +151,8 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
           let soundName = UNNotificationSoundName("sms-received5.aiff")
           content.sound = UNNotificationSound(named: soundName)
           let uuidString = randomString(length: 10)
-          let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval((manager.currentRestTime - 4) - n), repeats: false)
+          print("Notify = \(TimeInterval(manager.currentRestTime - n))")
+          let trigger1 = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(manager.currentRestTime - n), repeats: false)
           let request1 = UNNotificationRequest(identifier: "\(uuidString)1", content: content, trigger: trigger1)
           center.add(request1) { (error:Error?) in
             if let theError = error {
@@ -152,8 +164,6 @@ class IterationsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
       }
     }
-    
-    
   }
     
     @objc private func nextIterationstate(_ sender: UIButton) {

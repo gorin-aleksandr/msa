@@ -68,7 +68,7 @@ class UserAchievementsViewController: UIViewController {
   }
   
   func checkEmptyState() {
-    if viewModel.selectedAchievements.count == 0 && viewModel.selectedEducation.count == 0 && viewModel.selectedCertificates.count == 0 {
+    if viewModel.selectedAchievements.count == 0 && viewModel.selectedEducation.count == 0 && viewModel.selectedCertificates.count == 0 && viewModel.selectedUser != nil {
         self.tableView.emptyState.show(MainState.noInfoForCoachUser)
     } else {
        self.tableView.emptyState.hide()
@@ -105,9 +105,8 @@ extension UserAchievementsViewController: UITableViewDataSource, UITableViewDele
     return 63
   }
   
-  
   func numberOfSections(in tableView: UITableView) -> Int {
-    if viewModel.selectedAchievements.count == 0 && viewModel.selectedEducation.count == 0 && viewModel.selectedCertificates.count == 0 {
+    if viewModel.selectedAchievements.count == 0 && viewModel.selectedEducation.count == 0 && viewModel.selectedCertificates.count == 0 && viewModel.selectedUser != nil{
       return 0
     } else {
       return 3

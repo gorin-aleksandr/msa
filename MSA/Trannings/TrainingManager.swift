@@ -985,8 +985,8 @@ class TrainingManager {
   
   // TRAINING FLOW
   
-  var timer = Timer()
-  var secondomer = Timer()
+  var timer: Timer?
+  var secondomer: Timer?
   
   var iterationState: IterationState = .work
   var trainingState: TrainingState = .normal
@@ -1160,34 +1160,41 @@ class TrainingManager {
     guard let iteration = currentIteration else {
       return
     }
+    print("Main timer from background fire = \(Date())")
+
     switch iterationState {
       case .rest:
         if iteration.restTime == 0 {
           if iteration.startTimerOnZero {
             secondomerTime += time
           }
-          self.eventWithTimer(time: secondomerTime, playSound: false)
+          self.startSecondomer()
+          //self.eventWithTimer(time: secondomerTime, playSound: false)
         } else {
           if (currentRestTime - time) < 0 {
             currentRestTime = 0
           } else {
+            //let timeFromBackground = time > 1 ? time : time - 1
             currentRestTime -= time
           }
-          self.eventWithTimer(time: self.currentRestTime, playSound: false)
+          startTimer()
+          //self.eventWithTimer(time: self.currentRestTime, playSound: false)
         }
       case .work:
         if iteration.workTime == 0 {
           if iteration.startTimerOnZero {
             secondomerTime += time
           }
-          self.eventWithTimer(time: self.secondomerTime, playSound: false)
+          self.startSecondomer()
+          //self.eventWithTimer(time: self.secondomerTime, playSound: false)
         } else {
           if (currentWorkTime - time) < 0 {
             currentWorkTime = 0
           } else {
             currentWorkTime -= time
           }
-          self.eventWithTimer(time: self.currentWorkTime, playSound: false)
+          startTimer()
+         // self.eventWithTimer(time: self.currentWorkTime, playSound: false)
         }
     }
   }
@@ -1315,6 +1322,7 @@ class TrainingManager {
 
     trainingInProgress = true
     timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { (timer) in
+      print("Main timer fire = \(Date())")
       if !self.isTrainingFinished() {
         if let current = self.currentIteration {
           if self.iterationState == .work {
@@ -1354,7 +1362,7 @@ class TrainingManager {
         }
       } else {
         self.fullStop()
-        self.timer.invalidate()
+        self.timer?.invalidate()
         self.trainedIterationsIDS.removeAll()
       }
     }
@@ -1370,7 +1378,7 @@ class TrainingManager {
 
   }
   private func pauseSecondomer() {
-    secondomer.invalidate()
+    secondomer?.invalidate()
   }
   private func stopSecondomer() {
     pauseSecondomer()
@@ -1426,7 +1434,7 @@ class TrainingManager {
   }
   
   func pauseIteration() {
-    timer.invalidate()
+    timer?.invalidate()
     pauseSecondomer()
     trainingInProgress = false
     trainingStarted = true
@@ -1466,7 +1474,7 @@ class TrainingManager {
       }
       if trainingInProgress {
         eventWithTimer(time: time)
-        if !timer.isValid {
+        if !(timer?.isValid ?? false) {
           startTimer()
         }
       } else {
@@ -1482,7 +1490,7 @@ class TrainingManager {
   }
   
   func stopIteration() {
-    timer.invalidate()
+    timer?.invalidate()
     stopSecondomer()
     iterationState = .work
   }
@@ -1495,8 +1503,8 @@ class TrainingManager {
     saveIterationsInfo()
     stopIteration()
     currentIterationNumber = 0
-    timer.invalidate()
-    secondomer.invalidate()
+    timer?.invalidate()
+    secondomer?.invalidate()
     self.flowView?.changeTime(time: "--:--", iterationState: iterationState, i: (currentExerciseNumber, -1), stop: true)
     self.currentIteration = nil
     self.currentExercise = nil

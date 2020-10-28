@@ -244,7 +244,6 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     //    let padding: CGFloat =  1
     //    let collectionViewSizeWidth = collectionView.frame.size.width - padding
     //    let collectionViewSizeHeight = collectionView.frame.size.height - padding
-    if UIScreen.main.scale == 1{
       if indexPath.section == 0 {
         return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (80/iPhoneXHeight))
       } else if indexPath.section == 1  {
@@ -257,20 +256,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
           
         }
       }
-    } else {
-      if indexPath.section == 0 {
-        return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (80/iPhoneXHeight))
-      } else if indexPath.section == 1  {
-        return CGSize(width: screenSize.width * (335/iPhoneXWidth), height: screenSize.height * (127/iPhoneXHeight))
-      } else {
-        if indexPath.row != 4 {
-          return CGSize(width: screenSize.width * 0.9, height: screenSize.height * (124/iPhoneXHeight))
-        } else {
-          return CGSize(width: screenSize.width * 0.9, height: screenSize.height * (124/iPhoneXHeight))
-          
-        }
-      }
-    }
+
 
   }
   
